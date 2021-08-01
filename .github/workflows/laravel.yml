@@ -19,7 +19,7 @@ jobs:
         env:
           ## Accessing to Github secrets, where you can store your configuration
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: peerfinder_testing
+          MYSQL_DATABASE: peerfinder_test
         ## map the "external" 33306 port with the "internal" 3306
         ports:
           - 33306:3306
@@ -44,4 +44,4 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Run Tests
-      run: vendor/bin/phpunit
+      run: ./artisan test
