@@ -12,23 +12,16 @@ jobs:
     runs-on: ubuntu-latest
 
     services:
-      # mysql-service Label used to access the service container
       mysql:
-        # Docker Hub image (also with version)
         image: mysql:5.7
         env:
           ## Accessing to Github secrets, where you can store your configuration
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: peerfinder_test
-        ## map the "external" 33306 port with the "internal" 3306
         ports:
-          - 33306:3306
+          - 3306
         # Set health checks to wait until mysql database has started (it takes some seconds to start)
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
