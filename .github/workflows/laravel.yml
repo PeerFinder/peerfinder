@@ -13,7 +13,7 @@ jobs:
 
     services:
       # mysql-service Label used to access the service container
-      mysql-service:
+      mysql:
         # Docker Hub image (also with version)
         image: mysql:5.7
         env:
