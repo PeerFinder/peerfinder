@@ -20,6 +20,8 @@ jobs:
           ## Accessing to Github secrets, where you can store your configuration
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: peerfinder_test
+          MYSQL_PASSWORD: password
+          MYSQL_USER: user
         ## map the "external" 33306 port with the "internal" 3306
         ports:
           - 33306:3306
