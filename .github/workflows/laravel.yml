@@ -37,4 +37,19 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Run Tests
-      run: ./artisan test
+      run: php artisan test
+    - name: Install and run node
+      run: npm install && npm run production
+    - name: Upgrade Chrome Driver
+      run: php artisan dusk:chrome-driver
+    - name: Start Chrome Driver
+      run: ./vendor/laravel/dusk/bin/chromedriver-linux > /dev/null 2>&1 &
+    - name: Run Laravel Server
+      run: php artisan serve > /dev/null 2>&1 &
+    - name: Run Dusk Tests
+      run: |
+          chmod -R 0755 vendor/laravel/dusk/bin/
+          php artisan dusk
+      env:
+        APP_ENV: local
+        APP_URL: "http://127.0.0.1:8000"
