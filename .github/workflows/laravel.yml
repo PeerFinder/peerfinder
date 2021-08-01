@@ -10,7 +10,7 @@ jobs:
   laravel-tests:
 
     runs-on: ubuntu-latest
-    
+
     services:
       # mysql-service Label used to access the service container
       mysql-service:
@@ -18,10 +18,8 @@ jobs:
         image: mysql:5.7
         env:
           ## Accessing to Github secrets, where you can store your configuration
-          MYSQL_ROOT_PASSWORD: root
+          MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: peerfinder_test
-          MYSQL_PASSWORD: password
-          MYSQL_USER: user
         ## map the "external" 33306 port with the "internal" 3306
         ports:
           - 33306:3306
@@ -30,7 +28,7 @@ jobs:
           --health-cmd="mysqladmin ping"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3    
+          --health-retries=3
 
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
@@ -38,7 +36,7 @@ jobs:
         php-version: '8.0'
     - uses: actions/checkout@v2
     - name: Copy .env
-      run: php -r "file_exists('.env.testing') || copy('.env.testing.example', '.env.testing');"
+      run: php -r "file_exists('.env.testing') || copy('.env.ci', '.env.testing');"
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
