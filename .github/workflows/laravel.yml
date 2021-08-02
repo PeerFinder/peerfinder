@@ -1,4 +1,4 @@
-name: Laravel
+name: PeerFinder Web Application
 
 on:
   push:
