@@ -22,6 +22,14 @@ class AuthTest extends TestCase
     }
 
     /** @test */
+    public function a_guest_can_see_the_register_form()
+    {
+        $response = $this->get(route('register'));
+        $response->assertStatus(200);
+        $response->assertViewIs('frontend.auth.register');
+    }    
+
+    /** @test */
     public function a_user_can_login()
     {
         $response = $this->post(route('login'), [
@@ -55,4 +63,9 @@ class AuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
+    /** @test */
+    // public function a_guest_can_register()
+    // {
+        
+    // }
 }
