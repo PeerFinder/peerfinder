@@ -12,10 +12,10 @@
 
         <form action="{{ route('login') }}" method="post" class="space-y-4 p-10">
             <div>
-                <x-ui.forms.input id="email" value="{{ old('email') }}" name="email" type="email" autocomplete="email" XXrequired>{{ __('auth.field_email') }}</x-ui.forms.input>
+                <x-ui.forms.input id="email" value="{{ old('email') }}" name="email" type="email" autocomplete="email" required>{{ __('auth.field_email') }}</x-ui.forms.input>
             </div>
             <div>
-                <x-ui.forms.input id="password" name="password" type="password" autocomplete="current-password" XXrequired>{{ __('auth.field_password') }}</x-ui.forms.input>
+                <x-ui.forms.input id="password" name="password" type="password" autocomplete="current-password" required>{{ __('auth.field_password') }}</x-ui.forms.input>
             </div>
             <div class="flex items-center space-x-2">
                 <x-ui.forms.checkbox id="remember" name="remember">{{ __('auth.field_remember_me') }}</x-ui.forms.checkbox>

@@ -23,6 +23,9 @@
             <div>
                 <x-ui.forms.input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>{{ __('auth.field_password_confirmation') }}</x-ui.forms.input>
             </div>
+            <div>
+                <p>{{ __('auth.accepting_policy') }}</p>
+            </div>
             <div class="text-center">
                 @csrf
                 <x-ui.forms.button class="w-full">{{ __('auth.button_register') }}</x-ui.forms.button>

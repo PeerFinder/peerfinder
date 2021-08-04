@@ -31,4 +31,8 @@ return [
     'sign_in' => 'sign in',
     'register_title' => 'Sign up',
     'button_register' => 'Sign up',
+    'accepting_policy' => 'By using our services you accept our terms of service and privacy policy.',
+    'terms_of_service' => 'Terms of Service',
+    'privacy_policy' => 'Privacy Policy',
+    'imprint' => 'Imprint',
 ];

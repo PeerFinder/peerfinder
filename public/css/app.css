@@ -729,6 +729,9 @@ select {
 .fixed {
 	position: fixed;
 }
+.absolute {
+	position: absolute;
+}
 .relative {
 	position: relative;
 }
@@ -737,6 +740,21 @@ select {
 }
 .right-0 {
 	right: 0px;
+}
+.top-2 {
+	top: 0.5rem;
+}
+.left-4 {
+	left: 1rem;
+}
+.left-0 {
+	left: 0px;
+}
+.-top-2 {
+	top: -0.5rem;
+}
+.-top-3 {
+	top: -0.75rem;
 }
 .mx-auto {
 	margin-left: auto;
@@ -771,6 +789,9 @@ select {
 }
 .mb-12 {
 	margin-bottom: 3rem;
+}
+.mb-1 {
+	margin-bottom: 0.25rem;
 }
 .block {
 	display: block;
@@ -820,6 +841,9 @@ select {
 .max-w-sm {
 	max-width: 24rem;
 }
+.cursor-text {
+	cursor: text;
+}
 .grid-cols-1 {
 	grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -849,6 +873,16 @@ select {
 	--tw-space-x-reverse: 0;
 	margin-right: calc(0.5rem * var(--tw-space-x-reverse));
 	margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+.space-x-5 > :not([hidden]) ~ :not([hidden]) {
+	--tw-space-x-reverse: 0;
+	margin-right: calc(1.25rem * var(--tw-space-x-reverse));
+	margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
+}
+.space-x-3 > :not([hidden]) ~ :not([hidden]) {
+	--tw-space-x-reverse: 0;
+	margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+	margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -907,6 +941,9 @@ select {
 .p-10 {
 	padding: 2.5rem;
 }
+.p-1 {
+	padding: 0.25rem;
+}
 .py-4 {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
@@ -939,8 +976,26 @@ select {
 	padding-left: 1rem;
 	padding-right: 1rem;
 }
+.px-0 {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+.py-2 {
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+.px-1 {
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+}
 .pt-8 {
 	padding-top: 2rem;
+}
+.pt-5 {
+	padding-top: 1.25rem;
+}
+.pb-2 {
+	padding-bottom: 0.5rem;
 }
 .text-center {
 	text-align: center;
@@ -961,11 +1016,18 @@ select {
 	font-size: 1.5rem;
 	line-height: 2rem;
 }
+.text-xs {
+	font-size: 0.75rem;
+	line-height: 1rem;
+}
 .font-semibold {
 	font-weight: 600;
 }
 .font-bold {
 	font-weight: 700;
+}
+.font-medium {
+	font-weight: 500;
 }
 .leading-7 {
 	line-height: 1.75rem;
@@ -1010,12 +1072,25 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
+.text-gray-100 {
+	--tw-text-opacity: 1;
+	color: rgba(243, 244, 246, var(--tw-text-opacity));
+}
 .underline {
 	text-decoration: underline;
 }
 .antialiased {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+.placeholder-transparent::-moz-placeholder {
+	color: transparent;
+}
+.placeholder-transparent:-ms-input-placeholder {
+	color: transparent;
+}
+.placeholder-transparent::placeholder {
+	color: transparent;
 }
 .shadow {
 	--tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -1024,6 +1099,11 @@ select {
 .shadow-sm {
 	--tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 	box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.transition-all {
+	transition-property: all;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	transition-duration: 150ms;
 }
 .after\:block::after {
 	content: "";
@@ -1061,6 +1141,132 @@ select {
 .hover\:text-pf-lightblue:hover {
 	--tw-text-opacity: 1;
 	color: rgba(134, 187, 216, var(--tw-text-opacity));
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:top-4 {
+	top: 1rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:top-4 {
+	top: 1rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:top-4 {
+	top: 1rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:left-4 {
+	left: 1rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:left-4 {
+	left: 1rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:left-4 {
+	left: 1rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:top-3 {
+	top: 0.75rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:top-3 {
+	top: 0.75rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:top-3 {
+	top: 0.75rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:top-2 {
+	top: 0.5rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:top-2 {
+	top: 0.5rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:top-2 {
+	top: 0.5rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:top-2\.5 {
+	top: 0.625rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:top-2\.5 {
+	top: 0.625rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:top-2\.5 {
+	top: 0.625rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:bg-transparent {
+	background-color: transparent;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:bg-transparent {
+	background-color: transparent;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:bg-transparent {
+	background-color: transparent;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:p-0 {
+	padding: 0px;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:p-0 {
+	padding: 0px;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:p-0 {
+	padding: 0px;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:px-4 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:px-4 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:px-4 {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:py-4 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:py-4 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:py-4 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+.peer:-moz-placeholder-shown ~ .peer-placeholder-shown\:text-base {
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+.peer:-ms-input-placeholder ~ .peer-placeholder-shown\:text-base {
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+.peer:placeholder-shown ~ .peer-placeholder-shown\:text-base {
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+.peer:focus ~ .peer-focus\:top-2 {
+	top: 0.5rem;
+}
+.peer:focus ~ .peer-focus\:left-4 {
+	left: 1rem;
+}
+.peer:focus ~ .peer-focus\:-top-2 {
+	top: -0.5rem;
+}
+.peer:focus ~ .peer-focus\:-top-3 {
+	top: -0.75rem;
+}
+.peer:focus ~ .peer-focus\:bg-white {
+	--tw-bg-opacity: 1;
+	background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+}
+.peer:focus ~ .peer-focus\:p-1 {
+	padding: 0.25rem;
+}
+.peer:focus ~ .peer-focus\:px-1 {
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+}
+.peer:focus ~ .peer-focus\:text-xs {
+	font-size: 0.75rem;
+	line-height: 1rem;
 }
 @media (prefers-color-scheme: dark) {
 
@@ -1103,6 +1309,10 @@ select {
 		height: 5rem;
 	}
 
+	.sm\:max-w-sm {
+		max-width: 24rem;
+	}
+
 	.sm\:items-center {
 		align-items: center;
 	}
@@ -1117,6 +1327,10 @@ select {
 
 	.sm\:rounded-lg {
 		border-radius: 0.5rem;
+	}
+
+	.sm\:rounded-md {
+		border-radius: 0.375rem;
 	}
 
 	.sm\:px-6 {

@@ -22,3 +22,11 @@ Route::get('/logout', function() {
     Auth::logout();
     return redirect('/');
 });
+
+Route::get('/info/{slug}', function($slug) {
+    return 'Content of '.$slug;
+})->name('info');
+
+Route::group(['prefix' => '/profile', 'as' => 'profile.', 'middleware' => 'auth'], function () {
+    Route::get('/', fn() => 'Profile')->name('index');
+});
