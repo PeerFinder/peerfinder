@@ -1,0 +1,2 @@
+<input {{ $attributes->merge(['type' => 'checkbox', 'class' => 'border-1 border-gray-400 rounded-sm shadow-sm']) }} {{ old($attributes->get('name')) ? 'checked' : '' }} />
+<label class="text-sm ml-1" for="{{ $attributes->get('name') }}">{{ $slot }}</label>

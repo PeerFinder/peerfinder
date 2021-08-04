@@ -21,7 +21,7 @@ module.exports = {
       }),
     },
     fontFamily: {
-      'sans': ['Quicksilver', 'sans-serif'],
+      'sans': ['Quicksand', 'sans-serif'],
     },
   },
   variants: {
