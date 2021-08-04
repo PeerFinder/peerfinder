@@ -22,7 +22,7 @@ Route::get('/', function() {
 /* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/home', function() {
     return 'Home';
-});
+})->middleware('verified');
 
 Route::get('/logout', function() {
     Auth::logout();
