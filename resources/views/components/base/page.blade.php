@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
     <style>
         @font-face {
             font-family: 'Quicksand';
-            src: url('{{ asset('/fonts/Quicksand-VariableFont_wght.ttf') }}') format('truetype');
+            src: url('{{ asset("/fonts/Quicksand-VariableFont_wght.ttf") }}') format('truetype');
         }
     </style>
 </head>
