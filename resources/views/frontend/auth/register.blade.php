@@ -23,8 +23,8 @@
             <div>
                 <x-ui.forms.input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>{{ __('auth.field_password_confirmation') }}</x-ui.forms.input>
             </div>
-            <div>
-                <p>{{ __('auth.accepting_policy') }}</p>
+            <div class="prose">
+                <p>{!! __('auth.accepting_policy', ['terms' => route('info', ['slug' => 'terms-of-service']), 'privacy' => route('info', ['slug' => 'privacy-policy'])]) !!}</p>
             </div>
             <div class="text-center">
                 @csrf

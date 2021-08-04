@@ -45,6 +45,24 @@ class AuthTest extends DuskTestCase
                     ->type('password_confirmation', $password)
                     ->press(__('auth.button_register'))
                     ->assertPathIs(RouteServiceProvider::HOME);
+            
+            $browser->visit(route('logout'));
         });
-    }    
+    }
+
+    /** @test */
+    public function a_guest_cannot_register_with_short_password()
+    {
+        $this->browse(function ($browser) {
+            $browser->visit(route('register'))
+                    ->type('name', Str::random(10))
+                    ->type('email', Str::random(10).'@gmail.com')
+                    ->type('password', "shorty")
+                    ->type('password_confirmation', "shorty")
+                    ->press(__('auth.button_register'))
+                    ->assertRouteIs('register')
+                    ->assertSee('The password must be at least');
+        });
+    }
+
 }

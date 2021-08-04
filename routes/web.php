@@ -14,19 +14,27 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+/* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/', function() {
     return 'index';
+});
+
+/* TEMP TEMP TEMP TEMP TEMP */
+Route::get('/home', function() {
+    return 'Home';
 });
 
 Route::get('/logout', function() {
     Auth::logout();
     return redirect('/');
-});
+})->name('logout');
 
+/* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/info/{slug}', function($slug) {
     return 'Content of '.$slug;
 })->name('info');
 
+/* TEMP TEMP TEMP TEMP TEMP */
 Route::group(['prefix' => '/profile', 'as' => 'profile.', 'middleware' => 'auth'], function () {
     Route::get('/', fn() => 'Profile')->name('index');
 });
