@@ -17,24 +17,21 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function a_guest_can_see_the_login_form()
+    public function test_guest_can_see_the_login_form()
     {
         $response = $this->get(route('login'));
         $response->assertStatus(200);
         $response->assertViewIs('frontend.auth.login');
     }
 
-    /** @test */
-    public function a_guest_can_see_the_register_form()
+    public function test_guest_can_see_the_register_form()
     {
         $response = $this->get(route('register'));
         $response->assertStatus(200);
         $response->assertViewIs('frontend.auth.register');
     }
 
-    /** @test */
-    public function a_user_can_login()
+    public function test_user_can_login()
     {
         $response = $this->post(route('login'), [
             'email' => '',
@@ -67,8 +64,7 @@ class AuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    /** @test */
-    public function a_guest_can_register()
+    public function test_guest_can_register()
     {
         $password = 'myLongPassword555&&';
 
@@ -88,8 +84,7 @@ class AuthTest extends TestCase
         $this->assertAuthenticatedAs($user);
     }
 
-    /** @test */
-    public function a_guest_cannot_register_if_already_registered()
+    public function test_guest_cannot_register_if_already_registered()
     {
         $user = User::factory()->create();
 

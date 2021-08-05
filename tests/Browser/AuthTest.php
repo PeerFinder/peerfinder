@@ -8,6 +8,7 @@ use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * @group auth
@@ -36,8 +37,9 @@ class AuthTest extends DuskTestCase
     public function a_guest_can_register()
     {
         $password = 'myLongPassword555&&';
-
+        
         $this->browse(function ($browser) use ($password) {
+            
             $browser->visit(route('register'))
                     ->type('name', Str::random(10))
                     ->type('email', Str::random(10).'@gmail.com')
