@@ -1,2 +1,2 @@
-<label for="{{ $attributes->get('name') }}" class="block mb-1">{{ $slot }}</label>
-<input {{ $attributes->merge(['class' => 'w-full border border-gray-300 px-3 py-2 rounded-md shadow-sm'. ($errors->first($attributes->get('name')) ? ' bg-red-100 border-red-500': '') ]) }} />
+<label for="{{ $attributes->get('name') }}" class="block mb-2">{{ $slot }}</label>
+<input {{ $attributes->merge(['class' => 'w-full border-2 border-gray-300 px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent'. ($errors->first($attributes->get('name')) ? ' bg-red-100 border-red-500': '') ]) }} />

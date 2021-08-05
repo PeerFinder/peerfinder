@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
+/**
+ * @group auth
+ */
 class EmailVerificationTest extends TestCase
 {
     use RefreshDatabase;

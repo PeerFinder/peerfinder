@@ -1,1 +1,1 @@
-<button {{ $attributes->merge(['class' => 'bg-pf-darkblue hover:bg-pf-midblue py-1 px-6 text-white rounded-md']) }}>{{ $slot }}</button>
+<button {{ $attributes->merge(['class' => 'bg-pf-darkblue hover:bg-pf-midblue py-1 px-6 text-white rounded-md shadow']) }}>{{ $slot }}</button>
