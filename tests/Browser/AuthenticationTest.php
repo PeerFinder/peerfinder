@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Mail;
 class AuthenticationTest extends DuskTestCase
 {
     use DatabaseMigrations;
+    
+    private $mailhog_address = 'http://localhost:8025';
 
     public function test_user_can_login()
     {
@@ -38,6 +40,7 @@ class AuthenticationTest extends DuskTestCase
         
         $this->browse(function ($browser) use ($password) {
             
+            # Visit the registration page, register and check for email verification page
             $browser->visitRoute('register')
                     ->type('name', Str::random(10))
                     ->type('email', Str::random(10).'@gmail.com')
@@ -47,7 +50,8 @@ class AuthenticationTest extends DuskTestCase
                     ->assertRouteIs('verification.notice')
                     ->assertSee(__('auth.button_resend_verification_email'));
 
-            $browser->visit('http://localhost:8025')
+            # Visit MailHog, check for the last mail and verify the mail
+            $browser->visit($this->mailhog_address)
                     ->waitForLocation('/')
                     ->click('.messages > .msglist-message')
                     ->withinFrame('#preview-html', function($browser) {
@@ -55,6 +59,7 @@ class AuthenticationTest extends DuskTestCase
                                 ->clickLink('Verify Email Address');
                     });
 
+            # Check the home router for access, if the verification linked worked, the route is accessible
             $browser->visit(RouteServiceProvider::HOME)
                     ->assertPathIs(RouteServiceProvider::HOME);
 
@@ -78,4 +83,45 @@ class AuthenticationTest extends DuskTestCase
         });
     }
 
+    public function test_user_can_reset_password()
+    {
+        $password = 'myLongPassword555&&';
+
+        $user = User::factory()->create();
+
+        $this->browse(function ($browser) use ($password, $user) {
+            
+            # Visit the login page, click on "Forgot Password?" and reset password
+            $browser->visitRoute('login')
+                    ->clickLink(__('auth.forgot_password'))
+                    ->waitForRoute('password.request')
+                    ->type('email', $user->email)
+                    ->press(__('auth.button_request_password'))
+                    ->assertRouteIs('password.request')
+                    ->assertSee('We have emailed your password reset link');
+
+            # Visit MailHog, check for the last mail and copy the password reset link
+            $browser->visit($this->mailhog_address)
+                    ->waitForLocation('/')
+                    ->click('.messages > .msglist-message')
+                    ->withinFrame('#preview-html', function($frame) use ($browser, $password) {
+                        $link = $frame->waitForLink('Reset Password')->attribute('.button', 'href');
+
+                        $browser->visit($link)
+                                ->type('password', $password)
+                                ->type('password_confirmation', $password)
+                                ->press(__('auth.button_reset_password'))
+                                ->waitForRoute('login')
+                                ->assertSee('Your password has been reset');
+                    });
+
+            $browser->visitRoute('login')
+                    ->type('email', $user->email)
+                    ->type('password', $password)
+                    ->press(__('auth.button_login'))
+                    ->assertPathIs(RouteServiceProvider::HOME);
+
+            $browser->visit(route('logout'));
+        });
+    }
 }

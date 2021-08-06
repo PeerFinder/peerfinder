@@ -10,7 +10,9 @@
             @endif
         </x-slot>
 
-        <form action="{{ route('login') }}" method="post" class="space-y-4 p-10">
+        <x-ui.session.status :status="session('status')" />
+
+        <x-auth.form action="{{ route('login') }}" class="space-y-4">
             <div>
                 <x-ui.forms.input id="email" value="{{ old('email') }}" name="email" type="email" autocomplete="email" required>{{ __('auth.field_email') }}</x-ui.forms.input>
             </div>
@@ -29,6 +31,6 @@
                 </div>
                 @endif
             </div>
-        </form>
+        </x-auth.form>
     </x-auth.card>
 </x-layout.auth>

@@ -24,6 +24,11 @@ Route::get('/home', function() {
     return 'Home';
 })->middleware(['verified']);
 
+/* TEMP TEMP TEMP TEMP TEMP */
+Route::get('/secret', function() {
+    return 'Secret';
+})->middleware(['auth', 'password.confirm']);
+
 Route::get('/logout', function() {
     Auth::logout();
     return redirect('/');

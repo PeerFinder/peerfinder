@@ -29,7 +29,7 @@ return [
     'forgot_password' => 'Forgot password?',
     'register_account' => 'Sign up for a new account',
     'sign_in' => 'sign in',
-    'logout' => 'Log out',
+    'logout' => 'log out',
     'register_title' => 'Sign up',
     'button_register' => 'Sign up',
     'accepting_policy' => 'By using our services you accept our <a href=":terms">Terms of Service</a> and <a href=":privacy">Privacy Policy</a>.',
@@ -40,4 +40,13 @@ return [
     'verify_email_explanation' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
     'button_resend_verification_email' => 'Resend Verification Email',
     'verification_link_has_been_sent' => 'A new verification link has been sent to the email address you provided during registration.',
+    'forgot_password_title' => 'Password Reset',
+    'reset_your_password' => 'Reset your Password',
+    'reset_password_explanation' => 'Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.',
+    'button_request_password' => 'Request New Password',
+    'button_reset_password' => 'Reset Password',
+    'confirm_password_title' => 'Confirm Password',
+    'confirm_your_password' => 'Please confirm your Password',
+    'confirm_password_explanation' => 'This is a secure area of the application. Please confirm your password before continuing.',
+    'button_confirm_password' => 'Confirm Password'
 ];
