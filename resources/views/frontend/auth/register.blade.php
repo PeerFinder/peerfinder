@@ -28,7 +28,7 @@
             </div>
             <div class="text-center">
                 @csrf
-                <x-ui.forms.button class="w-full">{{ __('auth.button_register') }}</x-ui.forms.button>
+                <x-ui.forms.button class="w-full" action="create">{{ __('auth.button_register') }}</x-ui.forms.button>
             </div>
         </x-auth.form>
     </x-auth.card>
