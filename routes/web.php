@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+/* TEMP TEMP TEMP TEMP TEMP */
+Route::get('/', function() {
+    return 'index';
+});
+
+/* TEMP TEMP TEMP TEMP TEMP */
+Route::get('/home', function() {
+    return 'Home';
+})->middleware(['verified']);
+
+/* TEMP TEMP TEMP TEMP TEMP */
+Route::get('/secret', function() {
+    return 'Secret';
+})->middleware(['auth', 'password.confirm']);
+
+Route::get('/logout', function() {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
+
+/* TEMP TEMP TEMP TEMP TEMP */
+Route::get('/info/{slug}', function($slug) {
+    return 'Content of '.$slug;
+})->name('info');
+
+/* TEMP TEMP TEMP TEMP TEMP */
+Route::group(['prefix' => '/profile', 'as' => 'profile.', 'middleware' => 'auth'], function () {
+    Route::get('/', fn() => 'Profile')->name('index');
 });

@@ -38,6 +38,11 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
     - name: Run Tests
       run: php artisan test
+    - name: Install MailHog for Dusk Tests
+      run: |
+        sudo apt-get -y install golang-go
+        go get github.com/mailhog/MailHog
+        ~/go/bin/MailHog &
     - name: Install and run node
       run: npm install && npm run production
     - name: Upgrade Chrome Driver
