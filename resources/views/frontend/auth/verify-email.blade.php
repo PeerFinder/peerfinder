@@ -13,6 +13,12 @@
         </x-auth.flash>
         @endif
 
+        @if (session('success'))
+        <x-auth.flash class="bg-green-200">
+            <p>{{ session('success') }}</p>
+        </x-auth.flash>
+        @endif
+
         <x-auth.hint>{{ __('auth.verify_email_explanation') }}</x-auth.hint>
 
         <x-auth.form action="{{ route('verification.send') }}" class="p-0 px-10 pb-10">
