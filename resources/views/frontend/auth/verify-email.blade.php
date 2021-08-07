@@ -1,4 +1,4 @@
-<x-layout.auth title="{{ __('auth.please_verify_your_email') }}">
+<x-layout.auth :title="__('auth.please_verify_your_email')">
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.please_verify_your_email') }}</x-auth.headline>

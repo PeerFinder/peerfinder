@@ -1,10 +1,10 @@
-<x-layout.auth title="{{ __('auth.confirm_password_title') }}">
+<x-layout.auth :title="__('auth.confirm_password_title')">
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.confirm_your_password') }}</x-auth.headline>
         </x-slot>
 
-        <x-ui.session.status :status="session('status')" />
+        <x-auth.status :status="session('status')" />
 
         <x-auth.hint>{{ __('auth.confirm_password_explanation') }}</x-auth.hint>
 
