@@ -9,7 +9,12 @@
                 
                 <div class="grid grid-cols-5">
                     <div class="col-span-1">
-                        <div class="p-5">Menu</div>
+                        <div class="p-5">
+                            <ul>
+                                <li><a href="{{ route('account.password.edit') }}">Password</a></li>
+                                <li><a href="{{ route('account.email.edit') }}">E-Mail</a></li>
+                            </ul>
+                        </div>
                     </div>
                     
                     <div class="col-span-4">

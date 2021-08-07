@@ -8,4 +8,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => ['auth'
         Route::get('/', 'PasswordController@edit')->name('edit');
         Route::put('/update', 'PasswordController@update')->name('update');
     });
+    Route::group(['prefix' => 'email', 'as' => 'email.'], function () {
+        Route::get('/', 'EmailController@edit')->name('edit');
+        Route::put('/update', 'EmailController@update')->name('update');
+    });    
 });
