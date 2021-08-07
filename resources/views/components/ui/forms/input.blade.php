@@ -1,2 +1,2 @@
-<label for="{{ $attributes->get('name') }}" class="block mb-2 font-medium">{{ $slot }}</label>
-<input {{ $attributes->merge(['class' => 'w-full bg-gray-50 border border-gray-300 px-3 py-1 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent focus:bg-white'. ($errors->first($attributes->get('name')) ? ' bg-red-100 border-red-500': '') ]) }} />
+<label for="{{ $attributes->get('name') }}" class="block mb-2 font-medium">{{ $slot }}@error($attributes->get('name')) <x-ui.icon name="exclamation" class="text-red-500" />@enderror</label>
+<input {{ $attributes->merge(['class' => 'w-full border px-3 py-1 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent focus:bg-white'. ($errors->first($attributes->get('name')) ? ' bg-red-100 border-red-500': ' bg-gray-50 border-gray-300') ]) }} />

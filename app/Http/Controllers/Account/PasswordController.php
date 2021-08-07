@@ -20,6 +20,11 @@ class PasswordController extends Controller
 
     public function update(Request $request, UpdateUserPassword $updater)
     {
+        $updater->update($request->user(), $request->all());
+
+        return redirect()->back()->with('success', __('account/password.password_changed_successfully'));
+
+        /*
         $user = $request->user();
         $input = $request->all();
 
@@ -36,6 +41,6 @@ class PasswordController extends Controller
             'password' => Hash::make($input['password']),
         ])->save();
 
-        return redirect()->back()->with('success', __('account/password.password_changed_successfully'));
+        return redirect()->back()->with('success', __('account/password.password_changed_successfully'));*/
     }
 }

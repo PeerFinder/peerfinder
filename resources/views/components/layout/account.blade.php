@@ -10,9 +10,9 @@
                 <div class="grid grid-cols-5">
                     <div class="col-span-1">
                         <div class="p-5">
-                            <ul>
-                                <li><a href="{{ route('account.password.edit') }}">Password</a></li>
-                                <li><a href="{{ route('account.email.edit') }}">E-Mail</a></li>
+                            <ul class="space-y-1">
+                                <li><a class="block p-2 border border-gray-100" href="{{ route('account.password.edit') }}"><x-ui.icon name="key" class="text-gray-600" /> Password</a></li>
+                                <li><a class="block p-2 border border-gray-100" href="{{ route('account.email.edit') }}"><x-ui.icon name="mail" class="text-gray-600" /> E-Mail</a></li>
                             </ul>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                             <x-account.flash class="bg-red-300 border-red-500">
                                 <ul>
                                     @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
+                                        <li><x-ui.icon name="exclamation" class="text-red-600" /> {{ $error }}</li>
                                     @endforeach
                                 </ul>
                             </x-account.flash>
