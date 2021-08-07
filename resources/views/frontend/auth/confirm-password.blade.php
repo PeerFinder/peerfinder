@@ -10,7 +10,7 @@
 
         <x-auth.form action="{{ route('password.confirm') }}" class="space-y-4 p-0 px-10 pb-10">
             <div>
-                <x-ui.forms.input id="password" name="password" type="password" autocomplete="new-password" required>{{ __('auth.field_password') }}</x-ui.forms.input>
+                <x-ui.forms.input id="password" name="password" type="password" autocomplete="current-password" required>{{ __('auth.field_password') }}</x-ui.forms.input>
             </div>
 
             <div class="text-center">

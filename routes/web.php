@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 /* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/', function() {
     return 'index';
-});
+})->name('index');
 
 /* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/home', function() {

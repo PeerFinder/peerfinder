@@ -14,6 +14,7 @@
                                 <li><a class="block p-2 border border-gray-100" href="{{ route('account.profile.edit') }}"><x-ui.icon name="user-circle" class="text-gray-600" /> Profile</a></li>
                                 <li><a class="block p-2 border border-gray-100" href="{{ route('account.email.edit') }}"><x-ui.icon name="mail" class="text-gray-600" /> E-Mail</a></li>
                                 <li><a class="block p-2 border border-gray-100" href="{{ route('account.password.edit') }}"><x-ui.icon name="key" class="text-gray-600" /> Password</a></li>
+                                <li><a class="block p-2 border border-gray-100" href="{{ route('account.account.edit') }}"><x-ui.icon name="shield-exclamation" class="text-gray-600" /> Account</a></li>
                             </ul>
                         </div>
                     </div>
