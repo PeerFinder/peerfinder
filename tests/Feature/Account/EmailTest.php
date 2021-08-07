@@ -29,6 +29,19 @@ class EmailTest extends TestCase
         $response = $this->actingAs($user)->get(route('account.email.edit'));
         $response->assertStatus(200);
     }
+
+    public function test_validate_email()
+    {
+        Notification::fake();
+
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->put(route('account.email.update'), [
+            'email' => 'mail@new'
+        ]);
+
+        $response->assertSessionHasErrors();
+    }
  
     public function test_user_can_change_email()
     {

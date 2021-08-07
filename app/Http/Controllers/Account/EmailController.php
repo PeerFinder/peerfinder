@@ -25,24 +25,23 @@ class EmailController extends Controller
             'email' => [
                 'required',
                 'string',
-                'email',
+                'email:rfc,dns',
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
         ])->validate();
 
         if ($input['email'] !== $user->email) {
-
             $user->forceFill([
                 'email' => $input['email'],
                 'email_verified_at' => null,
             ])->save();
-    
+
             $user->sendEmailVerificationNotification();
 
             return redirect(route('verification.notice'))->with('success', __('account/email.email_changed_successfully'));
         }
 
-        return redirect()->back()->with('success', __('account/email.email_changed_successfully'));
+        return redirect()->back()->with('info', __('account/email.email_no_changes'));
     }
 }
