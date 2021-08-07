@@ -1,4 +1,4 @@
-<x-base.page title="{{$title}}">
+<x-base.page :title="$title">
     <body class="bg-gray-100">
         {{ $slot }}
     </body>

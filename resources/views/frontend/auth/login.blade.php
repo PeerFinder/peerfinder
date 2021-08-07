@@ -1,4 +1,4 @@
-<x-layout.auth title="{{ __('auth.login_title') }}">
+<x-layout.auth :title="__('auth.login_title')">
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.sign_in_in_your_account') }}</x-auth.headline>
@@ -10,7 +10,7 @@
             @endif
         </x-slot>
 
-        <x-ui.session.status :status="session('status')" />
+        <x-auth.status :status="session('status')" />
 
         <x-auth.form action="{{ route('login') }}" class="space-y-4">
             <div>

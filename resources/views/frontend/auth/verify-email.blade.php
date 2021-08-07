@@ -1,4 +1,4 @@
-<x-layout.auth title="{{ __('auth.please_verify_your_email') }}">
+<x-layout.auth :title="__('auth.please_verify_your_email')">
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.please_verify_your_email') }}</x-auth.headline>
@@ -10,6 +10,12 @@
         @if (session('status') == 'verification-link-sent')
         <x-auth.flash class="bg-green-200">
             <p>{{ __('auth.verification_link_has_been_sent') }}</p>
+        </x-auth.flash>
+        @endif
+
+        @if (session('success'))
+        <x-auth.flash class="bg-green-200">
+            <p>{{ session('success') }}</p>
         </x-auth.flash>
         @endif
 

@@ -1,16 +1,16 @@
-<x-layout.auth title="{{ __('auth.confirm_password_title') }}">
+<x-layout.auth :title="__('auth.confirm_password_title')">
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.confirm_your_password') }}</x-auth.headline>
         </x-slot>
 
-        <x-ui.session.status :status="session('status')" />
+        <x-auth.status :status="session('status')" />
 
         <x-auth.hint>{{ __('auth.confirm_password_explanation') }}</x-auth.hint>
 
         <x-auth.form action="{{ route('password.confirm') }}" class="space-y-4 p-0 px-10 pb-10">
             <div>
-                <x-ui.forms.input id="password" name="password" type="password" autocomplete="new-password" required>{{ __('auth.field_password') }}</x-ui.forms.input>
+                <x-ui.forms.input id="password" name="password" type="password" autocomplete="current-password" required>{{ __('auth.field_password') }}</x-ui.forms.input>
             </div>
 
             <div class="text-center">

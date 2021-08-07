@@ -1,4 +1,4 @@
-<x-layout.auth title="{{ __('auth.register_title') }}">
+<x-layout.auth :title="__('auth.register_title')">
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.register_account') }}</x-auth.headline>

@@ -1,4 +1,4 @@
-<x-layout.auth title="{{ __('auth.forgot_password_title') }}">
+<x-layout.auth :title="__('auth.forgot_password_title')">
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.reset_your_password') }}</x-auth.headline>
@@ -7,7 +7,7 @@
             </p>
         </x-slot>
 
-        <x-ui.session.status :status="session('status')" />
+        <x-auth.status :status="session('status')" />
 
         <x-auth.form action="{{ route('password.update') }}" class="space-y-4">
             <div>
