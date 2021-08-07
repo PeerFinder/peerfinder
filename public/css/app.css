@@ -1037,11 +1037,25 @@ select {
 .prose > :last-child {
 	margin-bottom: 0;
 }
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
 .col-span-1 {
 	grid-column: span 1 / span 1;
 }
 .col-span-4 {
 	grid-column: span 4 / span 4;
+}
+.col-span-9 {
+	grid-column: span 9 / span 9;
 }
 .mx-10 {
 	margin-left: 2.5rem;
@@ -1072,11 +1086,17 @@ select {
 .mb-2 {
 	margin-bottom: 0.5rem;
 }
+.ml-2 {
+	margin-left: 0.5rem;
+}
 .block {
 	display: block;
 }
 .inline-block {
 	display: inline-block;
+}
+.inline {
+	display: inline;
 }
 .flex {
 	display: flex;
@@ -1111,6 +1131,12 @@ select {
 .grid-cols-5 {
 	grid-template-columns: repeat(5, minmax(0, 1fr));
 }
+.grid-cols-7 {
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.grid-cols-10 {
+	grid-template-columns: repeat(10, minmax(0, 1fr));
+}
 .flex-col {
 	flex-direction: column;
 }
@@ -1122,6 +1148,9 @@ select {
 }
 .justify-center {
 	justify-content: center;
+}
+.justify-items-center {
+	justify-items: center;
 }
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-y-reverse: 0;
@@ -1166,6 +1195,9 @@ select {
 .border-2 {
 	border-width: 2px;
 }
+.border-b {
+	border-bottom-width: 1px;
+}
 .border-green-500 {
 	--tw-border-opacity: 1;
 	border-color: rgba(16, 185, 129, var(--tw-border-opacity));
@@ -1205,6 +1237,10 @@ select {
 .border-yellow-300 {
 	--tw-border-opacity: 1;
 	border-color: rgba(252, 211, 77, var(--tw-border-opacity));
+}
+.border-yellow-700 {
+	--tw-border-opacity: 1;
+	border-color: rgba(180, 83, 9, var(--tw-border-opacity));
 }
 .bg-green-200 {
 	--tw-bg-opacity: 1;
@@ -1258,6 +1294,14 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(254, 243, 199, var(--tw-bg-opacity));
 }
+.bg-pf-darkorange {
+	--tw-bg-opacity: 1;
+	background-color: rgba(242, 100, 25, var(--tw-bg-opacity));
+}
+.bg-pf-midorange {
+	--tw-bg-opacity: 1;
+	background-color: rgba(246, 174, 45, var(--tw-bg-opacity));
+}
 .p-3 {
 	padding: 0.75rem;
 }
@@ -1306,6 +1350,9 @@ select {
 .pb-10 {
 	padding-bottom: 2.5rem;
 }
+.pl-2 {
+	padding-left: 0.5rem;
+}
 .text-center {
 	text-align: center;
 }
@@ -1324,6 +1371,10 @@ select {
 .text-3xl {
 	font-size: 1.875rem;
 	line-height: 2.25rem;
+}
+.text-4xl {
+	font-size: 2.25rem;
+	line-height: 2.5rem;
 }
 .font-bold {
 	font-weight: 700;
@@ -1420,6 +1471,25 @@ select {
 	content: "";
 	--tw-gradient-to: #d97706;
 }
+.last\:border-0:last-child {
+	border-width: 0px;
+}
+.last\:border-yellow-700:last-child {
+	--tw-border-opacity: 1;
+	border-color: rgba(180, 83, 9, var(--tw-border-opacity));
+}
+.hover\:bg-pf-lightorange:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(252, 229, 195, var(--tw-bg-opacity));
+}
+.hover\:bg-gray-100:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(243, 244, 246, var(--tw-bg-opacity));
+}
+.hover\:bg-gray-200:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
 .hover\:text-pf-lightblue:hover {
 	--tw-text-opacity: 1;
 	color: rgba(134, 187, 216, var(--tw-text-opacity));
@@ -1476,10 +1546,61 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(5, 150, 105, var(--tw-bg-opacity));
 }
+.group:last-child .group-last\:border-yellow-900 {
+	--tw-border-opacity: 1;
+	border-color: rgba(120, 53, 15, var(--tw-border-opacity));
+}
 @media (min-width: 640px) {
+
+	.sm\:sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
+	}
+
+	.sm\:not-sr-only {
+		position: static;
+		width: auto;
+		height: auto;
+		padding: 0;
+		margin: 0;
+		overflow: visible;
+		clip: auto;
+		white-space: normal;
+	}
+
+	.sm\:visible {
+		visibility: visible;
+	}
+
+	.sm\:col-span-4 {
+		grid-column: span 4 / span 4;
+	}
+
+	.sm\:ml-2 {
+		margin-left: 0.5rem;
+	}
+
+	.sm\:flex {
+		display: flex;
+	}
 
 	.sm\:max-w-sm {
 		max-width: 24rem;
+	}
+
+	.sm\:grid-cols-5 {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+
+	.sm\:justify-start {
+		justify-content: flex-start;
 	}
 
 	.sm\:rounded-md {

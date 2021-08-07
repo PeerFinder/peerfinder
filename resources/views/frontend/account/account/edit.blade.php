@@ -1,7 +1,4 @@
 <x-layout.account :title="__('account/account.title')">
-
-
-
     <x-account.form :action="route('account.account.destroy')" class="space-y-6">
         <p>{{ __('account/account.deletion_warning') }}</p>
 

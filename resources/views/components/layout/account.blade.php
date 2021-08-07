@@ -7,20 +7,18 @@
 
             <div class="bg-white shadow-md after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
                 
-                <div class="grid grid-cols-5">
-                    <div class="col-span-1">
-                        <div class="p-5">
-                            <ul class="space-y-1">
-                                <li><a class="block p-2 border border-gray-100" href="{{ route('account.profile.edit') }}"><x-ui.icon name="user-circle" class="text-gray-600" /> Profile</a></li>
-                                <li><a class="block p-2 border border-gray-100" href="{{ route('account.email.edit') }}"><x-ui.icon name="mail" class="text-gray-600" /> E-Mail</a></li>
-                                <li><a class="block p-2 border border-gray-100" href="{{ route('account.password.edit') }}"><x-ui.icon name="key" class="text-gray-600" /> Password</a></li>
-                                <li><a class="block p-2 border border-gray-100" href="{{ route('account.account.edit') }}"><x-ui.icon name="shield-exclamation" class="text-gray-600" /> Account</a></li>
-                            </ul>
-                        </div>
+                <div class="grid grid-cols-10 sm:grid-cols-5">
+                    <div class="col-span-1 bg-gray-50">
+                        <nav>
+                            <x-account.nav-item route="account.profile.edit" icon="user-circle">{{ __('account/account.menu_profile') }}</x-account.nav-item>
+                            <x-account.nav-item route="account.email.edit" icon="mail">{{ __('account/account.menu_email') }}</x-account.nav-item>
+                            <x-account.nav-item route="account.password.edit" icon="key">{{ __('account/account.menu_password') }}</x-account.nav-item>
+                            <x-account.nav-item route="account.account.edit" icon="shield-exclamation">{{ __('account/account.menu_account') }}</x-account.nav-item>
+                        </nav>
                     </div>
                     
-                    <div class="col-span-4">
-                        <h2 class="text-xl px-10 pt-10">{{ $title }}</h2>
+                    <div class="col-span-9 sm:col-span-4">
+                        <h2 class="text-2xl px-10 pt-10">{{ $title }}</h2>
 
                         <x-account.status />
 
@@ -39,10 +37,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
-
     </body>
 </x-base.page>
