@@ -14,25 +14,28 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('/logout', function() {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
+
 /* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/', function() {
     return 'index';
 })->name('index');
 
+
+
+
+
 /* TEMP TEMP TEMP TEMP TEMP */
-Route::get('/home', function() {
-    return 'Home';
-})->middleware(['verified']);
 
 /* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/secret', function() {
     return 'Secret';
 })->middleware(['auth', 'password.confirm']);
 
-Route::get('/logout', function() {
-    Auth::logout();
-    return redirect('/');
-})->name('logout');
+
 
 /* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/info/{slug}', function($slug) {
