@@ -86,4 +86,38 @@ class ProfileTest extends TestCase
         $response->assertSessionHasNoErrors();
         $this->assertEquals($about, $user->about);  
     }
+
+    public function test_user_can_change_homepage()
+    {
+        $user = User::factory()->create();
+        $name = $user->name;
+
+        $url = $this->faker->url();
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'homepage' => $url
+        ]);
+        $response->assertSessionHasNoErrors();
+        $this->assertEquals($url, $user->homepage);
+
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'homepage' => 'this-is-not-an-url'
+        ]);
+        $response->assertSessionHasErrors();
+
+        $dummy = str_repeat('x', 300);
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'homepage' => $dummy
+        ]);
+        $response->assertSessionHasErrors();
+
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'homepage' => 'homepage.com'
+        ]);
+        $response->assertSessionHasNoErrors();
+        $this->assertEquals($user->homepage, 'http://homepage.com');
+    }    
 }

@@ -10,7 +10,11 @@
 
         <div>
             <x-ui.forms.textarea id="about" value="{{ old('about', $user->about) }}" name="about" rows="5">{{ __('account/profile.field_about') }}</x-ui.forms.textarea>
-        </div>        
+        </div>
+
+        <div>
+            <x-ui.forms.input id="homepage" value="{{ old('homepage', $user->homepage) }}" name="homepage">{{ __('account/profile.field_homepage') }}</x-ui.forms.input>
+        </div>
 
         <div>
             @csrf
