@@ -67,6 +67,26 @@ class AuthenticationTest extends DuskTestCase
         });
     }
 
+    public function test_guest_can_change_unverified_email()
+    {
+        $password = 'myLongPassword555&&';
+        
+        $this->browse(function ($browser) use ($password) {
+            $browser->visitRoute('register')
+                    ->type('name', Str::random(10))
+                    ->type('email', Str::random(10).'@gmail.com')
+                    ->type('password', $password)
+                    ->type('password_confirmation', $password)
+                    ->press(__('auth.button_register'))
+                    ->assertRouteIs('verification.notice')
+                    ->assertSee(__('auth.button_resend_verification_email'))
+                    ->clickLink(__('auth.change_your_email'))
+                    ->assertRouteIs('account.email.edit');
+
+            $browser->visit(route('logout'));
+        });
+    }    
+
     public function a_guest_cannot_register_with_short_password()
     {
         $this->browse(function ($browser) {
