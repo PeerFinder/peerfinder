@@ -14,8 +14,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => ['auth'
     });
 
     Route::group(['prefix' => 'email', 'as' => 'email.'], function () {
-        Route::get('/', 'EmailController@edit')->name('edit');
-        Route::put('/update', 'EmailController@update')->name('update');
+        Route::get('/', 'EmailController@edit')->name('edit')->withoutMiddleware('verified');
+        Route::put('/update', 'EmailController@update')->name('update')->withoutMiddleware('verified');
     });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {

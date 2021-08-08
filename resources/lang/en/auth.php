@@ -48,5 +48,6 @@ return [
     'confirm_password_title' => 'Confirm Password',
     'confirm_your_password' => 'Please confirm your Password',
     'confirm_password_explanation' => 'This is a secure area of the application. Please confirm your password before continuing.',
-    'button_confirm_password' => 'Confirm Password'
+    'button_confirm_password' => 'Confirm Password',
+    'change_your_email' => 'Change the E-Mail address'
 ];
