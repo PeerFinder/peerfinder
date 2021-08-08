@@ -5,6 +5,14 @@
         </div>
 
         <div>
+            <x-ui.forms.input id="slogan" value="{{ old('slogan', $user->slogan) }}" name="slogan" type="text">{{ __('account/profile.field_slogan') }}</x-ui.forms.input>
+        </div>
+
+        <div>
+            <x-ui.forms.textarea id="about" value="{{ old('about', $user->about) }}" name="about" rows="5">{{ __('account/profile.field_about') }}</x-ui.forms.textarea>
+        </div>        
+
+        <div>
             @csrf
             @method('PUT')
             <x-ui.forms.button>{{ __('account/profile.button_change_profile') }}</x-ui.forms.button>

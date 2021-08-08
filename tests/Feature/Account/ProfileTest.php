@@ -51,4 +51,39 @@ class ProfileTest extends TestCase
         
         $response->assertSessionHasErrors();
     }
+
+    public function test_user_can_change_slogan()
+    {
+        $user = User::factory()->create();
+        $name = $user->name;
+
+        $slogan = $this->faker->text();
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'slogan' => $slogan
+        ]);
+        $response->assertSessionHasNoErrors();
+        $this->assertEquals($slogan, $user->slogan);
+
+        $slogan = str_repeat('x', 300);
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'slogan' => $slogan
+        ]);
+        $response->assertSessionHasErrors();
+    }
+
+    public function test_user_can_change_about()
+    {
+        $user = User::factory()->create();
+        $name = $user->name;
+
+        $about = $this->faker->text();
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'about' => $about
+        ]);
+        $response->assertSessionHasNoErrors();
+        $this->assertEquals($about, $user->about);  
+    }
 }

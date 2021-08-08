@@ -21,6 +21,7 @@ class ProfileController extends Controller
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
+            'slogan' => ['nullable', 'string', 'max:255'],
         ])->validate();
 
         $request->user()->update($input);
