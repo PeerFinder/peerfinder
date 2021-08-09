@@ -18,10 +18,10 @@ class ExtendUserProfile extends Migration
             $table->text('about')->nullable();
             $table->string('homepage')->nullable();
             $table->string('company')->nullable();
-            $table->string('facebook_profile_url')->nullable();
-            $table->string('twitter_profile_url')->nullable();
-            $table->string('linkedin_profile_url')->nullable();            
-            $table->string('xing_profile_url')->nullable();
+            $table->string('facebook_profile')->nullable();
+            $table->string('twitter_profile')->nullable();
+            $table->string('linkedin_profile')->nullable();
+            $table->string('xing_profile')->nullable();
             $table->string('avatar')->nullable();
         });
     }
@@ -39,11 +39,11 @@ class ExtendUserProfile extends Migration
                 'about',
                 'homepage',
                 'company',
-                'facebook_profile_url',
-                'twitter_profile_url',
-                'linkedin_profile_url',
-                'xing_profile_url',
-                'avatar',      
+                'facebook_profile',
+                'twitter_profile',
+                'linkedin_profile',
+                'xing_profile',
+                'avatar',
             ]);
         });
     }

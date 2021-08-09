@@ -13,7 +13,8 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         return view('frontend.account.profile.edit', [
-            'user' => $request->user()
+            'user' => $request->user(),
+            'plattforms' => array_keys(Urler::getSocialPlatforms()),
         ]);
     }
 
@@ -25,10 +26,23 @@ class ProfileController extends Controller
             $input['homepage'] = Urler::fullUrl($input['homepage']);
         }
 
+        foreach(array_keys(Urler::getSocialPlatforms()) as $platform) {
+            $field_name = $platform . '_profile';
+
+            if (key_exists($field_name, $input) && $input[$field_name]) {
+                $input[$field_name] = Urler::sanitizeSocialMediaProfileUrl($platform, $input[$field_name]);
+            }
+        }
+
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'slogan' => ['nullable', 'string', 'max:255'],
-            'homepage' => ['nullable', 'max:255', new UrlerValidUrl()]
+            'homepage' => ['nullable', 'max:255', new UrlerValidUrl()],
+            'company' => ['nullable', 'string', 'max:255'],
+            'facebook_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
+            'linkedin_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
+            'twitter_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
+            'xing_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
         ])->validate();
 
         $request->user()->update($input);

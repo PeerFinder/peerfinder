@@ -26,4 +26,52 @@ class UrlerTest extends TestCase
         $this->assertFalse(Urler::validate('http://localhost'));
         $this->assertFalse(Urler::validate(''));
     }
+
+    public function test_social_profile_urls()
+    {
+        $this->assertEquals(
+            'https://www.linkedin.com/in/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('linkedin', 'your-username')
+        );
+
+        $this->assertEquals(
+            'https://www.linkedin.com/in/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('linkedin', 'https://www.linkedin.com/in/your-username')
+        );
+
+        $this->assertEquals(
+            'https://www.linkedin.com/in/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('linkedin', 'www.linkedin.com/in/your-username/')
+        );
+
+        $this->assertEquals(
+            'https://www.linkedin.com/in/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('linkedin', 'linkedin.com/in/your-username')
+        );
+
+        $this->assertEquals(
+            'https://www.xing.com/profile/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('xing', 'your-username')
+        );
+
+        $this->assertEquals(
+            'https://www.xing.com/profile/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('xing', 'https://www.xing.com/profile/your-username')
+        );
+
+        $this->assertEquals(
+            'https://www.xing.com/profile/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('xing', 'www.xing.com/profile/your-username')
+        );
+
+        $this->assertEquals(
+            'https://www.xing.com/profile/SomeUserBlahBlah',
+            Urler::sanitizeSocialMediaProfileUrl('xing', 'https://www.xing.com/profile/SomeUserBlahBlah/cv?sc_o=mxb_p')
+        );
+
+        $this->assertEquals(
+            'https://facebook.com/SomeUserBlahBlah',
+            Urler::sanitizeSocialMediaProfileUrl('facebook', 'https://m.facebook.com/SomeUserBlahBlah?ref=bookmarks')
+        );
+    }
 }

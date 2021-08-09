@@ -24,10 +24,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'about',
         'homepage',
         'company',
-        'facebook_profile_url',
-        'twitter_profile_url',
-        'linkedin_profile_url',
-        'xing_profile_url',
+        'facebook_profile',
+        'twitter_profile',
+        'linkedin_profile',
+        'xing_profile',
     ];
 
     /**

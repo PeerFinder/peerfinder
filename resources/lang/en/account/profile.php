@@ -8,4 +8,8 @@ return [
     'field_homepage' => 'Homepage',
     'button_change_profile' => 'Change Profile details',
     'profile_changed_successfully' => 'Your Profile was changed successfully!',
+    'field_twitter' => 'Twitter Profile',
+    'field_linkedin' => 'LinkedIn Profile',
+    'field_facebook' => 'Facebook Profile',
+    'field_xing' => 'Xing Profile',
 ];
