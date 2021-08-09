@@ -21,14 +21,14 @@ class ProfileController extends Controller
     {
         $input = $request->all();
 
-        if (key_exists('homepage', $input)) {
+        if (key_exists('homepage', $input) && $input['homepage']) {
             $input['homepage'] = Urler::fullUrl($input['homepage']);
         }
 
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'slogan' => ['nullable', 'string', 'max:255'],
-            'homepage' => ['nullable', 'max:255', new UrlerValidUrl]
+            'homepage' => ['nullable', 'max:255', new UrlerValidUrl()]
         ])->validate();
 
         $request->user()->update($input);

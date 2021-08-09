@@ -2,10 +2,13 @@
 
 namespace App\Rules;
 
+use App\Helpers\Facades\Urler;
 use Illuminate\Contracts\Validation\Rule;
 
 class UrlerValidUrl implements Rule
 {
+    private $attribute;
+
     /**
      * Create a new rule instance.
      *
@@ -25,7 +28,8 @@ class UrlerValidUrl implements Rule
      */
     public function passes($attribute, $value)
     {
-        return false;
+        $this->attribute = $attribute;
+        return Urler::validate($value);
     }
 
     /**
@@ -35,6 +39,6 @@ class UrlerValidUrl implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return __('validation.url', ['attribute' => $this->attribute]);
     }
 }

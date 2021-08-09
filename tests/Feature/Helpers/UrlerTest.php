@@ -24,5 +24,6 @@ class UrlerTest extends TestCase
         $this->assertFalse(Urler::validate('google'));
         $this->assertFalse(Urler::validate('127.0.0.1'));
         $this->assertFalse(Urler::validate('http://localhost'));
+        $this->assertFalse(Urler::validate(''));
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Helpers\Facades\Urler;
+use App\Helpers\Urler;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,7 +17,7 @@ class UrlerServiceProvider extends ServiceProvider
     {
         $this->app->bind('urler', function() {
             return new Urler();
-        });  
+        });
     }
 
     /**

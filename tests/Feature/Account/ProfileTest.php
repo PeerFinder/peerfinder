@@ -31,7 +31,7 @@ class ProfileTest extends TestCase
         $response = $this->actingAs($user)->get(route('account.profile.edit'));
         $response->assertStatus(200);
     }
- 
+
     public function test_user_can_change_name()
     {
         $user = User::factory()->create();
@@ -48,7 +48,6 @@ class ProfileTest extends TestCase
         $response = $this->actingAs($user)->put(route('account.profile.update'), [
             'name' => ''
         ]);
-        
         $response->assertSessionHasErrors();
     }
 
@@ -84,7 +83,7 @@ class ProfileTest extends TestCase
             'about' => $about
         ]);
         $response->assertSessionHasNoErrors();
-        $this->assertEquals($about, $user->about);  
+        $this->assertEquals($about, $user->about);
     }
 
     public function test_user_can_change_homepage()
@@ -119,5 +118,11 @@ class ProfileTest extends TestCase
         ]);
         $response->assertSessionHasNoErrors();
         $this->assertEquals($user->homepage, 'http://homepage.com');
-    }    
+
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'homepage' => ''
+        ]);
+        $response->assertSessionHasNoErrors();
+    }
 }
