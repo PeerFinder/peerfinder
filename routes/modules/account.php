@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
-Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => ['auth', 'verified']], function () {
+Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
     Route::get('/', function () {
         return redirect(route('account.profile.edit'));
     })->name('index');
@@ -14,8 +13,9 @@ Route::group(['prefix' => 'account', 'as' => 'account.', 'middleware' => ['auth'
     });
 
     Route::group(['prefix' => 'email', 'as' => 'email.'], function () {
-        Route::get('/', 'EmailController@edit')->name('edit');
-        Route::put('/update', 'EmailController@update')->name('update');
+        # This routes are accessible even by not verified users so they can change their mail to be able to verify it
+        Route::get('/', 'EmailController@edit')->name('edit')->withoutMiddleware('verified');
+        Route::put('/update', 'EmailController@update')->name('update')->withoutMiddleware('verified');
     });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {

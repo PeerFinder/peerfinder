@@ -24,6 +24,11 @@
         <x-auth.form action="{{ route('verification.send') }}" class="p-0 px-10 pb-10">
             @csrf
             <x-ui.forms.button class="w-full">{{ __('auth.button_resend_verification_email') }}</x-ui.forms.button>
+            @if (Route::has('account.email.edit'))
+                <div class="mt-4 text-center">
+                    <x-ui.link href="{{ route('account.email.edit') }}">{{ __('auth.change_your_email') }}</x-ui.link>
+                </div>
+            @endif
         </x-auth.form>
     </x-auth.card>
 </x-layout.auth>
