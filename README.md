@@ -20,3 +20,5 @@ Find the current php.ini:
 <pre>
 php -r "phpinfo();" | grep "php.ini"
 </pre>
+
+Install XDebug with "pecl install xdebug". If it fails, run "brew upgrade" and remove shown directories manually.
