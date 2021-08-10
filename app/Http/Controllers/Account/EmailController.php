@@ -12,7 +12,7 @@ class EmailController extends Controller
     public function edit(Request $request)
     {
         return view('frontend.account.email.edit', [
-            'user' => $request->user()
+            'user' => $request->user(),
         ]);
     }
 

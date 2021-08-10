@@ -68,7 +68,7 @@ class Urler
                 return sprintf($fullurl, $matches[1]);
             }
         }
-
+        
         return sprintf($fullurl, $socialMediaProfileUrl);
     }
 }

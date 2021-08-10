@@ -3,6 +3,7 @@
 return [
     'title' => 'Account',
     'menu_profile' => 'Profile',
+    'menu_avatar' => 'Avatar',
     'menu_email' => 'E-Mail',
     'menu_password' => 'Password',
     'menu_account' => 'Account',

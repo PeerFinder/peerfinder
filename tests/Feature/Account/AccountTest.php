@@ -62,5 +62,5 @@ class AccountTest extends TestCase
         
         $response->assertSessionHasErrors();
         $this->assertDatabaseHas('users', ['email' => $user->email]);
-    }    
+    }
 }
