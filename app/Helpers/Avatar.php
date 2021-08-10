@@ -57,16 +57,16 @@ class Avatar
 
     public function forUser($user, $size = 0)
     {
-        if ($user->avatar) {
-            $img = Image::cache(function ($image) use ($user, $size) {
-                return $image->make(Storage::disk('local')->get('avatars/' . $user->avatar))->fit($size, $size);
-            });
-
-            return Response::make($img, 200, array(
-                'Content-Type' => 'image/jpg'
-            ));
-        } else {
-            abort(404); 
+        if (!$user->avatar) {
+            abort(404);
         }
+
+        $img = Image::cache(function ($image) use ($user, $size) {
+            return $image->make(Storage::disk('local')->get('avatars/' . $user->avatar))->fit($size, $size);
+        });
+
+        return Response::make($img, 200, array(
+            'Content-Type' => 'image/jpg'
+        ));
     }    
 }
