@@ -176,6 +176,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\UrlerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        App\Providers\AvatarServiceProvider::class,
     ],
 
     /*
@@ -230,6 +232,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Urler' => App\Helpers\Facades\Urler::class,
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Avatar' => App\Helpers\Facades\Avatar::class,
     ],
 
 ];

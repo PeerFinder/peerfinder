@@ -23,7 +23,7 @@
         @foreach ($plattforms as $plattform)
             <div>
                 <x-ui.forms.input id="{{ $plattform }}_profile" value="{{ old($plattform . '_profile', $user->getAttribute($plattform . '_profile')) }}" name="{{ $plattform }}_profile">
-                    {{ __('account/profile.field_' . $plattform) }}</x-ui.forms.input>
+                    {{ __('account/profile.field_' . $plattform . '_profile') }}</x-ui.forms.input>
             </div>
         @endforeach
 

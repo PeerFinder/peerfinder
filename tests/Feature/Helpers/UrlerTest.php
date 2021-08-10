@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Helpers;
 
 use App\Helpers\Facades\Urler;
 use Tests\TestCase;

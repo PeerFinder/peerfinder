@@ -27,5 +27,11 @@ Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         Route::get('/', 'AccountController@edit')->name('edit');
         Route::put('/update', 'AccountController@update')->name('update');
         Route::delete('/destroy', 'AccountController@destroy')->name('destroy');
-    });    
+    });
+
+    Route::group(['prefix' => 'avatar', 'as' => 'avatar.'], function () {
+        Route::get('/', 'AvatarController@edit')->name('edit');
+        Route::put('/update', 'AvatarController@update')->name('update');
+        Route::delete('/destroy', 'AvatarController@destroy')->name('destroy');
+    });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Facades\Avatar;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -48,4 +49,15 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            
+            # Delete the avatar image when deleting user account
+            Avatar::deleteForUser($user);
+        });
+    }
 }
