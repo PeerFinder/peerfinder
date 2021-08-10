@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Change Profile details',
+    'title' => 'Change Your Profile',
     'field_name' => 'My Name',
     'field_slogan' => 'Slogan',
     'field_about' => 'About me',

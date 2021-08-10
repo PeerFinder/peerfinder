@@ -30,27 +30,19 @@ class Avatar
             ),
         ]);
 
-        if ($request->hasFile('avatar')) {
-            if ($user->avatar) {
-                $newFileName = $user->avatar;
-            } else {
-                $newFileName = Str::uuid() . '.jpg';
-            }
-
-            try {
-                $image = Image::make($request->file('avatar'));
-            } catch (\Intervention\Image\Exception\NotReadableException $ex) {
-                return redirect()->back()->withErrors(__('account/avatar.wrong_format'));
-            }
-
-            Storage::disk('local')->put('avatars/' . $newFileName, (string) $image->encode('jpg'));
-
-            $user->avatar = $newFileName;
-
-            $user->save();
+        if ($user->avatar) {
+            $newFileName = $user->avatar;
         } else {
-            return redirect()->back()->withErrors(__('account/avatar.no_file_selected'));
+            $newFileName = Str::uuid() . '.jpg';
         }
+        
+        $image = Image::make($request->file('avatar'));
+
+        Storage::disk('local')->put('avatars/' . $newFileName, (string) $image->encode('jpg'));
+
+        $user->avatar = $newFileName;
+
+        $user->save();
     }
 
     public function deleteForUser(User $user)

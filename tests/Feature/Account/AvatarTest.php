@@ -14,6 +14,28 @@ use Tests\TestCase;
  */
 class AvatarTest extends TestCase
 {
+    public function test_user_can_render_avatar_view()
+    {
+        $user = User::factory()->create();        
+        $response = $this->actingAs($user)->get(route('account.avatar.edit'));
+        $response->assertStatus(200);
+        $response->assertViewIs('frontend.account.avatar.edit');
+    }
+
+    public function test_user_has_to_select_a_file()
+    {
+        $user = User::factory()->create([
+            'avatar' => 'test.jpg'
+        ]);
+
+        $response = $this->actingAs($user)->put(route('account.avatar.update'), [
+            'bla' => null
+        ]);
+
+        $response->assertSessionHasErrors();
+        $this->assertEquals('test.jpg', $user->avatar);
+    }
+
     public function test_user_can_upload_new_avatar()
     {
         $user = User::factory()->create();
@@ -23,18 +45,35 @@ class AvatarTest extends TestCase
         $min_upload_size = config('user.avatar.min_upload_size');
 
         $response = $this->actingAs($user)->put(route('account.avatar.update'), [
-            'avatar' => UploadedFile::fake()->image('avatar.jpeg', $min_upload_size, $min_upload_size),
+            'avatar' => UploadedFile::fake()->image('avatar.png', $min_upload_size, $min_upload_size),
         ]);
 
         $this->assertNotNull($user->avatar);
         Storage::disk('local')->assertExists('avatars/' . $user->avatar);
     }
 
+    public function test_user_can_change_avatar()
+    {
+        $user = User::factory()->create([
+            'avatar' => 'test.jpg'
+        ]);
+
+        Storage::fake('local');
+
+        $min_upload_size = config('user.avatar.min_upload_size');
+
+        $response = $this->actingAs($user)->put(route('account.avatar.update'), [
+            'avatar' => UploadedFile::fake()->image('avatar.jpeg', $min_upload_size, $min_upload_size),
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+        $this->assertEquals('test.jpg', $user->avatar);
+    }    
+
     public function test_user_cannot_upload_wrong_file_format()
     {
         $user = User::factory()->create();
-
-        Storage::fake('local');
 
         $response = $this->actingAs($user)->put(route('account.avatar.update'), [
             'avatar' => UploadedFile::fake()->create('document.pdf', 256),

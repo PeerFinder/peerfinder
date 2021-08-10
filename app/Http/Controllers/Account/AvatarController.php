@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Helpers\Facades\Avatar;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 
@@ -11,7 +12,9 @@ class AvatarController extends Controller
 {
     public function edit(Request $request)
     {
-        return "";
+        return view('frontend.account.avatar.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
     public function update(Request $request)
