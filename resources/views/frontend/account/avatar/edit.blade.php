@@ -3,13 +3,20 @@
 
     @if ($user->avatar)
     <div class="mb-5">
-        <x-account.form :action="route('account.avatar.destroy')" class="space-y-6">
-            <div>
-                @csrf
-                @method('DELETE')
-                <x-ui.forms.button action="destroy">{{ __('account/avatar.button_delete_avatar') }}</x-ui.forms.button>
-            </div>
-        </x-account.form>
+        <h2 class="block mb-2 font-medium">{{ __('account/avatar.current_avatar') }}</h2>
+
+        <div class="flex items-center space-x-6">
+            <x-ui.user.avatar :user="$user" />
+
+            <x-account.form :action="route('account.avatar.destroy')" class="space-y-6">
+                <div>
+                    @csrf
+                    @method('DELETE')
+                    <x-ui.forms.button action="destroy">{{ __('account/avatar.button_delete_avatar') }}</x-ui.forms.button>
+                </div>
+            </x-account.form>
+        </div>
+
     </div>
     @endif
 

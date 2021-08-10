@@ -17,6 +17,11 @@ class AvatarController extends Controller
         ]);
     }
 
+    public function show(User $user)
+    {
+        return Avatar::forUser($user, config('user.avatar.size'));
+    }
+
     public function update(Request $request)
     {
         Avatar::setForUser($request->user(), $request);

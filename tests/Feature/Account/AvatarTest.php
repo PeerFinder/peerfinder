@@ -143,4 +143,33 @@ class AvatarTest extends TestCase
         $response->assertSessionHasNoErrors();
         Storage::disk('local')->assertMissing('avatars/test.jpg');
     }
+
+    public function test_can_download_user_avatar()
+    {
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        Storage::fake('local');
+
+        $min_upload_size = config('user.avatar.min_upload_size');
+
+        $response = $this->actingAs($user)->put(route('account.avatar.update'), [
+            'avatar' => UploadedFile::fake()->image('avatar.png', $min_upload_size, $min_upload_size),
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $response = $this->actingAs($user2)->get(route('account.avatar.show', [
+            'user' => $user->id,
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'image/jpg');
+
+        $response = $this->actingAs($user2)->get(route('account.avatar.show', [
+            'user' => $user2->id,
+        ]));
+
+        $response->assertStatus(404);
+    }
 }

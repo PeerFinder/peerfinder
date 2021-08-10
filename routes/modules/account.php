@@ -31,6 +31,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
 
     Route::group(['prefix' => 'avatar', 'as' => 'avatar.'], function () {
         Route::get('/', 'AvatarController@edit')->name('edit');
+        Route::get('/show/{user:id}', 'AvatarController@show')->name('show');
         Route::put('/update', 'AvatarController@update')->name('update');
         Route::delete('/destroy', 'AvatarController@destroy')->name('destroy');
     });

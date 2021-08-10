@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Response;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -53,4 +54,19 @@ class Avatar
             $user->save();
         }
     }
+
+    public function forUser($user, $size = 0)
+    {
+        if ($user->avatar) {
+            $img = Image::cache(function ($image) use ($user, $size) {
+                return $image->make(Storage::disk('local')->get('avatars/' . $user->avatar))->fit($size, $size);
+            });
+
+            return Response::make($img, 200, array(
+                'Content-Type' => 'image/jpg'
+            ));
+        } else {
+            abort(404); 
+        }
+    }    
 }
