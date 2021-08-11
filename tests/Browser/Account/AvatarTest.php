@@ -30,7 +30,7 @@ class AvatarTest extends DuskTestCase
         $this->browse(function ($browser) use ($user) {
             $browser->loginAs($user)
                     ->visitRoute('account.avatar.edit')
-                    ->attach('avatar', storage_path('app/public/testing/test_avatar.jpeg'))
+                    ->attach('avatar', __DIR__ . '/../../resources/test_avatar.jpeg')
                     ->press(__('account/avatar.button_upload_avatar'))
                     ->assertRouteIs('account.avatar.edit')
                     ->assertSee(__('account/avatar.avatar_changed_successfully'));

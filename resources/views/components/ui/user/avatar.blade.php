@@ -1,7 +1,7 @@
 @props(['user', 'size' => 100])
 
 @if ($user->avatar)
-    <img srcset="{{ route('account.avatar.show', ['user' => $user->id, 'size' => $size]) }}, {{ route('account.avatar.show', ['user' => $user->id, 'size' => $size * 2]) }} 2x"
+    <img srcset="{{ route('account.avatar.show', ['user' => $user->username, 'size' => $size]) }}, {{ route('account.avatar.show', ['user' => $user->username, 'size' => $size * 2]) }} 2x"
             alt="{{ $user->name }}" {{ $attributes->merge(['class' => '']) }} />
 @else
     <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" viewBox="0 0 20 20" fill="currentColor">

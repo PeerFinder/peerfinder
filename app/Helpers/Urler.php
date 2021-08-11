@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers;
+use Illuminate\Support\Str;
 
 class Urler
 {
@@ -70,5 +71,16 @@ class Urler
         }
         
         return sprintf($fullUrl, $socialMediaProfileUrl);
+    }
+
+    public function createUniqueSlug($modelInstance, $field, $length = 17)
+    {
+        $model = get_class($modelInstance);
+
+        do {
+            $slug = Str::random($length);
+        } while ($model::where($field, $slug)->exists());
+
+        $modelInstance->$field = $slug;
     }
 }

@@ -162,7 +162,7 @@ class AvatarTest extends TestCase
         $response->assertSessionHasNoErrors();
 
         $response = $this->actingAs($user2)->get(route('account.avatar.show', [
-            'user' => $user->id,
+            'user' => $user->username,
             'size' => 100
         ]));
 
@@ -170,7 +170,7 @@ class AvatarTest extends TestCase
         $response->assertHeader('Content-Type', 'image/jpg');
 
         $response = $this->actingAs($user2)->get(route('account.avatar.show', [
-            'user' => $user2->id,
+            'user' => $user2->username,
             'size' => 100            
         ]));
 
@@ -184,7 +184,7 @@ class AvatarTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->get(route('account.avatar.show', [
-            'user' => $user->id,
+            'user' => $user->username,
             'size' => 100            
         ]));
 

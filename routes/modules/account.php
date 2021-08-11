@@ -36,7 +36,7 @@ Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
 
     Route::group(['prefix' => 'avatar', 'as' => 'avatar.'], function () {
         Route::get('/', [AvatarController::class, 'edit'])->name('edit');
-        Route::get('/show/{user:id}_{size}.jpg', [AvatarController::class, 'show'])->where('size', '[0-9]+')->name('show');
+        Route::get('/show/{user:username}_{size}.jpg', [AvatarController::class, 'show'])->where('size', '[0-9]+')->name('show');
         Route::put('/update', [AvatarController::class, 'update'])->name('update');
         Route::delete('/destroy', [AvatarController::class, 'destroy'])->name('destroy');
     });
