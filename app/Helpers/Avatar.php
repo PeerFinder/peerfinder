@@ -37,7 +37,7 @@ class Avatar
             $newFileName = Str::uuid() . '.jpg';
         }
         
-        $image = Image::make($request->file('avatar'));
+        $image = Image::make($request->file('avatar'))->orientate();
 
         Storage::disk('local')->put('avatars/' . $newFileName, (string) $image->encode('jpg'));
 
@@ -61,9 +61,14 @@ class Avatar
             abort(404);
         }
 
+        if (!Storage::disk('local')->exists('avatars/' . $user->avatar)) {
+            abort(404);
+        }
+
         $img = Image::cache(function ($image) use ($user, $size) {
-            return $image->make(Storage::disk('local')->get('avatars/' . $user->avatar))->fit($size, $size);
-        });
+            return $image->make(Storage::disk('local')->get('avatars/' . $user->avatar))
+                            ->fit($size);
+        }, 10);
 
         return Response::make($img, 200, array(
             'Content-Type' => 'image/jpg'

@@ -14,6 +14,8 @@ use Tests\TestCase;
  */
 class AvatarTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_user_can_render_avatar_view()
     {
         $user = User::factory()->create();        
@@ -161,6 +163,7 @@ class AvatarTest extends TestCase
 
         $response = $this->actingAs($user2)->get(route('account.avatar.show', [
             'user' => $user->id,
+            'size' => 100
         ]));
 
         $response->assertStatus(200);
@@ -168,6 +171,21 @@ class AvatarTest extends TestCase
 
         $response = $this->actingAs($user2)->get(route('account.avatar.show', [
             'user' => $user2->id,
+            'size' => 100            
+        ]));
+
+        $response->assertStatus(404);
+    }
+
+    public function test_cannot_download_missing_avatar()
+    {
+        $user = User::factory()->create([
+            'avatar' => 'image.jpg'
+        ]);
+
+        $response = $this->actingAs($user)->get(route('account.avatar.show', [
+            'user' => $user->id,
+            'size' => 100            
         ]));
 
         $response->assertStatus(404);
