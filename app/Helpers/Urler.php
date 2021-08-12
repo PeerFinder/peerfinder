@@ -83,4 +83,9 @@ class Urler
 
         $modelInstance->$field = $slug;
     }
+
+    public function userProfileUrl($user)
+    {
+        return route('profile.user.show', ['user' => $user->username]);
+    }
 }

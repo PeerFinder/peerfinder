@@ -1,8 +1,8 @@
 <x-base.page :title="$title">
-
     <body class="bg-gray-100">
+        <x-ui.sections.header :user="$currentUser" />
 
-        <div class="w-full max-w-5xl mx-auto mb-10">
+        <div class="w-full max-w-5xl mx-auto mb-10 px-3">
             <h1 class="mt-10 mb-5 text-3xl">{{ __('account/account.title') }}</h1>
 
             <div class="bg-white shadow-md after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
@@ -19,7 +19,14 @@
                     </div>
 
                     <div class="col-span-9 sm:col-span-4">
-                        <h2 class="text-2xl px-10 pt-10">{{ $title }}</h2>
+                        <div class="px-10 pt-10 sm:flex justify-between items-center space-y-5 sm:space-y-0">
+                            <h2 class="text-2xl">{{ $title }}</h2>
+                            @if (Route::currentRouteNamed(['account.profile.edit', 'account.avatar.edit']))
+                            <div>
+                                <x-ui.forms.button tag="a" href="{{ Urler::userProfileUrl($currentUser) }}" target="_blank" action="inform">{{ __('account/account.button_show_profile') }}</x-ui.forms.button>
+                            </div>
+                            @endif
+                        </div>
 
                         <x-account.status />
 
