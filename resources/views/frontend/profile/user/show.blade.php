@@ -5,15 +5,15 @@
 
     <x-ui.card class="sm:mt-10">
         <div class="sm:flex">
-            <div class="visual sm:w-2/4">
+            <div class="visual sm:w-1/4">
                 <div class="pt-10 sm:p-10 flex flex-col items-center">
                     <div class="image">
                         <x-ui.user.avatar :user="$user" class="rounded-full text-gray-400" size="200" />
                     </div>
                 </div>
             </div>
-            <div class="information p-10 sm:p-0">
-                <div class="sm:pr-10 sm:py-12">
+            <div class="information sm:w-3/4">
+                <div class="p-10 sm:pl-0 sm:pr-10 sm:py-12">
                     <h1 class="text-3xl font-bold">{{ $user->name }}</h1>
 
                     @if ($user->slogan)
@@ -33,6 +33,13 @@
 
                     @if ($user->about)
                         <p>{{ $user->about }}</p>
+                    @endif
+
+                    @if ($user == auth()->user())
+                    <div class="mt-5 space-x-2">
+                        <x-ui.forms.button tag="a" href="{{ route('account.profile.edit') }}" action="inform">{{ __('profile/user.button_edit_profile') }}</x-ui.forms.button>
+                        <x-ui.forms.button tag="a" href="{{ route('account.avatar.edit') }}" action="inform">{{ __('profile/user.button_edit_avatar') }}</x-ui.forms.button>
+                    </div>
                     @endif
                 </div>
             </div>
