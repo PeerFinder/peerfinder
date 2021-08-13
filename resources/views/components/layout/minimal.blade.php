@@ -2,8 +2,10 @@
     <body class="bg-gray-100">
         <x-ui.sections.header :user="$currentUser" />
 
-        <div class="w-full max-w-5xl mx-auto mb-10 px-3">
+        <x-base.container class="mb-10 sm:px-3">
             {{ $slot }}
-        </div>
+        </x-base.container>
+
+        <x-ui.sections.footer />
     </body>
 </x-base.page>

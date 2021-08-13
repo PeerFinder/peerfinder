@@ -22,3 +22,11 @@ php -r "phpinfo();" | grep "php.ini"
 </pre>
 
 Install XDebug with "pecl install xdebug". If it fails, run "brew upgrade" and remove shown directories manually.
+
+## Icons used in the project
+
+* Many Heroicons
+* https://fontawesome.com/v5.15/icons/twitter-square
+* https://fontawesome.com/v5.15/icons/linkedin
+* https://fontawesome.com/v5.15/icons/facebook-square
+* https://fontawesome.com/v5.15/icons/xing-square

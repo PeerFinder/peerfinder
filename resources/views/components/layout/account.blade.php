@@ -2,14 +2,14 @@
     <body class="bg-gray-100">
         <x-ui.sections.header :user="$currentUser" />
 
-        <div class="w-full max-w-5xl mx-auto mb-10 px-3">
-            <h1 class="mt-10 mb-5 text-3xl">{{ __('account/account.title') }}</h1>
+        <x-base.container class="mb-10 sm:px-3">
+            <h1 class="mt-10 mb-5 text-3xl text-center sm:text-left">{{ __('account/account.title') }}</h1>
 
             <div class="bg-white shadow-md after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
 
                 <div class="grid grid-cols-10 sm:grid-cols-5">
                     <div class="col-span-1 bg-gray-50 border-r border-gray-200">
-                        <nav class="p-2">
+                        <nav class="sm:p-2">
                             <x-account.nav-item route="account.profile.edit" icon="user-circle">{{ __('account/account.menu_profile') }}</x-account.nav-item>
                             <x-account.nav-item route="account.avatar.edit" icon="photograph">{{ __('account/account.menu_avatar') }}</x-account.nav-item>
                             <x-account.nav-item route="account.email.edit" icon="mail">{{ __('account/account.menu_email') }}</x-account.nav-item>
@@ -46,6 +46,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </x-base.container>
+
+        <x-ui.sections.footer />
     </body>
 </x-base.page>
