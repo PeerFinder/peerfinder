@@ -8,7 +8,7 @@
         </div>
 
         <div class="flex items-center md:space-x-6 flex-row">
-            <x-ui.user.avatar :user="$user" class="ml-2 w-10 h-10 rounded-full text-gray-400" />
+            <x-ui.user.avatar :user="$user" size="40" class="ml-2 rounded-full text-gray-400" />
         </div>
     </div>
 </nav>

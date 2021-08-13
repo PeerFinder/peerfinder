@@ -8,8 +8,8 @@
             <div class="bg-white shadow-md after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
 
                 <div class="grid grid-cols-10 sm:grid-cols-5">
-                    <div class="col-span-1 bg-gray-50">
-                        <nav>
+                    <div class="col-span-1 bg-gray-50 border-r border-gray-200">
+                        <nav class="p-2">
                             <x-account.nav-item route="account.profile.edit" icon="user-circle">{{ __('account/account.menu_profile') }}</x-account.nav-item>
                             <x-account.nav-item route="account.avatar.edit" icon="photograph">{{ __('account/account.menu_avatar') }}</x-account.nav-item>
                             <x-account.nav-item route="account.email.edit" icon="mail">{{ __('account/account.menu_email') }}</x-account.nav-item>
