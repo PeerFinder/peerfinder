@@ -15,7 +15,9 @@ class AccountController extends Controller
     
     public function edit(Request $request)
     {
-        return view('frontend.account.account.edit');
+        return view('frontend.account.account.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
     public function destroy(Request $request)

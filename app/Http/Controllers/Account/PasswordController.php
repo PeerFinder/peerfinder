@@ -15,7 +15,9 @@ class PasswordController extends Controller
 
     public function edit(Request $request)
     {
-        return view('frontend.account.password.edit');
+        return view('frontend.account.password.edit', [
+            'user' => $request->user(),
+        ]);
     }
 
     public function update(Request $request, UpdateUserPassword $updater)

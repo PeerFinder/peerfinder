@@ -3,6 +3,7 @@
 namespace Tests\Feature\Helpers;
 
 use App\Helpers\Facades\Urler;
+use App\Models\User;
 use Tests\TestCase;
 
 class UrlerTest extends TestCase
@@ -73,5 +74,11 @@ class UrlerTest extends TestCase
             'https://facebook.com/SomeUserBlahBlah',
             Urler::sanitizeSocialMediaProfileUrl('facebook', 'https://m.facebook.com/SomeUserBlahBlah?ref=bookmarks')
         );
+    }
+
+    public function test_user_profile_url()
+    {
+        $user = User::factory()->create();
+        $this->assertEquals(route('profile.user.show', ['user' => $user->username]), Urler::userProfileUrl($user));
     }
 }

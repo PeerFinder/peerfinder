@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\Facades\Avatar;
+use App\Helpers\Facades\Urler;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -54,8 +55,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         parent::boot();
 
+        static::creating(function ($user) {
+            Urler::createUniqueSlug($user, 'username');
+        });
+
         static::deleting(function ($user) {
-            
             # Delete the avatar image when deleting user account
             Avatar::deleteForUser($user);
         });

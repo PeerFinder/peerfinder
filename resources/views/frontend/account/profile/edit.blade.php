@@ -16,14 +16,14 @@
         </div>
 
         <div>
-            <x-ui.forms.input id="homepage" value="{{ old('homepage', $user->homepage) }}" name="homepage">
+            <x-ui.forms.input id="homepage" value="{{ old('homepage', $user->homepage) }}" name="homepage" type="text">
                 {{ __('account/profile.field_homepage') }}</x-ui.forms.input>
         </div>
 
-        @foreach ($plattforms as $plattform)
+        @foreach ($platforms as $platform)
             <div>
-                <x-ui.forms.input id="{{ $plattform }}_profile" value="{{ old($plattform . '_profile', $user->getAttribute($plattform . '_profile')) }}" name="{{ $plattform }}_profile">
-                    {{ __('account/profile.field_' . $plattform . '_profile') }}</x-ui.forms.input>
+                <x-ui.forms.input id="{{ $platform }}_profile" value="{{ old($platform . '_profile', $user->getAttribute($platform . '_profile')) }}" name="{{ $platform }}_profile" type="text">
+                    {{ __('account/profile.field_' . $platform . '_profile') }}</x-ui.forms.input>
             </div>
         @endforeach
 

@@ -24,10 +24,6 @@ Route::get('/', function() {
     return 'index';
 })->name('index');
 
-
-
-
-
 /* TEMP TEMP TEMP TEMP TEMP */
 
 /* TEMP TEMP TEMP TEMP TEMP */

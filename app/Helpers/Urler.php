@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Helpers;
+use Illuminate\Support\Str;
 
 class Urler
 {
@@ -10,28 +11,28 @@ class Urler
                 '^(?:http(?:s)?:\/\/)?(?:[\w]+\.)?twitter\.com\/([A-z0-9_]+)\/?(.*)$',
                 '^([A-z0-9_]+)?$',
             ],
-            'fullurl' => 'https://twitter.com/%s',
+            'fullUrl' => 'https://twitter.com/%s',
         ],
         'facebook' => [
             'regex' => [
                 '^(?:http(?:s)?:\/\/)?(?:[\w]+\.)?facebook\.com\/([A-z0-9_\-\.]+)\/?(.*)$',
                 '^([A-z0-9_\-\.]+)?$',
             ],
-            'fullurl' => 'https://facebook.com/%s',
+            'fullUrl' => 'https://facebook.com/%s',
         ],
         'linkedin' => [
             'regex' => [
                 '^(?:http(?:s)?:\/\/)?(?:[\w]+\.)?linkedin\.com\/in\/([A-z0-9_\-]+)\/?(.*)$',
                 '^([A-z0-9_\-]+)?$',
             ],
-            'fullurl' => 'https://www.linkedin.com/in/%s',
+            'fullUrl' => 'https://www.linkedin.com/in/%s',
         ],
         'xing' => [
             'regex' => [
                 '^(?:http(?:s)?:\/\/)?(?:[\w]+\.)?xing\.com\/profile\/([A-z0-9_\-\.]+)\/?(.*)$',
                 '^([A-z0-9_\-\.]+)?$',
             ],
-            'fullurl' => 'https://www.xing.com/profile/%s',
+            'fullUrl' => 'https://www.xing.com/profile/%s',
         ],
     ];
 
@@ -49,7 +50,7 @@ class Urler
     }
 
     /**
-     * Based on urlregex.com
+     * @source urlregex.com
      */
     public function validate($url)
     {
@@ -61,14 +62,30 @@ class Urler
         $template = $this->socialMediaPlatforms[$socialMediaPlatform];
 
         $regex_list = $template['regex'];
-        $fullurl = $template['fullurl'];
+        $fullUrl = $template['fullUrl'];
 
         foreach ($regex_list as $regex) {
             if (preg_match('/' . $regex . '/', $socialMediaProfileUrl, $matches)) {
-                return sprintf($fullurl, $matches[1]);
+                return sprintf($fullUrl, $matches[1]);
             }
         }
         
-        return sprintf($fullurl, $socialMediaProfileUrl);
+        return sprintf($fullUrl, $socialMediaProfileUrl);
+    }
+
+    public function createUniqueSlug($modelInstance, $field, $length = 17)
+    {
+        $model = get_class($modelInstance);
+
+        do {
+            $slug = Str::random($length);
+        } while ($model::where($field, $slug)->exists());
+
+        $modelInstance->$field = $slug;
+    }
+
+    public function userProfileUrl($user)
+    {
+        return route('profile.user.show', ['user' => $user->username]);
     }
 }

@@ -14,7 +14,7 @@ class ProfileController extends Controller
     {
         return view('frontend.account.profile.edit', [
             'user' => $request->user(),
-            'plattforms' => array_keys(Urler::getSocialPlatforms()),
+            'platforms' => array_keys(Urler::getSocialPlatforms()),
         ]);
     }
 
