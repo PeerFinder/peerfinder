@@ -10,4 +10,5 @@ return [
     'button_edit_avatar' => 'Edit my avatar',
     'signed_in_as' => 'Signed in as',
     'menu_my_account' => 'My Account',
+    'menu_logout' => 'Logout',
 ];

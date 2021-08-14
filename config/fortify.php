@@ -140,4 +140,11 @@ return [
         //]),
     ],
 
+    'redirects' => [
+        'login' => null,
+        'logout' => null,
+        'password-confirmed' => null,
+        'register' => null,
+        'email-verification' => null,
+    ],
 ];

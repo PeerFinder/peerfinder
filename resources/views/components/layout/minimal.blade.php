@@ -1,5 +1,5 @@
 <x-base.page :title="$title">
-    <body class="bg-gray-100">
+    <x-base.app>
         <x-ui.sections.header :user="$currentUser" />
 
         <x-base.container class="mb-10 sm:px-3">
@@ -7,5 +7,5 @@
         </x-base.container>
 
         <x-ui.sections.footer />
-    </body>
+    </x-base.app>
 </x-base.page>
