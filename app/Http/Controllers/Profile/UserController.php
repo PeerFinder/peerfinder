@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        return redirect(route('profile.user.show', ['user' => auth()->user()->username]));
+    }
+
     public function show(User $user)
     {
         $available_profiles = [];

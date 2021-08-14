@@ -1,5 +1,5 @@
 <x-base.page :title="$title">
-    <body class="bg-gray-100">
+    <x-base.app>
         {{ $slot }}
-    </body>
+    </x-base.app>
 </x-base.page>

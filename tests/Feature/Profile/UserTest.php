@@ -29,6 +29,14 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_user_profile_redirects_to_current_user()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get(route('profile.user.index'));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('profile.user.show', ['user' => $user->username]));
+    }
+
     public function test_user_profile_not_found()
     {
         $user = User::factory()->create();
