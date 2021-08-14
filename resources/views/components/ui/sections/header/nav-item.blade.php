@@ -1,0 +1,1 @@
+<a href="{{ route($route) }}" class="block py-2 px-5 hover:bg-gray-200 hover:text-gray-800 {{ Route::currentRouteNamed($route) ? 'bg-pf-midorange text-white' : 'hover:bg-gray-100' }}">{{ $slot }}</a>
