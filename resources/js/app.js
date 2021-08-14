@@ -1,9 +1,14 @@
 require('./bootstrap');
 
-import Vue from 'vue';
+import { createApp } from 'vue';
+import HeaderMenu from './components/HeaderMenu.vue';
+import vClickOutside from "click-outside-vue3";
 
-Vue.component('header-menu', require('./components/HeaderMenu.vue').default);
-
-const app = new Vue({
-    el: '#app'
+const app = createApp({
+    'components': {
+        'header-menu': HeaderMenu
+    }
 });
+
+app.mount('#app');
+app.use(vClickOutside);
