@@ -21,7 +21,7 @@ Route::get('/logout', function() {
 
 /* TEMP TEMP TEMP TEMP TEMP */
 Route::get('/', function() {
-    return 'index';
+    return view('frontend.index.index');
 })->name('index');
 
 /* TEMP TEMP TEMP TEMP TEMP */
