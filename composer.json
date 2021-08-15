@@ -13,8 +13,8 @@
         "intervention/imagecache": "^2.5",
         "laravel/fortify": "^1.7",
         "laravel/framework": "^8.40",
-        "laravel/tinker": "^2.5",
-        "laravel/nova": "*"
+        "laravel/nova": "^3.28",
+        "laravel/tinker": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -65,10 +65,10 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "path",
-            "url": "./nova"
+    "repositories": {
+        "nova": {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
         }
-    ]
+    }
 }
