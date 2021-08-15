@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Nova\Metrics\NewUsers;
 use App\Nova\Metrics\UsersPerDay;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Nova;
@@ -43,11 +44,11 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function gate()
     {
-        /* Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
+        Gate::define('viewNova', function ($admin) {
+            return in_array($admin->email, [
+                Auth::guard('admin')->check(),
             ]);
-        }); */
+        });
     }
 
     /**
