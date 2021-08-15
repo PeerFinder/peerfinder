@@ -49,7 +49,9 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Username')->onlyOnDetail(),
+            Text::make('Username')->resolveUsing(function() {
+                return sprintf('<a href="%s" target="_blank">%s</a>', route('profile.user.show', ['user' => $this->username]), $this->username);
+            })->asHtml(),
 
             Text::make('Name')
                 ->sortable()
