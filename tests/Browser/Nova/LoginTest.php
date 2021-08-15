@@ -3,6 +3,7 @@
 namespace Tests\Browser\Nova;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
@@ -23,12 +24,12 @@ class LoginTest extends DuskTestCase
                     ->assertSee('Welcome Back!');
         });
     }
-
+    
     public function test_admin_can_login()
     {
         $admin = Admin::factory()->create();
 
-        $this->actingAs($admin)->browse(function (Browser $browser) use ($admin) {
+        $this->browse(function (Browser $browser) use ($admin) {
             $browser->visit(config('nova.path'))
                     ->type('email', $admin->email)
                     ->type('password', 'password')
@@ -36,5 +37,5 @@ class LoginTest extends DuskTestCase
                     ->press('Login')
                     ->assertSee('Dashboard');
         });
-    }    
+    }
 }
