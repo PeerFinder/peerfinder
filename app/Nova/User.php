@@ -4,12 +4,15 @@ namespace App\Nova;
 
 use App\Helpers\Facades\Avatar;
 use App\Models\User as UserModel;
+use App\Nova\Actions\ShowUserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Line;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Stack;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 
@@ -49,13 +52,14 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Username')->resolveUsing(function() {
-                return sprintf('<a href="%s" target="_blank">%s</a>', route('profile.user.show', ['user' => $this->username]), $this->username);
-            })->asHtml(),
+            Stack::make('Details', [
+                Line::make('Name')
+                    ->sortable()
+                    ->rules('required', 'max:255')->asHeading(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255'),
+                Line::make('Username')->asSmall(),
+            ]),
+
 
             Text::make('Email')
                 ->sortable()
@@ -147,6 +151,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new ShowUserProfile())->showOnTableRow()->withoutConfirmation(),
+        ];
     }
 }
