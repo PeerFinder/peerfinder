@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Helpers\Facades\Urler;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Rules\UrlerValidUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -34,16 +35,7 @@ class ProfileController extends Controller
             }
         }
 
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'slogan' => ['nullable', 'string', 'max:255'],
-            'homepage' => ['nullable', 'max:255', new UrlerValidUrl()],
-            'company' => ['nullable', 'string', 'max:255'],
-            'facebook_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
-            'linkedin_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
-            'twitter_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
-            'xing_profile' => ['nullable', new UrlerValidUrl(), 'max:255'],
-        ])->validate();
+        Validator::make($input, User::getValidationRules()['update'])->validate();
 
         $request->user()->update($input);
 

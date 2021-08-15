@@ -51,6 +51,25 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public static function getValidationRules() {
+        $updateRules = [
+            'name' => ['required', 'string', 'max:255'],
+            'slogan' => ['nullable', 'string', 'max:255'],
+            'about' => ['nullable', 'string', 'max:1000'],
+            'homepage' => ['nullable', 'max:255', new \App\Rules\UrlerValidUrl()],
+            'company' => ['nullable', 'string', 'max:255'],
+            'facebook_profile' => ['nullable', new \App\Rules\UrlerValidUrl(), 'max:255'],
+            'linkedin_profile' => ['nullable', new \App\Rules\UrlerValidUrl(), 'max:255'],
+            'twitter_profile' => ['nullable', new \App\Rules\UrlerValidUrl(), 'max:255'],
+            'xing_profile' => ['nullable', new \App\Rules\UrlerValidUrl(), 'max:255'],
+        ];
+
+        return [
+            'update' => $updateRules,
+            'create' => $updateRules,
+        ];
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -20,6 +20,10 @@
                     <p class="text-gray-400 mb-4">{{ $user->slogan }}</p>
                     @endif
 
+                    @if ($user->company)
+                    <p class="my-3"><x-ui.icon name="office-building" class="text-gray-400" /> {{ $user->company }}</p>
+                    @endif                    
+
                     @if (count($platforms) || $user->homepage)
                     <nav class="social-bookmarks mb-4 flex flex-wrap">
                         @if ($user->homepage)
