@@ -9,7 +9,7 @@
             </p>
             @endif
         </x-slot>
-
+        
         <x-auth.status :status="session('status')" />
 
         <x-auth.form action="{{ route('login') }}" class="space-y-4">
