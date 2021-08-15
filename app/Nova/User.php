@@ -2,11 +2,16 @@
 
 namespace App\Nova;
 
+use App\Helpers\Facades\Avatar;
+use App\Models\User as UserModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 
 class User extends Resource
 {
@@ -30,7 +35,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email',
+        'id', 'name', 'email', 'company', 'slogan'
     ];
 
     /**
@@ -44,6 +49,8 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
+            Text::make('Username')->onlyOnDetail(),
+
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
@@ -54,10 +61,46 @@ class User extends Resource
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
-            Password::make('Password')
+            Text::make('Slogan')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['slogan']),
+
+            Text::make('Homepage')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['homepage']),
+            
+            Textarea::make('About')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['about']),
+
+            Text::make('Company')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['company']),           
+            
+            Text::make('Facebook Profile')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['facebook_profile']),  
+
+            Text::make('Twitter Profile')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['twitter_profile']),       
+                
+            Text::make('LinkedIn Profile')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['linkedin_profile']),
+
+            Text::make('Xing Profile')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['xing_profile']),
+
+            Text::make('Xing Profile')
+                ->hideFromIndex()
+                ->rules(UserModel::getValidationRules()['create']['xing_profile']),
+
+/*             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:8')
-                ->updateRules('nullable', 'string', 'min:8'),
+                ->updateRules('nullable', 'string', 'min:8'), */
         ];
     }
 

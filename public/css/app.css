@@ -1119,6 +1119,14 @@ select {
 	margin-top: 1.25rem;
 	margin-bottom: 1.25rem;
 }
+.my-2 {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+.my-3 {
+	margin-top: 0.75rem;
+	margin-bottom: 0.75rem;
+}
 .mt-10 {
 	margin-top: 2.5rem;
 }
@@ -1211,6 +1219,9 @@ select {
 }
 .w-8 {
 	width: 2rem;
+}
+.w-1 {
+	width: 0.25rem;
 }
 .max-w-5xl {
 	max-width: 64rem;

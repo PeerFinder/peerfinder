@@ -6,6 +6,7 @@ return [
     'field_slogan' => 'Slogan',
     'field_about' => 'About me',
     'field_homepage' => 'Homepage',
+    'field_company' => 'Company',
     'button_change_profile' => 'Change Profile details',
     'profile_changed_successfully' => 'Your Profile was changed successfully!',
     'field_twitter_profile' => 'Twitter Profile',
