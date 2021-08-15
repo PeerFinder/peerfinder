@@ -2,7 +2,7 @@ name: PeerFinder Web Application
 
 on:
   push:
-    branches: [ main, feature/** ]
+    branches: [ main, feature/**, bugfix/**, hotfix/** ]
   pull_request:
     branches: [ main, feature/** ]
 
