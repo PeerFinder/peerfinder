@@ -34,7 +34,7 @@ Route::get('/secret', function() {
 
 
 /* TEMP TEMP TEMP TEMP TEMP */
-Route::get('/info/{slug}', function($slug) {
+Route::get('/info/{language}/{slug}', function($language, $slug) {
     return 'Content of '.$slug;
 })->name('info');
 
