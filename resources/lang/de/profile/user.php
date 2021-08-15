@@ -12,4 +12,6 @@ return [
     'menu_my_profile' => 'Mein Profil',
     'menu_my_account' => 'Mein Konto',
     'menu_logout' => 'Abmelden',
+    'button_register' => 'Registrieren',
+    'button_login' => 'Anmelden',    
 ];
