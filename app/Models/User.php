@@ -8,10 +8,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Talk\Actions\DeleteConversations;
+use Talk\Traits\UserConversations;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, UserConversations;
 
     /**
      * The attributes that are mass assignable.
@@ -81,6 +83,8 @@ class User extends Authenticatable implements MustVerifyEmail
         static::deleting(function ($user) {
             # Delete the avatar image when deleting user account
             Avatar::deleteForUser($user);
+
+            (new DeleteConversations())->forUser($user);
         });
     }
 }

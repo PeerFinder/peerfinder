@@ -12,16 +12,24 @@ class CreateConversationsTable extends Migration
             $table->id();
             $table->string('identifier')->index();
             $table->nullableMorphs('conversationable');
-            $table->foreignId('user_id')->nullable();
-            $table->foreignId('participant_id')->nullable();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('body');
+            $table->timestamps();
+        });
+
+        Schema::create('conversation_user', function(Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('conversation_id');
+            $table->foreign('conversation_id')->references('id')->on('conversations');
             $table->timestamps();
         });
     }
 
     public function down()
     {
+        Schema::dropIfExists('conversation_user');
         Schema::dropIfExists('conversations');
     }
 }
