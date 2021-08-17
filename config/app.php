@@ -179,6 +179,7 @@ return [
         App\Providers\UrlerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         App\Providers\AvatarServiceProvider::class,
+        Talk\TalkServiceProvider::class,
     ],
 
     /*

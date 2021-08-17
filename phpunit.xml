@@ -7,14 +7,17 @@
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
+            <directory suffix="Test.php">./modules/**/tests/Unit</directory>
         </testsuite>
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
+            <directory suffix="Test.php">./modules/**/tests/Feature</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./modules/**/src</directory>
         </include>
         <report>
             <html outputDirectory="./tests/tmp/coverage"/>

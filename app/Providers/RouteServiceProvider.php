@@ -49,15 +49,15 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware(['web', 'auth', 'verified'])
                 ->namespace('App\Http\Controllers\Account')
-                ->group(base_path('routes/modules/account.php'));
+                ->group(base_path('routes/verified/account.php'));
 
             Route::middleware(['web', 'auth', 'verified'])
                 ->namespace('App\Http\Controllers\Dashboard')
-                ->group(base_path('routes/modules/dashboard.php'));
+                ->group(base_path('routes/verified/dashboard.php'));
             
             Route::middleware(['web', 'auth', 'verified'])
                 ->namespace('App\Http\Controllers\Profile')
-                ->group(base_path('routes/modules/profile.php'));
+                ->group(base_path('routes/verified/profile.php'));
         });
     }
 
