@@ -1,8 +1,4 @@
-<x-layout.minimal>
-    <x-slot name="title">
-        {{ $user->name }}
-    </x-slot>
-
+<x-layout.minimal :title="$user->name">
     <x-ui.card class="sm:mt-10">
         <div class="sm:flex">
             <div class="visual sm:w-1/4">
