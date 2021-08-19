@@ -4,13 +4,13 @@ namespace Tests\Browser\Nova;
 
 use App\Models\Admin;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 
 class LoginTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /**
      * A Dusk test example.

@@ -200,5 +200,14 @@ class ConversationTest extends TestCase
         $this->assertTrue($conversation->isParticipant($users[1]));
         $this->assertTrue($conversation->isParticipant($users[2]));
         $this->assertEquals(3, $conversation->users()->count());
-    }    
+    }
+
+    public function test_create_conversation_for_single_user()
+    {
+        $user = User::factory()->create();
+        $user1 = User::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('talk.user.create', ['user' => $user1->username]));
+        $response->assertStatus(200);
+    }
 }

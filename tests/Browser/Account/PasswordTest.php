@@ -7,7 +7,7 @@ use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Mail;
 
 /**
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class PasswordTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
     
     public function test_user_can_update_password()
     {
