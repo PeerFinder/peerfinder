@@ -57,13 +57,19 @@ class Conversation extends Model
 
     public function addUser(User $user)
     {
-        $this->users()->syncWithoutDetaching([$user->id]);
+        return $this->users()->syncWithoutDetaching([$user->id]);
+    }
+
+    public function syncUsers($users)
+    {
+        $user_ids = array_map(fn($user) => $user->id, $users);
+        return $this->users()->sync($user_ids);
     }
 
     public function setOwner($owner)
     {
         $this->conversationable()->associate($owner);
-        $this->save();
+        return $this->save();
     }
 
     public function isOwner($owner)

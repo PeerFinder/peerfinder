@@ -154,4 +154,51 @@ class ConversationTest extends TestCase
         $response = $this->actingAs($user)->get(route('talk.edit', ['conversation' => $conversation->identifier]));
         $response->assertStatus(200);
     }
+
+    public function test_user_can_update_conversation_title()
+    {
+        $user = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user)->create();
+
+        $conversation->addUser($user);
+
+        $new_title = $this->faker->text();
+
+        $response = $this->actingAs($user)->put(route('talk.update', ['conversation' => $conversation->identifier]), [
+            'title' => $new_title,
+        ]);
+
+        $conversation->refresh();
+
+        $response->assertSessionHasNoErrors();
+        $this->assertEquals($new_title, $conversation->title);
+    }
+
+    public function test_user_can_update_conversation_users()
+    {
+        $user = User::factory()->create();
+        $users = User::factory(5)->create();
+
+        $conversation = Conversation::factory()->byUser($user)->create();
+
+        $conversation->addUser($user);
+
+        $response = $this->actingAs($user)->put(route('talk.update', ['conversation' => $conversation->identifier]), [
+            'users' => [
+                $users[0]->username,
+                $users[1]->username,
+                $users[2]->username,
+                'and-a-fake-username',
+            ],
+        ]);
+
+        $conversation->refresh();
+
+        $response->assertSessionHasNoErrors();
+        $this->assertTrue($conversation->isParticipant($users[0]));
+        $this->assertTrue($conversation->isParticipant($users[1]));
+        $this->assertTrue($conversation->isParticipant($users[2]));
+        $this->assertEquals(3, $conversation->users()->count());
+    }    
 }
