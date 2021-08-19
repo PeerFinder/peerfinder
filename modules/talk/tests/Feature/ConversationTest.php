@@ -65,9 +65,7 @@ class ConversationTest extends TestCase
 
         $conversation->delete();
 
-        $this->assertDatabaseCount('conversation_user', 0);
-        $this->assertDatabaseCount('conversations', 0);
-        $this->assertDatabaseCount('users', 1);
+        $this->assertDatabaseMissing('conversation_user', ['user_id' => $user->id]);
     }
 
     public function test_deleting_conversation_with_user()
@@ -94,10 +92,11 @@ class ConversationTest extends TestCase
         $conversation->addUser($user);
         $conversation->addUser($user2);
 
-        $user->delete();
+        $user_id = $user->id;
+        $this->assertDatabaseHas('conversation_user', ['user_id' => $user_id]);
 
-        $this->assertDatabaseCount('conversation_user', 1);
-        $this->assertDatabaseCount('conversations', 1);
+        $user->delete();
+        $this->assertDatabaseMissing('conversation_user', ['user_id' => $user_id]);
     }
 
     public function test_user_can_render_conversations_list()
