@@ -43,7 +43,6 @@ class ConversationTest extends TestCase
 
         $conversation = $user->owned_conversations()->create([
             'title' => $this->faker->text(),
-            'body' => $this->faker->text(),
         ]);
 
         $conversation->save();
@@ -59,7 +58,6 @@ class ConversationTest extends TestCase
         $user = User::factory()->create();
         $conversation = $user->owned_conversations()->create([
             'title' => $this->faker->text(),
-            'body' => $this->faker->text(),
         ]);
         $conversation->save();
 
@@ -77,7 +75,6 @@ class ConversationTest extends TestCase
         $user = User::factory()->create();
         $conversation = $user->owned_conversations()->create([
             'title' => $this->faker->text(),
-            'body' => $this->faker->text(),
         ]);
         $conversation->save();
 
@@ -145,6 +142,17 @@ class ConversationTest extends TestCase
         $this->assertFalse($conversation->isOwner($conversation));
 
         $response = $this->actingAs($user2)->get(route('talk.show', ['conversation' => $conversation->identifier]));
+        $response->assertStatus(200);
+    }
+
+    public function test_user_can_edit_conversation()
+    {
+        $user = User::factory()->create();
+        $conversation = Conversation::factory()->byUser($user)->create();
+
+        $conversation->addUser($user);
+
+        $response = $this->actingAs($user)->get(route('talk.edit', ['conversation' => $conversation->identifier]));
         $response->assertStatus(200);
     }
 }

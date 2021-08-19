@@ -20,5 +20,21 @@ class ConversationController extends Controller
         return view('talk::conversations.show', [
             'conversation' => $conversation,
         ]);
+    }
+
+    public function edit(Request $request, Conversation $conversation)
+    {
+        Gate::authorize('edit', $conversation);
+
+        return view('talk::conversations.edit', [
+            'conversation' => $conversation,
+        ]);
+    }
+
+    public function update(Request $request, Conversation $conversation)
+    {
+        Gate::authorize('edit', $conversation);
+
+        
     }    
 }

@@ -5,3 +5,4 @@ use Talk\Http\Controllers\ConversationController;
 
 Route::get('/', [ConversationController::class, 'index'])->name('index');
 Route::get('/{conversation:identifier}', [ConversationController::class, 'show'])->name('show');
+Route::get('/{conversation:identifier}/edit', [ConversationController::class, 'edit'])->name('edit');

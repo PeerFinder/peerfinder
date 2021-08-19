@@ -13,7 +13,6 @@ class CreateConversationsTable extends Migration
             $table->string('identifier')->index();
             $table->morphs('conversationable');
             $table->string('title')->nullable();
-            $table->text('body');
             $table->timestamps();
         });
 

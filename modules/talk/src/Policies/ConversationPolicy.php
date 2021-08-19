@@ -11,4 +11,9 @@ class ConversationPolicy
     {
         return $conversation->isParticipant($user) || $conversation->isOwner($user);
     }
+
+    public function edit($user, Conversation $conversation)
+    {
+        return $conversation->isParticipant($user) || $conversation->isOwner($user);
+    }    
 }

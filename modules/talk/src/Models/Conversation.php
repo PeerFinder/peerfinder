@@ -14,13 +14,11 @@ class Conversation extends Model
 
     protected $fillable = [
         'title',
-        'body',
     ];
 
     public static function getValidationRules() {
         $updateRules = [
             'title' => ['nullable', 'string', 'max:255'],
-            'body' => ['required', 'string', 'max:255'],
         ];
 
         return [

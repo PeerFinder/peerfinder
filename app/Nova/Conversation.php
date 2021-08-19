@@ -33,7 +33,6 @@ class Conversation extends Resource
      */
     public static $search = [
         'id',
-        'body',
         'title',
     ];
 
@@ -49,8 +48,6 @@ class Conversation extends Resource
             ID::make(__('ID'), 'id')->sortable(),
 
             Text::make('Title'),
-
-            Text::make('Body')->hideFromIndex()->required(),
 
             MorphTo::make('Belongs to', 'Conversationable')->types([
                 User::class,

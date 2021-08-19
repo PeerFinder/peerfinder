@@ -28,23 +28,11 @@ class TalkTest extends TestCase
 
         $conversation = Talk::createConversationForUser($user, [
             'title' => $this->faker->text(),
-            'body' => $this->faker->text(),
         ]);
 
         $this->assertEquals(1, $user->participated_conversations()->count());
         $this->assertEquals($user->email, $conversation->users()->first()->email);
         $this->assertEquals($user->email, $conversation->conversationable->email);
-    }
-
-    public function test_create_conversation_validates_input()
-    {
-        $user = User::factory()->create();
-
-        $this->expectException(ValidationException::class);
-
-        Talk::createConversationForUser($user, [
-            'title' => $this->faker->text(),
-        ]);
     }
 
     public function test_list_of_user_in_conversation()
