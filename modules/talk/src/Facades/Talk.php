@@ -8,6 +8,6 @@ class Talk extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'talk';
+        return 'Talk';
     }
 }

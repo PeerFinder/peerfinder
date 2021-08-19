@@ -2,6 +2,7 @@
 
 namespace Talk\Models;
 
+use App\Models\User;
 use Talk\Database\Factories\ConversationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -54,5 +55,30 @@ class Conversation extends Model
     public function conversationable()
     {
         return $this->morphTo();
+    }
+
+    public function addUser(User $user)
+    {
+        $this->users()->syncWithoutDetaching([$user->id]);
+    }
+
+    public function setOwner($owner)
+    {
+        $this->conversationable()->associate($owner);
+        $this->save();
+    }
+
+    public function isOwner($owner)
+    {
+        if (get_class($this->conversationable) === get_class($owner)) {
+            return $this->conversationable->id == $owner->id;
+        } else {
+            return false;
+        }
+    }
+
+    public function isParticipant(User $user)
+    {
+        return $this->users->contains($user);
     }
 }

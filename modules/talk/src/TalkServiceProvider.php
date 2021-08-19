@@ -3,35 +3,56 @@
 namespace Talk;
 
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Talk\Components\ConversationsList;
-use Talk\Facades\Talk as TalkFacade;
+use Talk\Models\Conversation;
+use Talk\Policies\ConversationPolicy;
 
 class TalkServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        Conversation::class => ConversationPolicy::class,
+    ];
+
     public function boot()
     {
         if ($this->app->runningInConsole()) {
             $this->registerPublishing();
         }
 
+        $this->registerFacades();
+
         $this->registerResources();
+
+        $this->registerPolicies();
 
         $this->registerRoutes();
 
         $this->loadViewComponents();
-
     }
     
     public function register()
     {
-        $this->app->bind('talk', function() {
-            return new Talk();
+
+    }
+
+    protected function registerFacades()
+    {
+        $this->app->singleton('Talk', function() {
+            return new \Talk\Talk();
         });
 
         $loader = AliasLoader::getInstance();
-        $loader->alias('Talk', TalkFacade::class);
+        $loader->alias('Talk', \Talk\Facades\Talk::class);        
+    }
+
+    protected function registerPolicies()
+    {
+        foreach ($this->policies as $key => $value) {
+            Gate::policy($key, $value);
+        }
     }
 
     protected function registerResources()
@@ -71,8 +92,6 @@ class TalkServiceProvider extends ServiceProvider
 
     protected function loadViewComponents()
     {
-        //['conversations-list' => ConversationsList::class],
-
         $this->loadViewComponentsAs('talk', [
             ConversationsList::class,
         ]);

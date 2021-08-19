@@ -3,7 +3,7 @@
 namespace Tests\Browser\Account;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Support\Str;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class ProfileTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
     use WithFaker;
     
     public function test_user_can_update_name()

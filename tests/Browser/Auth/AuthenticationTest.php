@@ -3,7 +3,7 @@
 namespace Tests\Browser\Auth;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Support\Str;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class AuthenticationTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     private $mailhog_address = 'http://localhost:8025';
 

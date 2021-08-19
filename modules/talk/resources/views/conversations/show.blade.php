@@ -3,5 +3,5 @@
         <p>{{ $conversation->title }}</p>
     @endif
                     
-    <p>{{ Talk::usersAsString(Talk::listOfUsers($conversation)) }}</p>
+    <p>{{ Talk::usersAsString(Talk::filterUsers($conversation)) }}</p>
 </x-talk::layout.single>

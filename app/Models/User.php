@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Talk\Actions\DeleteConversations;
+use Talk\Facades\Talk;
 use Talk\Traits\UserConversations;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -84,7 +84,7 @@ class User extends Authenticatable implements MustVerifyEmail
             # Delete the avatar image when deleting user account
             Avatar::deleteForUser($user);
 
-            (new DeleteConversations())->forUser($user);
+            Talk::deleteConversationForUser($user);
         });
     }
 }
