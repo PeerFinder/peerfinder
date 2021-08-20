@@ -48,7 +48,7 @@ class ConversationTest extends TestCase
         $conversation->save();
 
         $this->assertEquals(1, $user->owned_conversations()->count());
-        
+
         $conversation->users()->attach($user);
         $this->assertEquals(1, $user->participated_conversations()->count());
     }
@@ -127,11 +127,11 @@ class ConversationTest extends TestCase
         $user = User::factory()->create();
         $user2 = User::factory()->create();
         $conversation = Conversation::factory()->byUser()->create();
-        
+
         $conversation->addUser($user);
 
         $response = $this->actingAs($user)->get(route('talk.show', ['conversation' => $conversation->identifier]));
-        $response->assertStatus(200);   
+        $response->assertStatus(200);
 
         $response = $this->actingAs($user2)->get(route('talk.show', ['conversation' => $conversation->identifier]));
         $response->assertStatus(403);
@@ -207,7 +207,7 @@ class ConversationTest extends TestCase
         $user = User::factory()->create();
         $user1 = User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('talk.user.create', ['user' => $user1->username]));
+        $response = $this->actingAs($user)->get(route('talk.create', ['user' => $user1->username]));
         $response->assertStatus(200);
     }
 }

@@ -15,6 +15,13 @@ class ConversationController extends Controller
         return view('talk::conversations.index');
     }
 
+    public function create(User $user, Request $request)
+    {
+        return view('talk::conversations.create', [
+            'participants' => [$user],
+        ]);
+    }
+
     public function show(Request $request, Conversation $conversation)
     {
         Gate::authorize('view', $conversation);
@@ -34,9 +41,9 @@ class ConversationController extends Controller
     }
 
     public function update(Conversation $conversation, Request $request)
-    {        
+    {
         Gate::authorize('edit', $conversation);
-        
+
         $input = $request->all();
 
         Validator::make($input, Conversation::getValidationRules()['update'])->validate();
