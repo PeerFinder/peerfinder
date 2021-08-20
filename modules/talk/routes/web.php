@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Talk\Http\Controllers\ConversationController;
 
 Route::get('/', [ConversationController::class, 'index'])->name('index');
-Route::get('/dm/{user:username}', [ConversationController::class, 'directMessage'])->name('direct');
+Route::get('/create/{user:username}', [ConversationController::class, 'createForUser'])->name('create.user');
+Route::put('/create/{user:username}', [ConversationController::class, 'storeForUser'])->name('store.user');
+#Route::get('/create', [ConversationController::class, 'create'])->name('create');
+#Route::put('/create', [ConversationController::class, 'store'])->name('store');
 Route::get('/{conversation:identifier}', [ConversationController::class, 'show'])->name('show');
 Route::get('/{conversation:identifier}/edit', [ConversationController::class, 'edit'])->name('edit');
 Route::put('/{conversation:identifier}/update', [ConversationController::class, 'update'])->name('update');

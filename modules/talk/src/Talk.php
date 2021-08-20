@@ -5,6 +5,7 @@ namespace Talk;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Talk\Models\Conversation;
+use Talk\Models\Reply;
 
 class Talk
 {
@@ -32,11 +33,35 @@ class Talk
         return implode(", ", array_map(fn($user) => $user->name, $users));
     }
 
-    public function createConversationForUser(User $user, $input)
+    public function createReply(Conversation $conversation, User $user, $message, $replyTo = null)
     {
+        $reply = new Reply();
+        $reply->conversation()->associate($conversation);
+        $reply->user()->associate($user);
+        $reply->message = $message;
+        $reply->save();
+        return $reply;
+    }
+
+    public function createConversation($owner, $participants, $input)
+    {
+        $conversation = null;
+
         Validator::make($input, Conversation::getValidationRules()['create'])->validate();
-        $conversation = $user->owned_conversations()->create($input);
-        $conversation->addUser($user);
+        Validator::make($input, Reply::getValidationRules()['create'])->validate();
+        
+        if ($owner instanceof User) {
+            $conversation = $owner->owned_conversations()->create($input);
+        }
+        
+        if ($conversation) {
+            foreach ($participants as $participant) {
+                $conversation->addUser($participant);
+            }
+
+            $this->createReply($conversation, $owner, $input['message']);
+        }
+
         return $conversation;
     }
 

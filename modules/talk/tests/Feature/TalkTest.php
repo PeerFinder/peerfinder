@@ -24,15 +24,18 @@ class TalkTest extends TestCase
 
     public function test_create_conversation_by_action()
     {
-        $user = User::factory()->create();
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
 
-        $conversation = Talk::createConversationForUser($user, [
+        $conversation = Talk::createConversation($user1, [$user1, $user2, $user3], [
             'title' => $this->faker->text(),
+            'message' => $this->faker->text(),
         ]);
 
-        $this->assertEquals(1, $user->participated_conversations()->count());
-        $this->assertEquals($user->email, $conversation->users()->first()->email);
-        $this->assertEquals($user->email, $conversation->conversationable->email);
+        $this->assertEquals(1, $user1->participated_conversations()->count());
+        $this->assertEquals($user1->email, $conversation->users()->first()->email);
+        $this->assertEquals($user1->email, $conversation->conversationable->email);
     }
 
     public function test_list_of_user_in_conversation()

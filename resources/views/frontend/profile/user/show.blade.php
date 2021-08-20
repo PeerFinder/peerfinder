@@ -8,7 +8,7 @@
                     </div>
                     @if ($user != auth()->user())
                     <div class="mt-5">
-                        <x-ui.forms.button tag="a" href="{{ route('talk.direct', ['user' => $user->username]) }}">{{ __('profile/user.button_send_message') }}</x-ui.forms.button>
+                        <x-ui.forms.button tag="a" href="{{ route('talk.create.user', ['user' => $user->username]) }}">{{ __('profile/user.button_send_message') }}</x-ui.forms.button>
                     </div>
                     @endif
                 </div>

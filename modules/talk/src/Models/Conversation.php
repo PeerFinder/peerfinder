@@ -38,12 +38,21 @@ class Conversation extends Model
 
         static::deleting(function ($conversation) {
             $conversation->users()->detach();
+            
+            foreach ($conversation->replies() as $reply) {
+                $reply->delete();
+            }
         });
     }
 
     public function users()
     {
         return $this->belongsToMany(\App\Models\User::class)->withTimestamps();
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
     }
 
     protected static function newFactory()

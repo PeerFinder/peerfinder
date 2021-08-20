@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Talk\Facades\Talk;
 use Talk\Models\Conversation;
 
 class ConversationController extends Controller
@@ -16,23 +17,47 @@ class ConversationController extends Controller
         return view('talk::conversations.index');
     }
 
-    public function directMessage(User $user, Request $request)
+    private function checkConversationCreation($user)
     {
-        if ($user == auth()->user()) {
+        if ($user->id == auth()->user()->id) {
             return redirect(route('talk.index'));
         }
-
-        $participants = [auth()->user(), $user];
-
-        $conversation = Conversation::forUsers($participants)->get()->first();
+        
+        $conversation = Conversation::forUsers([auth()->user(), $user])->get()->first();
 
         if ($conversation) {
             return redirect(route('talk.show', ['conversation' => $conversation->identifier]));
         }
 
+        return null;
+    }
+
+    public function createForUser(User $user, Request $request)
+    {
+        $ret = $this->checkConversationCreation($user);
+
+        if ($ret) {
+            return $ret;
+        }
+
         return view('talk::conversations.create', [
-            'participants' => $participants,
+            'participants' => [$user],
         ]);
+    }
+
+    public function storeForUser(User $user, Request $request)
+    {
+        $ret = $this->checkConversationCreation($user);
+        
+        if ($ret) {
+            return $ret;
+        }
+    
+        $conversation = Talk::createConversation(auth()->user(), [auth()->user(), $user], $request->all());
+
+        #TODO: Save the message here
+
+        return redirect()->back()->with('success', __('talk::talk.conversation_create_successfully'));
     }
 
     public function show(Request $request, Conversation $conversation)

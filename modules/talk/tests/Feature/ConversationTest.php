@@ -205,7 +205,7 @@ class ConversationTest extends TestCase
         $conversation = Conversation::factory()->byUser()->create();
         $conversation->addUser($user);
 
-        $response = $this->actingAs($user)->get(route('talk.direct', ['user' => $user1->username]));
+        $response = $this->actingAs($user)->get(route('talk.create.user', ['user' => $user1->username]));
         $response->assertStatus(200);
     }
 
@@ -219,15 +219,19 @@ class ConversationTest extends TestCase
         $conversation->addUser($user1);
         $conversation->addUser($user2);
 
-        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
         $response->assertStatus(200);
-
+        
         $conversation->setOwner($user1);
-        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user2->username]));
+        
+        $this->assertFalse($conversation->isOwner($conversation)); // check for a different type
+        $this->assertTrue($conversation->isOwner($user1));
+
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
 
-        $response = $this->actingAs($user2)->get(route('talk.direct', ['user' => $user1->username]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['user' => $user1->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
     }
@@ -242,10 +246,10 @@ class ConversationTest extends TestCase
         $conversation->addUser($user1);
         $conversation->addUser($user2);
 
-        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
         $response->assertStatus(200);
 
-        $response = $this->actingAs($user2)->get(route('talk.direct', ['user' => $user1->username]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['user' => $user1->username]));
         $response->assertStatus(200);
     }
 
@@ -255,8 +259,44 @@ class ConversationTest extends TestCase
         $user2 = User::factory()->create();
         $user3 = User::factory()->create();
 
-        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user1->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user1->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.index'));
+    }
+
+    public function test_user_creates_conversation()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user1->username]), [
+            'message' => $this->faker->text(),
+        ]);
+        
+        $response->assertStatus(302);
+        $response->assertRedirect(route('talk.index'));
+
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user2->username]), [
+            'message' => $this->faker->text(),
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(302);
+        $this->assertEquals(1, $user1->owned_conversations()->count());
+        $this->assertEquals(1, $user1->participated_conversations()->count());
+        $this->assertEquals(1, $user2->participated_conversations()->count());
+        $this->assertDatabaseHas('replies', ['user_id' => $user1->id]);
+    }
+
+    public function test_user_cannot_send_empty_message()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user2->username]), [
+            'message' => '',
+        ]);
+
+        $response->assertSessionHasErrors();
     }
 }
