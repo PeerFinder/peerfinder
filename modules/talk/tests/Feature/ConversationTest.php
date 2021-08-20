@@ -115,6 +115,8 @@ class ConversationTest extends TestCase
         $user = User::factory()->create();
         $conversation = Conversation::factory()->byUser($user)->create();
 
+        $conversation->addUser($user);
+
         $response = $this->actingAs($user)->get(route('talk.show', ['conversation' => $conversation->identifier]));
         $response->assertStatus(200);
 
@@ -122,11 +124,11 @@ class ConversationTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_user_can_only_see_conversations_as_participant_or_owner()
+    public function test_user_can_only_see_conversations_as_participant()
     {
         $user = User::factory()->create();
         $user2 = User::factory()->create();
-        $conversation = Conversation::factory()->byUser()->create();
+        $conversation = Conversation::factory()->byUser($user2)->create();
 
         $conversation->addUser($user);
 
@@ -135,13 +137,6 @@ class ConversationTest extends TestCase
 
         $response = $this->actingAs($user2)->get(route('talk.show', ['conversation' => $conversation->identifier]));
         $response->assertStatus(403);
-
-        $conversation->setOwner($user2);
-        $this->assertTrue($conversation->isOwner($user2));
-        $this->assertFalse($conversation->isOwner($conversation));
-
-        $response = $this->actingAs($user2)->get(route('talk.show', ['conversation' => $conversation->identifier]));
-        $response->assertStatus(200);
     }
 
     public function test_user_can_edit_conversation()
@@ -207,7 +202,61 @@ class ConversationTest extends TestCase
         $user = User::factory()->create();
         $user1 = User::factory()->create();
 
-        $response = $this->actingAs($user)->get(route('talk.create', ['user' => $user1->username]));
+        $conversation = Conversation::factory()->byUser()->create();
+        $conversation->addUser($user);
+
+        $response = $this->actingAs($user)->get(route('talk.direct', ['user' => $user1->username]));
         $response->assertStatus(200);
+    }
+
+    public function test_redirect_to_existent_conversation_for_single_user()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user3)->create();
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user2->username]));
+        $response->assertStatus(200);
+
+        $conversation->setOwner($user1);
+        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user2->username]));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
+
+        $response = $this->actingAs($user2)->get(route('talk.direct', ['user' => $user1->username]));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
+    }
+
+    public function test_new_conversation_if_not_owned()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user3)->create();
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user2->username]));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user2)->get(route('talk.direct', ['user' => $user1->username]));
+        $response->assertStatus(200);
+    }
+
+    public function test_no_conversation_with_self()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->get(route('talk.direct', ['user' => $user1->username]));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('talk.index'));
     }
 }

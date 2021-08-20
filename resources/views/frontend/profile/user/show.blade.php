@@ -6,6 +6,11 @@
                     <div class="image">
                         <x-ui.user.avatar :user="$user" class="rounded-full text-gray-400" size="200" />
                     </div>
+                    @if ($user != auth()->user())
+                    <div class="mt-5">
+                        <x-ui.forms.button tag="a" href="{{ route('talk.direct', ['user' => $user->username]) }}">{{ __('profile/user.button_send_message') }}</x-ui.forms.button>
+                    </div>
+                    @endif
                 </div>
             </div>
             <div class="information sm:w-3/4">
@@ -18,7 +23,7 @@
 
                     @if ($user->company)
                     <p class="my-3"><x-ui.icon name="office-building" class="text-gray-400" /> {{ $user->company }}</p>
-                    @endif                    
+                    @endif
 
                     @if (count($platforms) || $user->homepage)
                     <nav class="social-bookmarks mb-4 flex flex-wrap">

@@ -2,6 +2,6 @@
     @if ($conversation->title)
         <p>{{ $conversation->title }}</p>
     @endif
-                    
-    <p>{{ Talk::usersAsString(Talk::filterUsers($conversation)) }}</p>
+
+    <p>{{ Talk::usersAsString(Talk::filterUsersForConversation($conversation)) }}</p>
 </x-talk::layout.single>

@@ -3,6 +3,7 @@
 namespace Talk\Models;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Talk\Database\Factories\ConversationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,7 +27,7 @@ class Conversation extends Model
             'create' => $updateRules,
         ];
     }
-    
+
     protected static function boot()
     {
         parent::boot();
@@ -84,5 +85,24 @@ class Conversation extends Model
     public function isParticipant(User $user)
     {
         return $this->users->contains($user);
+    }
+
+    public static function forUsers($users)
+    {
+        $query = Conversation::with('users');
+
+        // Check for participation
+        foreach ($users as $user) {
+            $query->whereHas('users', function (Builder $sub_query) use ($user) {
+                $sub_query->where('user_id', $user->id);
+            });
+        }
+
+        // Check for ownership
+        $query->whereHasMorph('conversationable', [User::class], function(Builder $query) use ($users) {
+            $query->whereIn('conversationable_id', array_map(fn($user) => $user->id, $users));
+        });
+
+        return $query;
     }
 }

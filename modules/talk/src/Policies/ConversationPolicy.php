@@ -9,11 +9,11 @@ class ConversationPolicy
 {
     public function view($user, Conversation $conversation)
     {
-        return $conversation->isParticipant($user) || $conversation->isOwner($user);
+        return $conversation->isParticipant($user);
     }
 
     public function edit($user, Conversation $conversation)
     {
-        return $conversation->isParticipant($user) || $conversation->isOwner($user);
-    }    
+        return $conversation->isParticipant($user);
+    }
 }

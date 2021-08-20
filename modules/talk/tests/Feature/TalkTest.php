@@ -44,7 +44,7 @@ class TalkTest extends TestCase
 
         $conversation->addUser($users->get(0));
 
-        $filtered_users = Talk::filterUsers($conversation);
+        $filtered_users = Talk::filterUsersForConversation($conversation);
 
         $this->assertCount(1, $filtered_users);
 
@@ -53,7 +53,7 @@ class TalkTest extends TestCase
 
         $this->assertStringContainsString($users->first()->name, Talk::usersAsString($filtered_users));
 
-        $filtered_users = Talk::filterUsers($conversation);
+        $filtered_users = Talk::filterUsersForConversation($conversation);
 
         $ids = array_map(fn($user) => $user->id, $filtered_users);
 

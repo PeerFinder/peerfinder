@@ -7,7 +7,7 @@
                     @if ($conv->title)
                         {{ $conv->title }}
                     @else
-                        {{ Talk::usersAsString(Talk::filterUsers($conv)) }}
+                        {{ Talk::usersAsString(Talk::filterUsersForConversation($conv)) }}
                     @endif
                 </div>
                 <div>x</div>

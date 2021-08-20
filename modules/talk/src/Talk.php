@@ -13,15 +13,18 @@ class Talk
         $this->user = auth()->user();
     }
 
-    public function filterUsers($conversation)
+    public function filterUsers($users)
     {
-        $users = $conversation->users()->get()->all();
-
         if (count($users) > 1) {
             $users = array_filter($users, fn($user) => $this->user->id != $user->id);
         }
 
         return $users;
+    }
+
+    public function filterUsersForConversation($conversation)
+    {
+        return $this->filterUsers($conversation->users()->get()->all());
     }
 
     public function usersAsString($users)

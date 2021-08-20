@@ -3,6 +3,7 @@
 namespace Talk\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,10 +16,22 @@ class ConversationController extends Controller
         return view('talk::conversations.index');
     }
 
-    public function create(User $user, Request $request)
+    public function directMessage(User $user, Request $request)
     {
+        if ($user == auth()->user()) {
+            return redirect(route('talk.index'));
+        }
+
+        $participants = [auth()->user(), $user];
+
+        $conversation = Conversation::forUsers($participants)->get()->first();
+
+        if ($conversation) {
+            return redirect(route('talk.show', ['conversation' => $conversation->identifier]));
+        }
+
         return view('talk::conversations.create', [
-            'participants' => [$user],
+            'participants' => $participants,
         ]);
     }
 
