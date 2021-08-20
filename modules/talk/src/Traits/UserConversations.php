@@ -3,6 +3,8 @@
 namespace Talk\Traits;
 
 use Talk\Models\Conversation;
+use Talk\Models\Receipt;
+use Talk\Models\Reply;
 
 trait UserConversations
 {
@@ -14,5 +16,15 @@ trait UserConversations
     public function owned_conversations()
     {
         return $this->morphMany(Conversation::class, 'conversationable');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    public function receipts()
+    {
+        return $this->hasMany(Receipt::class);
     }
 }

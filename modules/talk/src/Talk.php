@@ -5,6 +5,7 @@ namespace Talk;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Talk\Models\Conversation;
+use Talk\Models\Receipt;
 use Talk\Models\Reply;
 
 class Talk
@@ -33,13 +34,25 @@ class Talk
         return implode(", ", array_map(fn($user) => $user->name, $users));
     }
 
-    public function createReply(Conversation $conversation, User $user, $message, $replyTo = null)
+    public function createReply(Conversation $conversation, User $user, $input, $replyTo = null)
     {
+        Validator::make($input, Reply::getValidationRules()['create'])->validate();
+
         $reply = new Reply();
         $reply->conversation()->associate($conversation);
         $reply->user()->associate($user);
-        $reply->message = $message;
+        $reply->message = $input['message'];
         $reply->save();
+
+        foreach ($conversation->users as $u) {
+            if ($u->id != $user->id) {
+                $receipt = new Receipt();
+                $receipt->user()->associate($u);
+                $receipt->reply()->associate($reply);
+                $receipt->save();
+            }
+        }
+
         return $reply;
     }
 
@@ -49,7 +62,7 @@ class Talk
 
         Validator::make($input, Conversation::getValidationRules()['create'])->validate();
         Validator::make($input, Reply::getValidationRules()['create'])->validate();
-        
+
         if ($owner instanceof User) {
             $conversation = $owner->owned_conversations()->create($input);
         }
@@ -59,7 +72,7 @@ class Talk
                 $conversation->addUser($participant);
             }
 
-            $this->createReply($conversation, $owner, $input['message']);
+            $this->createReply($conversation, $owner, $input);
         }
 
         return $conversation;
@@ -67,6 +80,14 @@ class Talk
 
     public function deleteConversationForUser(User $user)
     {
+        $user->receipts()->each(function ($receipt) {
+            $receipt->delete();
+        });
+
+        $user->replies()->each(function ($reply) {
+            $reply->delete();
+        });
+
         $user->participated_conversations()->detach();
 
         $user->owned_conversations()->each(function ($conversation) {

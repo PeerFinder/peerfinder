@@ -114,4 +114,13 @@ class Conversation extends Model
 
         return $query;
     }
+
+    public function getReplies()
+    {
+        $replies = $this->replies()->with(['receipts'])->get()->all();
+
+        foreach ($replies as $reply) {
+            
+        }
+    }
 }

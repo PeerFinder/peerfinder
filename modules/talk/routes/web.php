@@ -11,3 +11,4 @@ Route::put('/create/{user:username}', [ConversationController::class, 'storeForU
 Route::get('/{conversation:identifier}', [ConversationController::class, 'show'])->name('show');
 Route::get('/{conversation:identifier}/edit', [ConversationController::class, 'edit'])->name('edit');
 Route::put('/{conversation:identifier}/update', [ConversationController::class, 'update'])->name('update');
+Route::put('/{conversation:identifier}/reply', [ConversationController::class, 'replyStore'])->name('reply.store');

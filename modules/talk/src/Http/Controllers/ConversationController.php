@@ -60,12 +60,22 @@ class ConversationController extends Controller
         return redirect()->back()->with('success', __('talk::talk.conversation_create_successfully'));
     }
 
+    public function replyStore(Conversation $conversation, Request $request)
+    {
+        Gate::authorize('view', $conversation);
+
+        Talk::createReply($conversation, auth()->user(), $request->all());
+
+        return redirect()->back()->with('success', __('talk::talk.reply_postet_successfully'));
+    }
+
     public function show(Request $request, Conversation $conversation)
     {
         Gate::authorize('view', $conversation);
 
         return view('talk::conversations.show', [
             'conversation' => $conversation,
+            'replies' => $conversation->getReplies(),
         ]);
     }
 

@@ -59,5 +59,10 @@ class Reply extends Model
     public function parent()
     {
         return $this->belongsTo(Reply::class);
-    }    
+    }
+
+    public function receipts()
+    {
+        return $this->hasMany(Receipt::class);
+    }
 }
