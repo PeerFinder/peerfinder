@@ -7,7 +7,7 @@
             </a>
         </div>
 
-        <div class="flex items-center space-x-2 flex-row">
+        <div class="flex items-center space-x-4 flex-row">
             @guest
             <x-ui.sections.header.button class="bg-pf-midblue hover:bg-pf-lightblue active:bg-pf-midblue" href="{{ route('login') }}">{{ __('profile/user.button_login') }}</x-ui.sections.header.button>
                 @if (Route::has('register'))
@@ -17,6 +17,16 @@
             
             @auth
             {{-- <x-ui.sections.header.button class="bg-green-600 hover:bg-green-500 active:bg-green-700 mr-7" href="{{ route('index') }}">Start circle</x-ui.sections.header.button> --}}
+            
+            <div class="notifications">
+                <div class="relative">
+                    <a href="{{ route('talk.index') }}"><x-ui.icon name="mail" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
+                    @if (Talk::userHasUnreadConversations($user))
+                    <div class="absolute rounded-full -right-1 top-0 w-3 h-3 bg-pf-darkorange"></div>
+                    @endif
+                </div>
+            </div>
+
             <header-menu>
                 <template v-slot:trigger>
                     <span class="text-gray-300 hover:text-white"><x-ui.user.avatar :user="$user" size="40" class="rounded-full inline-block" /><x-ui.icon name="chevron" class="" /></span>

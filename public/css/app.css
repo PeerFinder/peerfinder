@@ -1098,6 +1098,21 @@ select {
 .right-3 {
 	right: 0.75rem;
 }
+.right-0 {
+	right: 0px;
+}
+.top-0 {
+	top: 0px;
+}
+.right-1 {
+	right: 0.25rem;
+}
+.top-1 {
+	top: 0.25rem;
+}
+.-right-1 {
+	right: -0.25rem;
+}
 .col-span-1 {
 	grid-column: span 1 / span 1;
 }
@@ -1177,6 +1192,9 @@ select {
 .mb-1 {
 	margin-bottom: 0.25rem;
 }
+.mr-3 {
+	margin-right: 0.75rem;
+}
 .block {
 	display: block;
 }
@@ -1195,11 +1213,26 @@ select {
 .h-5 {
 	height: 1.25rem;
 }
+.h-10 {
+	height: 2.5rem;
+}
 .h-auto {
 	height: auto;
 }
 .h-9 {
 	height: 2.25rem;
+}
+.h-7 {
+	height: 1.75rem;
+}
+.h-1 {
+	height: 0.25rem;
+}
+.h-2 {
+	height: 0.5rem;
+}
+.h-3 {
+	height: 0.75rem;
 }
 .min-h-screen {
 	min-height: 100vh;
@@ -1218,6 +1251,18 @@ select {
 }
 .w-7 {
 	width: 1.75rem;
+}
+.w-10 {
+	width: 2.5rem;
+}
+.w-1 {
+	width: 0.25rem;
+}
+.w-2 {
+	width: 0.5rem;
+}
+.w-3 {
+	width: 0.75rem;
 }
 .max-w-5xl {
 	max-width: 64rem;
@@ -1279,6 +1324,11 @@ select {
 	--tw-space-x-reverse: 0;
 	margin-right: calc(0.5rem * var(--tw-space-x-reverse));
 	margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+}
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+	--tw-space-x-reverse: 0;
+	margin-right: calc(1rem * var(--tw-space-x-reverse));
+	margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -1579,6 +1629,10 @@ select {
 .text-gray-400 {
 	--tw-text-opacity: 1;
 	color: rgba(156, 163, 175, var(--tw-text-opacity));
+}
+.text-pf-lightblue {
+	--tw-text-opacity: 1;
+	color: rgba(134, 187, 216, var(--tw-text-opacity));
 }
 .underline {
 	text-decoration: underline;

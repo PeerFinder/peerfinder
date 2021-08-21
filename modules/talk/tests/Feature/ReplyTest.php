@@ -107,9 +107,24 @@ class ReplyTest extends TestCase
         $conversation->addUser($user2);
 
         $reply1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
-
         $reply2 = Talk::createReply($reply1, $user1, ['message' => $this->faker->text()]);
 
         $this->assertDatabaseHas('replies', ['reply_id' => $reply1->id]);
+    }
+
+    public function test_user_has_unread_conversations()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user2)->create();
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $this->assertFalse(Talk::userHasUnreadConversations($user2));
+
+        $reply1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+
+        $this->assertTrue(Talk::userHasUnreadConversations($user2));
     }
 }

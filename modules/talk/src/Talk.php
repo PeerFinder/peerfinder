@@ -115,5 +115,10 @@ class Talk
         }
 
         return null;
-    }    
+    }
+
+    public function userHasUnreadConversations(User $user)
+    {
+        return $user->receipts()->exists();
+    }
 }
