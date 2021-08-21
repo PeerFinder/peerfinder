@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public static function getValidationRules() {
+    public static function rules() {
         $updateRules = [
             'name' => ['required', 'string', 'max:255'],
             'slogan' => ['nullable', 'string', 'max:255'],

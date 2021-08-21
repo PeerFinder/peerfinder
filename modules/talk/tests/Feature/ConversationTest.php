@@ -236,6 +236,23 @@ class ConversationTest extends TestCase
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
     }
 
+    public function test_not_redirect_to_conversation_with_more_participants()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+        $user4 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user4)->create();
+
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+        $conversation->addUser($user3);
+
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response->assertStatus(200);
+    }
+
     public function test_new_conversation_if_not_owned()
     {
         $user1 = User::factory()->create();
@@ -286,17 +303,5 @@ class ConversationTest extends TestCase
         $this->assertEquals(1, $user1->participated_conversations()->count());
         $this->assertEquals(1, $user2->participated_conversations()->count());
         $this->assertDatabaseHas('replies', ['user_id' => $user1->id]);
-    }
-
-    public function test_user_cannot_send_empty_message()
-    {
-        $user1 = User::factory()->create();
-        $user2 = User::factory()->create();
-
-        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user2->username]), [
-            'message' => '',
-        ]);
-
-        $response->assertSessionHasErrors();
     }
 }

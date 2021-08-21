@@ -69,39 +69,39 @@ class User extends Resource
 
             Text::make('Slogan')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['slogan']),
+                ->rules(UserModel::rules()['create']['slogan']),
 
             Text::make('Homepage')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['homepage']),
+                ->rules(UserModel::rules()['create']['homepage']),
             
             Textarea::make('About')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['about']),
+                ->rules(UserModel::rules()['create']['about']),
 
             Text::make('Company')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['company']),           
+                ->rules(UserModel::rules()['create']['company']),           
             
             Text::make('Facebook Profile')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['facebook_profile']),  
+                ->rules(UserModel::rules()['create']['facebook_profile']),  
 
             Text::make('Twitter Profile')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['twitter_profile']),       
+                ->rules(UserModel::rules()['create']['twitter_profile']),       
                 
             Text::make('LinkedIn Profile')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['linkedin_profile']),
+                ->rules(UserModel::rules()['create']['linkedin_profile']),
 
             Text::make('Xing Profile')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['xing_profile']),
+                ->rules(UserModel::rules()['create']['xing_profile']),
 
             Text::make('Xing Profile')
                 ->hideFromIndex()
-                ->rules(UserModel::getValidationRules()['create']['xing_profile']),
+                ->rules(UserModel::rules()['create']['xing_profile']),
 
 /*             Password::make('Password')
                 ->onlyOnForms()

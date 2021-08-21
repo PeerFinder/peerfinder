@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Talk\Facades\Talk;
 use Talk\Models\Conversation;
+use Talk\Models\Receipt;
 
 class ConversationController extends Controller
 {
@@ -17,24 +18,9 @@ class ConversationController extends Controller
         return view('talk::conversations.index');
     }
 
-    private function checkConversationCreation($user)
-    {
-        if ($user->id == auth()->user()->id) {
-            return redirect(route('talk.index'));
-        }
-        
-        $conversation = Conversation::forUsers([auth()->user(), $user])->get()->first();
-
-        if ($conversation) {
-            return redirect(route('talk.show', ['conversation' => $conversation->identifier]));
-        }
-
-        return null;
-    }
-
     public function createForUser(User $user, Request $request)
     {
-        $ret = $this->checkConversationCreation($user);
+        $ret = Talk::checkConversationCreation($user);
 
         if ($ret) {
             return $ret;
@@ -47,17 +33,15 @@ class ConversationController extends Controller
 
     public function storeForUser(User $user, Request $request)
     {
-        $ret = $this->checkConversationCreation($user);
+        $ret = Talk::checkConversationCreation($user);
         
         if ($ret) {
             return $ret;
         }
     
-        $conversation = Talk::createConversation(auth()->user(), [auth()->user(), $user], $request->all());
+        Talk::createConversation(auth()->user(), [auth()->user(), $user], $request->all());
 
-        #TODO: Save the message here
-
-        return redirect()->back()->with('success', __('talk::talk.conversation_create_successfully'));
+        return redirect()->back()->with('success', __('talk::talk.conversation_created_successfully'));
     }
 
     public function replyStore(Conversation $conversation, Request $request)
@@ -66,16 +50,21 @@ class ConversationController extends Controller
 
         Talk::createReply($conversation, auth()->user(), $request->all());
 
-        return redirect()->back()->with('success', __('talk::talk.reply_postet_successfully'));
+        return redirect()->back()->with('success', __('talk::talk.reply_posted_successfully'));
     }
 
     public function show(Request $request, Conversation $conversation)
     {
         Gate::authorize('view', $conversation);
 
+        $unread = false;
+
+        $unread = $conversation->markAsRead();
+
         return view('talk::conversations.show', [
             'conversation' => $conversation,
             'replies' => $conversation->getReplies(),
+            'unread' => $unread,
         ]);
     }
 
@@ -94,7 +83,7 @@ class ConversationController extends Controller
 
         $input = $request->all();
 
-        Validator::make($input, Conversation::getValidationRules()['update'])->validate();
+        Validator::make($input, Conversation::rules()['update'])->validate();
 
         $conversation->update($input);
 

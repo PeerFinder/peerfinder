@@ -10,7 +10,7 @@ class CreateRepliesTable extends Migration
     {
         Schema::create('replies', function(Blueprint $table) {
             $table->id();
-            $table->string('identifier')->index();
+            $table->uuid('identifier')->index();
             $table->text('message');
             $table->foreignId('user_id');
             $table->foreignId('conversation_id');

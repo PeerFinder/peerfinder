@@ -4,6 +4,9 @@
         <li class="border-b border-gray-600 p-3 {{ ($conversation && $conv->identifier == $conversation->identifier) ? 'bg-blue-500' : '' }}">
             <a href="{{ route('talk.show', ['conversation' => $conv->identifier]) }}">
                 <div class="truncate bg-yellow-400 font-bold">
+                    @if ($conv->isUnread())
+                        Unread: 
+                    @endif
                     @if ($conv->title)
                         {{ $conv->title }}
                     @else

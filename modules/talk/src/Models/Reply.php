@@ -17,7 +17,7 @@ class Reply extends Model
         'message',
     ];
 
-    public static function getValidationRules() {
+    public static function rules() {
         $updateRules = [
             'message' => ['required', 'string', 'max:1000'],
         ];
@@ -35,15 +35,6 @@ class Reply extends Model
         static::creating(function ($reply) {
             $reply->identifier = (string) Str::uuid();
         });
-
-        static::deleting(function ($conversation) {
-            
-        });
-    }
-
-    protected static function newFactory()
-    {
-        return new ReplyFactory();
     }
 
     public function conversation()
@@ -58,11 +49,6 @@ class Reply extends Model
 
     public function parent()
     {
-        return $this->belongsTo(Reply::class);
-    }
-
-    public function receipts()
-    {
-        return $this->hasMany(Receipt::class);
+        return $this->belongsTo(Reply::class, 'reply_id');
     }
 }

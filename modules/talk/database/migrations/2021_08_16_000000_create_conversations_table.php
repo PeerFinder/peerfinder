@@ -10,7 +10,7 @@ class CreateConversationsTable extends Migration
     {
         Schema::create('conversations', function(Blueprint $table) {
             $table->id();
-            $table->string('identifier')->index();
+            $table->uuid('identifier')->index();
             $table->morphs('conversationable');
             $table->string('title')->nullable();
             $table->timestamps();

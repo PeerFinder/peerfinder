@@ -17,7 +17,7 @@ class Conversation extends Model
         'title',
     ];
 
-    public static function getValidationRules() {
+    public static function rules() {
         $updateRules = [
             'title' => ['nullable', 'string', 'max:255'],
         ];
@@ -38,10 +38,14 @@ class Conversation extends Model
 
         static::deleting(function ($conversation) {
             $conversation->users()->detach();
-            
-            foreach ($conversation->replies() as $reply) {
+
+            $conversation->receipts()->each(function ($receipt) {
+                $receipt->delete();
+            });
+
+            $conversation->replies()->each(function ($reply) {
                 $reply->delete();
-            }
+            });
         });
     }
 
@@ -53,6 +57,11 @@ class Conversation extends Model
     public function replies()
     {
         return $this->hasMany(Reply::class);
+    }
+
+    public function receipts()
+    {
+        return $this->hasMany(Receipt::class);
     }
 
     protected static function newFactory()
@@ -98,7 +107,7 @@ class Conversation extends Model
 
     public static function forUsers($users)
     {
-        $query = Conversation::with('users');
+        $query = Conversation::withCount('users')->having('users_count', '=', count($users));
 
         // Check for participation
         foreach ($users as $user) {
@@ -117,10 +126,20 @@ class Conversation extends Model
 
     public function getReplies()
     {
-        $replies = $this->replies()->with(['receipts'])->get()->all();
+        $replies = $this->replies()->with(['user'])->get()->all();
+        return $replies;
+    }
 
-        foreach ($replies as $reply) {
-            
-        }
+    public function isUnread()
+    {
+        return ($this->receipts->count() > 0);
+    }
+
+    public function markAsRead()
+    {
+        $receipt = Receipt::where('conversation_id', $this->id)->where('user_id', auth()->user()->id);
+        $was_unread = $receipt->exists();
+        $receipt->delete();
+        return $was_unread;
     }
 }

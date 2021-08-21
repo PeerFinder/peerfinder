@@ -11,7 +11,7 @@ class CreateReceiptsTable extends Migration
         Schema::create('receipts', function(Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('reply_id');
+            $table->foreignId('conversation_id');
             $table->timestamps();
         });
     }
