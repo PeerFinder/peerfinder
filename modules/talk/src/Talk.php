@@ -54,6 +54,8 @@ class Talk
         $reply->message = $input['message'];
         $reply->save();
 
+        $conversation->touch();
+
         foreach ($conversation->users as $u) {
             if ($u->id != $user->id) {
                 Receipt::firstOrCreate(['user_id' => $u->id, 'conversation_id' => $conversation->id]);
@@ -120,5 +122,16 @@ class Talk
     public function userHasUnreadConversations(User $user)
     {
         return $user->receipts()->exists();
+    }
+
+    public function getRecentUnreadConversationForUser(User $user)
+    {
+        $receipt = Receipt::where('user_id', $user->id)->orderBy('updated_at', 'desc')->first();
+
+        if ($receipt) {
+            return $receipt->conversation;
+        } else {
+            return null;
+        }
     }
 }

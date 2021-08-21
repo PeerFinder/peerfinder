@@ -11,4 +11,9 @@ class Receipt extends Model
         'user_id',
         'conversation_id',
     ];
+
+    public function conversation()
+    {
+        return $this->belongsTo(Conversation::class);
+    }
 }

@@ -9,4 +9,6 @@ return [
     'button_start_conversation' => 'Start conversation',
     'button_send_reply' => 'Reply',
     'field_message' => 'Post',
+    'no_conversation_selected' => 'No conversation selected',
+    'select_a_conversation_on_the_left_side' => 'Select a conversation on the left side!',
 ];

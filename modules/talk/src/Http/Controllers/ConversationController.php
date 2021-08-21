@@ -15,6 +15,12 @@ class ConversationController extends Controller
 {
     public function index(Request $request)
     {
+        $recent_conversation = Talk::getRecentUnreadConversationForUser(auth()->user());
+
+        if ($recent_conversation) {
+            return redirect(route('talk.show', ['conversation' => $recent_conversation->identifier]));
+        }
+
         return view('talk::conversations.index');
     }
 
