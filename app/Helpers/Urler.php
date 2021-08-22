@@ -86,6 +86,6 @@ class Urler
 
     public function userProfileUrl($user)
     {
-        return route('profile.user.show', ['user' => $user->username]);
+        return $user->profileUrl();
     }
 }

@@ -58,4 +58,21 @@ class TalkTest extends TestCase
 
         $this->assertNotContains($users->first()->id, $ids);
     }
+
+    public function test_conversation_can_be_embedded()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser()->create();
+
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $reply1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+
+        $content = Talk::embedConversation($conversation);
+
+        $this->assertStringContainsString($reply1->message, $content);
+    }
 }

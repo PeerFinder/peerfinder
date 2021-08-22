@@ -29,8 +29,12 @@ class Talk
         return $this->filterUsers($conversation->users->all());
     }
 
-    public function usersAsString($users)
+    public function usersAsString($users, $with_links = false)
     {
+        if ($with_links) {
+            return implode(", ", array_map(fn($user) => '<a href="' . $user->profileUrl() . '">' . $user->name . '</a>', $users));
+        }
+
         return implode(", ", array_map(fn($user) => $user->name, $users));
     }
 
@@ -133,5 +137,12 @@ class Talk
         } else {
             return null;
         }
+    }
+
+    public function embedConversation(Conversation $conversation)
+    {
+        return view('talk::conversations.embedded.show', [
+            'conversation' => $conversation,
+        ]);
     }
 }

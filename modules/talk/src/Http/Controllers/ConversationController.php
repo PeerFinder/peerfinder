@@ -54,9 +54,10 @@ class ConversationController extends Controller
     {
         Gate::authorize('view', $conversation);
 
-        Talk::createReply($conversation, auth()->user(), $request->all());
+        $reply = Talk::createReply($conversation, auth()->user(), $request->all());
 
-        return redirect()->back()->with('success', __('talk::talk.reply_posted_successfully'));
+        return redirect(route('talk.show', ['conversation' => $conversation->identifier, '#reply-'.$reply->identifier]))
+            ->with('success', __('talk::talk.reply_posted_successfully'));
     }
 
     public function show(Request $request, Conversation $conversation)
@@ -98,6 +99,7 @@ class ConversationController extends Controller
             $conversation->syncUsers($users);
         }
 
-        return redirect()->back()->with('success', __('talk::talk.conversation_changed_successfully'));
+        return redirect(route('talk.show', ['conversation' => $conversation->identifier]))
+                ->with('success', __('talk::talk.conversation_changed_successfully'));
     }
 }

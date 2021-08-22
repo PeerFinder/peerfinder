@@ -87,4 +87,9 @@ class User extends Authenticatable implements MustVerifyEmail
             Talk::deleteConversationForUser($user);
         });
     }
+
+    public function profileUrl()
+    {
+        return route('profile.user.show', ['user' => $this->username]);
+    }
 }

@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        return redirect(route('profile.user.show', ['user' => auth()->user()->username]));
+        return redirect(auth()->user()->profileUrl());
     }
 
     public function show(User $user)
