@@ -21,6 +21,8 @@ class Talk
             $users = array_filter($users, fn($user) => $this->user->id != $user->id);
         }
 
+        $users = array_values($users);
+
         return $users;
     }
 

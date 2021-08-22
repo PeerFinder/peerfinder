@@ -6,10 +6,10 @@
             <x-ui.forms.input id="password" name="password" type="password" autocomplete="current-password" required>{{ __('auth.field_password') }}</x-ui.forms.input>
         </div>
 
-        <div>
+        <x-account.form-buttons>
             @csrf
             @method('DELETE')
             <x-ui.forms.button action="destroy">{{ __('account/account.button_delete_account') }}</x-ui.forms.button>
-        </div>
+        </x-account.form-buttons>
     </x-account.form>
 </x-layout.account>

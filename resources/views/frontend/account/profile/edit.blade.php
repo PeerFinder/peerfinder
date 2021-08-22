@@ -32,10 +32,10 @@
             </div>
         @endforeach
 
-        <div>
+        <x-account.form-buttons>
             @csrf
             @method('PUT')
             <x-ui.forms.button>{{ __('account/profile.button_change_profile') }}</x-ui.forms.button>
-        </div>
+        </x-account.form-buttons>
     </x-account.form>
 </x-layout.account>

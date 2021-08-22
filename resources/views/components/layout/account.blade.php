@@ -2,6 +2,8 @@
     <x-base.app>
         <x-ui.sections.header :user="$currentUser" />
 
+        <x-ui.status />
+
         <x-base.container class="mb-10 sm:px-3 pt-10">
             <div class="bg-white shadow-md after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
 
@@ -28,17 +30,7 @@
                             @endif
                         </div>
 
-                        <x-account.status />
-
-                        @if ($errors->any())
-                            <x-account.flash class="bg-red-300 border-red-500">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li><x-ui.icon name="exclamation" class="text-red-600" /> {{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </x-account.flash>
-                        @endif
+                        <x-ui.errors :errors="$errors" class="mx-10 mt-10 p-3" />
 
                         <div class="p-10">
                             {{ $slot }}

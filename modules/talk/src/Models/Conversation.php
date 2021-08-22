@@ -142,4 +142,9 @@ class Conversation extends Model
         $receipt->delete();
         return $was_unread;
     }
+
+    public function getUrl()
+    {
+        return route('talk.show', ['conversation' => $this->identifier]);
+    }
 }

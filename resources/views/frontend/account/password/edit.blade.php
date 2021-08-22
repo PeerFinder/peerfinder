@@ -9,10 +9,11 @@
         <div>
             <x-ui.forms.input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>{{ __('account/password.field_new_password_confirmation') }}</x-ui.forms.input>
         </div>
-        <div>
+        
+        <x-account.form-buttons>
             @csrf
             @method('PUT')
             <x-ui.forms.button>{{ __('account/password.button_change_password') }}</x-ui.forms.button>
-        </div>
+        </x-account.form-buttons>
     </x-account.form>
 </x-layout.account>
