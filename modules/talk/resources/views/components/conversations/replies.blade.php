@@ -1,4 +1,7 @@
 <div class="space-y-4">
+
+{{ $replies->links('talk::components.ui.pagination') }}
+
 @foreach ($replies as $reply)
     <div id="reply-{{ $reply->identifier }}">
         <div class="flex justify-between mb-1 text-sm">
@@ -13,4 +16,7 @@
         </div>
     </div>
 @endforeach
+
+{{ $replies->links('talk::components.ui.pagination') }}
+
 </div>

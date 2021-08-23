@@ -3,6 +3,7 @@
 namespace Talk\Models;
 
 use App\Models\User;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Builder;
 use Talk\Database\Factories\ConversationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -106,6 +107,14 @@ class Conversation extends Model
         return $this->users->contains($user);
     }
 
+    /**
+     * Searches for the conversation with an exact list of users. At least one of those
+     * user has to be also the owner of the conversation (otherwise the owner can leave
+     * the conversation and other participants cannot create another one with same users).
+     * 
+     * @param mixed $users List of participants
+     * @return Builder query
+     */
     public static function forUsers($users)
     {
         $query = Conversation::withCount('users')->having('users_count', '=', count($users));
@@ -127,8 +136,9 @@ class Conversation extends Model
 
     public function getReplies()
     {
-        $replies = $this->replies()->with(['user'])->get()->all();
-        return $replies;
+        return Reply::where('conversation_id', $this->id)
+                    ->with('user')
+                    ->paginate(config('talk.replies_per_page', 20));
     }
 
     public function isUnread()
@@ -136,6 +146,12 @@ class Conversation extends Model
         return ($this->receipts->count() > 0);
     }
 
+    /**
+     * Marks the conversation as read for the current user by
+     * deleting the corresponding receipt from the database.
+     * 
+     * @return bool previous read/unread state
+     */
     public function markAsRead()
     {
         $receipt = Receipt::where('conversation_id', $this->id)->where('user_id', auth()->user()->id);
@@ -144,6 +160,13 @@ class Conversation extends Model
         return $was_unread;
     }
 
+    /**
+     * Returns the URL of current conversation. If the reply is provided,
+     * the reply identifier is attached as hash-parameter to the URL.
+     * 
+     * @param mixed|null $reply Reply Object
+     * @return string URL
+     */
     public function getUrl($reply = null)
     {
         if ($reply) {
@@ -153,6 +176,12 @@ class Conversation extends Model
         }
     }
 
+    /**
+     * Returns the title stored in the database. If the title is empty, returns
+     * the list of participants
+     * 
+     * @return string 
+     */
     public function getTitle()
     {
         if ($this->title) {

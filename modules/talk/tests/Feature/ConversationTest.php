@@ -321,4 +321,21 @@ class ConversationTest extends TestCase
         $this->assertEquals(1, $user2->participated_conversations()->count());
         $this->assertDatabaseHas('replies', ['user_id' => $user1->id]);
     }
+
+    public function test_title_of_the_conversation_is_dynamic()
+    {
+        $user = User::factory()->create();
+        $user1 = User::factory()->create();
+        $conversation = Conversation::factory()->byUser($user)->create();
+
+        $this->be($user);
+
+        $conversation->addUser($user);
+        $conversation->addUser($user1);
+
+        $this->assertEquals($conversation->title, $conversation->getTitle());
+
+        $conversation->title = '';
+        $this->assertStringContainsString($user1->name, $conversation->getTitle());
+    }
 }

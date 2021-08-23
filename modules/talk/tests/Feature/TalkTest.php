@@ -53,6 +53,7 @@ class TalkTest extends TestCase
         $conversation->refresh();
 
         $this->assertStringContainsString($users->first()->name, Talk::usersAsString($filtered_users));
+        $this->assertStringContainsString($users->first()->profileUrl(), Talk::usersAsString($filtered_users, true));
         
         $filtered_users = Talk::filterUsersForConversation($conversation);
         

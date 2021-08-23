@@ -132,4 +132,25 @@ class ReplyTest extends TestCase
         $this->assertEquals(route('talk.show', ['conversation' => $conversation->identifier, '#reply-' . $reply1->identifier]),
                     Talk::dynamicConversationsUrl($user2));
     }
+
+    public function test_get_unread_conversations_for_user()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user2)->create();
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $this->assertNull(Talk::getRecentUnreadConversationForUser($user2));
+
+        $reply1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+
+        $user2 = User::whereId($user2->id)->with('receipts')->get()->first();
+
+        $unreadConversation = Talk::getRecentUnreadConversationForUser($user2);
+
+        $this->assertNotNull($unreadConversation);
+        $this->assertEquals($conversation->id, $unreadConversation->id);
+    }
 }

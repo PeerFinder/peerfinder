@@ -4,7 +4,7 @@
         <h2 class="font-bold">{{ $conversation->title }}</h2>
         @endif
     
-        <p>{{ Talk::usersAsString(Talk::filterUsersForConversation($conversation)) }}</p>
+        <p>{!! Talk::usersAsString(Talk::filterUsersForConversation($conversation), true) !!}</p>
     </div>
 
     <div class="p-6">
