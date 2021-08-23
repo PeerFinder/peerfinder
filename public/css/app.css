@@ -1089,9 +1089,6 @@ select {
 	white-space: nowrap;
 	border-width: 0;
 }
-.invisible {
-	visibility: hidden;
-}
 .absolute {
 	position: absolute;
 }
@@ -1125,11 +1122,14 @@ select {
 .col-span-9 {
 	grid-column: span 9 / span 9;
 }
-.col-span-10 {
-	grid-column: span 10 / span 10;
+.col-span-7 {
+	grid-column: span 7 / span 7;
 }
 .col-span-3 {
 	grid-column: span 3 / span 3;
+}
+.col-span-10 {
+	grid-column: span 10 / span 10;
 }
 .m-2 {
 	margin: 0.5rem;
@@ -1149,6 +1149,10 @@ select {
 .my-3 {
 	margin-top: 0.75rem;
 	margin-bottom: 0.75rem;
+}
+.mx-3 {
+	margin-left: 0.75rem;
+	margin-right: 0.75rem;
 }
 .mb-12 {
 	margin-bottom: 3rem;
@@ -1203,6 +1207,12 @@ select {
 }
 .mt-1 {
 	margin-top: 0.25rem;
+}
+.mr-3 {
+	margin-right: 0.75rem;
+}
+.mt-3 {
+	margin-top: 0.75rem;
 }
 .block {
 	display: block;
@@ -1484,10 +1494,6 @@ select {
 .bg-yellow-200 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(253, 230, 138, var(--tw-bg-opacity));
-}
-.bg-yellow-50 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(255, 251, 235, var(--tw-bg-opacity));
 }
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
@@ -1833,10 +1839,6 @@ select {
 		overflow: visible;
 		clip: auto;
 		white-space: normal;
-	}
-
-	.sm\:visible {
-		visibility: visible;
 	}
 
 	.sm\:col-span-4 {
