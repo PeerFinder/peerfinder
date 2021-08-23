@@ -8,6 +8,7 @@ use Talk\Database\Factories\ConversationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Talk\Facades\Talk;
 
 class Conversation extends Model
 {
@@ -143,8 +144,21 @@ class Conversation extends Model
         return $was_unread;
     }
 
-    public function getUrl()
+    public function getUrl($reply = null)
     {
-        return route('talk.show', ['conversation' => $this->identifier]);
+        if ($reply) {
+            return route('talk.show', ['conversation' => $this->identifier, '#reply-' . $reply->identifier]);
+        } else {
+            return route('talk.show', ['conversation' => $this->identifier]);
+        }
+    }
+
+    public function getTitle()
+    {
+        if ($this->title) {
+            return $this->title;
+        } else {
+            return Talk::usersAsString(Talk::filterUsersForConversation($this));
+        }
     }
 }

@@ -9,11 +9,7 @@
                 <div class="flex-1">
                     <div class="line-clamp-1 font-bold ml-2">
                         @if ($conv->isUnread())<span class="rounded-full inline-block w-3 h-3 bg-pf-darkorange"></span>@endif
-                        @if ($conv->title)
-                            {{ $conv->title }}
-                        @else
-                            {{ Talk::usersAsString(Talk::filterUsersForConversation($conv)) }}
-                        @endif
+                        {{ $conv->getTitle() }}
                     </div>
                     @if ($conv->replies->first())
                     <div class="line-clamp-2 text-sm ml-2">{{ $conv->replies->first()->message }}</div>

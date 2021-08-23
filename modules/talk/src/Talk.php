@@ -18,7 +18,7 @@ class Talk
     public function filterUsers($users)
     {
         if (count($users) > 1) {
-            $users = array_filter($users, fn($user) => $this->user->id != $user->id);
+            $users = array_filter($users, fn ($user) => $this->user->id != $user->id);
         }
 
         $users = array_values($users);
@@ -34,10 +34,10 @@ class Talk
     public function usersAsString($users, $with_links = false)
     {
         if ($with_links) {
-            return implode(", ", array_map(fn($user) => '<a href="' . $user->profileUrl() . '">' . $user->name . '</a>', $users));
+            return implode(", ", array_map(fn ($user) => '<a href="' . $user->profileUrl() . '">' . $user->name . '</a>', $users));
         }
 
-        return implode(", ", array_map(fn($user) => $user->name, $users));
+        return implode(", ", array_map(fn ($user) => $user->name, $users));
     }
 
     public function createReply($parent, User $user, $input)
@@ -64,7 +64,18 @@ class Talk
 
         foreach ($conversation->users as $u) {
             if ($u->id != $user->id) {
-                Receipt::firstOrCreate(['user_id' => $u->id, 'conversation_id' => $conversation->id]);
+                $receipt = Receipt::where(['user_id' => $u->id, 'conversation_id' => $conversation->id]);
+
+                if (!$receipt->exists()) {
+                    $receipt = new Receipt();
+                    $receipt->user_id = $u->id;
+                    $receipt->conversation_id = $conversation->id;
+                } else {
+                    $receipt = $receipt->first();
+                }
+
+                $receipt->reply_id = $reply->id;
+                $receipt->save();
             }
         }
 
@@ -81,7 +92,7 @@ class Talk
         if ($owner instanceof User) {
             $conversation = $owner->owned_conversations()->create($input);
         }
-        
+
         if ($conversation) {
             foreach ($participants as $participant) {
                 $conversation->addUser($participant);
@@ -115,7 +126,7 @@ class Talk
         if ($user->id == auth()->user()->id) {
             return redirect(route('talk.index'));
         }
-        
+
         $conversation = Conversation::forUsers([auth()->user(), $user])->get()->first();
 
         if ($conversation) {
@@ -127,12 +138,12 @@ class Talk
 
     public function userHasUnreadConversations(User $user)
     {
-        return $user->receipts()->exists();
+        return $user->receipts->count() > 0;
     }
 
     public function getRecentUnreadConversationForUser(User $user)
     {
-        $receipt = Receipt::where('user_id', $user->id)->orderBy('updated_at', 'desc')->first();
+        $receipt = $user->receipts->first();
 
         if ($receipt) {
             return $receipt->conversation;
@@ -146,5 +157,16 @@ class Talk
         return view('talk::conversations.embedded.show', [
             'conversation' => $conversation,
         ]);
+    }
+
+    public function dynamicConversationsUrl($user)
+    {
+        if ($this->userHasUnreadConversations($user)) {
+            $conversation = $this->getRecentUnreadConversationForUser($user);
+            $reply = $user->receipts->first()->reply;
+            return $conversation->getUrl($reply);
+        } else {
+            return route('talk.index');
+        }
     }
 }

@@ -111,21 +111,21 @@ class ConversationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_user_is_redirected_to_unread_conversation()
-    {
-        $user1 = User::factory()->create();
-        $user2 = User::factory()->create();
-        $conversation = Conversation::factory()->byUser()->create();
-
-        $conversation->addUser($user1);
-        $conversation->addUser($user2);
-
-        Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
-
-        $response = $this->actingAs($user2)->get(route('talk.index'));
-        $response->assertStatus(302);
-        $response->assertLocation(route('talk.show', ['conversation' => $conversation->identifier]));
-    }
+    #public function test_user_is_redirected_to_unread_conversation()
+    #{
+    #    $user1 = User::factory()->create();
+    #    $user2 = User::factory()->create();
+    #    $conversation = Conversation::factory()->byUser()->create();
+    #
+    #    $conversation->addUser($user1);
+    #    $conversation->addUser($user2);
+    #
+    #    Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+    #
+    #    $response = $this->actingAs($user2)->get(route('talk.index'));
+    #    $response->assertStatus(302);
+    #    $response->assertLocation(route('talk.show', ['conversation' => $conversation->identifier]));
+    #}
 
     public function test_user_can_render_conversation()
     {

@@ -12,6 +12,7 @@ class CreateReceiptsTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('conversation_id');
+            $table->foreignId('reply_id');
             $table->timestamps();
         });
     }

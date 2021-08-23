@@ -125,6 +125,11 @@ class ReplyTest extends TestCase
 
         $reply1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
 
+        $user2 = User::whereId($user2->id)->with('receipts')->get()->first();
+
         $this->assertTrue(Talk::userHasUnreadConversations($user2));
+
+        $this->assertEquals(route('talk.show', ['conversation' => $conversation->identifier, '#reply-' . $reply1->identifier]),
+                    Talk::dynamicConversationsUrl($user2));
     }
 }

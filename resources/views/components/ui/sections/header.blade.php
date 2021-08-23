@@ -20,7 +20,7 @@
             
             <div class="notifications">
                 <div class="relative">
-                    <a href="{{ route('talk.index') }}"><x-ui.icon name="mail" class="w-7 h-7 text-gray-400 hover:text-white" /></a>
+                    <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-gray-400 hover:text-white" /></a>
                     @if (Talk::userHasUnreadConversations($user))
                     <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-pf-darkorange"></div>
                     @endif

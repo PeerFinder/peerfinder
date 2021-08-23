@@ -9,11 +9,11 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "intervention/image": "^2.6",
+        "intervention/image": "^2.6.1",
         "intervention/imagecache": "^2.5",
-        "laravel/fortify": "^1.7",
-        "laravel/framework": "^8.40",
-        "laravel/nova": "^3.28",
+        "laravel/fortify": "^1.8.0",
+        "laravel/framework": "^8.55",
+        "laravel/nova": "^3.29.0",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
