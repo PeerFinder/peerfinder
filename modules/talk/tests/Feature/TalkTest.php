@@ -5,6 +5,8 @@ namespace Talk\Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ViewErrorBag;
 use Talk\Models\Conversation;
 use Talk\Facades\Talk;
 use Tests\TestCase;
@@ -71,6 +73,7 @@ class TalkTest extends TestCase
 
         $reply1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
 
+        View::share('errors', new ViewErrorBag());
         $content = Talk::embedConversation($conversation);
 
         $this->assertStringContainsString($reply1->message, $content);

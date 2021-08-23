@@ -6,6 +6,7 @@ return [
     'edit_conversation' => 'Edit conversation',
     'field_title' => 'Title',
     'conversation_created_successfully' => 'Conversation created successfully',
+    'conversation_changed_successfully' => 'Conversation changed successfully',
     'reply_posted_successfully' => 'Reply posted successfully',
     'button_start_conversation' => 'Start conversation',
     'button_send_reply' => 'Reply',

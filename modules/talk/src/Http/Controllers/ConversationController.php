@@ -15,13 +15,6 @@ class ConversationController extends Controller
 {
     public function index(Request $request)
     {
-        /*
-        $recent_conversation = Talk::getRecentUnreadConversationForUser(auth()->user());
-
-        if ($recent_conversation) {
-            return redirect(route('talk.show', ['conversation' => $recent_conversation->identifier]));
-        }
-        */
         return view('talk::conversations.index');
     }
 
@@ -57,8 +50,7 @@ class ConversationController extends Controller
 
         $reply = Talk::createReply($conversation, auth()->user(), $request->all());
 
-        return redirect(route('talk.show', ['conversation' => $conversation->identifier, '#reply-'.$reply->identifier]))
-            ->with('success', __('talk::talk.reply_posted_successfully'));
+        return redirect(app('url')->previous() . '#reply-' . $reply->identifier)->with('success', __('talk::talk.reply_posted_successfully'));
     }
 
     public function show(Request $request, Conversation $conversation)
@@ -100,7 +92,6 @@ class ConversationController extends Controller
             $conversation->syncUsers($users);
         }
 
-        return redirect(route('talk.show', ['conversation' => $conversation->identifier]))
-                ->with('success', __('talk::talk.conversation_changed_successfully'));
+        return redirect($conversation->getUrl())->with('success', __('talk::talk.conversation_changed_successfully'));
     }
 }

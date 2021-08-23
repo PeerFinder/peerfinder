@@ -10,6 +10,4 @@
             <div class="ml-3 bg-gray-50">Sidebar</div>
         </div>
     </div>
-    
-
 </x-layout.minimal>

@@ -3,7 +3,7 @@
 <x-ui.errors :errors="$errors" class="p-3 mb-2" />
 
 <div>
-    <x-ui.forms.textarea id="message" value="{{ old('message') }}" name="message" rows="4" required>{{ __('talk::talk.field_message') }}</x-ui.forms.textarea>
+    <x-ui.forms.textarea id="message" value="{{ old('message') }}" name="message" rows="4" requiredXX>{{ __('talk::talk.field_message') }}</x-ui.forms.textarea>
 </div>
 
 <div class="mt-2">
