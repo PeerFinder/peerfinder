@@ -170,4 +170,9 @@ class Talk
             return route('talk.index');
         }
     }
+
+    public function formatDateTime($datetime)
+    {
+        return $datetime->format('H:i - d.m.y');
+    }
 }
