@@ -35,7 +35,7 @@ class ProfileController extends Controller
             }
         }
 
-        Validator::make($input, User::getValidationRules()['update'])->validate();
+        Validator::make($input, User::rules()['update'])->validate();
 
         $request->user()->update($input);
 

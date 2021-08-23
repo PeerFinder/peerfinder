@@ -3,11 +3,11 @@
 namespace Tests\Browser\Account;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Mail;
 
@@ -23,7 +23,7 @@ class AccountTest extends DuskTestCase
     {
         $user = User::factory()->create();
 
-        $this->browse(function ($browser) use ($user) {
+        $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                     ->visitRoute('account.account.edit')
                     ->type('password', 'password')

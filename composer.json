@@ -9,15 +9,16 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "intervention/image": "^2.6",
+        "intervention/image": "^2.6.1",
         "intervention/imagecache": "^2.5",
-        "laravel/fortify": "^1.7",
-        "laravel/framework": "^8.40",
-        "laravel/nova": "^3.28",
+        "laravel/fortify": "^1.8.0",
+        "laravel/framework": "^8.55",
+        "laravel/nova": "^3.29.0",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
+        "beyondcode/laravel-query-detector": "^1.5",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/dusk": "^6.15",
@@ -30,7 +31,9 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Talk\\": "modules/talk/src/",
+            "Talk\\Database\\Factories\\": "modules/talk/database/factories"
         }
     },
     "autoload-dev": {

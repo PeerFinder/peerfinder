@@ -1,6 +1,8 @@
 {
     "cSpell.words": [
         "authenticatable",
+        "conversationable",
         "urler"
-    ]
+    ],
+    "php.suggest.basic": false
 }

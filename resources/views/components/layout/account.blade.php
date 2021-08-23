@@ -2,13 +2,15 @@
     <x-base.app>
         <x-ui.sections.header :user="$currentUser" />
 
-        <x-base.container class="mb-10 sm:px-3">
-            <h1 class="mt-10 mb-5 text-3xl text-center sm:text-left">{{ __('account/account.title') }}</h1>
+        <x-ui.status />
 
+        <x-base.container class="mb-10 sm:px-3 pt-10">
             <div class="bg-white shadow-md after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
 
-                <div class="grid grid-cols-10 sm:grid-cols-5">
+                <div class="grid grid-cols-10 sm:grid-cols-5 min-h-screen">
                     <div class="col-span-1 bg-gray-50 border-r border-gray-200">
+                        <h1 class="hidden sm:block px-4 py-2 border-b border-gray-200 bg-white">{{ __('account/account.title') }}</h1>
+
                         <nav class="sm:p-2">
                             <x-account.nav-item route="account.profile.edit" icon="user-circle">{{ __('account/account.menu_profile') }}</x-account.nav-item>
                             <x-account.nav-item route="account.avatar.edit" icon="photograph">{{ __('account/account.menu_avatar') }}</x-account.nav-item>
@@ -28,17 +30,7 @@
                             @endif
                         </div>
 
-                        <x-account.status />
-
-                        @if ($errors->any())
-                            <x-account.flash class="bg-red-300 border-red-500">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li><x-ui.icon name="exclamation" class="text-red-600" /> {{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </x-account.flash>
-                        @endif
+                        <x-ui.errors :errors="$errors" class="mx-10 mt-10 p-3" />
 
                         <div class="p-10">
                             {{ $slot }}

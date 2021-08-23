@@ -13,10 +13,10 @@
 
         <div class="text-sm">{{ __('account/email.mail_change_notice') }}</div>
 
-        <div>
+        <x-account.form-buttons>
             @csrf
             @method('PUT')
             <x-ui.forms.button>{{ __('account/email.button_change_email') }}</x-ui.forms.button>
-        </div>
+        </x-account.form-buttons>
     </x-account.form>
 </x-layout.account>

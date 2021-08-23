@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Account',
+    'title' => 'My Account',
     'menu_profile' => 'Profile',
     'menu_avatar' => 'Avatar',
     'menu_email' => 'E-Mail',

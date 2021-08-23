@@ -4,6 +4,9 @@ module.exports = {
     './resources/**/*.blade.php',
     './resources/**/*.js',
     './resources/**/*.vue',
+    './modules/**/resources/**/*.blade.php',
+    './modules/**/resources/**/*.js.php',
+    './modules/**/resources/**/*.vue.php',
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
@@ -31,5 +34,6 @@ module.exports = {
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/line-clamp'),
   ]
 }

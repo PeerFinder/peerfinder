@@ -27,11 +27,11 @@
             <x-ui.forms.input id="avatar" name="avatar" type="file" required>{{ __('account/avatar.field_avatar') }}</x-ui.forms.input>
         </div>
 
-        <div>
+        <x-account.form-buttons>
             @csrf
             @method('PUT')
             <x-ui.forms.button>{{ __('account/avatar.button_upload_avatar') }}</x-ui.forms.button>
-        </div>
+        </x-account.form-buttons>
     </x-account.form>
 
 
