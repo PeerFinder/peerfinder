@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'conversations_title' => 'My Conversations',
+    'conversations_title' => 'My conversations',
     'no_conversations_yet' => 'No conversations yet',
+    'edit_conversation' => 'Edit conversation',
     'field_title' => 'Title',
     'conversation_created_successfully' => 'Conversation created successfully',
     'reply_posted_successfully' => 'Reply posted successfully',
