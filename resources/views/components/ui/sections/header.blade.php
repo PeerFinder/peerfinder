@@ -9,7 +9,7 @@
 
         <div class="flex items-center space-x-4 flex-row">
             @guest
-            <x-ui.sections.header.button class="bg-pf-midblue hover:bg-pf-lightblue active:bg-pf-midblue" href="{{ route('login') }}">{{ __('profile/user.button_login') }}</x-ui.sections.header.button>
+            <x-ui.sections.header.button class="bg-pf-darkblue inline-flex items-center hover:bg-pf-lightblue active:bg-pf-midblue" href="{{ route('login') }}"><x-ui.icon name="user-circle" class="mr-1" />{{ __('profile/user.button_login') }}</x-ui.sections.header.button>
                 @if (Route::has('register'))
                 <x-ui.sections.header.button class="bg-pf-darkorange hover:bg-pf-midorange active:bg-pf-darkorange" href="{{ route('register') }}">{{ __('profile/user.button_register') }}</x-ui.sections.header.button>
                 @endif
@@ -29,7 +29,7 @@
 
             <header-menu>
                 <template v-slot:trigger>
-                    <span class="text-gray-400 hover:text-white"><x-ui.user.avatar :user="$user" size="40" class="rounded-full inline-block" /><x-ui.icon name="chevron" class="" /></span>
+                    <span class="text-gray-200 hover:text-white"><x-ui.user.avatar :user="$user" size="40" class="rounded-full inline-block" /><x-ui.icon name="chevron" class="" /></span>
                 </template>
                 <template v-slot:content>
                     <p class="text-sm px-5 pt-4">{{ __('profile/user.signed_in_as') }}</p>
