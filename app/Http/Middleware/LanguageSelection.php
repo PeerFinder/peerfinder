@@ -25,6 +25,8 @@ class LanguageSelection
             App::setLocale(config('app.fallback_locale'));
         }
 
+        setlocale(LC_TIME, App::getLocale());
+
         return $next($request);
     }
 }

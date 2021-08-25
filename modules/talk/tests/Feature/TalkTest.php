@@ -5,6 +5,7 @@ namespace Talk\Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ViewErrorBag;
 use Talk\Models\Conversation;
@@ -78,5 +79,23 @@ class TalkTest extends TestCase
         $content = Talk::embedConversation($conversation);
 
         $this->assertStringContainsString($reply1->message, $content);
+    }
+
+    public function test_timezone_is_calculated()
+    {
+        $timezone = $this->faker->timezone();
+
+        $user1 = User::factory()->create([
+            'timezone' => $timezone,
+        ]);
+        
+        $this->be($user1);
+
+        $datetime = Carbon::now();
+        $datetime2 = $datetime->clone();
+        
+        $datetime->setTimezone($timezone);
+
+        $this->assertEquals($datetime->format('H:i - d.m.y'), Talk::formatDateTime($datetime2));
     }
 }

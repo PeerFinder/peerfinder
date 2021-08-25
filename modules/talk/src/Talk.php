@@ -173,6 +173,10 @@ class Talk
 
     public function formatDateTime($datetime)
     {
+        if ($this->user && $this->user->timezone) {
+            $datetime->setTimezone($this->user->timezone);
+        }
+
         return $datetime->format('H:i - d.m.y');
     }
 }
