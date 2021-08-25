@@ -26,7 +26,13 @@
 
             {{ $slot }}
         </div>
-        
+
+        @isset($aftercard)
+        <div class="bg-white shadow-md after:block sm:rounded-md overflow-hidden">
+            {{ $aftercard }}
+        </div>
+        @endisset
+
         <!-- Additional navigation -->
         <x-auth.mini-nav />
     </div>

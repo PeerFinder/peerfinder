@@ -2,12 +2,6 @@
     <x-auth.card>
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.sign_in_in_your_account') }}</x-auth.headline>
-
-            @if (Route::has('register'))
-            <p>{{ __('auth.or') }}
-                <x-ui.link href="{{ route('register') }}" class="font-bold">{{ __('auth.sign_up_new_account') }}</x-ui.link>
-            </p>
-            @endif
         </x-slot>
         
         <x-auth.status :status="session('status')" />
@@ -32,5 +26,14 @@
                 @endif
             </div>
         </x-auth.form>
+
+        @if (Route::has('register'))
+        <x-slot name="aftercard">
+            <div class="p-4 flex justify-between items-center">
+                <div class="flex-1 text-center font-bold">{{ __('auth.no_account') }}</div>
+                <x-ui.forms.button tag="a" action="create" href="{{ route('register') }}">{{ __('auth.sign_up_new_account') }}</x-ui.forms.button>
+            </div>
+        </x-slot>
+        @endif
     </x-auth.card>
 </x-layout.auth>
