@@ -1285,11 +1285,11 @@ select {
 .max-w-xs {
 	max-width: 20rem;
 }
-.flex-none {
-	flex: none;
-}
 .flex-1 {
 	flex: 1 1 0%;
+}
+.flex-none {
+	flex: none;
 }
 .transform {
 	transform: var(--tw-transform);
@@ -1523,20 +1523,20 @@ select {
 .p-2 {
 	padding: 0.5rem;
 }
-.p-3 {
-	padding: 0.75rem;
-}
 .p-10 {
 	padding: 2.5rem;
+}
+.p-3 {
+	padding: 0.75rem;
 }
 .p-0 {
 	padding: 0px;
 }
-.p-5 {
-	padding: 1.25rem;
-}
 .p-4 {
 	padding: 1rem;
+}
+.p-5 {
+	padding: 1.25rem;
 }
 .p-6 {
 	padding: 1.5rem;

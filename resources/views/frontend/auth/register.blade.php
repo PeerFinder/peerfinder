@@ -28,6 +28,8 @@
             </div>
             <div class="text-center">
                 @csrf
+                <timezone-select></timezone-select>
+                
                 <x-ui.forms.button class="w-full" action="create">{{ __('auth.button_register') }}</x-ui.forms.button>
             </div>
         </x-auth.form>
