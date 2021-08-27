@@ -53,13 +53,11 @@ class User extends Resource
             ID::make()->sortable(),
 
             Stack::make('Details', [
-                Line::make('Name')
-                    ->sortable()
-                    ->rules('required', 'max:255')->asHeading(),
-
+                Line::make('Name')->sortable()->asHeading(),
                 Line::make('Username')->asSmall(),
             ]),
 
+            Text::make('Name')->onlyOnForms()->rules('required', 'max:255'),
 
             Text::make('Email')
                 ->sortable()
