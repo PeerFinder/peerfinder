@@ -19,18 +19,18 @@ class CreatePeergroupsTable extends Migration
             $table->boolean('virtual')->default(true);
             $table->boolean('private')->default(false);
             $table->boolean('open')->default(true);
+            $table->boolean('with_approval')->default(false);
+            $table->string('location');
+            $table->string('meeting_link');
             $table->timestamps();
         });
 
         Schema::create('language_peergroup', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('language_id')->unsigned();
+            $table->id();
+            $table->foreignId('language_id');
             $table->foreign('language_id')->references('id')->on('languages');
-            
-            $table->integer('peergroup_id')->unsigned();
+            $table->foreignId('peergroup_id');
             $table->foreign('peergroup_id')->references('id')->on('peergroups');
-            
             $table->timestamps();
         });
     }

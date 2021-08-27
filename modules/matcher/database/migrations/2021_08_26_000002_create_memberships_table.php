@@ -9,24 +9,21 @@ class CreateMembershipsTable extends Migration
     public function up()
     {
         Schema::create('memberships', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('peergroup_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->id();
+            $table->foreignId('peergroup_id');
+            $table->foreignId('user_id');
             $table->date('begin')->nullable();
             $table->text('comment')->nullable();
-            $table->bool('approved')->default(false);
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
 
         Schema::create('language_membership', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('language_id')->unsigned();
+            $table->id();
+            $table->foreignId('language_id');
             $table->foreign('language_id')->references('id')->on('languages');
-            
-            $table->integer('membership_id')->unsigned();
+            $table->foreignId('membership_id');
             $table->foreign('membership_id')->references('id')->on('memberships');
-            
             $table->timestamps();
         });
     }
