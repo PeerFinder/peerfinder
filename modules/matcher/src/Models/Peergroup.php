@@ -65,5 +65,5 @@ class Peergroup extends Model
         return new PeergroupFactory();
     }
 
-
+    
 }

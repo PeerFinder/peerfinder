@@ -15,18 +15,6 @@ class Language extends Model
         'title',
     ];
 
-    public static function rules() {
-        $updateRules = [
-            'code' => ['required', 'regex:/^[a-z]{2}$/', 'max:10'],
-            'title' => ['required', 'string', 'max:100'],
-        ];
-
-        return [
-            'update' => $updateRules,
-            'create' => $updateRules,
-        ];
-    }
-
     protected static function newFactory()
     {
         return new LanguageFactory();

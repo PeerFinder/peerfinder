@@ -44,8 +44,8 @@ class Language extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Title')->sortable()->rules(ModelsLanguage::rules()['update']['title']),
-            Text::make('Code')->sortable()->rules(ModelsLanguage::rules()['update']['code']),
+            Text::make('Title')->sortable()->rules('required', 'string', 'max:100'),
+            Text::make('Code')->sortable()->rules('required', 'regex:/^[a-z]{2}$/', 'max:10'),
         ];
     }
 
