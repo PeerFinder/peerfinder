@@ -54,7 +54,9 @@ class User extends Resource
 
             Stack::make('Details', [
                 Line::make('Name')->sortable()->asHeading(),
-                Line::make('Username')->asSmall(),
+                Line::make('Username', function() {
+                    return sprintf('<a href="%s" target="blank">%s</a>', $this->profileUrl(), htmlspecialchars($this->username));
+                })->asHtml(),
             ]),
 
             Text::make('Name')->onlyOnForms()->rules('required', 'max:255'),
@@ -149,8 +151,6 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [
-            (new ShowUserProfile())->showOnTableRow()->withoutConfirmation(),
-        ];
+        return [];
     }
 }

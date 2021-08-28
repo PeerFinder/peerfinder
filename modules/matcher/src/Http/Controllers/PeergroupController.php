@@ -32,5 +32,18 @@ class PeergroupController extends Controller
         return view('matcher::peergroups.edit', [
             'pg' => $pg,
         ]);
-    }    
+    }
+
+    public function update(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('edit', $pg);
+
+        $input = $request->all();
+
+        Validator::make($input, Peergroup::rules()['update'])->validate();
+
+        $pg->update($input);
+
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
+    }
 }

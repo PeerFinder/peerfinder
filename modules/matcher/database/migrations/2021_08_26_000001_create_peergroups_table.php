@@ -10,7 +10,7 @@ class CreatePeergroupsTable extends Migration
     {
         Schema::create('peergroups', function(Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned();
+            $table->foreignId('user_id');
             $table->string('groupname')->unique();
             $table->string('title');
             $table->text('description');

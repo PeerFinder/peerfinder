@@ -3,6 +3,8 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Line;
@@ -51,16 +53,30 @@ class Peergroup extends Resource
 
             Stack::make('Details', [
                 Line::make('Title')->sortable()->asHeading(),
-                Line::make('Groupname')->asSmall(),
+                Line::make('Groupname', function() {
+                    return sprintf('<a href="%s" target="blank">%s</a>', $this->getUrl(), htmlspecialchars($this->groupname));
+                })->asHtml(),
             ]),
 
-            Text::make('Title')->onlyOnForms()->rules(ModelsPeergroup::rules()['update']['title']),
+            Text::make('Title')->onlyOnForms()->rules(ModelsPeergroup::rules()['update']['title'])->required(),
 
-            Textarea::make('Description')->hideFromIndex(),
+            Textarea::make('Description')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['description'])->required(),
 
-            Number::make('Limit')->rules(ModelsPeergroup::rules()['update']['limit']),
+            Number::make('Limit')->rules(ModelsPeergroup::rules()['update']['limit'])->required(),
 
             Date::make('Begin')->rules(ModelsPeergroup::rules()['update']['begin']),
+
+            Boolean::make('Virtual')->hideFromIndex(),
+
+            Boolean::make('Private')->hideFromIndex(),
+
+            Boolean::make('With Approval')->hideFromIndex(),
+
+            BelongsTo::make('User'),
+
+            Text::make('Location')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['location']),
+
+            Text::make('Meeting Link')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['meeting_link']),
         ];
     }
 

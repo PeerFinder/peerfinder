@@ -3,6 +3,7 @@
 namespace Matcher\Models;
 
 use App\Helpers\Facades\Urler;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Matcher\Database\Factories\PeergroupFactory;
@@ -22,7 +23,6 @@ class Peergroup extends Model
         'begin',
         'virtual',
         'private',
-        'open',
         'with_approval',
         'location',
         'meeting_link',
@@ -37,8 +37,8 @@ class Peergroup extends Model
             'virtual' => ['required', 'boolean'],
             'private' => ['required', 'boolean'],
             'with_approval' => ['required', 'boolean'],
-            'location' => ['nullable', 'string'],
-            'meeting_link' => ['nullable', 'string', new \App\Rules\UrlerValidUrl()],
+            'location' => ['nullable', 'string', 'max:100'],
+            'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
         ];
 
         return [
@@ -58,12 +58,30 @@ class Peergroup extends Model
         static::deleting(function ($user) {
 
         });
-    }    
+    }
 
     protected static function newFactory()
     {
         return new PeergroupFactory();
     }
 
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function isOwner(User $user)
+    {
+        return $this->user()->first()->id == $user->id;
+    }
+
+    public function isMember(User $user)
+    {
+        return false;
+    }
+
+    public function getUrl()
+    {
+        return route('matcher.show', ['pg' => $this->groupname]);
+    }
 }
