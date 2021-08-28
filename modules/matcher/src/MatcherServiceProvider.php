@@ -70,6 +70,10 @@ class MatcherServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
+        /* Route::bind('pg', function ($value) {
+            return Peergroup::where('groupname', $value)->with('user')->firstOrFail();
+        }); */
+
         Route::group($this->getRoutesConfiguration('web'), function () {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         });

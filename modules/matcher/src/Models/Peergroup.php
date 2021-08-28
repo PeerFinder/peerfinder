@@ -72,16 +72,33 @@ class Peergroup extends Model
 
     public function isOwner(User $user)
     {
-        return $this->user()->first()->id == $user->id;
-    }
-
-    public function isMember(User $user)
-    {
-        return false;
+        return $this->user->id == $user->id;
     }
 
     public function getUrl()
     {
         return route('matcher.show', ['pg' => $this->groupname]);
+    }
+
+    public function needsApproval(User $user = null)
+    {
+        $user = $user ?: auth()->user();
+
+        if ($this->isOwner($user)) {
+            return false;
+        }
+
+        if ($this->with_approval) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isMember(User $user = null)
+    {
+        $user = $user ?: auth()->user();
+
+        return false;
     }
 }
