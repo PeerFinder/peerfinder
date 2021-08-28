@@ -80,7 +80,7 @@ class MatcherServiceProvider extends ServiceProvider
     {
         return [
             'middleware' => array_merge([$interface], config('matcher.middleware', ['auth'])),
-            'prefix' => config('matcher.url', 'matcher'),
+            'prefix' => config('matcher.url', 'groups'),
             'namespace' => 'Matcher',
             'as' => 'matcher.',
         ];
