@@ -6,10 +6,13 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Matcher\Models\Peergroup;
+use Matcher\Policies\PeergroupPolicy;
 
 class MatcherServiceProvider extends ServiceProvider
 {
     protected $policies = [
+        Peergroup::class => PeergroupPolicy::class,
     ];
 
     public function boot()
@@ -54,8 +57,8 @@ class MatcherServiceProvider extends ServiceProvider
     protected function registerResources()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'Matcher');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'Matcher');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'matcher');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'matcher');
     }
 
     protected function registerPublishing()

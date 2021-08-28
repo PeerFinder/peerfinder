@@ -29,8 +29,31 @@ class PeergroupTest extends TestCase
         $pg = Peergroup::factory()->byUser($user)->create();
 
         $response = $this->actingAs($user)->get(route('matcher.show', ['pg' => $pg->groupname]));
-        
+
         $response->assertStatus(200);
         $response->assertSee($pg->title);
     }
+
+    public function test_user_cannot_show_private_peergroup()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser()->create([
+            'private' => true,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('matcher.show', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(403);
+    }
+
+    public function test_owner_can_edit_public_peergroup()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->get(route('matcher.edit', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(200);
+        $response->assertSee($pg->title);
+    }    
 }

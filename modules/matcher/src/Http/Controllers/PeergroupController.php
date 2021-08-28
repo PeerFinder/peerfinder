@@ -18,9 +18,19 @@ class PeergroupController extends Controller
 
     public function show(Request $request, Peergroup $pg)
     {
-        return "";
-        /*return view('matcher::peergroups.show', [
+        Gate::authorize('view', $pg);
+
+        return view('matcher::peergroups.show', [
             'pg' => $pg,
-        ]);*/
+        ]);
     }
+
+    public function edit(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('edit', $pg);
+
+        return view('matcher::peergroups.edit', [
+            'pg' => $pg,
+        ]);
+    }    
 }

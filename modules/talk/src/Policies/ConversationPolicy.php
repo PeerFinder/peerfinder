@@ -3,7 +3,6 @@
 namespace Talk\Policies;
 
 use Talk\Models\Conversation;
-use Talk\Traits\AdminPolicies;
 
 class ConversationPolicy
 {
