@@ -1,5 +1,5 @@
 @can('edit', $pg)
-<x-ui.card class="my-5" title="{{ __('matcher::peergroup.group_administration') }}" subtitle="{{ __('matcher::peergroup.group_administration_notice') }}">
+<x-ui.card class="my-5 after:bg-gradient-to-r after:from-red-400 after:to-red-600 after:h-1 after:block overflow-hidden" title="{{ __('matcher::peergroup.group_administration') }}" subtitle="{{ __('matcher::peergroup.group_administration_notice') }}">
     <div class="flex justify-between p-4">
         <x-ui.forms.button tag="a" href="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_edit_group') }}</x-ui.forms.button>
         <x-ui.forms.button tag="a" href="{{ route('matcher.editCompleted', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_complete_group') }}</x-ui.forms.button>

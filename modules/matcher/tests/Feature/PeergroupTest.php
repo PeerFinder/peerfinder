@@ -25,6 +25,40 @@ class PeergroupTest extends TestCase
         $this->assertNotNull($pg->groupname);
     }
 
+    public function test_user_can_create_new_peergroup()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get(route('matcher.create'));
+        $response->assertStatus(200);
+    }
+
+    public function test_owner_can_store_peergroup()
+    {
+        $user = User::factory()->create();
+        $language = Language::factory()->create();
+
+        $data = [
+            'title' => $this->faker->realText(50),
+            'description' => $this->faker->text(),
+            'limit' => $this->faker->numberBetween(2, config('matcher.max_limit')),
+            'begin' => $this->faker->date(),
+            'virtual' => $this->faker->boolean(),
+            'private' => $this->faker->boolean(),
+            'with_approval' => $this->faker->boolean(),
+            'location' => $this->faker->city(),
+            'meeting_link' => $this->faker->url(),
+            'languages' => [$language->code],
+        ];
+
+        $response = $this->actingAs($user)->put(route('matcher.create'), $data);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(302);
+
+        unset($data['languages']);
+        $this->assertDatabaseHas('peergroups', $data);
+    }
+
     public function test_user_can_show_public_peergroup()
     {
         $user = User::factory()->create();
@@ -85,6 +119,7 @@ class PeergroupTest extends TestCase
     {
         $user = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
+        $language = Language::factory()->create();
 
         $data = [
             'title' => $this->faker->realText(50),
@@ -96,13 +131,19 @@ class PeergroupTest extends TestCase
             'with_approval' => $this->faker->boolean(),
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
+            'languages' => [$language->code],
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
 
+        $response->assertSessionHasNoErrors();
         $response->assertStatus(302);
 
+        unset($data['languages']);
+
         $this->assertDatabaseHas('peergroups', $data);
+
+        $this->assertDatabaseHas('language_peergroup', ['peergroup_id' => $pg->id, 'language_id' => $language->id]);
     }
 
     public function test_owner_cannot_update_peergroup_with_errors()
@@ -119,6 +160,7 @@ class PeergroupTest extends TestCase
             'private' => $this->faker->text(),
             'with_approval' => $this->faker->text(),
             'meeting_link' => $this->faker->text(),
+            'languages' => ['bla', 'blu']
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
@@ -126,10 +168,10 @@ class PeergroupTest extends TestCase
         $response->assertSessionHasErrors(array_keys($data));
 
         $data = [
-            'title' => $this->faker->realText(400),
-            'description' => $this->faker->text(1000),
+            'title' => Str::random(400),
+            'description' => Str::random(1000),
             'limit' => config('matcher.max_limit') * 2,
-            'location' => $this->faker->text(200),
+            'location' => Str::random(300),
             'meeting_link' => 'http://' . Str::random(300) . '.com',
         ];
 
@@ -164,5 +206,13 @@ class PeergroupTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertDatabaseHas('language_peergroup', ['peergroup_id' => $pg->id, 'language_id' => $language1->id]);
+    }
+
+    public function test_peergroups_deleted_with_user()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $user->delete();
+        $this->assertDatabaseMissing('peergroups', ['id' => $pg->id]);
     }
 }

@@ -1,15 +1,17 @@
 @props(['pg' => null])
 
-<x-layout.minimal :title="$pg->title">
+<x-layout.minimal :title="$pg ? $pg->title : __('matcher::peergroup.new_peergroup_title')">
     <div class="mt-10 grid grid-cols-10 gap-5">
         <div class="col-span-7">
-            <div class="">
+            @if ($pg)
+            <div>
                 <h1 class="text-3xl font-semibold">@if($pg->private)<x-matcher::ui.badge icon="lock-closed" class="bg-yellow-300">{{ __('matcher::peergroup.badge_private') }}</x-matcher::ui.badge> @endif{{ $pg->title }}</h1>
 
                 <div class="mt-4 space-x-5">
                     <x-matcher::ui.user :user="$pg->user" role="{{ __('matcher::peergroup.role_founder') }}" />
                 </div>
             </div>
+            @endif
 
             <div class="mt-5">
                 {{ $slot }}

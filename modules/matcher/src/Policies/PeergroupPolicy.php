@@ -7,6 +7,11 @@ use Matcher\Models\Peergroup;
 
 class PeergroupPolicy
 {
+    public function create(User $user)
+    {
+        return true;
+    }
+
     public function view(User $user, Peergroup $pg)
     {
         if (!$pg->private) {

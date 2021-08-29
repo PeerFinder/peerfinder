@@ -6,7 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Matcher\Facades\Matcher;
 use Matcher\Models\Peergroup;
 
 class PeergroupController extends Controller
@@ -16,34 +18,48 @@ class PeergroupController extends Controller
         return view('matcher::peergroups.index');
     }
 
+    public function create()
+    {
+        Gate::authorize('create', Peergroup::class);
+
+        # Create dummy peergroup to be able to reuse the edit view
+        $pg = new Peergroup([
+            'limit' => config('matcher.default_limit'),
+            'begin' => Carbon::today(),
+        ]);
+
+        return view('matcher::peergroups.create', compact('pg'));
+    }
+
     public function show(Request $request, Peergroup $pg)
     {
         Gate::authorize('view', $pg);
 
-        return view('matcher::peergroups.show', [
-            'pg' => $pg,
-        ]);
+        return view('matcher::peergroups.show', compact('pg'));
     }
 
     public function edit(Request $request, Peergroup $pg)
     {
         Gate::authorize('edit', $pg);
 
-        return view('matcher::peergroups.edit', [
-            'pg' => $pg,
-        ]);
+        return view('matcher::peergroups.edit', compact('pg'));
+    }
+
+    public function store(Request $request)
+    {
+        Gate::authorize('create', Peergroup::class);
+
+        $pg = Matcher::storePeergroupData(null, $request);
+
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_created_successfully'));
     }
 
     public function update(Request $request, Peergroup $pg)
     {
         Gate::authorize('edit', $pg);
 
-        $input = $request->all();
-
-        Validator::make($input, Peergroup::rules()['update'])->validate();
-
-        #$pg->update($input);
-
+        Matcher::storePeergroupData($pg, $request);
+        
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
-    }
+    }    
 }

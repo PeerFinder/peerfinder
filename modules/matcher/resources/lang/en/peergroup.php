@@ -5,6 +5,7 @@ return [
     'role_founder' => 'Group Founder',
     'detail_begin' => 'Begin',
     'detail_virtual_group' => 'Virtual',
+    'detail_languages' => 'Languages',
     'button_join_group' => 'Join this group',
     'button_apply_membership' => 'Apply for membership',
     'button_edit_group' => 'Edit group',
@@ -27,6 +28,9 @@ return [
     'button_save_peergroup' => 'Save group details',
     'edit_title' => 'Change group details',
     'button_cancel' => 'Cancel',
+    'peergroup_created_successfully' => 'Group was created successfully!',
     'peergroup_changed_successfully' => 'Group was changed successfully!',
     'badge_private' => 'Private',
+    'new_peergroup_title' => 'Start new group',
+    'button_create_peergroup' => 'Start group',
 ];

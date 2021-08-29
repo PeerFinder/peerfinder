@@ -104,7 +104,7 @@ class Talk
         return $conversation;
     }
 
-    public function deleteConversationForUser(User $user)
+    public function cleanupForUser(User $user)
     {
         $user->receipts()->each(function ($receipt) {
             $receipt->delete();

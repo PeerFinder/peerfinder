@@ -52,11 +52,11 @@ class Peergroup extends Model
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            Urler::createUniqueSlug($user, 'groupname');
+        static::creating(function ($peergroup) {
+            Urler::createUniqueSlug($peergroup, 'groupname');
         });
 
-        static::deleting(function ($user) {
+        static::deleting(function ($peergroup) {
 
         });
     }
