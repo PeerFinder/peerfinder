@@ -44,8 +44,6 @@ class PeergroupController extends Controller
 
         #$pg->update($input);
 
-        return redirect()->back();
-
-        #return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
     }
 }
