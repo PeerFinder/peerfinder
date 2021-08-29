@@ -42,8 +42,10 @@ class PeergroupController extends Controller
 
         Validator::make($input, Peergroup::rules()['update'])->validate();
 
-        $pg->update($input);
+        #$pg->update($input);
 
-        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
+        return redirect()->back();
+
+        #return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
     }
 }

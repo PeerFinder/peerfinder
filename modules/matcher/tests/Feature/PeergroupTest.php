@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Matcher\Models\Peergroup;
 use Tests\TestCase;
 use Illuminate\Support\Str;
+use Matcher\Models\Language;
 
 /**
  * @group Peergroup
@@ -135,5 +136,33 @@ class PeergroupTest extends TestCase
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
         
         $response->assertSessionHasErrors(array_keys($data));
+    }
+
+    public function test_owner_can_update_languages()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $language1 = Language::factory()->create();
+        $language2 = Language::factory()->create();
+
+        $data = [
+            'title' => $this->faker->realText(50),
+            'description' => $this->faker->text(),
+            'limit' => $this->faker->numberBetween(2, config('matcher.max_limit')),
+            'begin' => $this->faker->date(),
+            'virtual' => $this->faker->boolean(),
+            'private' => $this->faker->boolean(),
+            'with_approval' => $this->faker->boolean(),
+            'languages' => [
+                $language1->code,
+                $language2->code,
+            ]
+        ];
+
+        $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('language_peergroup', ['peergroup_id' => $pg->id, 'language_id' => $language1->id]);
     }
 }

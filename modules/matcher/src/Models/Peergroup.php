@@ -39,6 +39,7 @@ class Peergroup extends Model
             'with_approval' => ['required', 'boolean'],
             'location' => ['nullable', 'string', 'max:100'],
             'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
+            'languages' => ['required', 'exists:languages,code'],
         ];
 
         return [
