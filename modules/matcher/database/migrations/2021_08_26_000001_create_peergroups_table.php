@@ -20,8 +20,8 @@ class CreatePeergroupsTable extends Migration
             $table->boolean('private')->default(false);
             $table->boolean('open')->default(true);
             $table->boolean('with_approval')->default(false);
-            $table->string('location');
-            $table->string('meeting_link');
+            $table->string('location')->nullable();
+            $table->string('meeting_link')->nullable();
             $table->timestamps();
         });
 

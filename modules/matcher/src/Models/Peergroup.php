@@ -70,6 +70,11 @@ class Peergroup extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class)->withTimestamps();
+    }
+
     public function isOwner(User $user)
     {
         return $this->user->id == $user->id;

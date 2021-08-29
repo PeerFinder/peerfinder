@@ -7,7 +7,7 @@
                     <x-talk::conversations.avatars :users="Talk::filterUsersForConversation($conv)" />
                 </div>
                 <div class="flex-1">
-                    <div class="line-clamp-1 font-bold ml-2">
+                    <div class="line-clamp-1 font-semibold ml-2">
                         @if ($conv->isUnread())<span class="rounded-full inline-block w-3 h-3 bg-pf-darkorange"></span>@endif
                         {{ $conv->getTitle() }}
                     </div>

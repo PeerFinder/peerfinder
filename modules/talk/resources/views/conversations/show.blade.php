@@ -1,7 +1,7 @@
 <x-talk::layout.single :conversation="$conversation">
     <div class="p-4 border-b">
         @if ($conversation->title)
-        <h2 class="font-bold">{{ $conversation->title }}</h2>
+        <h2 class="font-semibold">{{ $conversation->title }}</h2>
         @endif
     
         <p>{!! Talk::usersAsString(Talk::filterUsersForConversation($conversation), true) !!}</p>
