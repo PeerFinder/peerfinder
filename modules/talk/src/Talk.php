@@ -130,7 +130,7 @@ class Talk
         $conversation = Conversation::forUsers([auth()->user(), $user])->get()->first();
 
         if ($conversation) {
-            return redirect(route('talk.show', ['conversation' => $conversation->identifier]));
+            return redirect($conversation->getUrl());
         }
 
         return null;

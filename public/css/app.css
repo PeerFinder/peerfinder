@@ -1210,14 +1210,14 @@ select {
 .ml-3 {
 	margin-left: 0.75rem;
 }
+.mr-4 {
+	margin-right: 1rem;
+}
 .-ml-px {
 	margin-left: -1px;
 }
 .mt-3 {
 	margin-top: 0.75rem;
-}
-.mr-4 {
-	margin-right: 1rem;
 }
 .block {
 	display: block;
@@ -1658,9 +1658,6 @@ select {
 }
 .pb-7 {
 	padding-bottom: 1.75rem;
-}
-.pr-4 {
-	padding-right: 1rem;
 }
 .text-center {
 	text-align: center;

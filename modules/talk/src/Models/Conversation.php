@@ -138,7 +138,8 @@ class Conversation extends Model
     {
         return Reply::where('conversation_id', $this->id)
                     ->with('user')
-                    ->paginate(config('talk.replies_per_page', 20));
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(config('talk.replies_per_page', 20), '*', 'page');
     }
 
     public function isUnread()

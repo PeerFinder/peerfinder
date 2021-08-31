@@ -2,7 +2,7 @@
 
 {{ $replies->links('talk::components.ui.pagination') }}
 
-@foreach ($replies as $reply)
+@foreach ($replies->reverse() as $reply)
     <div id="reply-{{ $reply->identifier }}">
         <div class="flex justify-between mb-1 text-sm">
             <div class="flex items-center">

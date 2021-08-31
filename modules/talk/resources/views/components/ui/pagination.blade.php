@@ -3,21 +3,21 @@
         <!-- Mobile view -->
         <div class="flex justify-between flex-1 sm:hidden">
             @if ($paginator->onFirstPage())
-                <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-100 cursor-default leading-5 rounded-md">
+                <span class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-100 cursor-default leading-5 rounded-md">
                     {!! __('pagination.previous') !!}
                 </span>
             @else
-                <a href="{{ $paginator->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border leading-5 rounded-md hover:bg-gray-50">
+                <a href="{{ $paginator->previousPageUrl() }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border leading-5 rounded-md hover:bg-gray-50">
                     {!! __('pagination.previous') !!}
                 </a>
             @endif
 
             @if ($paginator->hasMorePages())
-                <a href="{{ $paginator->nextPageUrl() }}" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border leading-5 rounded-md hover:bg-gray-50">
+                <a href="{{ $paginator->nextPageUrl() }}" class="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border leading-5 rounded-md hover:bg-gray-50">
                     {!! __('pagination.next') !!}
                 </a>
             @else
-                <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-200 bg-white border border-gray-100 cursor-default leading-5 rounded-md">
+                <span class="inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-200 bg-white border border-gray-100 cursor-default leading-5 rounded-md">
                     {!! __('pagination.next') !!}
                 </span>
             @endif
@@ -29,7 +29,7 @@
                     {{-- Previous Page Link --}}
                     @if ($paginator->onFirstPage())
                     @else
-                        <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border rounded-l-md leading-5 hover:bg-gray-50">
+                        <a href="{{ $paginator->previousPageUrl() }}" rel="prev" class="inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border rounded-l-md leading-5 hover:bg-gray-50">
                             <x-ui.icon name="chevron-left" />
                         </a>
                     @endif
@@ -39,7 +39,7 @@
                         {{-- "Three Dots" Separator --}}
                         @if (is_string($element))
                             <span>
-                                <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border cursor-default leading-5">{{ $element }}</span>
+                                <span class="inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border cursor-default leading-5">{{ $element }}</span>
                             </span>
                         @endif
 
@@ -51,7 +51,7 @@
                                         <span class="block p-1 px-3 bg-pf-midorange text-white ">{{ $page }}</span>
                                     </span>
                                 @else
-                                    <a href="{{ $url }}" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border leading-5 hover:bg-gray-50">
+                                    <a href="{{ $url }}" class="inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border leading-5 hover:bg-gray-50">
                                         {{ $page }}
                                     </a>
                                 @endif
@@ -61,7 +61,7 @@
 
                     {{-- Next Page Link --}}
                     @if ($paginator->hasMorePages())
-                        <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border rounded-r-md leading-5 hover:bg-gray-50">
+                        <a href="{{ $paginator->nextPageUrl() }}" rel="next" class="inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border rounded-r-md leading-5 hover:bg-gray-50">
                             <x-ui.icon name="chevron-right" />
                         </a>
                     @else
