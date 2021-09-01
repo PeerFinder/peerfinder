@@ -215,4 +215,42 @@ class PeergroupTest extends TestCase
         $user->delete();
         $this->assertDatabaseMissing('peergroups', ['id' => $pg->id]);
     }
+
+    public function test_user_cannot_complete_the_group()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser()->create();
+        $response = $this->actingAs($user)->post(route('matcher.complete', ['pg' => $pg->groupname]));
+        $response->assertStatus(403);
+    }
+
+    public function test_owner_can_complete_the_group()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->post(route('matcher.complete', ['pg' => $pg->groupname]), [
+            'status' => '1',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionDoesntHaveErrors();
+        $pg->refresh();
+        $this->assertFalse($pg->isOpen());
+    }
+
+    public function test_owner_can_uncomplete_the_group()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->post(route('matcher.complete', ['pg' => $pg->groupname]), [
+            'status' => '0',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionDoesntHaveErrors();
+        $pg->refresh();
+        $this->assertTrue($pg->isOpen());
+    }
 }

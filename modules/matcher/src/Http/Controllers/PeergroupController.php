@@ -61,5 +61,14 @@ class PeergroupController extends Controller
         Matcher::storePeergroupData($pg, $request);
         
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
-    }    
+    }
+
+    public function complete(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('complete', $pg);
+
+        $result = Matcher::completeGroup($pg, $request);
+
+        return back()->with(... $result);
+    }
 }

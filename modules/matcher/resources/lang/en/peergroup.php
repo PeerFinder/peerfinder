@@ -11,6 +11,7 @@ return [
     'button_edit_group' => 'Edit group',
     'button_delete_group' => 'Delete group',
     'button_complete_group' => 'Complete group',
+    'button_uncomplete_group' => 'Reopen group',
     'button_transfer_ownership' => 'Change owner',
     'group_administration' => 'Group administration',
     'group_administration_notice' => 'Only you as owner of this group can see this menu.',
@@ -33,4 +34,9 @@ return [
     'badge_private' => 'Private',
     'new_peergroup_title' => 'Start new group',
     'button_create_peergroup' => 'Start group',
+    'peergroup_was_completed' => 'The group was completed successfully!',
+    'peergroup_was_uncompleted' => 'The group was reopened successfully!',
+    'peergroup_cannot_be_uncompleted' => 'The group cannot be reopened!',
+    'completed_notice' => 'This group is marked as completed. No new users can join.',
+    'full_notice' => 'This group is full. No new users can join.',
 ];

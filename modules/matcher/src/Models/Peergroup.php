@@ -14,6 +14,11 @@ class Peergroup extends Model
 
     protected $casts = [
         'begin' => 'date',
+        'limit' => 'int',
+        'open' => 'boolean',
+        'virtual' => 'boolean',
+        'private' => 'boolean',
+        'with_approval' => 'boolean',
     ];
 
     protected $fillable = [
@@ -106,5 +111,32 @@ class Peergroup extends Model
         $user = $user ?: auth()->user();
 
         return false;
+    }
+
+    public function isFull()
+    {
+        return false;
+    }
+
+    public function isOpen()
+    {
+        return $this->open;
+    }
+
+    public function complete()
+    {
+        $this->open = false;
+        $this->save();
+    }
+
+    public function uncomplete()
+    {
+        $this->open = true;
+        $this->save();
+    }
+
+    public function canUncomplete()
+    {
+        return !($this->isOpen() || $this->isFull());
     }
 }

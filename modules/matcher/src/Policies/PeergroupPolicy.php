@@ -37,4 +37,13 @@ class PeergroupPolicy
 
         return false;
     }
+
+    public function complete(User $user, Peergroup $pg)
+    {
+        if ($pg->isOwner($user)) {
+            return true;
+        }
+
+        return false;
+    }    
 }

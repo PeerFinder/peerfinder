@@ -42,4 +42,23 @@ class Matcher
 
         return $pg;
     }
+
+    public function completeGroup(Peergroup $pg, Request $request)
+    {
+        $input = $request->all();
+
+        Validator::make($input, ['status' => ['required', 'boolean']])->validate();
+
+        if ($input['status'] === '1') {
+            $pg->complete();
+            return ['success', __('matcher::peergroup.peergroup_was_completed')];
+        } else {
+            if ($pg->canUncomplete()) {
+                $pg->uncomplete();
+                return ['success', __('matcher::peergroup.peergroup_was_uncompleted')];
+            } else {
+                return ['error', __('matcher::peergroup.peergroup_cannot_be_uncompleted')];
+            }
+        }
+    }
 }

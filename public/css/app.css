@@ -1472,6 +1472,10 @@ select {
 	--tw-border-opacity: 1;
 	border-color: rgba(245, 158, 11, var(--tw-border-opacity));
 }
+.border-gray-50 {
+	--tw-border-opacity: 1;
+	border-color: rgba(249, 250, 251, var(--tw-border-opacity));
+}
 .border-pf-midorange {
 	--tw-border-opacity: 1;
 	border-color: rgba(246, 174, 45, var(--tw-border-opacity));
