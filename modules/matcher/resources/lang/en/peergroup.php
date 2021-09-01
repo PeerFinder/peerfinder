@@ -39,4 +39,6 @@ return [
     'peergroup_cannot_be_uncompleted' => 'The group cannot be reopened!',
     'completed_notice' => 'This group is marked as completed. No new users can join.',
     'full_notice' => 'This group is full. No new users can join.',
+    'change_owner' => 'Transfer ownership of this group',
+    'button_change_owner' => 'Set new owner',
 ];

@@ -12,8 +12,8 @@ Route::put('/{pg:groupname}/edit', [PeergroupController::class, 'update'])->name
 
 Route::post('/{pg:groupname}/complete', [PeergroupController::class, 'complete'])->name('complete');
 
-Route::get('/{pg:groupname}/owner', [PeergroupController::class, 'editOwner'])->name('editOwner');
-Route::put('/{pg:groupname}/owner', [PeergroupController::class, 'updateOwner'])->name('updateOwner');
+Route::get('/{pg:groupname}/transfer-ownership', [PeergroupController::class, 'editOwner'])->name('editOwner');
+Route::put('/{pg:groupname}/transfer-ownership', [PeergroupController::class, 'updateOwner'])->name('updateOwner');
 
 Route::get('/{pg:groupname}/delete', [PeergroupController::class, 'delete'])->name('delete');
 Route::delete('/{pg:groupname}/delete', [PeergroupController::class, 'destroy'])->name('destroy');

@@ -242,7 +242,9 @@ class PeergroupTest extends TestCase
     public function test_owner_can_uncomplete_the_group()
     {
         $user = User::factory()->create();
-        $pg = Peergroup::factory()->byUser($user)->create();
+        $pg = Peergroup::factory()->byUser($user)->create([
+            'open' => false,
+        ]);
 
         $response = $this->actingAs($user)->post(route('matcher.complete', ['pg' => $pg->groupname]), [
             'status' => '0',
@@ -252,5 +254,10 @@ class PeergroupTest extends TestCase
         $response->assertSessionDoesntHaveErrors();
         $pg->refresh();
         $this->assertTrue($pg->isOpen());
+    }
+
+    public function test_owner_cannot_uncomplete_full_group()
+    {
+        
     }
 }

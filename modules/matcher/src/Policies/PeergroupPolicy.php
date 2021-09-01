@@ -45,5 +45,14 @@ class PeergroupPolicy
         }
 
         return false;
-    }    
+    }
+
+    public function editOwner(User $user, Peergroup $pg)
+    {
+        if ($pg->isOwner($user)) {
+            return true;
+        }
+
+        return false;
+    }
 }
