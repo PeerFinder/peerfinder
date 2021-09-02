@@ -31,28 +31,21 @@ class PeergroupPolicy
 
     public function edit(User $user, Peergroup $pg)
     {
-        if ($pg->isOwner($user)) {
-            return true;
-        }
-
-        return false;
+        return $pg->isOwner($user);
     }
 
     public function complete(User $user, Peergroup $pg)
     {
-        if ($pg->isOwner($user)) {
-            return true;
-        }
-
-        return false;
+        return $pg->isOwner($user);
     }
 
     public function editOwner(User $user, Peergroup $pg)
     {
-        if ($pg->isOwner($user)) {
-            return true;
-        }
-
-        return false;
+        return $pg->isOwner($user);
     }
+
+    public function delete(User $user, Peergroup $pg)
+    {
+        return $pg->isOwner($user);
+    }    
 }

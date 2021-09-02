@@ -4,8 +4,9 @@
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
         <x-ui.forms.form :action="route('matcher.editOwner', ['pg' => $pg->groupname])">
-
-            
+            <div class="p-4">
+                <p>{{ __('matcher::peergroup.change_owner_notice') }}</p>
+            </div>
 
             <div class="mt-2 p-4 border-t">
                 @csrf

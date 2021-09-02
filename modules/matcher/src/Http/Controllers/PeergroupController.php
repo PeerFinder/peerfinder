@@ -52,6 +52,13 @@ class PeergroupController extends Controller
         return view('matcher::peergroups.edit-owner', compact('pg'));
     }
 
+    public function delete(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('delete', $pg);
+
+        return view('matcher::peergroups.delete', compact('pg'));
+    }    
+
     public function store(Request $request)
     {
         Gate::authorize('create', Peergroup::class);
