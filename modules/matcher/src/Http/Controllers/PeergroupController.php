@@ -52,12 +52,29 @@ class PeergroupController extends Controller
         return view('matcher::peergroups.edit-owner', compact('pg'));
     }
 
+    public function updateOwner(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('editOwner', $pg);
+
+        #TODO: Redirect here to the group if user has access to the group
+        
+    }
+
     public function delete(Request $request, Peergroup $pg)
     {
         Gate::authorize('delete', $pg);
 
         return view('matcher::peergroups.delete', compact('pg'));
-    }    
+    }
+
+    public function destroy(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('delete', $pg);
+
+        Matcher::deleteGroup($pg, $request);
+
+        return redirect(route('dashboard.index'));
+    }
 
     public function store(Request $request)
     {
@@ -83,6 +100,7 @@ class PeergroupController extends Controller
 
         $result = Matcher::completeGroup($pg, $request);
 
-        return back()->with(... $result);
+        return $result;
     }
+
 }

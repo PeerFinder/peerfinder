@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Matcher\Models\Peergroup;
 use Tests\TestCase;
 use Illuminate\Support\Str;
+use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
 
 /**
@@ -164,7 +165,7 @@ class PeergroupTest extends TestCase
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
-        
+
         $response->assertSessionHasErrors(array_keys($data));
 
         $data = [
@@ -176,7 +177,7 @@ class PeergroupTest extends TestCase
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
-        
+
         $response->assertSessionHasErrors(array_keys($data));
     }
 
@@ -257,6 +258,100 @@ class PeergroupTest extends TestCase
     }
 
     public function test_owner_cannot_uncomplete_full_group()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'limit' => 2,
+        ]);
+
+        Matcher::addMemberToGroup($pg, $user1);
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user1)->post(route('matcher.complete', ['pg' => $pg->groupname]), [
+            'status' => '0',
+        ]);
+
+        $response->assertSessionHasErrors();
+        $pg->refresh();
+        $this->assertFalse($pg->isOpen());
+    }
+
+    public function test_owner_cannot_transfer_the_group_ownership_to_non_member()
+    {
+        $this->withoutExceptionHandling();
+
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $response = $this->actingAs($user1)->put(route('matcher.editOwner', ['pg' => $pg->groupname]), [
+            'new_owner' => $user2,
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors();
+        $this->assertNotEquals($pg->user()->first()->id, $user2->id);
+    }
+
+    public function test_owner_can_transfer_the_group_ownership_to_member()
+    {
+        $this->withoutExceptionHandling();
+
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user1)->put(route('matcher.editOwner', ['pg' => $pg->groupname]), [
+            'new_owner' => $user2,
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionDoesntHaveErrors();
+        $this->assertEquals($pg->user()->first()->id, $user2->id);
+    }
+
+    public function test_owner_gets_redirected_after_ownership_transfer()
+    {
+        
+    }
+
+    public function test_owner_can_delete_the_group()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $language = Language::factory()->create();
+
+        $pg->languages()->attach($language);
+
+        $response = $this->actingAs($user)->delete(route('matcher.delete', ['pg' => $pg->groupname]), [
+            'confirm_delete' => '1'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionDoesntHaveErrors();
+        $this->assertDatabaseMissing('peergroups', ['id' => $pg->id]);
+        $this->assertDatabaseMissing('language_peergroup', ['peergroup_id' => $pg->id]);
+    }
+
+    public function test_user_can_join_a_group_without_approval()
+    {
+        
+    }
+
+    public function test_user_cannot_join_a_group_with_approval()
+    {
+        
+    }
+
+    public function test_user_cannot_join_full_group()
+    {
+        
+    }
+
+    public function test_user_cannot_join_completed_group()
     {
         
     }

@@ -7,12 +7,16 @@
             <div class="p-4 space-y-4">
                 <p>{{ __('matcher::peergroup.delete_group_notice') }}</p>
 
-                <p class="text-yellow-500"><x-ui.icon name="exclamation" />{!! __('matcher::peergroup.delete_group_has_members_notice', ['link' => htmlspecialchars(route('matcher.editOwner', ['pg' => $pg->groupname]))]) !!}
+                <p class="text-yellow-500"><x-ui.icon name="exclamation" />{!! __('matcher::peergroup.delete_group_has_members_notice', ['link' => htmlspecialchars(route('matcher.editOwner', ['pg' => $pg->groupname]))]) !!}</p>
+            </div>
+
+            <div class="p-4">
+                <x-ui.forms.checkbox id="confirm_delete" name="confirm_delete">{{ __('matcher::peergroup.delete_group_confirm') }}</x-ui.forms.checkbox>
             </div>
 
             <div class="mt-2 p-4 border-t">
                 @csrf
-                @method('PUT')
+                @method('DELETE')
                 <x-matcher::ui.edit-buttons action="destroy" :pg="$pg">{{ __('matcher::peergroup.button_delete_group') }}</x-matcher::ui.edit-buttons>
             </div>
         </x-ui.forms.form>

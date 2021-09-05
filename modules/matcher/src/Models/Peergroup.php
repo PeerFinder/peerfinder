@@ -57,12 +57,14 @@ class Peergroup extends Model
     {
         parent::boot();
 
-        static::creating(function ($peergroup) {
-            Urler::createUniqueSlug($peergroup, 'groupname');
+        static::creating(function ($pg) {
+            Urler::createUniqueSlug($pg, 'groupname');
         });
 
-        static::deleting(function ($peergroup) {
-
+        static::deleting(function ($pg) {
+            $pg->languages()->detach();
+            #TODO: Delete memberships here
+            #TODO: Delete conversations here
         });
     }
 
@@ -74,6 +76,21 @@ class Peergroup extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class);
+    }
+
+    public function members()
+    {
+        return $this->hasManyThrough(User::class, Membership::class, 'peergroup_id', 'id', 'id', 'user_id');
+    }
+
+    public function approvedMembers()
+    {
+        return $this->members()->where('approved', true);
     }
 
     public function languages()
@@ -115,7 +132,7 @@ class Peergroup extends Model
 
     public function isFull()
     {
-        return false;
+        return $this->approvedMembers()->count() >= $this->limit;
     }
 
     public function isOpen()
@@ -138,5 +155,15 @@ class Peergroup extends Model
     public function canUncomplete()
     {
         return !($this->isOpen() || $this->isFull());
+    }
+
+    public function updateStates()
+    {
+        $members_count = $this->members()->count();
+
+        if ($members_count >= $this->limit) {
+            $this->open = false;
+            $this->save();
+        }
     }
 }

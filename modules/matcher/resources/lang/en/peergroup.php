@@ -45,4 +45,8 @@ return [
     'delete_group' => 'Delete group',
     'delete_group_notice' => 'Are you sure you want to delete this group?',
     'delete_group_has_members_notice' => 'This group has members. Instead of deleting you could <a href=":link" class="text-pf-midblue underline font-semibold">transfer the ownership</a> to an other member.',
+    'delete_group_confirm' => 'Yes I\'m sure I want to delete this group',
+    'delete_group_confirm_validation_error' => 'Please check the confirmation checkbox to be able to delete the group.',
+    'exception_user_already_member' => ':user is already a member',
+    'exception_limit_is_reached' => 'Group limit is reached',
 ];
