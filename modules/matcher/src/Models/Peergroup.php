@@ -130,6 +130,16 @@ class Peergroup extends Model
         return false;
     }
 
+    /**
+     * Check if there are more members in this group other than the owner
+     * @return true/false 
+     */
+    public function hasMoreMembersThanOwner()
+    {
+        #TODO: Implement this function
+        return false;
+    }
+
     public function isFull()
     {
         return $this->approvedMembers()->count() >= $this->limit;

@@ -321,10 +321,19 @@ class PeergroupTest extends TestCase
     public function test_owner_can_delete_the_group()
     {
         $user = User::factory()->create();
+        $user2 = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
         $language = Language::factory()->create();
 
         $pg->languages()->attach($language);
+        
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $this->assertTrue($pg->hasMoreMembersThanOwner());
+
+        $response = $this->actingAs($user)->get(route('matcher.delete', ['pg' => $pg->groupname]));
+
+        $response->assertSee(__('matcher::peergroup.delete_group_has_members_notice', ['link' => route('matcher.editOwner', ['pg' => $pg->groupname])]));
 
         $response = $this->actingAs($user)->delete(route('matcher.delete', ['pg' => $pg->groupname]), [
             'confirm_delete' => '1'

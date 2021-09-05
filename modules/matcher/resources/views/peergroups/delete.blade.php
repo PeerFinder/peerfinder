@@ -7,7 +7,9 @@
             <div class="p-4 space-y-4">
                 <p>{{ __('matcher::peergroup.delete_group_notice') }}</p>
 
+                @if ($pg->hasMoreMembersThanOwner())
                 <p class="text-yellow-500"><x-ui.icon name="exclamation" />{!! __('matcher::peergroup.delete_group_has_members_notice', ['link' => htmlspecialchars(route('matcher.editOwner', ['pg' => $pg->groupname]))]) !!}</p>
+                @endif
             </div>
 
             <div class="p-4">
