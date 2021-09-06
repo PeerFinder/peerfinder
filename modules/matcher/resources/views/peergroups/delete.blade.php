@@ -8,14 +8,16 @@
                 <p>{{ __('matcher::peergroup.delete_group_notice') }}</p>
 
                 @if ($pg->hasMoreMembersThanOwner())
-                <p class="text-yellow-500"><x-ui.icon name="exclamation" />{!! __('matcher::peergroup.delete_group_has_members_notice', ['link' => htmlspecialchars(route('matcher.editOwner', ['pg' => $pg->groupname]))]) !!}</p>
+                <p class="text-yellow-500">
+                    <x-ui.icon name="exclamation" />{!! __('matcher::peergroup.delete_group_has_members_notice', ['link' => htmlspecialchars(route('matcher.editOwner', ['pg' => $pg->groupname]))]) !!}
+                </p>
                 @endif
             </div>
 
             <div class="p-4">
                 <x-ui.forms.checkbox id="confirm_delete" name="confirm_delete">{{ __('matcher::peergroup.delete_group_confirm') }}</x-ui.forms.checkbox>
             </div>
-
+            
             <div class="mt-2 p-4 border-t">
                 @csrf
                 @method('DELETE')

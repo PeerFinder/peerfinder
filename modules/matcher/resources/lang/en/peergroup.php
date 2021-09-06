@@ -55,4 +55,6 @@ return [
     'exception_group_is_completed' => 'The group is completed, no more user can join.',
     'peergroup_joined_successfully' => 'You have joined this group!',
     'join_group_title' => 'Join group',
+    'peergroup_waiting_for_approval' => 'Request to join this group was sent successfully.',
+    'button_request_join_group' => 'Request to join this group',
 ];

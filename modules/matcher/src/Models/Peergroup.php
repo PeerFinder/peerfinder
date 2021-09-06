@@ -172,6 +172,15 @@ class Peergroup extends Model
         return $query->exists();
     }
 
+    public function isPending(User $user = null)
+    {
+        $user = $user ?: auth()->user();
+
+        $query = Membership::where(['user_id' => $user->id, 'peergroup_id' => $this->id, 'approved' => false]);
+
+        return $query->exists();
+    }    
+
     /**
      * Check if there are more members in this group other than the owner
      * @return true/false 

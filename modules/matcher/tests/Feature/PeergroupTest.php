@@ -95,6 +95,22 @@ class PeergroupTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_member_can_show_private_peergroup()
+    {
+        $user = User::factory()->create();
+        $user1 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        Matcher::addMemberToGroup($pg, $user1);
+
+        $pg->private = true;
+        $pg->save();
+
+        $response = $this->actingAs($user1)->get(route('matcher.show', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(200);
+    }    
+
     public function test_owner_can_edit_peergroup()
     {
         $user = User::factory()->create();
@@ -292,6 +308,21 @@ class PeergroupTest extends TestCase
         $this->assertNotEquals($pg->user()->first()->id, $user2->id);
     }
 
+    public function test_owner_cannot_transfer_the_group_ownership_to_non_user()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $response = $this->actingAs($user1)->put(route('matcher.editOwner', ['pg' => $pg->groupname]), [
+            'owner' => 'some-fake-username',
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors('owner');
+        $this->assertNotEquals($pg->user()->first()->id, $user2->id);
+    }
+
     public function test_owner_can_transfer_the_group_ownership_to_member()
     {
         $user1 = User::factory()->create();
@@ -359,6 +390,9 @@ class PeergroupTest extends TestCase
         $response = $this->actingAs($user)->get(route('matcher.delete', ['pg' => $pg->groupname]));
 
         $response->assertSee('This group has members');
+
+        $response = $this->actingAs($user)->delete(route('matcher.delete', ['pg' => $pg->groupname]));
+        $response->assertSessionHasErrors('confirm_delete');
 
         $response = $this->actingAs($user)->delete(route('matcher.delete', ['pg' => $pg->groupname]), [
             'confirm_delete' => '1'

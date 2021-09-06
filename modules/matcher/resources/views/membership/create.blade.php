@@ -9,7 +9,12 @@
             <div class="mt-2 p-4 border-t">
                 @csrf
                 @method('PUT')
+
+                @if($pg->needsApproval())
+                <x-matcher::ui.edit-buttons :pg="$pg">{{ __('matcher::peergroup.button_request_join_group') }}</x-matcher::ui.edit-buttons>
+                @else
                 <x-matcher::ui.edit-buttons :pg="$pg">{{ __('matcher::peergroup.button_join_group') }}</x-matcher::ui.edit-buttons>
+                @endif
             </div>
         </x-ui.forms.form>
     </x-ui.card>

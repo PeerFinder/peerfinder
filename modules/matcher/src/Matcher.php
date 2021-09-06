@@ -3,12 +3,14 @@
 namespace Matcher;
 
 use App\Models\User;
+use App\Rules\ConfirmCheckbox;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Language;
 use Matcher\Models\Membership;
+use Matcher\Rules\IsGroupMember;
 
 class Matcher
 {
@@ -68,11 +70,11 @@ class Matcher
     {
         $input = $request->all();
 
-        Validator::make($input, ['confirm_delete' => ['required', 'boolean']])->after(function ($validator) use($input) {
-            if ($input['confirm_delete'] !== '1') {
-                $validator->errors()->add('confirm_delete', __('matcher::peergroup.delete_group_confirm_validation_error'));
-            }
-        })->validate();
+        Validator::make($input, ['confirm_delete' => [
+            'required',
+            'boolean',
+            new ConfirmCheckbox(__('matcher::peergroup.delete_group_confirm_validation_error')),
+        ]])->validate();
 
         $pg->delete();
     }
@@ -81,11 +83,11 @@ class Matcher
     {
         $input = $request->all();
 
-        Validator::make($input, ['owner' => ['required', 'exists:users,username']])->after(function ($validator) use($input, $pg) {
-            if (key_exists('owner', $input) && !$pg->isMember(User::where('username', $input['owner'])->first())) {
-                $validator->errors()->add('owner', __('matcher::peergroup.change_owner_validation_error'));
-            }
-        })->validate();
+        Validator::make($input, ['owner' => [
+            'required',
+            'exists:users,username',
+            new IsGroupMember($pg, __('matcher::peergroup.change_owner_validation_error')),
+        ]])->validate();
 
         $pg->setOwner(User::where('username', $input['owner'])->first());
     }
@@ -98,14 +100,17 @@ class Matcher
                 throw new MembershipException(__('matcher::peergroup.exception_user_already_member', ['user' => $user->name]));
             }
     
+            # User without invitation cannot join private groups. Owners can.
             if (!$pg->allowedToJoin($user)) {
                 throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
             }
     
+            # If the group is marked as completed/closed nobody can join
             if (!$pg->isOpen()) {
                 throw new MembershipException(__('matcher::peergroup.exception_group_is_completed'));
             }
     
+            # If the group is full, nobody can join
             if ($pg->isFull()) {
                 throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
             }

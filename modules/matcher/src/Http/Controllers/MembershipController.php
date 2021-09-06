@@ -22,11 +22,15 @@ class MembershipController extends Controller
         Gate::authorize('create', [Membership::class, $pg]);
 
         try {
-            Matcher::addMemberToGroup($pg, auth()->user());
+            $membership = Matcher::addMemberToGroup($pg, auth()->user());
         } catch (MembershipException $e) {
             return back()->withErrors($e->getMessage());
         }
 
-        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_joined_successfully'));
+        if ($membership->approved) {
+            return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_joined_successfully'));
+        } else {
+            return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_waiting_for_approval'));
+        }
     }
 }
