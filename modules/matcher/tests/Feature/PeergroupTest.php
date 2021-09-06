@@ -279,25 +279,21 @@ class PeergroupTest extends TestCase
 
     public function test_owner_cannot_transfer_the_group_ownership_to_non_member()
     {
-        $this->withoutExceptionHandling();
-
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user1)->create();
 
         $response = $this->actingAs($user1)->put(route('matcher.editOwner', ['pg' => $pg->groupname]), [
-            'new_owner' => $user2,
+            'owner' => $user2->username,
         ]);
 
         $response->assertStatus(302);
-        $response->assertSessionHasErrors();
+        $response->assertSessionHasErrors('owner');
         $this->assertNotEquals($pg->user()->first()->id, $user2->id);
     }
 
     public function test_owner_can_transfer_the_group_ownership_to_member()
     {
-        $this->withoutExceptionHandling();
-
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user1)->create();
@@ -305,35 +301,62 @@ class PeergroupTest extends TestCase
         Matcher::addMemberToGroup($pg, $user2);
 
         $response = $this->actingAs($user1)->put(route('matcher.editOwner', ['pg' => $pg->groupname]), [
-            'new_owner' => $user2,
+            'owner' => $user2->username,
         ]);
 
         $response->assertStatus(302);
         $response->assertSessionDoesntHaveErrors();
+        $response->assertRedirect($pg->getUrl());
+        $pg->refresh();
         $this->assertEquals($pg->user()->first()->id, $user2->id);
     }
 
     public function test_owner_gets_redirected_after_ownership_transfer()
     {
-        
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $pg->private = true;
+        $pg->save();
+
+        $response = $this->actingAs($user1)->put(route('matcher.editOwner', ['pg' => $pg->groupname]), [
+            'owner' => $user2->username,
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionDoesntHaveErrors();
+        $response->assertRedirect(route('dashboard.index'));
+
+        $response = $this->actingAs($user1)->get(route('matcher.show', ['pg' => $pg->groupname]));
+        $response->assertStatus(403);
     }
 
     public function test_owner_can_delete_the_group()
     {
         $user = User::factory()->create();
         $user2 = User::factory()->create();
-        $pg = Peergroup::factory()->byUser($user)->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user)->create([
+            'limit' => 5,
+        ]);
+
         $language = Language::factory()->create();
 
         $pg->languages()->attach($language);
         
+        Matcher::addMemberToGroup($pg, $user);
         Matcher::addMemberToGroup($pg, $user2);
+        Matcher::addMemberToGroup($pg, $user3);
 
         $this->assertTrue($pg->hasMoreMembersThanOwner());
 
         $response = $this->actingAs($user)->get(route('matcher.delete', ['pg' => $pg->groupname]));
 
-        $response->assertSee(__('matcher::peergroup.delete_group_has_members_notice', ['link' => route('matcher.editOwner', ['pg' => $pg->groupname])]));
+        $response->assertSee('This group has members');
 
         $response = $this->actingAs($user)->delete(route('matcher.delete', ['pg' => $pg->groupname]), [
             'confirm_delete' => '1'
@@ -343,25 +366,5 @@ class PeergroupTest extends TestCase
         $response->assertSessionDoesntHaveErrors();
         $this->assertDatabaseMissing('peergroups', ['id' => $pg->id]);
         $this->assertDatabaseMissing('language_peergroup', ['peergroup_id' => $pg->id]);
-    }
-
-    public function test_user_can_join_a_group_without_approval()
-    {
-        
-    }
-
-    public function test_user_cannot_join_a_group_with_approval()
-    {
-        
-    }
-
-    public function test_user_cannot_join_full_group()
-    {
-        
-    }
-
-    public function test_user_cannot_join_completed_group()
-    {
-        
     }
 }

@@ -83,7 +83,7 @@ class Peergroup extends Model
         return $this->hasMany(Membership::class);
     }
 
-    public function members()
+    private function members()
     {
         return $this->hasManyThrough(User::class, Membership::class, 'peergroup_id', 'id', 'id', 'user_id');
     }
@@ -101,6 +101,12 @@ class Peergroup extends Model
     public function isOwner(User $user)
     {
         return $this->user->id == $user->id;
+    }
+
+    public function setOwner(User $user)
+    {
+        $this->user_id = $user->id;
+        $this->save();
     }
 
     public function getUrl()
@@ -123,11 +129,26 @@ class Peergroup extends Model
         return false;
     }
 
-    public function isMember(User $user = null)
+    public function allowedToJoin(User $user = null)
     {
         $user = $user ?: auth()->user();
 
-        return false;
+        if ($this->private) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isMember(User $user = null, $include_not_approved = false)
+    {
+        $user = $user ?: auth()->user();
+        
+        if ($include_not_approved) {
+            return $this->members()->get()->contains($user);
+        } else {
+            return $this->approvedMembers()->get()->contains($user);
+        }
     }
 
     /**
@@ -136,8 +157,14 @@ class Peergroup extends Model
      */
     public function hasMoreMembersThanOwner()
     {
-        #TODO: Implement this function
-        return false;
+        $members = $this->approvedMembers()->get();
+        $owner = $this->user()->first();
+
+        $filtered = $members->reject(function ($value, $key) use ($owner) {
+            return $value->id == $owner->id;
+        });
+
+        return $filtered->count() > 0;
     }
 
     public function isFull()

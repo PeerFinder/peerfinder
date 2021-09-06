@@ -49,4 +49,9 @@ return [
     'delete_group_confirm_validation_error' => 'Please check the confirmation checkbox to be able to delete the group.',
     'exception_user_already_member' => ':user is already a member',
     'exception_limit_is_reached' => 'Group limit is reached',
+    'change_owner_validation_error' => 'New owner must be a member of the group.',
+    'owner_changed_successfully' => 'Group owner was changes successfully!',
+    'exception_cannot_join_private_group' => 'Private group cannot be joined without invitation',
+    'exception_group_is_completed' => 'The group is completed, no more user can join.',
+    
 ];

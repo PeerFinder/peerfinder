@@ -77,30 +77,49 @@ class Matcher
         $pg->delete();
     }
 
+    public function changeOwner(Peergroup $pg, Request $request)
+    {
+        $input = $request->all();
+
+        Validator::make($input, ['owner' => ['required', 'exists:users,username']])->after(function ($validator) use($input, $pg) {
+            if (key_exists('owner', $input) && !$pg->isMember(User::where('username', $input['owner'])->first())) {
+                $validator->errors()->add('owner', __('matcher::peergroup.change_owner_validation_error'));
+            }
+        })->validate();
+
+        $pg->setOwner(User::where('username', $input['owner'])->first());
+    }
+
     public function addMemberToGroup(Peergroup $pg, User $user)
     {
         # User is already a member? Nothing to do
-        if ($pg->isMember($user)) {
+        if ($pg->isMember($user, true)) {
             throw new MembershipException(__('matcher::peergroup.exception_user_already_member', ['user' => $user->name]));
         }
 
-        $members_count = $pg->members()->count();
+        if (!$pg->allowedToJoin($user)) {
+            throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
+        }
 
-        if ($members_count < $pg->limit) {
-            $membership = new Membership();
-            $membership->peergroup_id = $pg->id;
-            $membership->user_id = $user->id;
-            
-            if ($pg->needsApproval($user)) {
-                $membership->approved = false;
-            } else {
-                $membership->approved = true;
-            }
+        if (!$pg->isOpen()) {
+            throw new MembershipException(__('matcher::peergroup.exception_group_is_completed'));
+        }
 
-            $membership->save();
-        } else {
+        if ($pg->isFull()) {
             throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
         }
+
+        $membership = new Membership();
+        $membership->peergroup_id = $pg->id;
+        $membership->user_id = $user->id;
+        
+        if ($pg->needsApproval($user)) {
+            $membership->approved = false;
+        } else {
+            $membership->approved = true;
+        }
+
+        $membership->save();
 
         $pg->updateStates();
 

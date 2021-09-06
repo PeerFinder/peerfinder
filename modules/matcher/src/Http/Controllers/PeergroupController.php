@@ -56,8 +56,15 @@ class PeergroupController extends Controller
     {
         Gate::authorize('editOwner', $pg);
 
-        #TODO: Redirect here to the group if user has access to the group
-        
+        Matcher::changeOwner($pg, $request);
+
+        $pg->refresh();
+
+        if (Gate::allows('view', $pg)) {
+            return redirect($pg->getUrl())->with('success', __('matcher::peergroup.owner_changed_successfully'));
+        } else {
+            return redirect(route('dashboard.index'))->with('success', __('matcher::peergroup.owner_changed_successfully'));
+        }
     }
 
     public function delete(Request $request, Peergroup $pg)
