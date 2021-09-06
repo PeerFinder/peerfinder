@@ -89,25 +89,40 @@ class Matcher
 
         $pg->setOwner(User::where('username', $input['owner'])->first());
     }
+    
+    public function canUserJoinGroup(Peergroup $pg, User $user, $with_exception = false)
+    {
+        try {
+            # User is already a member? Nothing to do
+            if ($pg->isMember($user, true)) {
+                throw new MembershipException(__('matcher::peergroup.exception_user_already_member', ['user' => $user->name]));
+            }
+    
+            if (!$pg->allowedToJoin($user)) {
+                throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
+            }
+    
+            if (!$pg->isOpen()) {
+                throw new MembershipException(__('matcher::peergroup.exception_group_is_completed'));
+            }
+    
+            if ($pg->isFull()) {
+                throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
+            }
+        } catch (MembershipException $e) {
+            if ($with_exception) {
+                throw $e;
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public function addMemberToGroup(Peergroup $pg, User $user)
     {
-        # User is already a member? Nothing to do
-        if ($pg->isMember($user, true)) {
-            throw new MembershipException(__('matcher::peergroup.exception_user_already_member', ['user' => $user->name]));
-        }
-
-        if (!$pg->allowedToJoin($user)) {
-            throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
-        }
-
-        if (!$pg->isOpen()) {
-            throw new MembershipException(__('matcher::peergroup.exception_group_is_completed'));
-        }
-
-        if ($pg->isFull()) {
-            throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
-        }
+        $this->canUserJoinGroup($pg, $user, true);
 
         $membership = new Membership();
         $membership->peergroup_id = $pg->id;

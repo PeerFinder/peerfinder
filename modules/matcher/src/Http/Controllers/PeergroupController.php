@@ -2,12 +2,10 @@
 
 namespace Matcher\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Validator;
+use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Peergroup;
 
@@ -34,23 +32,26 @@ class PeergroupController extends Controller
     public function show(Request $request, Peergroup $pg)
     {
         Gate::authorize('view', $pg);
-
         return view('matcher::peergroups.show', compact('pg'));
     }
 
     public function edit(Request $request, Peergroup $pg)
     {
         Gate::authorize('edit', $pg);
-
         return view('matcher::peergroups.edit', compact('pg'));
     }
 
     public function editOwner(Request $request, Peergroup $pg)
     {
         Gate::authorize('editOwner', $pg);
-
         return view('matcher::peergroups.edit-owner', compact('pg'));
     }
+
+    public function delete(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('delete', $pg);
+        return view('matcher::peergroups.delete', compact('pg'));
+    }    
 
     public function updateOwner(Request $request, Peergroup $pg)
     {
@@ -65,13 +66,6 @@ class PeergroupController extends Controller
         } else {
             return redirect(route('dashboard.index'))->with('success', __('matcher::peergroup.owner_changed_successfully'));
         }
-    }
-
-    public function delete(Request $request, Peergroup $pg)
-    {
-        Gate::authorize('delete', $pg);
-
-        return view('matcher::peergroups.delete', compact('pg'));
     }
 
     public function destroy(Request $request, Peergroup $pg)
@@ -109,5 +103,4 @@ class PeergroupController extends Controller
 
         return $result;
     }
-
 }

@@ -1,5 +1,6 @@
 <x-matcher::layout.single :pg="$pg">
 
+    {{--
     <div class="my-5 text-center">
         @if ($pg->isMember())
         <x-ui.forms.button action="destroy">{{ __('matcher::peergroup.button_leave_group') }}</x-ui.forms.button>
@@ -13,6 +14,7 @@
 
         @endif
     </div>
+    --}}
 
     @if ($pg->isFull())
     <x-ui.flash class="bg-yellow-100 p-3 border border-yellow-400 shadow text-center rounded-md">
@@ -23,6 +25,7 @@
         <x-ui.icon name="information-circle" class="text-yellow-500" /> {{ __('matcher::peergroup.completed_notice') }}
     </x-ui.flash>
     @endif
+    
 
     <x-matcher::peergroup.edit-menu :pg="$pg" />
 

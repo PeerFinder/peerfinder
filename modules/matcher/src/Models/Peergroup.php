@@ -61,6 +61,12 @@ class Peergroup extends Model
             Urler::createUniqueSlug($pg, 'groupname');
         });
 
+        static::saving(function ($pg) {
+            if ($pg->isFull()) {
+                $pg->open = false;
+            }
+        });
+
         static::deleting(function ($pg) {
             $pg->languages()->detach();
 
@@ -87,14 +93,18 @@ class Peergroup extends Model
         return $this->hasMany(Membership::class);
     }
 
-    private function members()
+    public function members()
     {
-        return $this->hasManyThrough(User::class, Membership::class, 'peergroup_id', 'id', 'id', 'user_id');
+        return $this->hasManyThrough(User::class, Membership::class, 'peergroup_id', 'id', 'id', 'user_id')->where('approved', true);
     }
 
-    public function approvedMembers()
+    public function getMembers()
     {
-        return $this->members()->where('approved', true);
+        if ($this->relationLoaded('memberships')) {
+            return $this->members;
+        } else {
+            return $this->members()->get();
+        }
     }
 
     public function languages()
@@ -111,6 +121,7 @@ class Peergroup extends Model
     {
         $this->user_id = $user->id;
         $this->save();
+        #TODO: Notify the new owner about the group
     }
 
     public function getUrl()
@@ -137,6 +148,10 @@ class Peergroup extends Model
     {
         $user = $user ?: auth()->user();
 
+        if ($this->isOwner($user)) {
+            return true;
+        }
+
         if ($this->private) {
             return false;
         }
@@ -148,11 +163,13 @@ class Peergroup extends Model
     {
         $user = $user ?: auth()->user();
 
-        if ($include_not_approved) {
-            return $this->members()->get()->contains($user);
-        } else {
-            return $this->approvedMembers()->get()->contains($user);
+        $query = Membership::where(['user_id' => $user->id, 'peergroup_id' => $this->id]);
+
+        if (!$include_not_approved) {
+            $query = $query->where('approved', true);
         }
+
+        return $query->exists();
     }
 
     /**
@@ -161,7 +178,8 @@ class Peergroup extends Model
      */
     public function hasMoreMembersThanOwner()
     {
-        $members = $this->approvedMembers()->get();
+        $members = $this->getMembers();
+
         $owner = $this->user()->first();
 
         $filtered = $members->reject(function ($value, $key) use ($owner) {
@@ -173,7 +191,7 @@ class Peergroup extends Model
 
     public function isFull()
     {
-        return $this->approvedMembers()->count() >= $this->limit;
+        return $this->getMembers()->count() >= $this->limit;
     }
 
     public function isOpen()
@@ -200,11 +218,8 @@ class Peergroup extends Model
 
     public function updateStates()
     {
-        $members_count = $this->members()->count();
-
-        if ($members_count >= $this->limit) {
-            $this->open = false;
-            $this->save();
+        if ($this->isFull()) {
+            $this->complete();
         }
     }
 }

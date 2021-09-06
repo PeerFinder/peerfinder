@@ -29,11 +29,6 @@ class PeergroupPolicy
         return false;
     }
 
-    public function join(User $user, Peergroup $pg)
-    {
-        
-    }
-
     public function edit(User $user, Peergroup $pg)
     {
         return $pg->isOwner($user);

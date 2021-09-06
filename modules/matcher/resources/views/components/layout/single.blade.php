@@ -22,10 +22,18 @@
             <x-ui.card class="h-32" title="Calender">
                 xyz
             </x-ui.card>
-            <x-ui.card class="h-32" title="Members">
-                abc
-            </x-ui.card>
             --}}
+
+            @if ($pg && $pg->getMembers()->count() > 0)
+            <x-ui.card class="h-32" title="Members">
+                @foreach ($pg->getMembers() as $member)
+                    <div>{{ $member->name }}</div>
+                @endforeach
+            </x-ui.card>
+            @endif
+
+
+            
         </div>
     </div>
 </x-layout.minimal>

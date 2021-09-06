@@ -6,13 +6,16 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Matcher\Models\Membership;
 use Matcher\Models\Peergroup;
+use Matcher\Policies\MembershipPolicy;
 use Matcher\Policies\PeergroupPolicy;
 
 class MatcherServiceProvider extends ServiceProvider
 {
     protected $policies = [
         Peergroup::class => PeergroupPolicy::class,
+        Membership::class => MembershipPolicy::class,
     ];
 
     public function boot()
@@ -70,9 +73,9 @@ class MatcherServiceProvider extends ServiceProvider
 
     protected function registerRoutes()
     {
-        /* Route::bind('pg', function ($value) {
-            return Peergroup::where('groupname', $value)->with('user')->firstOrFail();
-        }); */
+        Route::bind('pg', function ($value) {
+            return Peergroup::where('groupname', $value)->with('user', 'memberships.user')->firstOrFail();
+        });
 
         Route::group($this->getRoutesConfiguration('web'), function () {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');

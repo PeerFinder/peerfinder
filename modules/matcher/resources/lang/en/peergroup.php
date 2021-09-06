@@ -53,5 +53,6 @@ return [
     'owner_changed_successfully' => 'Group owner was changes successfully!',
     'exception_cannot_join_private_group' => 'Private group cannot be joined without invitation',
     'exception_group_is_completed' => 'The group is completed, no more user can join.',
-    
+    'peergroup_joined_successfully' => 'You have joined this group!',
+    'join_group_title' => 'Join group',
 ];
