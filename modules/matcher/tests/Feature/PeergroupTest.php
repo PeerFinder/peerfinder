@@ -352,6 +352,8 @@ class PeergroupTest extends TestCase
         Matcher::addMemberToGroup($pg, $user2);
         Matcher::addMemberToGroup($pg, $user3);
 
+        $this->assertDatabaseHas('memberships', ['peergroup_id' => $pg->id]);
+
         $this->assertTrue($pg->hasMoreMembersThanOwner());
 
         $response = $this->actingAs($user)->get(route('matcher.delete', ['pg' => $pg->groupname]));
@@ -366,5 +368,6 @@ class PeergroupTest extends TestCase
         $response->assertSessionDoesntHaveErrors();
         $this->assertDatabaseMissing('peergroups', ['id' => $pg->id]);
         $this->assertDatabaseMissing('language_peergroup', ['peergroup_id' => $pg->id]);
+        $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id]);
     }
 }

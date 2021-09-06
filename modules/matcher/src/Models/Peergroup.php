@@ -63,7 +63,11 @@ class Peergroup extends Model
 
         static::deleting(function ($pg) {
             $pg->languages()->detach();
-            #TODO: Delete memberships here
+
+            $pg->memberships()->each(function ($membership) {
+                $membership->delete();
+            });
+
             #TODO: Delete conversations here
         });
     }
@@ -143,7 +147,7 @@ class Peergroup extends Model
     public function isMember(User $user = null, $include_not_approved = false)
     {
         $user = $user ?: auth()->user();
-        
+
         if ($include_not_approved) {
             return $this->members()->get()->contains($user);
         } else {
