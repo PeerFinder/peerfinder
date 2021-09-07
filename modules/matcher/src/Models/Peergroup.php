@@ -62,6 +62,7 @@ class Peergroup extends Model
         });
 
         static::saving(function ($pg) {
+            # If the group is full, mark is also as closed
             if ($pg->isFull()) {
                 $pg->open = false;
             }

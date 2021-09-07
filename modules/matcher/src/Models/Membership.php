@@ -17,6 +17,15 @@ class Membership extends Model
         'approved' => 'boolean',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($membership) {
+            $membership->peergroup()->first()->updateStates();
+        });
+    }
+
     public function peergroup()
     {
         return $this->belongsTo(Peergroup::class);
@@ -25,5 +34,11 @@ class Membership extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function approve()
+    {
+        $this->approved = true;
+        $this->save();
     }
 }

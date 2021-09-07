@@ -42,6 +42,10 @@ class Peergroup extends Resource
         'id',
     ];
 
+    public static function indexQuery(NovaRequest $request, $query) {
+        return $query->withCount('members');
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -64,6 +68,8 @@ class Peergroup extends Resource
 
             Textarea::make('Description')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['description'])->required(),
 
+            Number::make('Members', 'members_count')->onlyOnIndex(),
+
             Number::make('Limit')->rules(ModelsPeergroup::rules()['update']['limit'])->required(),
 
             Date::make('Begin')->rules(ModelsPeergroup::rules()['update']['begin']),
@@ -76,7 +82,7 @@ class Peergroup extends Resource
 
             BelongsTo::make('User'),
 
-            Boolean::make('Open')->readonly(),
+            Boolean::make('Open'),
 
             Text::make('Location')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['location']),
 

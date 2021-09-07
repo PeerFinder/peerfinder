@@ -173,6 +173,31 @@ class MembershipTest extends TestCase
         $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);
     }
 
+    public function test_peergroup_changes_state_when_membership_approved()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'limit' => 2,
+            'with_approval' => true,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+        $m2 = Matcher::addMemberToGroup($pg, $user2);
+
+        $pg->refresh();
+        $this->assertTrue($pg->isOpen());
+
+        $m1->approve();
+        $m2->approve();
+
+        $pg->refresh();
+
+        $this->assertTrue($pg->isFull());
+        $this->assertFalse($pg->isOpen());
+    }
+
     public function test_owner_can_see_not_approved_users()
     {
         
