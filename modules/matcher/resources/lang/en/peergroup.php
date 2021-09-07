@@ -63,5 +63,5 @@ return [
     'join_group_notice' => 'By joining the group you will be able to access group\'s conversations and details. Please keep the information private.',
     'request_group_notice' => 'New members of this group have to be approved by the group founder.',
     'request_pending_notice' => 'Request to join this group is pending.',
-    
+    'change_owner_no_members' => 'This group has no other members.',
 ];

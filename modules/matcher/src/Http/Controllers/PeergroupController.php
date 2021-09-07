@@ -44,14 +44,19 @@ class PeergroupController extends Controller
     public function editOwner(Request $request, Peergroup $pg)
     {
         Gate::authorize('editOwner', $pg);
-        return view('matcher::peergroups.edit-owner', compact('pg'));
+
+        $members = $pg->getMembers()->reject(function($value) use ($pg) {
+            return $value->id == $pg->user->id;
+        });
+
+        return view('matcher::peergroups.edit-owner', compact('pg', 'members'));
     }
 
     public function delete(Request $request, Peergroup $pg)
     {
         Gate::authorize('delete', $pg);
         return view('matcher::peergroups.delete', compact('pg'));
-    }    
+    }
 
     public function updateOwner(Request $request, Peergroup $pg)
     {
@@ -91,7 +96,7 @@ class PeergroupController extends Controller
         Gate::authorize('edit', $pg);
 
         Matcher::storePeergroupData($pg, $request);
-        
+
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_changed_successfully'));
     }
 

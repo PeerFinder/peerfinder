@@ -8,6 +8,20 @@
                 <p>{{ __('matcher::peergroup.change_owner_notice') }}</p>
             </div>
 
+            <div class="p-4 space-y-1 w-1/2">
+            @forelse ($members as $member)
+                <div class="">
+                    <input class="peer hidden" id="owner-{{ $loop->index }}" type="radio" name="owner" value="{{ $member->username }}" />
+                    <div class="flex items-center pl-2 peer-checked:bg-pf-midorange peer-checked:text-white peer-checked:border-gray-800 border border-gray-400 hover:bg-gray-100 rounded-md">
+                        <x-ui.user.avatar :user="$member" size="30" />
+                        <label for="owner-{{ $loop->index }}" class="block pr-3 py-2 flex-1 ml-2 cursor-pointer">{{ $member->name }}</label>
+                    </div>
+                </div>
+            @empty
+            {{ __('matcher::peergroup.change_owner_no_members') }}
+            @endforelse
+            </div>
+
             <div class="mt-2 p-4 border-t">
                 @csrf
                 @method('PUT')

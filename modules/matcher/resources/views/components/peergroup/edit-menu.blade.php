@@ -18,7 +18,10 @@
             @endif
         </x-ui.forms.form>
 
+        @if ($pg->hasMoreMembersThanOwner())
         <x-ui.forms.button tag="a" href="{{ route('matcher.editOwner', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_transfer_ownership') }}</x-ui.forms.button>
+        @endif
+
         <x-ui.forms.button tag="a" href="{{ route('matcher.delete', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_delete_group') }}</x-ui.forms.button>
     </div>
 </x-ui.card>
