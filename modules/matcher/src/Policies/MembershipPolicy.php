@@ -11,16 +11,11 @@ class MembershipPolicy
 {
     public function create(User $user, Peergroup $pg)
     {
-        return Matcher::canUserJoinGroup($pg, $user, false);
+        return $pg->allowedToJoin($user);
     }
 
-    public function edit(User $user, Peergroup $pg, Membership $membership)
+    public function delete(User $user, Membership $membership, Peergroup $pg)
     {
-        return false;
-    }
-
-    public function delete(User $user, Peergroup $pg, Membership $membership)
-    {
-        return false;
+        return $membership->peergroup()->first()->id == $pg->id && $membership->user_id == $user->id;
     }    
 }

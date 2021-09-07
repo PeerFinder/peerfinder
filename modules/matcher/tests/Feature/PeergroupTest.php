@@ -56,7 +56,9 @@ class PeergroupTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertStatus(302);
 
+        # Unset because languages are a part of language_peergroup table, not peergroups
         unset($data['languages']);
+
         $this->assertDatabaseHas('peergroups', $data);
     }
 
@@ -156,6 +158,7 @@ class PeergroupTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertStatus(302);
 
+        # Unset because languages are a part of language_peergroup table, not peergroups
         unset($data['languages']);
 
         $this->assertDatabaseHas('peergroups', $data);
@@ -292,6 +295,18 @@ class PeergroupTest extends TestCase
         $pg->refresh();
         $this->assertFalse($pg->isOpen());
     }
+
+    public function test_owner_can_render_ownership_transfer_view()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $response = $this->actingAs($user1)->get(route('matcher.editOwner', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(200);
+    }    
 
     public function test_owner_cannot_transfer_the_group_ownership_to_non_member()
     {

@@ -76,6 +76,8 @@ class Peergroup extends Resource
 
             BelongsTo::make('User'),
 
+            Boolean::make('Open')->readonly(),
+
             Text::make('Location')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['location']),
 
             Text::make('Meeting Link')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['meeting_link']),

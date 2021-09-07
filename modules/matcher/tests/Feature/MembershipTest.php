@@ -35,7 +35,24 @@ class MembershipTest extends TestCase
 
         Matcher::addMemberToGroup($pg, $user1);
         Matcher::addMemberToGroup($pg, $user2);
+
+        $this->assertFalse($pg->isOpen());
+
         Matcher::addMemberToGroup($pg, $user3);
+    }
+
+    public function test_join_private_group_throws_exceptions()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'private' => true,
+        ]);
+
+        $this->expectException(MembershipException::class);
+
+        Matcher::addMemberToGroup($pg, $user2);
     }
 
     public function test_user_can_render_new_membership()
@@ -53,7 +70,7 @@ class MembershipTest extends TestCase
         Matcher::addMemberToGroup($pg, $user2);
 
         $response = $this->actingAs($user2)->get(route('matcher.membership.create', ['pg' => $pg->groupname]));
-        $response->assertStatus(403);
+        $response->assertStatus(302);
     }
 
     public function test_user_can_join_a_group_without_approval()
@@ -82,6 +99,7 @@ class MembershipTest extends TestCase
 
         $this->actingAs($user2)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
         $this->assertFalse($pg->isMember($user2));
+        $this->assertDatabaseHas('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id, 'approved' => false]);
     }
 
     public function test_user_cannot_join_private_group()
@@ -116,7 +134,7 @@ class MembershipTest extends TestCase
         });
 
         $response = $this->actingAs($user1)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
-        $response->assertStatus(403);
+        $response->assertStatus(302);
         $this->assertFalse($pg->isMember($user1));
     }
 
@@ -130,32 +148,29 @@ class MembershipTest extends TestCase
         $pg->complete();
 
         $response = $this->actingAs($user1)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
-        $response->assertStatus(403);
+        $response->assertStatus(302);
         $this->assertFalse($pg->isMember($user1));     
 
         $response = $this->actingAs($user2)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
-        $response->assertStatus(403);
+        $response->assertStatus(302);
         $this->assertFalse($pg->isMember($user2));
-    }
-
-    public function test_user_can_edit_own_membership()
-    {
-        
-    }
-
-    public function test_user_cannot_edit_membership_of_other_users()
-    {
-        
     }
 
     public function test_user_can_delete_own_membership()
     {
-        
-    }
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
 
-    public function test_user_cannot_delete_membership_of_other_users()
-    {
-        
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user2)->get(route('matcher.membership.delete', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user2)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname]));
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);
     }
 
     public function test_owner_can_see_not_approved_users()

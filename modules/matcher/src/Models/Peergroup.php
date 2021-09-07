@@ -227,6 +227,8 @@ class Peergroup extends Model
 
     public function updateStates()
     {
+        $this->refresh();
+
         if ($this->isFull()) {
             $this->complete();
         }

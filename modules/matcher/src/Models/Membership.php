@@ -14,6 +14,7 @@ class Membership extends Model
 
     protected $casts = [
         'begin' => 'date',
+        'approved' => 'boolean',
     ];
 
     public function peergroup()

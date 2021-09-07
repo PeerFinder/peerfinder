@@ -4,7 +4,11 @@
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
         <x-ui.forms.form :action="route('matcher.membership.store', ['pg' => $pg->groupname])">
-            
+            <p class="p-4">{{ __('matcher::peergroup.join_group_notice') }}</p>
+
+            @if ($pg->needsApproval())
+            <p class="p-4"><x-ui.icon name="exclamation" /> {{ __('matcher::peergroup.request_group_notice') }}</p>
+            @endif
 
             <div class="mt-2 p-4 border-t">
                 @csrf

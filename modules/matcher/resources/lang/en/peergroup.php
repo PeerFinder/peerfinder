@@ -57,4 +57,11 @@ return [
     'join_group_title' => 'Join group',
     'peergroup_waiting_for_approval' => 'Request to join this group was sent successfully.',
     'button_request_join_group' => 'Request to join this group',
+    'leave_group_title' => 'Leave the group',
+    'leave_group_notice' => 'Do you really want to leave the group? After that you will no longer have access to group\'s conversations and details.',
+    'peergroup_left_successfully' => 'You have left the group.',
+    'join_group_notice' => 'By joining the group you will be able to access group\'s conversations and details. Please keep the information private.',
+    'request_group_notice' => 'New members of this group have to be approved by the group founder.',
+    'request_pending_notice' => 'Request to join this group is pending.',
+    
 ];

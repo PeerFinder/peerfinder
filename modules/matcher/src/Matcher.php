@@ -92,42 +92,32 @@ class Matcher
         $pg->setOwner(User::where('username', $input['owner'])->first());
     }
     
-    public function canUserJoinGroup(Peergroup $pg, User $user, $with_exception = false)
+    public function canUserJoinGroup(Peergroup $pg, User $user)
     {
-        try {
-            # User is already a member? Nothing to do
-            if ($pg->isMember($user, true)) {
-                throw new MembershipException(__('matcher::peergroup.exception_user_already_member', ['user' => $user->name]));
-            }
-    
-            # User without invitation cannot join private groups. Owners can.
-            if (!$pg->allowedToJoin($user)) {
-                throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
-            }
-    
-            # If the group is marked as completed/closed nobody can join
-            if (!$pg->isOpen()) {
-                throw new MembershipException(__('matcher::peergroup.exception_group_is_completed'));
-            }
-    
-            # If the group is full, nobody can join
-            if ($pg->isFull()) {
-                throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
-            }
-        } catch (MembershipException $e) {
-            if ($with_exception) {
-                throw $e;
-            } else {
-                return false;
-            }
+        # User is already a member? Nothing to do
+        if ($pg->isMember($user, true)) {
+            throw new MembershipException(__('matcher::peergroup.exception_user_already_member', ['user' => $user->name]));
         }
 
-        return true;
+        # User without invitation cannot join private groups. Owners can.
+        if (!$pg->allowedToJoin($user)) {
+            throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
+        }
+
+        # If the group is full, nobody can join
+        if ($pg->isFull()) {
+            throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
+        }
+
+        # If the group is marked as completed/closed nobody can join
+        if (!$pg->isOpen()) {
+            throw new MembershipException(__('matcher::peergroup.exception_group_is_completed'));
+        }
     }
 
     public function addMemberToGroup(Peergroup $pg, User $user)
     {
-        $this->canUserJoinGroup($pg, $user, true);
+        $this->canUserJoinGroup($pg, $user);
 
         $membership = new Membership();
         $membership->peergroup_id = $pg->id;
@@ -144,5 +134,10 @@ class Matcher
         $pg->updateStates();
 
         return $membership;
+    }
+
+    public function removeMemberFromGroup(Peergroup $pg, User $user)
+    {
+        Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->delete();
     }
 }
