@@ -200,6 +200,20 @@ class MembershipTest extends TestCase
 
     public function test_owner_can_see_not_approved_users()
     {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'limit' => 2,
+            'with_approval' => true,
+        ]);
+
+        Matcher::addMemberToGroup($pg, $user1);
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user1)->get(route('matcher.show', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+
         
     }
 }

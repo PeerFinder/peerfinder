@@ -140,4 +140,10 @@ class Matcher
     {
         Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->delete();
     }
+
+    public function getPendingMemberships(Peergroup $pg)
+    {
+        $memberships = Membership::where(['peergroup_id' => $pg->id, 'approved' => false])->with('user')->get()->all();
+        return $memberships;
+    }    
 }

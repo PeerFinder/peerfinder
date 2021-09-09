@@ -64,4 +64,7 @@ return [
     'request_group_notice' => 'New members of this group have to be approved by the group founder.',
     'request_pending_notice' => 'Request to join this group is pending.',
     'change_owner_no_members' => 'This group has no other members.',
+    'button_approve_member' => 'Approve',
+    'button_decline_member' => 'Decline',
+    'title_waiting_approval' => 'Waiting for approval',
 ];

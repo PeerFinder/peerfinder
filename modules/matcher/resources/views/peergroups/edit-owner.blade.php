@@ -10,7 +10,7 @@
 
             <div class="p-4 space-y-2 w-1/2">
             @forelse ($members as $member)
-                <div class="">
+                <div>
                     <input class="peer hidden" id="owner-{{ $loop->index }}" type="radio" name="owner" value="{{ $member->username }}" />
                     <div class="flex items-center pl-2 peer-checked:bg-pf-midorange peer-checked:text-white peer-checked:border-gray-800 bg-gray-50 border-gray-400 hover:bg-gray-100 rounded-md peer-checked:shadow-md">
                         <x-ui.user.avatar :user="$member" size="30" class="rounded-full" />
