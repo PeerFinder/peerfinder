@@ -3,6 +3,7 @@
 namespace Matcher\Tests;
 
 use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -113,7 +114,7 @@ class MembershipTest extends TestCase
 
         # Owner can join private group
         $response = $this->actingAs($user1)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
-        $this->assertTrue($pg->isMember($user1));        
+        $this->assertTrue($pg->isMember($user1));
 
         $response = $this->actingAs($user2)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
         $response->assertStatus(403);
@@ -149,7 +150,7 @@ class MembershipTest extends TestCase
 
         $response = $this->actingAs($user1)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
         $response->assertStatus(302);
-        $this->assertFalse($pg->isMember($user1));     
+        $this->assertFalse($pg->isMember($user1));
 
         $response = $this->actingAs($user2)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
         $response->assertStatus(302);
@@ -214,6 +215,104 @@ class MembershipTest extends TestCase
         $response = $this->actingAs($user1)->get(route('matcher.show', ['pg' => $pg->groupname]));
         $response->assertStatus(200);
 
+        $response->assertSee(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertSee(route('matcher.membership.decline', ['pg' => $pg->groupname, 'username' => $user2->username]));
+
+        $response = $this->actingAs($user2)->get(route('matcher.show', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+        $response->assertDontSee(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user2->username]));
+    }
+
+    public function test_owner_can_approve_user_membership()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+        $m2 = Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user2)->post(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user1)->post(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(302);
+
+        $m2->refresh();
+        $this->assertTrue($m2->approved);
+    }
+
+    public function test_owner_cannot_approve_user_membership_if_group_full()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+            'limit' => 2,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+        $m2 = Matcher::addMemberToGroup($pg, $user2);
+        $m3 = Matcher::addMemberToGroup($pg, $user3);
+
+        $m1->approve();
+        $m2->approve();
+
+        $response = $this->actingAs($user1)->post(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user3->username]));
+        $response->assertStatus(302);
+
+        $m3->refresh();
+        $this->assertFalse($m3->approved);
+    }
+
+    public function test_owner_can_decline_user_membership()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        Matcher::addMemberToGroup($pg, $user1);
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user2)->post(route('matcher.membership.decline', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user1)->post(route('matcher.membership.decline', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);
+    }
+
+
+    public function test_owner_cannot_approve_user_membership_other_group()
+    {
+        return;
         
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+        $m2 = Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user2)->post(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(403);
+
+        $response = $this->actingAs($user1)->post(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(302);
+
+        $m2->refresh();
+        $this->assertTrue($m2->approved);
     }
 }

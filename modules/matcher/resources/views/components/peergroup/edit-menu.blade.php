@@ -12,10 +12,14 @@
                         <a href="{{ $pending_membership->user->profileUrl() }}">{{ $pending_membership->user->name }}</a>
                     </div>
                     <div>
-                        
-                        <x-ui.forms.button class="mr-1">{{ __('matcher::peergroup.button_approve_member') }}</x-ui.forms.button>
-
-                        <x-ui.forms.button action="inform">{{ __('matcher::peergroup.button_decline_member') }}</x-ui.forms.button>
+                        <x-ui.forms.form :action="route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $pending_membership->user->username])" method="post" class="inline-block">
+                            @csrf
+                            <x-ui.forms.button class="mr-1">{{ __('matcher::peergroup.button_approve_member') }}</x-ui.forms.button>
+                        </x-ui.forms.form>
+                        <x-ui.forms.form :action="route('matcher.membership.decline', ['pg' => $pg->groupname, 'username' => $pending_membership->user->username])" method="post" class="inline-block">
+                            @csrf
+                            <x-ui.forms.button action="inform">{{ __('matcher::peergroup.button_decline_member') }}</x-ui.forms.button>
+                        </x-ui.forms.form>
                     </div>
                 </div>
             @endforeach

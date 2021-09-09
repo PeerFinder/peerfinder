@@ -21,7 +21,9 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
         Route::get('/create', [MembershipController::class, 'create'])->name('create');
         Route::put('/create', [MembershipController::class, 'store'])->name('store');
         Route::get('/delete', [MembershipController::class, 'delete'])->name('delete');
-        Route::delete('/delete', [MembershipController::class, 'destroy'])->name('destroy');        
+        Route::delete('/delete', [MembershipController::class, 'destroy'])->name('destroy');
+        Route::post('/{username}/approve', [MembershipController::class, 'approve'])->name('approve');
+        Route::post('/{username}/decline', [MembershipController::class, 'decline'])->name('decline');
     });
 });
 

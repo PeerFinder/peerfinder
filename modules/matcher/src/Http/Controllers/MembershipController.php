@@ -61,4 +61,32 @@ class MembershipController extends Controller
 
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_left_successfully'));
     }
+
+    public function approve(Request $request, Peergroup $pg, $username)
+    {
+        $user = User::where(['username' => $username])->firstOrFail();
+        $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id, 'approved' => false])->firstOrFail();
+
+        Gate::authorize('approve', [$membership, $pg]);
+
+        try {
+            Matcher::approveMember($pg, $user);
+        } catch (MembershipException $e) {
+            return redirect($pg->getUrl())->with('error', $e->getMessage());
+        }
+
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.member_approved_successfully'));
+    }
+
+    public function decline(Request $request, Peergroup $pg, $username)
+    {
+        $user = User::where(['username' => $username])->firstOrFail();
+        $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id, 'approved' => false])->firstOrFail();
+
+        Gate::authorize('decline', [$membership, $pg]);
+
+        $membership->delete();
+        
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.member_declined_successfully'));
+    }    
 }

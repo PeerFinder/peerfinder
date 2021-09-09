@@ -65,6 +65,9 @@ return [
     'request_pending_notice' => 'Request to join this group is pending.',
     'change_owner_no_members' => 'This group has no other members.',
     'button_approve_member' => 'Approve',
-    'button_decline_member' => 'Decline',
+    'button_decline_member' => 'Dismiss',
     'title_waiting_approval' => 'Waiting for approval',
+    'member_approved_successfully' => 'New member was approved successfully!',
+    'member_declined_successfully' => 'Request dismissed.',
+    
 ];

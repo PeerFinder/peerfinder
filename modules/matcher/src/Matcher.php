@@ -91,7 +91,7 @@ class Matcher
 
         $pg->setOwner(User::where('username', $input['owner'])->first());
     }
-    
+
     public function canUserJoinGroup(Peergroup $pg, User $user)
     {
         # User is already a member? Nothing to do
@@ -122,7 +122,7 @@ class Matcher
         $membership = new Membership();
         $membership->peergroup_id = $pg->id;
         $membership->user_id = $user->id;
-        
+
         if ($pg->needsApproval($user)) {
             $membership->approved = false;
         } else {
@@ -145,5 +145,14 @@ class Matcher
     {
         $memberships = Membership::where(['peergroup_id' => $pg->id, 'approved' => false])->with('user')->get()->all();
         return $memberships;
-    }    
+    }
+
+    public function approveMember(Peergroup $pg, User $user)
+    {
+        if ($pg->isFull()) {
+            throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
+        }
+        
+        Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->firstOrFail()->approve();
+    }
 }

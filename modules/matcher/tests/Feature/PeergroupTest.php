@@ -303,6 +303,9 @@ class PeergroupTest extends TestCase
         
         $pg = Peergroup::factory()->byUser($user1)->create();
 
+        Matcher::addMemberToGroup($pg, $user1);
+        Matcher::addMemberToGroup($pg, $user2);
+
         $response = $this->actingAs($user1)->get(route('matcher.editOwner', ['pg' => $pg->groupname]));
 
         $response->assertStatus(200);
@@ -344,6 +347,7 @@ class PeergroupTest extends TestCase
         $user2 = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user1)->create();
 
+        Matcher::addMemberToGroup($pg, $user1);
         Matcher::addMemberToGroup($pg, $user2);
 
         $response = $this->actingAs($user1)->put(route('matcher.editOwner', ['pg' => $pg->groupname]), [
