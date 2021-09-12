@@ -232,6 +232,9 @@ class PeergroupTest extends TestCase
     {
         $user = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
+
+        $this->assertTrue($user->ownsPeergroups());
+
         $user->delete();
         $this->assertDatabaseMissing('peergroups', ['id' => $pg->id]);
     }

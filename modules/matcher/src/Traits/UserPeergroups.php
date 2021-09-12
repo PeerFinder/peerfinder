@@ -10,4 +10,9 @@ trait UserPeergroups
     {
         return $this->hasMany(Peergroup::class);
     }
+
+    public function ownsPeergroups()
+    {
+        return $this->peergroups()->count() > 0;
+    }
 }
