@@ -38,6 +38,7 @@ class Matcher
             $pg = new Peergroup($input);
             $pg->user()->associate($request->user());
             $pg->save();
+            $this->afterPeergroupCreated($pg);
         }
 
         $languages = Language::whereIn('code', array_values($request->languages))->get();
@@ -133,12 +134,16 @@ class Matcher
 
         $pg->updateStates();
 
+        $this->afterMemberAdded($pg, $user, $membership);
+
         return $membership;
     }
 
     public function removeMemberFromGroup(Peergroup $pg, User $user)
     {
         Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->delete();
+
+        $this->afterMemberRemoved($pg, $user);
     }
 
     public function getPendingMemberships(Peergroup $pg)
@@ -152,7 +157,25 @@ class Matcher
         if ($pg->isFull()) {
             throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
         }
-        
-        Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->firstOrFail()->approve();
+
+        $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->firstOrFail();
+        $membership->approve();
+
+        $this->afterMemberAdded($pg, $user, $membership);
+    }
+
+    private function afterPeergroupCreated(Peergroup $pg)
+    {
+
+    }
+
+    private function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)
+    {
+
+    }
+
+    private function afterMemberRemoved(Peergroup $pg, User $user)
+    {
+
     }
 }

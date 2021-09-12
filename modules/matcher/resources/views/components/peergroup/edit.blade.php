@@ -1,6 +1,6 @@
 @props(['pg' => null, 'errors' => null])
 
-<x-ui.card class="my-5" title="{{ $pg->isDirty() ? __('matcher::peergroup.new_peergroup_title') : __('matcher::peergroup.edit_title') }}">
+<x-ui.card class="my-2 sm:my-5" title="{{ $pg->isDirty() ? __('matcher::peergroup.new_peergroup_title') : __('matcher::peergroup.edit_title') }}">
     <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
     <x-ui.forms.form :action="$pg->isDirty() ? route('matcher.create') : route('matcher.edit', ['pg' => $pg->groupname])">

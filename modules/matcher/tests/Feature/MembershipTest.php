@@ -294,8 +294,6 @@ class MembershipTest extends TestCase
 
     public function test_owner_cannot_approve_user_membership_other_group()
     {
-        return;
-        
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 

@@ -1,6 +1,6 @@
 <x-matcher::layout.single :pg="$pg">
 
-    <x-ui.card class="my-5" title="{{ __('matcher::peergroup.delete_group') }}">
+    <x-ui.card class="my-2 sm:my-5" title="{{ __('matcher::peergroup.delete_group') }}">
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
         <x-ui.forms.form :action="route('matcher.delete', ['pg' => $pg->groupname])">

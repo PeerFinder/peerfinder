@@ -60,7 +60,7 @@ class Peergroup extends Resource
             Stack::make('Details', [
                 Line::make('Title')->sortable()->asHeading(),
                 Line::make('Groupname', function() {
-                    return sprintf('<a href="%s" target="blank">%s</a>', $this->getUrl(), htmlspecialchars($this->groupname));
+                    return sprintf('<a href="%s" target="_blank">%s</a>', $this->getUrl(), htmlspecialchars($this->groupname));
                 })->asHtml(),
             ]),
 

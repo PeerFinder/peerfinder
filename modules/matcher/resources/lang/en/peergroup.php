@@ -8,6 +8,7 @@ return [
     'detail_languages' => 'Languages',
     'button_join_group' => 'Join this group',
     'button_apply_membership' => 'Apply for membership',
+    'new_peergroup' => 'New group',
     'button_edit_group' => 'Edit group',
     'button_delete_group' => 'Delete group',
     'button_complete_group' => 'Complete group',
@@ -69,5 +70,7 @@ return [
     'title_waiting_approval' => 'Waiting for approval',
     'member_approved_successfully' => 'New member was approved successfully!',
     'member_declined_successfully' => 'Request dismissed.',
-    
+    'this_group_has_no_members_yet' => 'This group has no members yet.',
+    'caption_members_list' => 'Members',
+
 ];
