@@ -1,6 +1,15 @@
-<div class="my-2 sm:my-5 text-center">
+<x-ui.card  class="my-2 sm:my-5 text-center p-4">
     @if ($pg->isMember())
-    <x-ui.forms.button action="destroy" tag="a" href="{{ route('matcher.membership.delete', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_leave_group') }}</x-ui.forms.button>
+    <div class="flex items-center justify-between">
+        <div class="text-center flex-1">
+            {{ __('matcher::peergroup.notice_member_of_group') }}
+        </div>
+        <div class="space-x-1">
+            <x-ui.forms.button action="inform" tag="a" href="{{ route('matcher.membership.delete', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_edit_membership') }}</x-ui.forms.button>
+            <x-ui.forms.button action="destroy" tag="a" href="{{ route('matcher.membership.delete', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_leave_group') }}</x-ui.forms.button>
+        </div>
+    </div>
+    
     @else
         @if ($pg->isPending())
         <x-ui.flash class="bg-yellow-100 p-3 border-t border-b sm:border border-yellow-400 shadow text-center sm:rounded-md">
@@ -20,4 +29,4 @@
         <x-ui.forms.button tag="a" href="{{ route('matcher.membership.create', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_join_group') }}</x-ui.forms.button>
         @endif
     @endif
-</div>
+</x-ui.card>

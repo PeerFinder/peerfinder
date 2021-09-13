@@ -1,7 +1,5 @@
 @can('edit', $pg)
 <x-ui.card class="my-2 sm:my-5 after:bg-gradient-to-r after:from-red-400 after:to-red-600 after:h-1 after:block overflow-hidden" title="{{ __('matcher::peergroup.group_administration') }}" subtitle="{{ __('matcher::peergroup.group_administration_notice') }}">
-    <x-matcher::peergroup.pending-list :pending="$pending" :pg="$pg" />
-
     <div class="flex justify-between p-1 space-x-1 sm:p-4">
         <x-ui.forms.button tag="a" href="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_edit_group') }}</x-ui.forms.button>
 
@@ -24,7 +22,7 @@
         <x-ui.forms.button tag="a" href="{{ route('matcher.editOwner', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_transfer_ownership') }}</x-ui.forms.button>
         @endif
 
-        <x-ui.forms.button tag="a" href="{{ route('matcher.delete', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_delete_group') }}</x-ui.forms.button>
+        <x-ui.forms.button tag="a" href="{{ route('matcher.delete', ['pg' => $pg->groupname]) }}" action="destroy">{{ __('matcher::peergroup.button_delete_group') }}</x-ui.forms.button>
     </div>
 </x-ui.card>
 @endcan

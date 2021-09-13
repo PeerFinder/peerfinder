@@ -1,8 +1,6 @@
 @if ($pending)
-<div class="p-4 border-b">
-    <h2 class="mb-2 font-semibold">{{ __('matcher::peergroup.title_waiting_approval') }}</h2>
-
-    <div class="space-y-2">
+<x-ui.card class="my-2 sm:my-5 after:bg-gradient-to-r after:from-red-400 after:to-red-600 after:h-1 after:block overflow-hidden" title="{{ __('matcher::peergroup.title_waiting_approval') }}" subtitle="{{ __('matcher::peergroup.group_administration_notice') }}">
+    <div class="space-y-2 p-4">
         @foreach ($pending as $pending_membership)
         <div class="bg-gray-50 p-2 flex rounded-md">
             <div class="flex-1 flex items-center">
@@ -22,5 +20,5 @@
         </div>
         @endforeach
     </div>
-</div>
+</x-ui.card>
 @endif

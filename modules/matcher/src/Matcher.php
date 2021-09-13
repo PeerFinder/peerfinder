@@ -149,6 +149,7 @@ class Matcher
     public function getPendingMemberships(Peergroup $pg)
     {
         $memberships = Membership::where(['peergroup_id' => $pg->id, 'approved' => false])->with('user')->get()->all();
+        
         return $memberships;
     }
 
@@ -159,6 +160,7 @@ class Matcher
         }
 
         $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->firstOrFail();
+
         $membership->approve();
 
         $this->afterMemberAdded($pg, $user, $membership);

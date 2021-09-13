@@ -72,5 +72,6 @@ return [
     'member_declined_successfully' => 'Request dismissed.',
     'this_group_has_no_members_yet' => 'This group has no members yet.',
     'caption_members_list' => 'Members',
-
+    'button_edit_membership' => 'My membership',
+    'notice_member_of_group' => 'You are a member of this group.',
 ];

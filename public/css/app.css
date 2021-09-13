@@ -1122,9 +1122,6 @@ select {
 .col-span-9 {
 	grid-column: span 9 / span 9;
 }
-.col-span-7 {
-	grid-column: span 7 / span 7;
-}
 .col-span-3 {
 	grid-column: span 3 / span 3;
 }
@@ -1136,9 +1133,6 @@ select {
 }
 .m-4 {
 	margin: 1rem;
-}
-.m-1 {
-	margin: 0.25rem;
 }
 .mx-auto {
 	margin-left: auto;
@@ -1155,10 +1149,6 @@ select {
 .my-3 {
 	margin-top: 0.75rem;
 	margin-bottom: 0.75rem;
-}
-.my-1 {
-	margin-top: 0.25rem;
-	margin-bottom: 0.25rem;
 }
 .my-2 {
 	margin-top: 0.5rem;
@@ -1203,6 +1193,9 @@ select {
 .mb-4 {
 	margin-bottom: 1rem;
 }
+.mt-3 {
+	margin-top: 0.75rem;
+}
 .mb-5 {
 	margin-bottom: 1.25rem;
 }
@@ -1226,9 +1219,6 @@ select {
 }
 .-ml-px {
 	margin-left: -1px;
-}
-.mt-3 {
-	margin-top: 0.75rem;
 }
 .block {
 	display: block;
@@ -1262,9 +1252,6 @@ select {
 }
 .h-9 {
 	height: 2.25rem;
-}
-.h-32 {
-	height: 8rem;
 }
 .h-2\/3 {
 	height: 66.666667%;
@@ -1356,6 +1343,12 @@ select {
 .justify-between {
 	justify-content: space-between;
 }
+.justify-around {
+	justify-content: space-around;
+}
+.justify-evenly {
+	justify-content: space-evenly;
+}
 .gap-5 {
 	gap: 1.25rem;
 }
@@ -1399,20 +1392,20 @@ select {
 	margin-right: calc(1.25rem * var(--tw-space-x-reverse));
 	margin-left: calc(1.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
-.space-y-1 > :not([hidden]) ~ :not([hidden]) {
-	--tw-space-y-reverse: 0;
-	margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
-	margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+.space-x-1 > :not([hidden]) ~ :not([hidden]) {
+	--tw-space-x-reverse: 0;
+	margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+	margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .space-x-6 > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-x-reverse: 0;
 	margin-right: calc(1.5rem * var(--tw-space-x-reverse));
 	margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
-.space-x-1 > :not([hidden]) ~ :not([hidden]) {
-	--tw-space-x-reverse: 0;
-	margin-right: calc(0.25rem * var(--tw-space-x-reverse));
-	margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
+	--tw-space-y-reverse: 0;
+	margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+	margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -1508,10 +1501,6 @@ select {
 	--tw-border-opacity: 1;
 	border-color: rgba(243, 244, 246, var(--tw-border-opacity));
 }
-.border-pf-darkorange {
-	--tw-border-opacity: 1;
-	border-color: rgba(242, 100, 25, var(--tw-border-opacity));
-}
 .bg-white {
 	--tw-bg-opacity: 1;
 	background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
@@ -1580,10 +1569,6 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
 }
-.bg-gray-200 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
-}
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
@@ -1615,11 +1600,11 @@ select {
 .p-6 {
 	padding: 1.5rem;
 }
-.p-7 {
-	padding: 1.75rem;
-}
 .p-1 {
 	padding: 0.25rem;
+}
+.p-7 {
+	padding: 1.75rem;
 }
 .px-5 {
 	padding-left: 1.25rem;
@@ -2013,12 +1998,12 @@ select {
 		grid-column: span 4 / span 4;
 	}
 
-	.sm\:col-span-3 {
-		grid-column: span 3 / span 3;
-	}
-
 	.sm\:col-span-7 {
 		grid-column: span 7 / span 7;
+	}
+
+	.sm\:col-span-3 {
+		grid-column: span 3 / span 3;
 	}
 
 	.sm\:my-5 {
@@ -2032,10 +2017,6 @@ select {
 
 	.sm\:mt-10 {
 		margin-top: 2.5rem;
-	}
-
-	.sm\:mt-5 {
-		margin-top: 1.25rem;
 	}
 
 	.sm\:block {

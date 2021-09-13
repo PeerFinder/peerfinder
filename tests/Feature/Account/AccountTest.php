@@ -9,6 +9,8 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Notification;
+use Matcher\Facades\Matcher;
+use Matcher\Models\Peergroup;
 use Tests\TestCase;
 
 /**
@@ -63,4 +65,18 @@ class AccountTest extends TestCase
         $response->assertSessionHasErrors();
         $this->assertDatabaseHas('users', ['email' => $user->email]);
     }
+
+    public function test_user_cannot_delete_account_as_group_owner()
+    {
+        $user = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->delete(route('account.account.destroy'), [
+            'password' => 'password'
+        ]);
+        
+        $response->assertSessionHasErrors();
+        $this->assertDatabaseHas('users', ['email' => $user->email]);
+    }    
 }
