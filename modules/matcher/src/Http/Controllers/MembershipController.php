@@ -37,9 +37,11 @@ class MembershipController extends Controller
     public function store(Request $request, Peergroup $pg)
     {
         Gate::authorize('create', [Membership::class, $pg]);
+
+        $input = $request->all();
         
         try {
-            $membership = Matcher::addMemberToGroup($pg, auth()->user());
+            $membership = Matcher::addMemberToGroup($pg, auth()->user(), $input);
         } catch (MembershipException $e) {
             return redirect($pg->getUrl())->with('error', $e->getMessage());
         }

@@ -116,9 +116,11 @@ class Matcher
         }
     }
 
-    public function addMemberToGroup(Peergroup $pg, User $user)
+    public function addMemberToGroup(Peergroup $pg, User $user, $input = [])
     {
         $this->canUserJoinGroup($pg, $user);
+
+        Validator::make($input, Membership::rules()[$pg ? 'update' : 'create'])->validate();
 
         $membership = new Membership();
         $membership->peergroup_id = $pg->id;
@@ -129,6 +131,8 @@ class Matcher
         } else {
             $membership->approved = true;
         }
+
+        $membership->fill($input);
 
         $membership->save();
 

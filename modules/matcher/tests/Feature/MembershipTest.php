@@ -80,10 +80,16 @@ class MembershipTest extends TestCase
         $user2 = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user1)->create();
 
-        $response = $this->actingAs($user1)->put(route('matcher.membership.store', ['pg' => $pg->groupname]));
+        $data = [
+            'peergroup_id' => $pg->id,
+            'user_id' => $user1->id,
+            'comment' => $this->faker->text(),
+        ];
+
+        $response = $this->actingAs($user1)->put(route('matcher.membership.store', ['pg' => $pg->groupname]), $data);
 
         $response->assertSessionDoesntHaveErrors();
-        $this->assertDatabaseHas('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user1->id]);
+        $this->assertDatabaseHas('memberships', $data);
     }
 
     public function test_user_cannot_join_a_group_with_approval()
@@ -290,7 +296,6 @@ class MembershipTest extends TestCase
 
         $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);
     }
-
 
     public function test_owner_cannot_approve_user_membership_other_group()
     {

@@ -74,4 +74,6 @@ return [
     'caption_members_list' => 'Members',
     'button_edit_membership' => 'My membership',
     'notice_member_of_group' => 'You are a member of this group.',
+    'caption_meeting_link' => 'Meeting link',
+    'this_link_visible_for_members' => 'This link is visible for members only.',
 ];

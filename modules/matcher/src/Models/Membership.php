@@ -17,6 +17,17 @@ class Membership extends Model
         'approved' => 'boolean',
     ];
 
+    public static function rules() {
+        $updateRules = [
+            'comment' => ['string', 'max:500']
+        ];
+
+        return [
+            'update' => $updateRules,
+            'create' => $updateRules,
+        ];
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -27,6 +27,7 @@
         </div>
 
         <div class="sm:col-span-3 space-y-5">
+            <x-matcher::peergroup.meeting-link :pg="$pg" />
             <x-matcher::peergroup.members-list :pg="$pg" />
         </div>
     </div>
