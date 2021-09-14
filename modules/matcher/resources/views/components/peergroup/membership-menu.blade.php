@@ -5,7 +5,7 @@
             {{ __('matcher::peergroup.notice_member_of_group') }}
         </div>
         <div class="space-x-1">
-            <x-ui.forms.button action="inform" tag="a" href="{{ route('matcher.membership.delete', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_edit_membership') }}</x-ui.forms.button>
+            <x-ui.forms.button action="inform" tag="a" href="{{ route('matcher.membership.edit', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_edit_membership') }}</x-ui.forms.button>
             <x-ui.forms.button action="destroy" tag="a" href="{{ route('matcher.membership.delete', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_leave_group') }}</x-ui.forms.button>
         </div>
     </div>

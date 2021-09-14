@@ -6,12 +6,18 @@ use App\Models\User;
 use Matcher\Models\Peergroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Membership;
 
 class MembershipController extends Controller
 {
+    private function getMembershipOrFail(Request $request, Peergroup $pg, $approved = true)
+    {
+        return Membership::where(['peergroup_id' => $pg->id, 'user_id' => $request->user()->id, 'approved' => $approved])->firstOrFail();
+    }
+
     public function create(Request $request, Peergroup $pg)
     {
         Gate::authorize('create', [Membership::class, $pg]);
@@ -25,9 +31,33 @@ class MembershipController extends Controller
         return view('matcher::membership.create', compact('pg'));
     }
 
+    public function edit(Request $request, Peergroup $pg)
+    {
+        $membership = $this->getMembershipOrFail($request, $pg);
+
+        Gate::authorize('edit', [$membership, $pg]);
+
+        return view('matcher::membership.edit', compact('pg', 'membership'));
+    }
+
+    public function update(Request $request, Peergroup $pg)
+    {
+        $membership = $this->getMembershipOrFail($request, $pg);
+
+        Gate::authorize('edit', [$membership, $pg]);
+
+        $input = $request->all();
+        
+        Validator::make($input, Membership::rules()['update'])->validate();
+
+        $membership->update($input);
+        
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.membership_updated_successfully'));
+    }
+
     public function delete(Request $request, Peergroup $pg)
     {
-        $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $request->user()->id, 'approved' => true])->firstOrFail();
+        $membership = $this->getMembershipOrFail($request, $pg);
 
         Gate::authorize('delete', [$membership, $pg]);
 
@@ -55,7 +85,7 @@ class MembershipController extends Controller
 
     public function destroy(Request $request, Peergroup $pg)
     {
-        $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $request->user()->id, 'approved' => true])->firstOrFail();
+        $membership = $this->getMembershipOrFail($request, $pg);
 
         Gate::authorize('delete', [$membership, $pg]);
 

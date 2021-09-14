@@ -1,9 +1,12 @@
 <x-ui.card title="{{ __('matcher::peergroup.caption_members_list') }}">
     @if ($pg && $pg->getMembers()->count() > 0)
     <div class="space-y-1 m-2">
-        @foreach ($pg->getMembers() as $member)
-        <div class="shadow-sm p-2 rounded-md @if (auth()->id() == $member->id) border border-pf-midorange @endif">
-            <x-matcher::ui.user :user="$member" />
+        @foreach ($pg->memberships as $membership)
+        <div class="border p-2 rounded-md @if (auth()->id() == $membership->user_id) border border-pf-midorange @endif">
+            <x-matcher::ui.user :user="$membership->user" />
+            @if ($membership->comment)
+            <div class="bg-gray-50 text-sm mt-2 py-1 px-2 rounded-md">{{ $membership->comment }}</div>
+            @endif
         </div>
         @endforeach
     </div>

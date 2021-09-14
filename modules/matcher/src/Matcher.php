@@ -120,7 +120,7 @@ class Matcher
     {
         $this->canUserJoinGroup($pg, $user);
 
-        Validator::make($input, Membership::rules()[$pg ? 'update' : 'create'])->validate();
+        Validator::make($input, Membership::rules()['create'])->validate();
 
         $membership = new Membership();
         $membership->peergroup_id = $pg->id;

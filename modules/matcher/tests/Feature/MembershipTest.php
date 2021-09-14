@@ -318,4 +318,54 @@ class MembershipTest extends TestCase
         $m2->refresh();
         $this->assertTrue($m2->approved);
     }
+
+    public function test_user_can_edit_membership()
+    {
+        $user1 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user1);
+
+        $response = $this->actingAs($user1)->get(route('matcher.membership.edit', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_user_can_update_membership()
+    {
+        $user1 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+
+        $data = [
+            'comment' => $this->faker->text(),
+        ];
+
+        $response = $this->actingAs($user1)->put(route('matcher.membership.update', ['pg' => $pg->groupname]), $data);
+
+        $response->assertSessionDoesntHaveErrors();
+        $m1->refresh();
+
+        $this->assertEquals($m1->comment, $data['comment']);
+    }
+
+    public function test_user_cannot_update_membership_with_invalid_data()
+    {
+        $user1 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+
+        $data = [
+            'comment' => Str::random(1000),
+        ];
+
+        $response = $this->actingAs($user1)->put(route('matcher.membership.update', ['pg' => $pg->groupname]), $data);
+
+        $response->assertSessionHasErrors();
+        $m1->refresh();
+
+        $this->assertNotEquals($m1->comment, $data['comment']);
+    }
 }

@@ -76,4 +76,9 @@ return [
     'notice_member_of_group' => 'You are a member of this group.',
     'caption_meeting_link' => 'Meeting link',
     'this_link_visible_for_members' => 'This link is visible for members only.',
+    'button_update_membership' => 'Update membership',
+    'update_membership_title' => 'Update membership details',
+    'membership_updated_successfully' => 'Membership was updated successfully!',
+    'field_membership_comment' => 'Comment',
+
 ];

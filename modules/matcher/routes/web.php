@@ -20,6 +20,8 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
     Route::group(['as' => 'membership.', 'prefix' => 'membership'], function () {
         Route::get('/create', [MembershipController::class, 'create'])->name('create');
         Route::put('/create', [MembershipController::class, 'store'])->name('store');
+        Route::get('/edit', [MembershipController::class, 'edit'])->name('edit');
+        Route::put('/update', [MembershipController::class, 'update'])->name('update');
         Route::get('/delete', [MembershipController::class, 'delete'])->name('delete');
         Route::delete('/delete', [MembershipController::class, 'destroy'])->name('destroy');
         Route::post('/{username}/approve', [MembershipController::class, 'approve'])->name('approve');

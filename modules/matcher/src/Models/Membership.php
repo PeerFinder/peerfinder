@@ -19,7 +19,7 @@ class Membership extends Model
 
     public static function rules() {
         $updateRules = [
-            'comment' => ['string', 'max:500']
+            'comment' => ['nullable', 'string', 'max:500']
         ];
 
         return [
