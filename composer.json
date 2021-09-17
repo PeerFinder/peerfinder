@@ -33,7 +33,10 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Talk\\": "modules/talk/src/",
-            "Talk\\Database\\Factories\\": "modules/talk/database/factories"
+            "Talk\\Database\\Factories\\": "modules/talk/database/factories",
+            "Matcher\\": "modules/matcher/src/",
+            "Matcher\\Database\\Factories\\": "modules/matcher/database/factories",
+            "Matcher\\Database\\Seeders\\": "modules/matcher/database/seeders"
         }
     },
     "autoload-dev": {

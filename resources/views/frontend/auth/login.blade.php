@@ -13,7 +13,7 @@
             <div>
                 <x-ui.forms.input id="password" name="password" type="password" autocomplete="current-password" required>{{ __('auth.field_password') }}</x-ui.forms.input>
             </div>
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center">
                 <x-ui.forms.checkbox id="remember" name="remember">{{ __('auth.field_remember_me') }}</x-ui.forms.checkbox>
             </div>
             <div class="text-center">

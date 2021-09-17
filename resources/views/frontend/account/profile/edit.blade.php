@@ -18,7 +18,7 @@
         <div>
             <x-ui.forms.input id="company" value="{{ old('company', $user->company) }}" name="company" type="text">
                 {{ __('account/profile.field_company') }}</x-ui.forms.input>
-        </div>        
+        </div>
 
         <div>
             <x-ui.forms.input id="homepage" value="{{ old('homepage', $user->homepage) }}" name="homepage" type="text">

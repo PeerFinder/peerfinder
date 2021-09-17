@@ -1,7 +1,7 @@
 <template>
   <div class="relative" v-click-outside="closeMenu">
     <a @click.prevent="toggleMenu" href="#"><slot name="trigger"></slot></a>
-    <div :class="!isVisible && 'sr-only'" class="dropdown absolute right-3 w-60">
+    <div class="dropdown transition-opacity absolute right-3 w-60" :class="!isVisible && 'sr-only opacity-0'">
         <div class="after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block overflow-hidden rounded-md bg-white shadow-lg">
             <slot name="content"></slot>
         </div>

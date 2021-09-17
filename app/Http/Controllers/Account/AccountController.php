@@ -25,6 +25,10 @@ class AccountController extends Controller
         $user = $request->user();
         $input = $request->all();
 
+        if ($user->ownsPeergroups()) {
+            return back()->withErrors(__('account/account.owning_peergroups_warning'));
+        }
+
         Validator::make($input, [
             'password' => ['required', 'string'],
         ])->after(function ($validator) use ($user, $input) {
