@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Matcher\Database\Factories\PeergroupFactory;
+use Matcher\Facades\Matcher;
 
 class Peergroup extends Model
 {
@@ -61,6 +62,10 @@ class Peergroup extends Model
             Urler::createUniqueSlug($pg, 'groupname');
         });
 
+        static::created(function ($pg) {
+            Matcher::afterPeergroupCreated($pg);
+        });
+
         static::saving(function ($pg) {
             # If the group is full, mark is also as closed
             if ($pg->isFull()) {
@@ -75,7 +80,7 @@ class Peergroup extends Model
                 $membership->delete();
             });
 
-            #TODO: Delete conversations here
+            Matcher::beforePeergroupDeleted($pg);
         });
     }
 

@@ -3,14 +3,16 @@
 namespace Matcher\Tests;
 
 use App\Models\User;
-use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
 use Matcher\Models\Peergroup;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
+use Matcher\Events\PeerGroupWasCreated;
+use Matcher\Events\PeerGroupWasDeleted;
 
 /**
  * @group Peergroup
@@ -61,6 +63,31 @@ class PeergroupTest extends TestCase
 
         $this->assertDatabaseHas('peergroups', $data);
     }
+
+
+    public function test_event_is_triggered_when_group_created()
+    {
+        Event::fake(PeerGroupWasCreated::class);
+
+        $user = User::factory()->create();
+
+        Peergroup::factory()->byUser($user)->create();
+
+        Event::assertDispatched(PeerGroupWasCreated::class);
+    }
+
+    public function test_event_is_triggered_when_group_deleted()
+    {
+        Event::fake(PeerGroupWasDeleted::class);
+
+        $user = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $pg->delete();
+
+        Event::assertDispatched(PeerGroupWasDeleted::class);
+    }    
 
     public function test_user_can_show_public_peergroup()
     {

@@ -7,12 +7,17 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
 use Matcher\Models\Peergroup;
 use Tests\TestCase;
 use Illuminate\Support\Str;
+use Matcher\Events\MemberJoinedPeergroup;
+use Matcher\Events\MemberLeftPeergroup;
+use Matcher\Events\PeerGroupWasCreated;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
+use Matcher\Models\Membership;
 
 /**
  * @group Peergroup
@@ -368,4 +373,58 @@ class MembershipTest extends TestCase
 
         $this->assertNotEquals($m1->comment, $data['comment']);
     }
+
+    public function test_event_is_triggered_when_user_joins()
+    {
+        Event::fake(MemberJoinedPeergroup::class);
+
+        $user1 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+
+        Event::assertDispatched(MemberJoinedPeergroup::class, function (MemberJoinedPeergroup $event) use ($pg, $user1, $m1) {
+            return ($event->pg->id == $pg->id) && ($event->user->id == $user1->id) && ($event->membership->id == $m1->id);
+        });
+    }
+
+    public function test_event_is_triggered_when_user_gets_approved()
+    {
+        Event::fake(MemberJoinedPeergroup::class);
+
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+
+        Event::assertNotDispatched(MemberJoinedPeergroup::class);
+
+        $m1->approve();
+
+        Event::assertDispatched(MemberJoinedPeergroup::class, function (MemberJoinedPeergroup $event) use ($pg, $user2, $m1) {
+            return ($event->pg->id == $pg->id) && ($event->user->id == $user2->id) && ($event->membership->id == $m1->id);
+        });
+    }
+
+    public function test_event_is_triggered_when_user_leaves()
+    {
+        Event::fake(MemberLeftPeergroup::class);
+
+        $user1 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $m1 = Matcher::addMemberToGroup($pg, $user1);
+
+        $m1->delete();
+
+        Event::assertDispatched(MemberLeftPeergroup::class, function (MemberLeftPeergroup $event) use ($pg, $user1) {
+            return ($event->pg->id == $pg->id) && ($event->user->id == $user1->id);
+        });
+    }    
 }

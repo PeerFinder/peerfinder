@@ -4,6 +4,7 @@ namespace Matcher\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Matcher\Facades\Matcher;
 
 class Membership extends Model
 {
@@ -34,6 +35,22 @@ class Membership extends Model
 
         static::saved(function ($membership) {
             $membership->peergroup()->first()->updateStates();
+
+            if ($membership->wasChanged('approved') && $membership->approved) {
+                Matcher::afterMemberAdded($membership->peergroup()->first(), $membership->user()->first(), $membership);
+            }
+        });
+
+        static::created(function ($membership) {
+            if ($membership->approved) {
+                Matcher::afterMemberAdded($membership->peergroup()->first(), $membership->user()->first(), $membership);
+            }
+        });
+
+        static::deleting(function ($membership) {
+            if ($membership->approved) {
+                Matcher::beforeMemberRemoved($membership->peergroup()->first(), $membership->user()->first());
+            }
         });
     }
 

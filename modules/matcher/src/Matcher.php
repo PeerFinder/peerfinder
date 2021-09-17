@@ -6,6 +6,10 @@ use App\Models\User;
 use App\Rules\ConfirmCheckbox;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Matcher\Events\MemberJoinedPeergroup;
+use Matcher\Events\MemberLeftPeergroup;
+use Matcher\Events\PeerGroupWasCreated;
+use Matcher\Events\PeerGroupWasDeleted;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Language;
@@ -38,7 +42,6 @@ class Matcher
             $pg = new Peergroup($input);
             $pg->user()->associate($request->user());
             $pg->save();
-            $this->afterPeergroupCreated($pg);
         }
 
         $languages = Language::whereIn('code', array_values($request->languages))->get();
@@ -138,16 +141,12 @@ class Matcher
 
         $pg->updateStates();
 
-        $this->afterMemberAdded($pg, $user, $membership);
-
         return $membership;
     }
 
     public function removeMemberFromGroup(Peergroup $pg, User $user)
     {
         Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->delete();
-
-        $this->afterMemberRemoved($pg, $user);
     }
 
     public function getPendingMemberships(Peergroup $pg)
@@ -166,22 +165,25 @@ class Matcher
         $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->firstOrFail();
 
         $membership->approve();
-
-        $this->afterMemberAdded($pg, $user, $membership);
     }
 
-    private function afterPeergroupCreated(Peergroup $pg)
+    public function afterPeergroupCreated(Peergroup $pg)
     {
-
+        PeerGroupWasCreated::dispatch($pg);
     }
 
-    private function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)
+    public function beforePeergroupDeleted(Peergroup $pg)
     {
-
+        PeerGroupWasDeleted::dispatch($pg);
     }
 
-    private function afterMemberRemoved(Peergroup $pg, User $user)
+    public function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)
     {
+        MemberJoinedPeergroup::dispatch($pg, $user, $membership);
+    }
 
+    public function beforeMemberRemoved(Peergroup $pg, User $user)
+    {
+        MemberLeftPeergroup::dispatch($pg, $user);
     }
 }
