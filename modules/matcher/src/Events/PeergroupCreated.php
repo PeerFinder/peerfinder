@@ -7,7 +7,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Matcher\Models\Peergroup;
 
-class PeergroupWasCreated
+class PeergroupCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

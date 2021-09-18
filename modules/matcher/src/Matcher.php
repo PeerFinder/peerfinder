@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
-use Matcher\Events\PeergroupWasCreated;
-use Matcher\Events\PeergroupWasDeleted;
+use Matcher\Events\PeergroupCreated;
+use Matcher\Events\PeergroupDeleted;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Language;
@@ -169,12 +169,12 @@ class Matcher
 
     public function afterPeergroupCreated(Peergroup $pg)
     {
-        PeergroupWasCreated::dispatch($pg);
+        PeergroupCreated::dispatch($pg);
     }
 
     public function beforePeergroupDeleted(Peergroup $pg)
     {
-        PeergroupWasDeleted::dispatch($pg);
+        PeergroupDeleted::dispatch($pg);
     }
 
     public function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)

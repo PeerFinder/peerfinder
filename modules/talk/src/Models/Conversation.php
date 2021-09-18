@@ -9,6 +9,7 @@ use Talk\Database\Factories\ConversationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Matcher\Models\Peergroup;
 use Talk\Facades\Talk;
 
 class Conversation extends Model
@@ -105,6 +106,11 @@ class Conversation extends Model
         } else {
             return false;
         }
+    }
+
+    public function isOwnerPeergroup()
+    {
+        return $this->conversationable_type == Peergroup::class;
     }
 
     public function isParticipant(User $user)

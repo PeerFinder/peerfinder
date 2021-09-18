@@ -12,8 +12,8 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
-use Matcher\Events\PeergroupWasCreated;
-use Matcher\Events\PeergroupWasDeleted;
+use Matcher\Events\PeergroupCreated;
+use Matcher\Events\PeergroupDeleted;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -26,10 +26,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        PeergroupWasCreated::class => [
+        PeergroupCreated::class => [
             CreateConversationForPeergroup::class,
         ],
-        PeergroupWasDeleted::class => [
+        PeergroupDeleted::class => [
             DeleteConversationsForPeergroup::class,
         ],
         MemberJoinedPeergroup::class => [

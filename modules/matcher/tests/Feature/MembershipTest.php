@@ -13,7 +13,6 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
-use Matcher\Events\PeergroupWasCreated;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;

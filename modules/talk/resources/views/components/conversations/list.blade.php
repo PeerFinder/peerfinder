@@ -7,6 +7,11 @@
                     <x-talk::conversations.avatars :users="Talk::filterUsersForConversation($conv)" />
                 </div>
                 <div class="flex-1">
+                    @if ($conv->isOwnerPeergroup())
+                    <div class="ml-2 text-xs flex items-center border rounded-md px-1">
+                        <x-ui.icon name="user-group" size="5" class="mr-1"/><div class="line-clamp-1">{{ $conv->conversationable->title }}</div>
+                    </div>
+                    @endif
                     <div class="line-clamp-1 font-semibold ml-2">
                         @if ($conv->isUnread())<span class="rounded-full inline-block w-3 h-3 bg-pf-darkorange"></span>@endif
                         {{ $conv->getTitle() }}

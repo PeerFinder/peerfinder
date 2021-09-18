@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Event;
 use Matcher\Models\Language;
 use Matcher\Models\Peergroup;
 use Tests\TestCase;
-use Matcher\Events\PeergroupWasCreated;
 use Matcher\Facades\Matcher;
 
 /**
