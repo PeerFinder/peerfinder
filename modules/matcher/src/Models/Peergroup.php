@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Matcher\Database\Factories\PeergroupFactory;
 use Matcher\Facades\Matcher;
+use Talk\Traits\PeergroupConversations;
 
 class Peergroup extends Model
 {
-    use HasFactory;
+    use HasFactory, PeergroupConversations;
 
     protected $casts = [
         'begin' => 'date',

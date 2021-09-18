@@ -81,6 +81,11 @@ class Conversation extends Model
         return $this->users()->syncWithoutDetaching([$user->id]);
     }
 
+    public function removeUser(User $user)
+    {
+        return $this->users()->detach($user->id);
+    }
+
     public function syncUsers($users)
     {
         $user_ids = array_map(fn($user) => $user->id, $users);

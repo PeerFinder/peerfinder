@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
-use Matcher\Events\PeerGroupWasCreated;
-use Matcher\Events\PeerGroupWasDeleted;
+use Matcher\Events\PeergroupWasCreated;
+use Matcher\Events\PeergroupWasDeleted;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Language;
@@ -146,7 +146,7 @@ class Matcher
 
     public function removeMemberFromGroup(Peergroup $pg, User $user)
     {
-        Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->delete();
+        Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->first()->delete();
     }
 
     public function getPendingMemberships(Peergroup $pg)
@@ -169,12 +169,12 @@ class Matcher
 
     public function afterPeergroupCreated(Peergroup $pg)
     {
-        PeerGroupWasCreated::dispatch($pg);
+        PeergroupWasCreated::dispatch($pg);
     }
 
     public function beforePeergroupDeleted(Peergroup $pg)
     {
-        PeerGroupWasDeleted::dispatch($pg);
+        PeergroupWasDeleted::dispatch($pg);
     }
 
     public function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)

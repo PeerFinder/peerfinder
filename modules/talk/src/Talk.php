@@ -4,6 +4,7 @@ namespace Talk;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Matcher\Models\Peergroup;
 use Talk\Models\Conversation;
 use Talk\Models\Receipt;
 use Talk\Models\Reply;

@@ -11,8 +11,8 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
-use Matcher\Events\PeerGroupWasCreated;
-use Matcher\Events\PeerGroupWasDeleted;
+use Matcher\Events\PeergroupWasCreated;
+use Matcher\Events\PeergroupWasDeleted;
 
 /**
  * @group Peergroup
@@ -67,18 +67,18 @@ class PeergroupTest extends TestCase
 
     public function test_event_is_triggered_when_group_created()
     {
-        Event::fake(PeerGroupWasCreated::class);
+        Event::fake(PeergroupWasCreated::class);
 
         $user = User::factory()->create();
 
         Peergroup::factory()->byUser($user)->create();
 
-        Event::assertDispatched(PeerGroupWasCreated::class);
+        Event::assertDispatched(PeergroupWasCreated::class);
     }
 
     public function test_event_is_triggered_when_group_deleted()
     {
-        Event::fake(PeerGroupWasDeleted::class);
+        Event::fake(PeergroupWasDeleted::class);
 
         $user = User::factory()->create();
 
@@ -86,7 +86,7 @@ class PeergroupTest extends TestCase
 
         $pg->delete();
 
-        Event::assertDispatched(PeerGroupWasDeleted::class);
+        Event::assertDispatched(PeergroupWasDeleted::class);
     }    
 
     public function test_user_can_show_public_peergroup()
