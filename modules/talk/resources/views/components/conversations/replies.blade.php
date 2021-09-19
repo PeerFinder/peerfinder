@@ -1,8 +1,7 @@
 <div class="space-y-4">
+    {{ $replies->links('talk::components.ui.pagination') }}
 
-{{ $replies->links('talk::components.ui.pagination') }}
-
-@foreach ($replies->reverse() as $reply)
+    @forelse ($replies->reverse() as $reply)
     <div id="reply-{{ $reply->identifier }}">
         <div class="flex justify-between mb-1 text-sm">
             <div class="flex items-center">
@@ -15,8 +14,9 @@
             {{ $reply->message }}
         </div>
     </div>
-@endforeach
+    @empty
+    <p class="text-center">{{ __('talk::talk.no_replies_yet') }}</p>
+    @endforelse
 
-{{ $replies->links('talk::components.ui.pagination') }}
-
+    {{ $replies->links('talk::components.ui.pagination') }}
 </div>

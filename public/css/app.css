@@ -1310,6 +1310,12 @@ select {
 .flex-none {
 	flex: none;
 }
+.flex-initial {
+	flex: 0 1 auto;
+}
+.flex-grow-0 {
+	flex-grow: 0;
+}
 .transform {
 	transform: var(--tw-transform);
 }
@@ -1568,6 +1574,10 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
 }
+.bg-red-50 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(254, 242, 242, var(--tw-bg-opacity));
+}
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
@@ -1674,6 +1684,12 @@ select {
 }
 .pb-4 {
 	padding-bottom: 1rem;
+}
+.pb-1 {
+	padding-bottom: 0.25rem;
+}
+.pb-0\.5 {
+	padding-bottom: 0.125rem;
 }
 .text-center {
 	text-align: center;

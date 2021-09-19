@@ -42,14 +42,14 @@ class Membership extends Model
         });
 
         static::created(function ($membership) {
-            if ($membership->approved) {
-                Matcher::afterMemberAdded($membership->peergroup()->first(), $membership->user()->first(), $membership);
+            if ($membership->approved && $membership->user) {
+                Matcher::afterMemberAdded($membership->peergroup, $membership->user, $membership);
             }
         });
 
         static::deleting(function ($membership) {
-            if ($membership->approved) {
-                Matcher::beforeMemberRemoved($membership->peergroup()->first(), $membership->user()->first());
+            if ($membership->approved && $membership->user) {
+                Matcher::beforeMemberRemoved($membership->peergroup, $membership->user);
             }
         });
     }

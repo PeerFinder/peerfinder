@@ -15,4 +15,5 @@ return [
     'no_conversation_selected' => 'No conversation selected',
     'select_a_conversation_on_the_left_side' => 'Select a conversation on the left side!',
     'start_conversation_with' => 'Start conversation with :participants',
+    'no_replies_yet' => 'No posts yet. Be the first one!',
 ];

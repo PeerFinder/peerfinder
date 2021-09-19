@@ -2,23 +2,28 @@
     <ul class="p-2 space-y-2">
     @foreach ($conversations as $conv)
         <li class="border rounded-md {{ ($conversation && $conv->identifier == $conversation->identifier) ? 'border-pf-midorange bg-pf-midorange text-white' : 'bg-white hover:bg-gray-50' }}">
-            <a class="p-2 flex items-center" href="{{ $conv->getUrl() }}">
-                <div class="w-10 h-10 flex-none relative">
-                    <x-talk::conversations.avatars :users="Talk::filterUsersForConversation($conv)" />
+            <a href="{{ $conv->getUrl() }}">
+                @if ($conv->isOwnerPeergroup())
+                <div class="text-xs flex items-center border-b px-1">
+                    <div class="mr-1 pb-0.5">
+                        <x-ui.icon name="user-group" size="3" />
+                    </div>
+                    <div class="line-clamp-1">{{ $conv->conversationable->title }}</div>
                 </div>
-                <div class="flex-1">
-                    @if ($conv->isOwnerPeergroup())
-                    <div class="ml-2 text-xs flex items-center border rounded-md px-1">
-                        <x-ui.icon name="user-group" size="5" class="mr-1"/><div class="line-clamp-1">{{ $conv->conversationable->title }}</div>
+                @endif
+                <div class="p-2 flex items-center" >
+                    <div class="w-10 h-10 flex-none relative">
+                        <x-talk::conversations.avatars :users="Talk::filterUsersForConversation($conv)" />
                     </div>
-                    @endif
-                    <div class="line-clamp-1 font-semibold ml-2">
-                        @if ($conv->isUnread())<span class="rounded-full inline-block w-3 h-3 bg-pf-darkorange"></span>@endif
-                        {{ $conv->getTitle() }}
+                    <div class="flex-1">
+                        <div class="line-clamp-1 font-semibold ml-2">
+                            @if ($conv->isUnread())<span class="rounded-full inline-block w-3 h-3 bg-pf-darkorange"></span>@endif
+                            {{ $conv->getTitle() }}
+                        </div>
+                        @if ($conv->replies->first())
+                        <div class="line-clamp-2 text-sm ml-2">{{ $conv->replies->first()->message }}</div>
+                        @endif
                     </div>
-                    @if ($conv->replies->first())
-                    <div class="line-clamp-2 text-sm ml-2">{{ $conv->replies->first()->message }}</div>
-                    @endif
                 </div>
             </a>
         </li>

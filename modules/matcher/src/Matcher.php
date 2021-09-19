@@ -25,8 +25,12 @@ class Matcher
 
     public function cleanupForUser(User $user)
     {
-        $user->peergroups()->each(function ($peergroup) {
-            $peergroup->delete();
+        $user->peergroups()->each(function ($pg) {
+            $pg->delete();
+        });
+
+        $user->memberships()->each(function ($membership) {
+            $membership->delete();
         });
     }
 
