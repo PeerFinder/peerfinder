@@ -7,7 +7,7 @@
             {{ Talk::embedConversation($conversation) }}
         </div>
     @empty
-        No conversations yet.
+        <p class="text-center p-4">{{ __('matcher::peergroup.no_conversations_yet') }}</p>
     @endforelse
     </x-ui.card>
 @endif
