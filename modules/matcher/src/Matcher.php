@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
-use Matcher\Events\PeerGroupWasCreated;
-use Matcher\Events\PeerGroupWasDeleted;
+use Matcher\Events\PeergroupCreated;
+use Matcher\Events\PeergroupDeleted;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Language;
@@ -25,8 +25,12 @@ class Matcher
 
     public function cleanupForUser(User $user)
     {
-        $user->peergroups()->each(function ($peergroup) {
-            $peergroup->delete();
+        $user->peergroups()->each(function ($pg) {
+            $pg->delete();
+        });
+
+        $user->memberships()->each(function ($membership) {
+            $membership->delete();
         });
     }
 
@@ -146,7 +150,7 @@ class Matcher
 
     public function removeMemberFromGroup(Peergroup $pg, User $user)
     {
-        Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->delete();
+        Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id])->first()->delete();
     }
 
     public function getPendingMemberships(Peergroup $pg)
@@ -169,12 +173,12 @@ class Matcher
 
     public function afterPeergroupCreated(Peergroup $pg)
     {
-        PeerGroupWasCreated::dispatch($pg);
+        PeergroupCreated::dispatch($pg);
     }
 
     public function beforePeergroupDeleted(Peergroup $pg)
     {
-        PeerGroupWasDeleted::dispatch($pg);
+        PeergroupDeleted::dispatch($pg);
     }
 
     public function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)

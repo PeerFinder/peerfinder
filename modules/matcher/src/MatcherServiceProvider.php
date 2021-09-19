@@ -74,7 +74,9 @@ class MatcherServiceProvider extends ServiceProvider
     protected function registerRoutes()
     {
         Route::bind('pg', function ($value) {
-            return Peergroup::where('groupname', $value)->with('user', 'memberships.user')->firstOrFail();
+            return Peergroup::where('groupname', $value)->with(['user', 'memberships.user', 'memberships' => function ($query) {
+                $query->where('approved', true);
+            }])->firstOrFail();
         });
 
         Route::group($this->getRoutesConfiguration('web'), function () {

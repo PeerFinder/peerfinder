@@ -6,7 +6,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Matcher\Models\Peergroup;
 
-class PeerGroupWasDeleted
+class PeergroupDeleted
 {
     use Dispatchable, SerializesModels;
 

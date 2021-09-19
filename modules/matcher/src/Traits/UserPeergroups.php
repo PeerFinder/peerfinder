@@ -2,6 +2,7 @@
 
 namespace Matcher\Traits;
 
+use Matcher\Models\Membership;
 use Matcher\Models\Peergroup;
 
 trait UserPeergroups
@@ -10,6 +11,11 @@ trait UserPeergroups
     {
         return $this->hasMany(Peergroup::class);
     }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class);
+    }    
 
     public function ownsPeergroups()
     {

@@ -9,6 +9,7 @@ use Talk\Database\Factories\ConversationFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Matcher\Models\Peergroup;
 use Talk\Facades\Talk;
 
 class Conversation extends Model
@@ -81,6 +82,11 @@ class Conversation extends Model
         return $this->users()->syncWithoutDetaching([$user->id]);
     }
 
+    public function removeUser(User $user)
+    {
+        return $this->users()->detach($user->id);
+    }
+
     public function syncUsers($users)
     {
         $user_ids = array_map(fn($user) => $user->id, $users);
@@ -100,6 +106,11 @@ class Conversation extends Model
         } else {
             return false;
         }
+    }
+
+    public function isOwnerPeergroup()
+    {
+        return $this->conversationable_type == Peergroup::class;
     }
 
     public function isParticipant(User $user)
@@ -155,10 +166,14 @@ class Conversation extends Model
      */
     public function markAsRead()
     {
-        $receipt = Receipt::where('conversation_id', $this->id)->where('user_id', auth()->user()->id);
-        $was_unread = $receipt->exists();
-        $receipt->delete();
-        return $was_unread;
+        if (auth()->user()) {
+            $receipt = Receipt::where('conversation_id', $this->id)->where('user_id', auth()->user()->id);
+            $was_unread = $receipt->exists();
+            $receipt->delete();
+            return $was_unread;
+        } else {
+            return false;
+        }
     }
 
     /**

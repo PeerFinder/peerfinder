@@ -13,7 +13,6 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
-use Matcher\Events\PeerGroupWasCreated;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
@@ -426,5 +425,19 @@ class MembershipTest extends TestCase
         Event::assertDispatched(MemberLeftPeergroup::class, function (MemberLeftPeergroup $event) use ($pg, $user1) {
             return ($event->pg->id == $pg->id) && ($event->user->id == $user1->id);
         });
-    }    
+    }
+
+    public function test_memberships_are_deleted_with_the_user()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $user2->delete();
+
+        $this->assertDatabaseMissing('memberships', ['user_id' => $user2->id]);
+    }
 }

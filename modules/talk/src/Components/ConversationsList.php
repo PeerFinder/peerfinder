@@ -19,11 +19,16 @@ class ConversationsList extends Component
         
         $this->user = auth()->user();
 
-        $conversations = $this->user->participated_conversations()->with(['users', 'receipts' => function ($query) {
-            $query->where('user_id', $this->user->id);
-        }, 'replies' => function ($query) {
-            $query->where('reply_id', null)->orderBy('updated_at', 'desc');
-        }])->orderBy('updated_at', 'desc')->get();
+        $conversations = $this->user->participated_conversations()->with([
+            'users', 
+            'receipts' => function ($query) {
+                $query->where('user_id', $this->user->id);
+            }, 
+            'replies' => function ($query) {
+                $query->where('reply_id', null)->orderBy('updated_at', 'desc');
+            },
+            'conversationable',
+        ])->orderBy('updated_at', 'desc')->get();
 
         $this->data = [
             'user' => $this->user,

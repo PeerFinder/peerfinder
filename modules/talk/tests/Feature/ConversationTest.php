@@ -38,6 +38,22 @@ class ConversationTest extends TestCase
         $this->assertEquals($user->email, $conversation->users()->first()->email);
     }
 
+    public function test_user_can_be_removed_from_conversation()
+    {
+        $user = User::factory()->create();
+        $conversation = Conversation::factory()->byUser()->create();
+
+        $conversation->addUser($user);
+
+        $this->assertTrue($conversation->isParticipant($user));
+
+        $conversation->removeUser($user);
+
+        $conversation->refresh();
+
+        $this->assertFalse($conversation->isParticipant($user));
+    }    
+
     public function test_user_can_create_conversation()
     {
         $user = User::factory()->create();

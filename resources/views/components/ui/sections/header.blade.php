@@ -7,7 +7,7 @@
             </a>
         </div>
 
-        <div class="flex items-center space-x-4 flex-row">
+        <div class="flex items-center space-x-2 flex-row">
             @guest
             <x-ui.sections.header.button class="bg-pf-darkblue inline-flex items-center hover:bg-pf-lightblue active:bg-pf-midblue" href="{{ route('login') }}"><x-ui.icon name="user-circle" class="mr-1" />{{ __('profile/user.button_login') }}</x-ui.sections.header.button>
                 @if (Route::has('register'))
@@ -18,7 +18,7 @@
             @auth
             {{-- <x-ui.sections.header.button class="bg-green-600 hover:bg-green-500 active:bg-green-700 mr-7" href="{{ route('index') }}">Start circle</x-ui.sections.header.button> --}}
             
-            <div class="notifications">
+            <div class="mr-2">
                 <div class="relative">
                     <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-gray-400 hover:text-white" /></a>
                     @if (Talk::userHasUnreadConversations($user))

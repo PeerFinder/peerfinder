@@ -13,7 +13,7 @@
         </div>
 
         <!-- Form Card -->
-        <div class="bg-white shadow-md after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
+        <div class="bg-white shadow-sm after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
             @if ($errors->any())
                 <x-auth.flash class="bg-red-300">
                     <ul>
@@ -28,7 +28,7 @@
         </div>
 
         @isset($aftercard)
-        <div class="bg-white shadow-md after:block sm:rounded-md overflow-hidden">
+        <div class="bg-white shadow-sm after:block sm:rounded-md overflow-hidden">
             {{ $aftercard }}
         </div>
         @endisset

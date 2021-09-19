@@ -1,4 +1,4 @@
-<x-ui.card  class="my-2 sm:my-5 text-center p-4">
+<x-ui.card class="p-4 text-center">
     @if ($pg->isMember())
     <div class="flex items-center justify-between">
         <div class="text-center flex-1">

@@ -2,13 +2,14 @@
 
 namespace Matcher\Events;
 
+use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Matcher\Models\Peergroup;
 
-class PeerGroupWasCreated
+class PeergroupCreated
 {
-    use Dispatchable, SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $pg;
 

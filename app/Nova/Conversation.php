@@ -51,6 +51,7 @@ class Conversation extends Resource
 
             MorphTo::make('Belongs to', 'Conversationable')->types([
                 User::class,
+                Peergroup::class,
             ])->sortable(),
 
             BelongsToMany::make('Users')->hideFromIndex(),

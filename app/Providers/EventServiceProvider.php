@@ -2,10 +2,18 @@
 
 namespace App\Providers;
 
+use App\Listeners\AddUserToConversationWhenJoiningPeergroup;
+use App\Listeners\CreateConversationForPeergroup;
+use App\Listeners\DeleteConversationsForPeergroup;
+use App\Listeners\RemoveUserFromConversationWhenLeavingPeergroup;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Matcher\Events\MemberJoinedPeergroup;
+use Matcher\Events\MemberLeftPeergroup;
+use Matcher\Events\PeergroupCreated;
+use Matcher\Events\PeergroupDeleted;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -17,6 +25,18 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        PeergroupCreated::class => [
+            CreateConversationForPeergroup::class,
+        ],
+        PeergroupDeleted::class => [
+            DeleteConversationsForPeergroup::class,
+        ],
+        MemberJoinedPeergroup::class => [
+            AddUserToConversationWhenJoiningPeergroup::class,
+        ],
+        MemberLeftPeergroup::class => [
+            RemoveUserFromConversationWhenLeavingPeergroup::class,
         ],
     ];
 
