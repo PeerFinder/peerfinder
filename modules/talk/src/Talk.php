@@ -155,6 +155,8 @@ class Talk
 
     public function embedConversation(Conversation $conversation)
     {
+        $conversation->markAsRead();
+        
         return view('talk::conversations.embedded.show', [
             'conversation' => $conversation,
             'replies' => $conversation->getReplies(),

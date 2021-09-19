@@ -21,14 +21,15 @@
             </div>
             @endif
 
-            <div class="mt-5">
+            <div class="mt-5 space-y-2 sm:space-y-5">
                 {{ $slot }}
             </div>
         </div>
 
-        <div class="sm:col-span-3 space-y-5">
+        <div class="sm:col-span-3 space-y-2 sm:space-y-5 mt-2 sm:mt-0">
             <x-matcher::peergroup.meeting-link :pg="$pg" />
             <x-matcher::peergroup.members-list :pg="$pg" />
+            <x-matcher::peergroup.edit-menu :pg="$pg" />
         </div>
     </div>
 </x-layout.minimal>

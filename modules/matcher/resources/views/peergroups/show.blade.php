@@ -5,6 +5,5 @@
     
     <x-matcher::peergroup.group-description :pg="$pg" />
 
-    <x-matcher::peergroup.edit-menu :pg="$pg" />
-
+    <x-matcher::peergroup.conversations :pg="$pg" :conversations="$conversations" />
 </x-matcher::layout.single>

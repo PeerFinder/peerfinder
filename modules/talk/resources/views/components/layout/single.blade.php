@@ -8,7 +8,7 @@
     @endif
 
     <x-ui.card class="sm:mt-10">
-        <div class="grid grid-cols-10 min-h-screen">
+        <div class="grid grid-cols-10">
             <div @class([
                 'hidden sm:block col-span-3 border-r bg-gray-50' => $conversation,
                 'col-span-10 sm:col-span-3 border-r bg-gray-50' => !$conversation,

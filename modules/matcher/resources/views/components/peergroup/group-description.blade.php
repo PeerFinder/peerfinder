@@ -1,4 +1,4 @@
-<x-ui.card class="my-2 sm:my-5" title="{{ __('matcher::peergroup.group_description') }}">
+<x-ui.card title="{{ __('matcher::peergroup.group_description') }}">
     <div class="p-4 pb-4">
         <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_begin') }}" icon="calendar">{{ $pg->begin->format('d.m.y') }}</x-matcher::ui.group-detail>
         @if ($pg->virtual)

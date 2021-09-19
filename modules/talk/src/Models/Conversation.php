@@ -166,10 +166,14 @@ class Conversation extends Model
      */
     public function markAsRead()
     {
-        $receipt = Receipt::where('conversation_id', $this->id)->where('user_id', auth()->user()->id);
-        $was_unread = $receipt->exists();
-        $receipt->delete();
-        return $was_unread;
+        if (auth()->user()) {
+            $receipt = Receipt::where('conversation_id', $this->id)->where('user_id', auth()->user()->id);
+            $was_unread = $receipt->exists();
+            $receipt->delete();
+            return $was_unread;
+        } else {
+            return false;
+        }
     }
 
     /**

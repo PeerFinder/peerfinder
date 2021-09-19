@@ -33,13 +33,18 @@ class PeergroupController extends Controller
     {
         Gate::authorize('view', $pg);
 
-        $pending = null; 
+        $pending = null;
+        $conversations = null;
 
         if ($pg->isOwner($request->user())) {
             $pending = Matcher::getPendingMemberships($pg);
         }
 
-        return view('matcher::peergroups.show', compact('pg', 'pending'));
+        if ($pg->isMember($request->user())) {
+            $conversations = $pg->conversations()->get();
+        }
+
+        return view('matcher::peergroups.show', compact('pg', 'pending', 'conversations'));
     }
 
     public function edit(Request $request, Peergroup $pg)
