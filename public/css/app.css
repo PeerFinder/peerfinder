@@ -1,4 +1,4 @@
-/*! tailwindcss v2.2.7 | MIT License | https://tailwindcss.com *//*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
+/*! tailwindcss v2.2.11 | MIT License | https://tailwindcss.com *//*! modern-normalize v1.1.0 | MIT License | https://github.com/sindresorhus/modern-normalize */
 
 /*
 Document
@@ -447,6 +447,18 @@ textarea::placeholder {
 button,
 [role="button"] {
   cursor: pointer;
+}
+
+/**
+ * Override legacy focus reset from Normalize with modern Firefox focus styles.
+ *
+ * This is actually an improvement over the new defaults in Firefox in our testing,
+ * as it triggers the better focus styles even for links, which still use a dotted
+ * outline in Firefox by default.
+ */
+ 
+:-moz-focusring {
+	outline: auto;
 }
 
 table {
@@ -1190,8 +1202,8 @@ select {
 .mr-1 {
 	margin-right: 0.25rem;
 }
-.mr-7 {
-	margin-right: 1.75rem;
+.mr-10 {
+	margin-right: 2.5rem;
 }
 .mr-2 {
 	margin-right: 0.5rem;
@@ -1222,6 +1234,12 @@ select {
 }
 .-ml-px {
 	margin-left: -1px;
+}
+.mr-5 {
+	margin-right: 1.25rem;
+}
+.mb-20 {
+	margin-bottom: 5rem;
 }
 .block {
 	display: block;
@@ -1345,6 +1363,9 @@ select {
 }
 .justify-between {
 	justify-content: space-between;
+}
+.justify-evenly {
+	justify-content: space-evenly;
 }
 .gap-2 {
 	gap: 0.5rem;
@@ -1869,6 +1890,10 @@ select {
 .hover\:bg-gray-200:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
+}
+.hover\:bg-pf-darkblue:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(46, 72, 88, var(--tw-bg-opacity));
 }
 .hover\:text-pf-lightblue:hover {
 	--tw-text-opacity: 1;

@@ -3,7 +3,8 @@
         {{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }}
     </x-slot>
 
-    <div class="mt-5 sm:mt-10">
+    <div class="mt-5 sm:mt-10 flex items-center">
+        <x-ui.user.avatar :user="auth()->user()" size="40" class="rounded-full block mr-2" />
         <h1 class="text-3xl font-semibold">{{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }}</h1>
     </div>
 
