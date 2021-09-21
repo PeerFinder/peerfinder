@@ -30,5 +30,5 @@
     @endforeach
     </ul>
 @else
-    <p class="text-center mt-10">{{ __('talk::talk.no_conversations_yet') }}<p>
+    <p class="text-center p-4 pb-60">{{ __('talk::talk.no_conversations_yet') }}<p>
 @endif
