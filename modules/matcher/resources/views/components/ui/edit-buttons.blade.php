@@ -4,5 +4,7 @@
     <x-ui.forms.button {{ $attributes }}>{{ $slot }}</x-ui.forms.button>
     @if (!$pg->isDirty())
     <x-ui.forms.button tag="a" href="{{ $pg->getUrl() }}" action="inform">{{ __('matcher::peergroup.button_cancel') }}</x-ui.forms.button>
+    @else
+    <x-ui.forms.button tag="a" href="{{ route('dashboard.index') }}" action="inform">{{ __('matcher::peergroup.button_cancel') }}</x-ui.forms.button>
     @endif
 </div>
