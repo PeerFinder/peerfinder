@@ -16,10 +16,10 @@
                     <x-peergroup.card :pg="$pg" />
                     @empty
                     <p class="p-4 text-center">{{ __('dashboard/dashboard.no_owned_groups') }}</p>
-                    <p class="pb-4 px-4 text-center">
+                    @endforelse
+                    <p class="p-4 py-6 border rounded-md border-dashed text-center">
                         <x-ui.forms.button tag="a" href="{{ route('matcher.create') }}" action="create">{{ __('dashboard/dashboard.button_create_group') }}</x-ui.forms.button>
                     </p>
-                    @endforelse
                 </div>
             </x-ui.card>
         </div>
