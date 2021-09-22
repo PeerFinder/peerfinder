@@ -1,5 +1,5 @@
 @if ($conversations->count())
-    <ul class="p-2 space-y-2">
+    <ul class="p-2 space-y-2 mb-20">
     @foreach ($conversations as $conv)
         <li class="border rounded-md {{ ($conversation && $conv->identifier == $conversation->identifier) ? 'border-pf-midorange bg-pf-midorange text-white' : 'bg-white hover:bg-gray-50' }}">
             <a href="{{ $conv->getUrl() }}">
@@ -30,5 +30,5 @@
     @endforeach
     </ul>
 @else
-    <p class="text-center mt-10">{{ __('talk::talk.no_conversations_yet') }}<p>
+    <p class="text-center p-4 pb-60">{{ __('talk::talk.no_conversations_yet') }}<p>
 @endif

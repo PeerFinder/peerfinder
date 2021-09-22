@@ -80,7 +80,9 @@ class PeergroupListeners extends TestCase
         $user2 = User::factory()->create();
         $user3 = User::factory()->create();
 
-        $pg = Peergroup::factory()->byUser($user1)->create();
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'limit' => 5,
+        ]);
 
         $m1 = Matcher::addMemberToGroup($pg, $user1);
         $m2 = Matcher::addMemberToGroup($pg, $user2);

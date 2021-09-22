@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Matcher\Http\Controllers\MembershipController;
 use Matcher\Http\Controllers\PeergroupController;
 
+Route::get('/', [PeergroupController::class, 'index'])->name('index');
+
 Route::get('/create', [PeergroupController::class, 'create'])->name('create');
 Route::put('/create', [PeergroupController::class, 'store'])->name('store');
 

@@ -1,10 +1,8 @@
 <?php
 
+use App\Http\Controllers\Profile\DashboardController;
 use Illuminate\Support\Facades\Route;
-use Talk\Facades\Talk;
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
-    Route::get('/', function () {
-        return view('frontend.dashboard.index');
-    })->name('index');
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
 });

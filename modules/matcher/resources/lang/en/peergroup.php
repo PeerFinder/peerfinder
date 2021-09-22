@@ -81,4 +81,5 @@ return [
     'membership_updated_successfully' => 'Membership was updated successfully!',
     'field_membership_comment' => 'Comment',
     'caption_conversations' => 'Conversations',
+    'no_conversations_yet' => 'No conversations yet.',
 ];
