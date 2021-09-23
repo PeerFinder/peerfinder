@@ -82,4 +82,12 @@ return [
     'field_membership_comment' => 'Comment',
     'caption_conversations' => 'Conversations',
     'no_conversations_yet' => 'No conversations yet.',
+    'update_bookmarks_title' => 'Edit group bookmarks',
+    'button_update_bookmarks' => 'Update bookmarks',
+    'bookmarks_updated_successfully' => 'Bookmarks where updated successfully!',
+    'value_must_be_url' => 'Value must be a valid URL',
+    'value_too_long' => 'Value too long',
+    'button_add_bookmark' => 'Add bookmark',
+    'bookmark_url' => 'URL',
+    'bookmark_title' => 'Title',
 ];

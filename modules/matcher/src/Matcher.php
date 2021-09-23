@@ -11,6 +11,7 @@ use Matcher\Events\MemberLeftPeergroup;
 use Matcher\Events\PeergroupCreated;
 use Matcher\Events\PeergroupDeleted;
 use Matcher\Exceptions\MembershipException;
+use Matcher\Models\Bookmark;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Language;
 use Matcher\Models\Membership;
@@ -189,5 +190,29 @@ class Matcher
     public function beforeMemberRemoved(Peergroup $pg, User $user)
     {
         MemberLeftPeergroup::dispatch($pg, $user);
+    }
+
+    public function updateBookmarks(Peergroup $pg, Request $request)
+    {
+        $input = $request->input();
+
+        Validator::make($input, Bookmark::rules()['update'], [
+            'url.*.*' => __('matcher::peergroup.value_must_be_url'),
+            'title.*.*' => __('matcher::peergroup.value_too_long'),
+        ])->validate();
+
+        $count = min(count($input['url']), count($input['title']));
+
+        Bookmark::where('peergroup_id', $pg->id)->delete();
+
+        for($i = 0; $i < $count; $i++) {
+            $bookmark = [
+                'peergroup_id' => $pg->id,
+                'url' => $input['url'][$i],
+                'title' => $input['title'][$i],
+            ];
+
+            Bookmark::create($bookmark);
+        }
     }
 }

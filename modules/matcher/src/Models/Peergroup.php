@@ -35,7 +35,8 @@ class Peergroup extends Model
         'meeting_link',
     ];
 
-    public static function rules() {
+    public static function rules()
+    {
         $updateRules = [
             'title' => ['required', 'string', 'max:100'],
             'description' => ['required', 'string', 'max:800'],
@@ -81,6 +82,10 @@ class Peergroup extends Model
                 $membership->delete();
             });
 
+            $pg->bookmarks()->each(function ($bookmark) {
+                $bookmark->delete();
+            });
+
             Matcher::beforePeergroupDeleted($pg);
         });
     }
@@ -98,6 +103,11 @@ class Peergroup extends Model
     public function memberships()
     {
         return $this->hasMany(Membership::class);
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
     }
 
     public function members()
@@ -170,13 +180,13 @@ class Peergroup extends Model
     {
         $user = $user ?: auth()->user();
 
-        $query = Membership::where(['user_id' => $user->id, 'peergroup_id' => $this->id]);
-
-        if (!$include_not_approved) {
-            $query = $query->where('approved', true);
+        if ($include_not_approved) {
+            $query = Membership::where(['user_id' => $user->id, 'peergroup_id' => $this->id]);
+            return $query->exists();
+        } else {
+            $members = $this->getMembers();
+            return $members->contains($user);
         }
-
-        return $query->exists();
     }
 
     public function isPending(User $user = null)
@@ -186,7 +196,7 @@ class Peergroup extends Model
         $query = Membership::where(['user_id' => $user->id, 'peergroup_id' => $this->id, 'approved' => false]);
 
         return $query->exists();
-    }    
+    }
 
     /**
      * Check if there are more members in this group other than the owner

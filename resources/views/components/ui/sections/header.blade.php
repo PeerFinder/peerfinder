@@ -9,10 +9,12 @@
 
         <div class="flex-1 flex items-center justify-between">
             @guest
+            <div class="flex-1 flex justify-end items-center space-x-2">
                 <x-ui.sections.header.button class="bg-pf-darkblue inline-flex items-center hover:bg-pf-lightblue active:bg-pf-midblue" href="{{ route('login') }}"><x-ui.icon name="user-circle" class="mr-1" />{{ __('profile/user.button_login') }}</x-ui.sections.header.button>
                 @if (Route::has('register'))
                 <x-ui.sections.header.button class="bg-pf-darkorange hover:bg-pf-midorange active:bg-pf-darkorange" href="{{ route('register') }}">{{ __('profile/user.button_register') }}</x-ui.sections.header.button>
                 @endif
+            </div>
             @endguest
             
             @auth
