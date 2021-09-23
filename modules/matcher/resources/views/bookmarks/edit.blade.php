@@ -4,7 +4,6 @@
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
         <x-ui.forms.form :action="route('matcher.bookmarks.update', ['pg' => $pg->groupname])">
-
             <div class="p-2 space-y-2">
                 @foreach ($bookmarks as $i => $bookmark)
                 <div id="bookmark-{$i}" class="flex items-center border p-2 rounded-md shadow-sm">
@@ -22,7 +21,7 @@
                 </div>
                 @endforeach
 
-                <div class="border mt-2 border-dashed p-2 rounded-md text-center">
+                <div class="border border-dashed p-2 rounded-md text-center">
                     <x-ui.forms.button tag="a" href="#" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
                 </div>
             </div>
