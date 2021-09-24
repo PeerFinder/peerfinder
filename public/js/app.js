@@ -18983,6 +18983,39 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/BookmarksEditor.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/BookmarksEditor.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  setup: function setup() {
+    var items = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([]);
+
+    function addItem() {
+      items.value.push({});
+    }
+
+    function removeItem() {}
+
+    return {
+      addItem: addItem,
+      removeItem: removeItem,
+      items: items
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConditionalElements.vue?vue&type=script&lang=js":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ConditionalElements.vue?vue&type=script&lang=js ***!
@@ -19085,6 +19118,33 @@ __webpack_require__.r(__webpack_exports__);
     this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/BookmarksEditor.vue?vue&type=template&id=2965f52f":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/BookmarksEditor.vue?vue&type=template&id=2965f52f ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.items, function (item) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "item", {
+      actionRemove: $setup.removeItem
+    });
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "add-button", {
+    actionAdd: $setup.addItem
+  })]);
+}
 
 /***/ }),
 
@@ -19197,9 +19257,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_HeaderMenu_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/HeaderMenu.vue */ "./resources/js/components/HeaderMenu.vue");
 /* harmony import */ var _components_TimezoneSelect_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/TimezoneSelect.vue */ "./resources/js/components/TimezoneSelect.vue");
 /* harmony import */ var _components_ConditionalElements_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ConditionalElements.vue */ "./resources/js/components/ConditionalElements.vue");
-/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! click-outside-vue3 */ "./node_modules/click-outside-vue3/dist/v-click-outside.umd.js");
-/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(click_outside_vue3__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_BookmarksEditor_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/BookmarksEditor.vue */ "./resources/js/components/BookmarksEditor.vue");
+/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! click-outside-vue3 */ "./node_modules/click-outside-vue3/dist/v-click-outside.umd.js");
+/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(click_outside_vue3__WEBPACK_IMPORTED_MODULE_5__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -19210,11 +19272,12 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
   'components': {
     'header-menu': _components_HeaderMenu_vue__WEBPACK_IMPORTED_MODULE_1__.default,
     'timezone-select': _components_TimezoneSelect_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-    'conditional-elements': _components_ConditionalElements_vue__WEBPACK_IMPORTED_MODULE_3__.default
+    'conditional-elements': _components_ConditionalElements_vue__WEBPACK_IMPORTED_MODULE_3__.default,
+    'bookmarks-editor': _components_BookmarksEditor_vue__WEBPACK_IMPORTED_MODULE_4__.default
   }
 });
 app.mount('#app');
-app.use((click_outside_vue3__WEBPACK_IMPORTED_MODULE_4___default()));
+app.use((click_outside_vue3__WEBPACK_IMPORTED_MODULE_5___default()));
 
 /***/ }),
 
@@ -37089,6 +37152,32 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./resources/js/components/BookmarksEditor.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/BookmarksEditor.vue ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BookmarksEditor_vue_vue_type_template_id_2965f52f__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BookmarksEditor.vue?vue&type=template&id=2965f52f */ "./resources/js/components/BookmarksEditor.vue?vue&type=template&id=2965f52f");
+/* harmony import */ var _BookmarksEditor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BookmarksEditor.vue?vue&type=script&lang=js */ "./resources/js/components/BookmarksEditor.vue?vue&type=script&lang=js");
+
+
+
+_BookmarksEditor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _BookmarksEditor_vue_vue_type_template_id_2965f52f__WEBPACK_IMPORTED_MODULE_0__.render
+/* hot reload */
+if (false) {}
+
+_BookmarksEditor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/BookmarksEditor.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_BookmarksEditor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
 /***/ "./resources/js/components/ConditionalElements.vue":
 /*!*********************************************************!*\
   !*** ./resources/js/components/ConditionalElements.vue ***!
@@ -37171,6 +37260,22 @@ _TimezoneSelect_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default
 
 /***/ }),
 
+/***/ "./resources/js/components/BookmarksEditor.vue?vue&type=script&lang=js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/BookmarksEditor.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BookmarksEditor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BookmarksEditor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BookmarksEditor.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/BookmarksEditor.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/ConditionalElements.vue?vue&type=script&lang=js":
 /*!*********************************************************************************!*\
   !*** ./resources/js/components/ConditionalElements.vue?vue&type=script&lang=js ***!
@@ -37216,6 +37321,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TimezoneSelect_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TimezoneSelect.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TimezoneSelect.vue?vue&type=script&lang=js");
  
+
+/***/ }),
+
+/***/ "./resources/js/components/BookmarksEditor.vue?vue&type=template&id=2965f52f":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/BookmarksEditor.vue?vue&type=template&id=2965f52f ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BookmarksEditor_vue_vue_type_template_id_2965f52f__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BookmarksEditor_vue_vue_type_template_id_2965f52f__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BookmarksEditor.vue?vue&type=template&id=2965f52f */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/BookmarksEditor.vue?vue&type=template&id=2965f52f");
+
 
 /***/ }),
 
