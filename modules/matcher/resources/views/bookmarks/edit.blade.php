@@ -23,7 +23,7 @@
                 </template>
 
                 <template v-slot:add-button="props">
-                    <div class="border mt-2 border-dashed p-2 rounded-md text-center">
+                    <div class="border border-dashed p-2 rounded-md text-center">
                         <x-ui.forms.button @click.prevent="props.actionAdd" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
                     </div>
                 </template>
@@ -47,7 +47,7 @@
                 </div>
                 @endforeach
 
-                <div class="border mt-2 border-dashed p-2 rounded-md text-center">
+                <div class="border border-dashed p-2 rounded-md text-center">
                     <x-ui.forms.button tag="a" href="#" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
                 </div>
             </div>

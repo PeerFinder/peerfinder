@@ -46,8 +46,6 @@ class BookmarksController extends Controller
     {
         Gate::authorize('edit', $pg);
 
-        #Validator::make($request->input(), ['x' => 'required'])->validate();
-
         Matcher::updateBookmarks($pg, $request);
 
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.bookmarks_updated_successfully'));

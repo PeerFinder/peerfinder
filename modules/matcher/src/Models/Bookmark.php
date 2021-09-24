@@ -20,8 +20,8 @@ class Bookmark extends Model
 
     public static function rules() {
         $updateRules = [
-            'url' => ['array', 'max:20'],
-            'title' => ['array', 'max:20'],
+            'url' => ['required', 'array', 'min:1', 'max:20'],
+            'title' => ['array', 'min:1', 'max:20'],
             'url.*' => ['string', 'url', 'max:255'],
             'title.*' => ['nullable', 'string', 'max:255'],
         ];
