@@ -17,7 +17,7 @@ class BookmarksController extends Controller
     {
         Gate::authorize('edit', $pg);
 
-        $bookmarks = [];
+        $bookmarks = null;
 
         if ($request->old('url')) {
             $urls = $request->old('url');
@@ -30,6 +30,8 @@ class BookmarksController extends Controller
                     'title' => $titles[$i],
                 ];
             }
+
+            $bookmarks = collect($bookmarks);
         } else {
             $bookmarks = $pg->bookmarks->map(function ($bookmark) {
                 return [

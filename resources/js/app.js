@@ -4,7 +4,7 @@ import { createApp } from 'vue';
 import HeaderMenu from './components/HeaderMenu.vue';
 import TimezoneSelect from './components/TimezoneSelect.vue';
 import ConditionalElements from './components/ConditionalElements.vue';
-import BookmarksEditor from './components/BookmarksEditor.vue';
+import EditableList from './components/EditableList.vue';
 import vClickOutside from "click-outside-vue3";
 
 const app = createApp({
@@ -12,7 +12,7 @@ const app = createApp({
         'header-menu': HeaderMenu,
         'timezone-select': TimezoneSelect,
         'conditional-elements': ConditionalElements,
-        'bookmarks-editor': BookmarksEditor,
+        'editable-list': EditableList,
     }
 });
 

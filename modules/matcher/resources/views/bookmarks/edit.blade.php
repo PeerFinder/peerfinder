@@ -5,29 +5,29 @@
 
         <x-ui.forms.form :action="route('matcher.bookmarks.update', ['pg' => $pg->groupname])">
 
-            <bookmarks-editor class="p-2 space-y-2">
-                <template v-slot:item="props">
-                    <div class="flex items-center border p-2 rounded-md shadow-sm">
+            <editable-list class="p-2 space-y-2" :initial="{{ $bookmarks }}">
+                <template v-slot:list-item="props">
+                    <div class="flex items-center border p-2 rounded-md shadow-sm bg-gray-50">
                         <div class="flex-1 grid grid-cols-2 gap-2">
                             <div>
-                                <x-ui.forms.input name="url[]" type="url" required>{{ __('matcher::peergroup.bookmark_url') }}</x-ui.forms.input>
+                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.url" name="url[]" type="url" placeholder="{{ __('matcher::peergroup.bookmark_url') }}" />
                             </div>
                             <div>
-                                <x-ui.forms.input name="title[]" type="text">{{ __('matcher::peergroup.bookmark_title') }}</x-ui.forms.input>
+                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.title" name="title[]" type="text" placeholder="{{ __('matcher::peergroup.bookmark_title') }}" />
                             </div>
                         </div>
                         <div class="ml-2">
-                            <button @click.prevent="props.actionRemove"><x-ui.icon name="trash" /></button>
+                            <a @click.prevent="props.actionRemove(props.item)" href="#"><x-ui.icon name="trash" /></a>
                         </div>
                     </div>
                 </template>
 
                 <template v-slot:add-button="props">
                     <div class="border border-dashed p-2 rounded-md text-center">
-                        <x-ui.forms.button @click.prevent="props.actionAdd" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
+                        <x-ui.forms.button tag="a" href="#" @click.prevent="props.actionAdd({title:'', url:''})" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
                     </div>
                 </template>
-            </bookmarks-editor>
+            </editable-list>
 
             {{--
             <div class="p-2 space-y-2">
