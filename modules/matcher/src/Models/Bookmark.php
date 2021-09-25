@@ -18,7 +18,8 @@ class Bookmark extends Model
         'title',
     ];
 
-    public static function rules() {
+    public static function rules()
+    {
         $updateRules = [
             'url' => ['array', 'max:20'],
             'title' => ['array', 'max:20'],

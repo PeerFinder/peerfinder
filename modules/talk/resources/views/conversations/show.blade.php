@@ -16,7 +16,7 @@
         <p>{!! Talk::usersAsString(Talk::filterUsersForConversation($conversation), true) !!}</p>
     </div>
 
-    <div class="p-6">
+    <div class="p-4">
         <x-talk::conversations.replies :replies="$replies" />
     </div>
 

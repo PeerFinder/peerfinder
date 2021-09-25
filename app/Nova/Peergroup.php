@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasManyThrough;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Line;
@@ -91,6 +92,10 @@ class Peergroup extends Resource
             HasManyThrough::make('Memberships')->hideFromIndex(),
 
             BelongsToMany::make('Languages')->hideFromIndex(),
+
+            HasMany::make('Bookmarks')->hideFromIndex(),
+
+            HasMany::make('Appointments')->hideFromIndex(),
         ];
     }
 

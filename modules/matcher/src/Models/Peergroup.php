@@ -110,6 +110,11 @@ class Peergroup extends Model
         return $this->hasMany(Bookmark::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }    
+
     public function members()
     {
         return $this->hasManyThrough(User::class, Membership::class, 'peergroup_id', 'id', 'id', 'user_id')->where('approved', true);
