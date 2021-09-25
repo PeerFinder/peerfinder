@@ -3,7 +3,8 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
@@ -46,13 +47,17 @@ class Appointment extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            DateTime::make('Date'),
+            Date::make('Date')->required()->rules(ModelsAppointment::rules()['update']['date']),
 
-            Text::make('Subject'),
+            Text::make('Time')->rules(ModelsAppointment::rules()['update']['time']),
 
-            Textarea::make('Details'),
+            Text::make('Subject')->required()->rules(ModelsAppointment::rules()['update']['subject']),
 
-            Text::make('Location'),
+            Textarea::make('Details')->rules(ModelsAppointment::rules()['update']['details']),
+
+            Text::make('Location')->rules(ModelsAppointment::rules()['update']['location']),
+
+            BelongsTo::make('Peergroup'),
         ];
     }
 

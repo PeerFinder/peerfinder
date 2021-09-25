@@ -37,4 +37,9 @@ class Bookmark extends Model
     {
         return new BookmarkFactory();
     }
+
+    public function peergroup()
+    {
+        return $this->belongsTo(Peergroup::class);
+    }    
 }

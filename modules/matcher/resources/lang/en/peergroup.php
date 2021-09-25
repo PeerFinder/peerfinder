@@ -92,4 +92,13 @@ return [
     'bookmark_title' => 'Title',
     'caption_bookmarks' => 'Bookmarks',
     'button_edit_bookmarks' => "Edit bookmarks",
+    'create_appointment_title' => 'Create new appointment',
+    'button_create_appointment' => 'Create appointment',
+    'appointment_created_successfully' => 'Appointment was created successfully!',
+    'appointment_updated_successfully' => 'Appointment was updated successfully!',
+    'appointment_deleted_successfully' => 'Appointment was deleted successfully!',
+    'button_edit_appointments' => 'Edit appointments',
+    'appointments_title' => 'Appointments',
+    'button_new_appointment' => 'New appointment',
+    'no_appointments_yet' => 'No appointments yet.',
 ];

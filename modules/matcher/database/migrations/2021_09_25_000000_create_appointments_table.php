@@ -12,7 +12,8 @@ class CreateAppointmentsTable extends Migration
             $table->id();
             $table->string('identifier')->unique();
             $table->foreignId('peergroup_id');
-            $table->dateTime('date');
+            $table->date('date');
+            $table->time('time')->nullable();
             $table->string('subject');
             $table->string('location')->nullable();
             $table->text('details')->nullable();

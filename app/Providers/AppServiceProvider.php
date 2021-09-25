@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\Facades\EasyDate;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
@@ -30,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
                 $query->orderBy('updated_at', 'desc')->with('conversation', 'reply');
             }])->get()->first());
         });
+
     }
 }

@@ -16,11 +16,13 @@ class Appointment extends Model
         'subject',
         'details',
         'date',
+        'time',
         'location',
     ];
 
     protected $casts = [
         'date' => 'date',
+        'time' => 'timestamp',
     ];
 
     public static function rules()
@@ -30,6 +32,7 @@ class Appointment extends Model
             'location' => ['required', 'string', 'max:255'],
             'details' => ['required', 'string', 'max:800'],
             'date' => ['required', 'date'],
+            'time' => ['required', 'date_format:H:i'],
         ];
 
         return [
@@ -50,5 +53,10 @@ class Appointment extends Model
     protected static function newFactory()
     {
         return new AppointmentFactory();
+    }
+
+    public function peergroup()
+    {
+        return $this->belongsTo(Peergroup::class);
     }
 }

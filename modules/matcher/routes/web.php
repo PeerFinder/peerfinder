@@ -38,6 +38,7 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
     });
 
     Route::group(['as' => 'appointments.', 'prefix' => 'appointments'], function () {
+        Route::get('/', [AppointmentsController::class, 'index'])->name('index');
         Route::get('/create', [AppointmentsController::class, 'create'])->name('create');
         Route::put('/create', [AppointmentsController::class, 'store'])->name('store');
         Route::get('/{appointment:identifier}', [AppointmentsController::class, 'show'])->name('show');

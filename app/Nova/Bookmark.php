@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -47,6 +48,8 @@ class Bookmark extends Resource
             Text::make('URL'),
             
             Text::make('Title'),
+
+            BelongsTo::make('Peergroup'),
         ];
     }
 
