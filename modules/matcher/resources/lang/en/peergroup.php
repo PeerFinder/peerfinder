@@ -75,7 +75,7 @@ return [
     'button_edit_membership' => 'My membership',
     'notice_member_of_group' => 'You are a member of this group.',
     'caption_meeting_link' => 'Meeting link',
-    'this_link_visible_for_members' => 'This link is visible for members only.',
+    'visible_for_members' => 'Visible only for members.',
     'button_update_membership' => 'Update membership',
     'update_membership_title' => 'Update membership details',
     'membership_updated_successfully' => 'Membership was updated successfully!',
@@ -90,4 +90,6 @@ return [
     'button_add_bookmark' => 'Add bookmark',
     'bookmark_url' => 'URL',
     'bookmark_title' => 'Title',
+    'caption_bookmarks' => 'Bookmarks',
+    'button_edit_bookmarks' => "Edit bookmarks",
 ];

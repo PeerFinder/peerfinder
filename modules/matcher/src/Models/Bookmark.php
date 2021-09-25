@@ -32,11 +32,6 @@ class Bookmark extends Model
         ];
     }
 
-    public function peergroup()
-    {
-        return $this->belongsTo(Peergroup::class);
-    }
-
     protected static function newFactory()
     {
         return new BookmarkFactory();

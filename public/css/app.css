@@ -1374,6 +1374,9 @@ select {
 .gap-5 {
 	gap: 1.25rem;
 }
+.gap-7 {
+	gap: 1.75rem;
+}
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-y-reverse: 0;
 	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1582,13 +1585,13 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(253, 230, 138, var(--tw-bg-opacity));
 }
-.bg-yellow-300 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
-}
 .bg-red-50 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(254, 242, 242, var(--tw-bg-opacity));
+}
+.bg-yellow-300 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
 }
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
@@ -1663,6 +1666,10 @@ select {
 .px-1 {
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
+}
+.py-4 {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 .px-2 {
 	padding-left: 0.5rem;
@@ -1798,6 +1805,14 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(55, 65, 81, var(--tw-text-opacity));
 }
+.text-pf-darkorange {
+	--tw-text-opacity: 1;
+	color: rgba(242, 100, 25, var(--tw-text-opacity));
+}
+.text-gray-100 {
+	--tw-text-opacity: 1;
+	color: rgba(243, 244, 246, var(--tw-text-opacity));
+}
 .underline {
 	text-decoration: underline;
 }
@@ -1914,6 +1929,10 @@ select {
 	--tw-text-opacity: 1;
 	color: rgba(31, 41, 55, var(--tw-text-opacity));
 }
+.hover\:text-gray-500:hover {
+	--tw-text-opacity: 1;
+	color: rgba(107, 114, 128, var(--tw-text-opacity));
+}
 .focus\:border-transparent:focus {
 	border-color: transparent;
 }
@@ -2014,6 +2033,10 @@ select {
 		grid-column: span 3 / span 3;
 	}
 
+	.sm\:col-span-6 {
+		grid-column: span 6 / span 6;
+	}
+
 	.sm\:my-5 {
 		margin-top: 1.25rem;
 		margin-bottom: 1.25rem;
@@ -2103,6 +2126,12 @@ select {
 		margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
 	}
 
+	.sm\:space-y-7 > :not([hidden]) ~ :not([hidden]) {
+		--tw-space-y-reverse: 0;
+		margin-top: calc(1.75rem * calc(1 - var(--tw-space-y-reverse)));
+		margin-bottom: calc(1.75rem * var(--tw-space-y-reverse));
+	}
+
 	.sm\:rounded-md {
 		border-radius: 0.375rem;
 	}
@@ -2143,5 +2172,21 @@ select {
 
 	.sm\:pr-10 {
 		padding-right: 2.5rem;
+	}
+}
+@media (min-width: 1024px) {
+
+	.lg\:col-span-7 {
+		grid-column: span 7 / span 7;
+	}
+
+	.lg\:col-span-3 {
+		grid-column: span 3 / span 3;
+	}
+
+	.lg\:space-x-1 > :not([hidden]) ~ :not([hidden]) {
+		--tw-space-x-reverse: 0;
+		margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+		margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 	}
 }
