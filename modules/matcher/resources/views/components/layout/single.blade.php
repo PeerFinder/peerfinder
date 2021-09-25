@@ -1,8 +1,8 @@
 @props(['pg' => null])
 
 <x-layout.minimal :title="$pg ? $pg->title : __('matcher::peergroup.new_peergroup_title')">
-    <div class="mt-5 sm:mt-10 sm:grid sm:grid-cols-10 gap-5">
-        <div class="sm:col-span-7">
+    <div class="mt-5 sm:mt-10 sm:grid sm:grid-cols-10 gap-7">
+        <div class="sm:col-span-6 lg:col-span-7">
             @if ($pg)
             <div class="px-4 sm:p-0">
                 <h1 class="text-3xl font-semibold">@if($pg->private)<x-matcher::ui.badge icon="lock-closed" class="bg-yellow-300">{{ __('matcher::peergroup.badge_private') }}</x-matcher::ui.badge> @endif{{ $pg->title }}</h1>
@@ -21,13 +21,14 @@
             </div>
             @endif
 
-            <div class="mt-5 space-y-2 sm:space-y-5">
+            <div class="mt-5 space-y-2 sm:space-y-7">
                 {{ $slot }}
             </div>
         </div>
 
-        <div class="sm:col-span-3 space-y-2 sm:space-y-5 mt-2 sm:mt-0">
+        <div class="sm:col-span-4 lg:col-span-3 space-y-2 sm:space-y-7 mt-2 sm:mt-0">
             <x-matcher::peergroup.meeting-link :pg="$pg" />
+            <x-matcher::peergroup.bookmarks-list :pg="$pg" />
             <x-matcher::peergroup.members-list :pg="$pg" />
             <x-matcher::peergroup.edit-menu :pg="$pg" />
         </div>

@@ -17,6 +17,8 @@
         </x-ui.forms.form>
 
         <x-ui.forms.button tag="a" href="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_edit_group') }}</x-ui.forms.button>
+        
+        <x-ui.forms.button tag="a" href="{{ route('matcher.bookmarks.edit', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_edit_bookmarks') }}</x-ui.forms.button>
 
         @if ($pg->hasMoreMembersThanOwner())
         <x-ui.forms.button tag="a" href="{{ route('matcher.editOwner', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_transfer_ownership') }}</x-ui.forms.button>

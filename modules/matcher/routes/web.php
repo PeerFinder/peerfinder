@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Matcher\Http\Controllers\BookmarksController;
 use Matcher\Http\Controllers\MembershipController;
 use Matcher\Http\Controllers\PeergroupController;
 
@@ -28,6 +29,11 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
         Route::delete('/delete', [MembershipController::class, 'destroy'])->name('destroy');
         Route::post('/{username}/approve', [MembershipController::class, 'approve'])->name('approve');
         Route::post('/{username}/decline', [MembershipController::class, 'decline'])->name('decline');
+    });
+
+    Route::group(['as' => 'bookmarks.', 'prefix' => 'bookmarks'], function () {
+        Route::get('/edit', [BookmarksController::class, 'edit'])->name('edit');
+        Route::put('/update', [BookmarksController::class, 'update'])->name('update');
     });
 });
 

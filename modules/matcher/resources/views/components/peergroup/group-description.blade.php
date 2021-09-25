@@ -1,4 +1,4 @@
-<x-ui.card title="{{ __('matcher::peergroup.group_description') }}">
+<x-ui.card title="{{ __('matcher::peergroup.group_description') }}" edit="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" :can="auth()->user()->can('edit', $pg)">
     <div class="p-4 pb-4">
         <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_begin') }}" icon="calendar">{{ $pg->begin->format('d.m.y') }}</x-matcher::ui.group-detail>
         @if ($pg->virtual)
