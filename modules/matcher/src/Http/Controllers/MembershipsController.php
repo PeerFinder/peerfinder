@@ -11,7 +11,7 @@ use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Membership;
 
-class MembershipController extends Controller
+class MembershipsController extends Controller
 {
     private function getMembershipOrFail(Request $request, Peergroup $pg, $approved = true)
     {

@@ -15,7 +15,7 @@ use Matcher\Facades\Matcher;
 /**
  * @group listeners
  */
-class PeergroupListeners extends TestCase
+class PeergroupListenersTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
