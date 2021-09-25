@@ -5,7 +5,7 @@
 
         <x-ui.forms.form :action="route('matcher.bookmarks.update', ['pg' => $pg->groupname])">
 
-            <editable-list class="p-2 space-y-2" :initial="{{ $bookmarks }}">
+            <editable-list class="p-4 space-y-3" :initial="{{ $bookmarks }}">
                 <template v-slot:list-item="props">
                     <div class="flex items-center border p-2 rounded-md shadow-sm bg-gray-50">
                         <div class="flex-1 grid grid-cols-2 gap-2">
@@ -17,7 +17,7 @@
                             </div>
                         </div>
                         <div class="ml-2">
-                            <a @click.prevent="props.actionRemove(props.item)" href="#"><x-ui.icon name="trash" /></a>
+                            <a @click.prevent="props.actionRemove(props.item)" href="#" class="text-gray-400 hover:text-gray-600"><x-ui.icon name="trash" /></a>
                         </div>
                     </div>
                 </template>
