@@ -82,4 +82,20 @@ class BookmarkTest extends TestCase
 
         $this->assertDatabaseMissing('bookmarks', ['peergroup_id' => $pg->id]);
     }
+
+    public function test_group_owner_can_delete_all_bookmarks()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $data = [];
+
+        $response = $this->actingAs($user)->put(route('matcher.bookmarks.update', ['pg' => $pg->groupname]), $data);
+        
+        $response->assertRedirect();
+        $response->assertSessionDoesntHaveErrors();
+        $this->assertDatabaseMissing('bookmarks', ['peergroup_id' => $pg->id]);
+    }
 }

@@ -1,3 +1,5 @@
+@props(['errors'])
+
 @if ($errors && $errors->any())
 <x-ui.flash {{ $attributes->merge([ 'class' => 'bg-red-300 border-red-500 rounded-lg shadow border']) }}>
     <ul>

@@ -198,10 +198,15 @@ class Matcher
 
         Validator::make($input, Bookmark::rules()['update'], [
             'url.*.*' => __('matcher::peergroup.value_must_be_url'),
-            'title.*.*' => __('matcher::peergroup.value_too_long'),
+            'title.*.*' => __('matcher::peergroup.title_too_long'),
         ])->validate();
 
-        $count = min(count($input['url']), count($input['title']));
+        if (key_exists('url', $input) && key_exists('title', $input)) {
+            # Prevent index error in the bookmark loop
+            $count = min(count($input['url']), count($input['title']));
+        } else {
+            $count = 0;
+        }
 
         Bookmark::where('peergroup_id', $pg->id)->delete();
 

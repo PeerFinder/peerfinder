@@ -10,10 +10,10 @@
                     <div class="flex items-center border p-2 rounded-md shadow-sm bg-gray-50">
                         <div class="flex-1 grid grid-cols-2 gap-2">
                             <div>
-                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.url" name="url[]" type="url" placeholder="{{ __('matcher::peergroup.bookmark_url') }}" />
+                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.url" name="url[]" type="url" placeholder="{{ __('matcher::peergroup.bookmark_url') }}"  :class="props.item.data.error.url.length && 'border-red-300 bg-red-50'" />
                             </div>
                             <div>
-                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.title" name="title[]" type="text" placeholder="{{ __('matcher::peergroup.bookmark_title') }}" />
+                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.title" name="title[]" type="text" placeholder="{{ __('matcher::peergroup.bookmark_title') }}" :class="props.item.data.error.title.length && 'border-red-300 bg-red-50'" />
                             </div>
                         </div>
                         <div class="ml-2">
@@ -24,34 +24,10 @@
 
                 <template v-slot:add-button="props">
                     <div class="border border-dashed p-2 rounded-md text-center">
-                        <x-ui.forms.button tag="a" href="#" @click.prevent="props.actionAdd({title:'', url:''})" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
+                        <x-ui.forms.button tag="a" href="#" @click.prevent="props.actionAdd({title:'', url:'', error: {'title': [], 'url': []}})" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
                     </div>
                 </template>
             </editable-list>
-
-            {{--
-            <div class="p-2 space-y-2">
-                @foreach ($bookmarks as $i => $bookmark)
-                <div id="bookmark-{$i}" class="flex items-center border p-2 rounded-md shadow-sm">
-                    <div class="flex-1 grid grid-cols-2 gap-2">
-                        <div>
-                            <x-ui.forms.input name="url[]" type="url" value="{{ $bookmark['url'] }}" required>{{ __('matcher::peergroup.bookmark_url') }}</x-ui.forms.input>
-                        </div>
-                        <div>
-                            <x-ui.forms.input name="title[]" type="text" value="{{ $bookmark['title'] }}">{{ __('matcher::peergroup.bookmark_title') }}</x-ui.forms.input>
-                        </div>
-                    </div>
-                    <div class="ml-2">
-                        <button><x-ui.icon name="trash" /></button>
-                    </div>
-                </div>
-                @endforeach
-
-                <div class="border border-dashed p-2 rounded-md text-center">
-                    <x-ui.forms.button tag="a" href="#" action="create">{{ __('matcher::peergroup.button_add_bookmark') }}</x-ui.forms.button>
-                </div>
-            </div>
-            --}}
 
             <div class="p-4 border-t">
                 @csrf

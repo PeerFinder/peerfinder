@@ -1586,6 +1586,10 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
 }
+.bg-red-50 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(254, 242, 242, var(--tw-bg-opacity));
+}
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }

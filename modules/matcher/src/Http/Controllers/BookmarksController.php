@@ -19,15 +19,23 @@ class BookmarksController extends Controller
 
         $bookmarks = null;
 
-        if ($request->old('url')) {
+        if ($request->old('_token')) {
             $urls = $request->old('url');
             $titles = $request->old('title');
             $count = min(count($urls), count($titles));
 
+            $errors = session()->get('errors');
+            
             for($i = 0; $i < $count; $i++) {
+                $error = [
+                    'url' => $errors->getBag('default')->get('url.' . $i),
+                    'title' => $errors->getBag('default')->get('title.' . $i),
+                ];
+
                 $bookmarks[] = [
                     'url' => $urls[$i],
                     'title' => $titles[$i],
+                    'error' => $error,
                 ];
             }
 
@@ -37,6 +45,7 @@ class BookmarksController extends Controller
                 return [
                     'url' => $bookmark->url,
                     'title' => $bookmark->title,
+                    'error' => ['url' => [], 'title' => []],
                 ];
             });
         }
