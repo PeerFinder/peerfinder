@@ -101,5 +101,18 @@ class AppointmentsTest extends TestCase
         $response->assertStatus(302);
         
         $this->assertDatabaseMissing('appointments', ['peergroup_id' => $pg->id, 'subject' => $a->subject]);
+    }
+
+    public function test_appointments_are_deleted_with_peergroup()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $a = Appointment::factory()->forPeergroup($pg)->create();
+
+        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id]);
+
+        $pg->delete();
+
+        $this->assertDatabaseMissing('appointments', ['peergroup_id' => $pg->id]);
     }    
 }

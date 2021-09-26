@@ -3,11 +3,12 @@
     <x-ui.card class="my-5" title="{{ __('matcher::peergroup.appointments_title') }}">
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
-        <div class="p-4">
+        <div class="p-4 space-y-1">
             @forelse ($appointments as $appointment)
-            <div>
+            <div class="border">
                 <div>{{ $appointment->date }}</div>
-                <div>{{ $appointment->time }}</div>
+                <div class="bg-red-100">{{ $appointment->date->format('d') }} {{ $appointment->date->getTranslatedShortMonthName() }}</div>
+                <div>{{ EasyDate::fromUTC($appointment->time) }}</div>
                 <div>{{ $appointment->subject }}</div>
                 <div>{{ $appointment->details }}</div>
                 <div>{{ $appointment->location }}</div>

@@ -31,6 +31,5 @@ class AppServiceProvider extends ServiceProvider
                 $query->orderBy('updated_at', 'desc')->with('conversation', 'reply');
             }])->get()->first());
         });
-
     }
 }

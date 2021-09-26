@@ -21,8 +21,7 @@ class Appointment extends Model
     ];
 
     protected $casts = [
-        'date' => 'date',
-        'time' => 'timestamp',
+        'date' => 'date'
     ];
 
     public static function rules()

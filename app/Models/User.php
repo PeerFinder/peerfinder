@@ -37,6 +37,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'xing_profile',
     ];
 
+    protected $attributes = [
+        'timezone' => 'UTC',
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *

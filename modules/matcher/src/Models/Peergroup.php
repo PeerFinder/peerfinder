@@ -86,6 +86,10 @@ class Peergroup extends Model
                 $bookmark->delete();
             });
 
+            $pg->appointments()->each(function ($appointment) {
+                $appointment->delete();
+            });
+
             Matcher::beforePeergroupDeleted($pg);
         });
     }
