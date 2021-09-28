@@ -18,12 +18,11 @@ class Appointment extends Model
         'subject',
         'details',
         'date',
-        'time',
         'location',
     ];
 
     protected $casts = [
-        'date' => 'date'
+        'date' => 'datetime'
     ];
 
     public static function rules()
@@ -61,15 +60,8 @@ class Appointment extends Model
         return $this->belongsTo(Peergroup::class);
     }
 
-    public function fullDate($user_tz = false)
-    {
-        return EasyDate::joinDateTime($this->date, $this->time, $user_tz);
-    }
-
     public function isInPast()
     {
-        $currentUserTime = Carbon::now();
-
-        return $currentUserTime->diffInSeconds($this->fullDate(), false) < 0;
+        return Carbon::now()->diffInSeconds($this->date, false) < 0;
     }
 }

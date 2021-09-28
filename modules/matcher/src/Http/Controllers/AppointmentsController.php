@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
-use Matcher\Facades\Matcher;
 use Matcher\Models\Appointment;
 
 class AppointmentsController extends Controller
@@ -18,7 +17,7 @@ class AppointmentsController extends Controller
     {
         Gate::authorize('forMembers', $pg);
 
-        $appointments = $pg->appointments()->orderByDesc('date')->orderByDesc('time')->get();
+        $appointments = $pg->appointments()->orderByDesc('date')->get();
 
         return view('matcher::appointments.index', compact('pg', 'appointments'));
     }
@@ -29,7 +28,6 @@ class AppointmentsController extends Controller
 
         $appointment = new Appointment();
         $appointment->date = Carbon::now();
-        $appointment->time = Carbon::now()->format('H:i');
 
         return view('matcher::appointments.create', compact('pg', 'appointment'));
     }
@@ -42,7 +40,6 @@ class AppointmentsController extends Controller
 
         Validator::make($input, Appointment::rules()['create'])->validate();
 
-        $input['time'] = EasyDate::toUTCTime($input['time']);
         $input['date'] = EasyDate::joinAndConvertToUTC($input['date'], $input['time']);
 
         $appointment = new Appointment();
@@ -76,8 +73,7 @@ class AppointmentsController extends Controller
 
         Validator::make($input, Appointment::rules()['update'])->validate();
 
-        $input['time'] = EasyDate::toUTCTime($input['time']);
-        $input['date'] = EasyDate::toUTC($input['date']);
+        $input['date'] = EasyDate::joinAndConvertToUTC($input['date'], $input['time']);
 
         $appointment->update($input);
 

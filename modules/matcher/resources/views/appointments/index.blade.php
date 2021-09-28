@@ -16,17 +16,15 @@
                 <div>
                     <div @class(['bg-red-400 border border-red-400 w-10 text-center rounded-md overflow-none shadow-sm', 'bg-gray-400 border-gray-400' => $appointment->isInPast()])>
                         <div class="text-white text-sm px-1">
-                            {{ $appointment->fullDate(true)->getTranslatedShortMonthName() }}
+                            {{ EasyDate::fromUTC($appointment->date)->getTranslatedShortMonthName() }}
                         </div>
                         <div class="bg-white rounded-b-md font-semibold">
-                            {{ $appointment->fullDate(true)->format('d') }}
+                            {{ EasyDate::fromUTC($appointment->date)->format('d') }}
                         </div>
                     </div>
-                    @if ($appointment->time)
                     <div class="bg-white mt-1 rounded-md text-sm text-center shadow-sm">
-                        {{ EasyDate::fromUTC($appointment->time) }}
+                        {{ EasyDate::fromUTC($appointment->date)->format('H:i') }}
                     </div>
-                    @endif
                 </div>
                 <div class="mx-3 flex-1">
                     <a href="{{ route('matcher.appointments.show', ['pg' => $pg->groupname, 'appointment' => $appointment->identifier]) }}">

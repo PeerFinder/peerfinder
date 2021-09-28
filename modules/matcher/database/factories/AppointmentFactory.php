@@ -18,8 +18,7 @@ class AppointmentFactory extends Factory
             'subject' => $this->faker->realText(50),
             'details' => $this->faker->realText(50),
             'location' => $this->faker->city(),
-            'date' => $this->faker->date(),
-            'time' => $this->faker->time('H:i'),
+            'date' => $this->faker->dateTime(),
         ];
     }
 

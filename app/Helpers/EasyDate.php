@@ -19,33 +19,28 @@ class EasyDate
         }
     }
 
-    public function toUTCTime($time)
+    public function toUTC($dateTime)
     {
+        $dateTime = Carbon::parse($dateTime, $this->timezone);
+        $dateTime->setTimezone('UTC');
+        return $dateTime;
+    }
+
+    public function fromUTC($dateTime)
+    {
+        $dateTime->setTimezone($this->timezone);
+        return $dateTime;
+    }
+
+    public function joinAndConvertToUTC($date, $time)
+    {
+        $date = Carbon::parse($date, $this->timezone);
+
         $time = Carbon::parse($time, $this->timezone);
-
-        $time->setTimezone('UTC');
-
-        return $time->format('H:i');
-    }
-
-    public function fromUTCTime($time)
-    {
-        $time = Carbon::parse($time);
-
-        $time->setTimezone($this->timezone);
-
-        return $time->format('H:i');
-    }
-
-    public function joinDateTime($date, $time, $user_tz = false)
-    {
-        $time = Carbon::parse($time);
-
+        
         $date->setTime($time->hour, $time->minute, 0);
 
-        if ($user_tz) {
-            $date->setTimezone($this->timezone);
-        }
+        $date->setTimezone('UTC');
 
         return $date;
     }

@@ -70,21 +70,23 @@ class AppointmentsTest extends TestCase
 
         $pg = Peergroup::factory()->byUser($user)->create();
 
+        $date = Carbon::now($user->timezone);
+
         $data = [
             'subject' => $this->faker->realText(50),
             'details' => $this->faker->realText(50),
             'location' => $this->faker->city(),
-            'date' => $this->faker->date(),
-            'time' => $this->faker->time('H:i'),
+            'date' => $date->format('d-m-Y'),
+            'time' => $date->format('H:i'),
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.appointments.store', ['pg' => $pg->groupname]), $data);
         $response->assertSessionDoesntHaveErrors();
         $response->assertStatus(302);
 
-        $time = Carbon::parse($data['time'], $user->timezone)->setTimezone('UTC')->format('H:i:s');
+        $date = $date->setTimezone('UTC')->second(0)->toDateTime();
 
-        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject'], 'time' => $time]);
+        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject'], 'date' => $date]);
     }
 
     public function test_group_owner_can_show_appointment()
@@ -113,12 +115,14 @@ class AppointmentsTest extends TestCase
         $pg = Peergroup::factory()->byUser($user)->create();
         $a = Appointment::factory()->forPeergroup($pg)->create();
 
+        $date = Carbon::now($user->timezone);
+
         $data = [
             'subject' => $this->faker->realText(50),
             'details' => $this->faker->realText(50),
             'location' => $this->faker->city(),
-            'date' => $this->faker->date(),
-            'time' => $this->faker->time('H:i'),
+            'date' => $date->format('d-m-Y'),
+            'time' => $date->format('H:i'),
         ];
 
         $response = $this->actingAs($user)->put(route(
@@ -129,9 +133,9 @@ class AppointmentsTest extends TestCase
         $response->assertSessionDoesntHaveErrors();
         $response->assertStatus(302);
 
-        $time = Carbon::parse($data['time'], $user->timezone)->setTimezone('UTC')->format('H:i:s');
+        $date = $date->setTimezone('UTC')->second(0)->toDateTime();
 
-        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject'], 'time' => $time]);
+        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject'], 'date' => $date]);
     }
 
     public function test_group_owner_can_destroy_appointment()
@@ -173,7 +177,6 @@ class AppointmentsTest extends TestCase
         $dateTime = Carbon::now()->subHour();
 
         $a->date = $dateTime;
-        $a->time = $dateTime->format('H:i');
         $a->save();
 
         $this->assertTrue($a->isInPast());
@@ -181,7 +184,6 @@ class AppointmentsTest extends TestCase
         $dateTime = Carbon::now()->addHour();
 
         $a->date = $dateTime;
-        $a->time = $dateTime->format('H:i');
         $a->save();
 
         $this->assertFalse($a->isInPast());

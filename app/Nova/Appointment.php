@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
@@ -48,11 +49,7 @@ class Appointment extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            Date::make('Date')->required()->rules(ModelsAppointment::rules()['update']['date']),
-
-            Text::make('Time')->rules(ModelsAppointment::rules()['update']['time'])->resolveUsing(function ($time) {
-                return Carbon::parse($time)->format('H:i');
-            }),
+            DateTime::make('Date')->required()->rules(ModelsAppointment::rules()['update']['date']),
 
             Text::make('Subject')->required()->rules(ModelsAppointment::rules()['update']['subject']),
 

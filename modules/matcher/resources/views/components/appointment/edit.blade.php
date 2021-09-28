@@ -4,10 +4,10 @@
     </div>
     <div class="flex">
         <div class="w-1/2">
-            <x-ui.forms.input id="date" value="{{ old('date', $appointment->date->format('Y-m-d')) }}" name="date" type="date" required>{{ __('matcher::peergroup.field_date') }}</x-ui.forms.input>
+            <x-ui.forms.input id="date" value="{{ old('date', EasyDate::fromUTC($appointment->date)->format('Y-m-d')) }}" name="date" type="date" required>{{ __('matcher::peergroup.field_date') }}</x-ui.forms.input>
         </div>
         <div class="ml-2">
-            <x-ui.forms.input id="time" value="{{ old('time', EasyDate::fromUTCTime($appointment->time)) }}" name="time" type="time" required>{{ __('matcher::peergroup.field_time') }}</x-ui.forms.input>
+            <x-ui.forms.input id="time" value="{{ old('time', EasyDate::fromUTC($appointment->date)->format('H:i')) }}" name="time" type="time" required>{{ __('matcher::peergroup.field_time') }}</x-ui.forms.input>
         </div>
     </div>
     <div>
