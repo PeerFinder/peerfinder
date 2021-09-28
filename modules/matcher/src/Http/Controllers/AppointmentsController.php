@@ -2,9 +2,11 @@
 
 namespace Matcher\Http\Controllers;
 
+use App\Helpers\Facades\EasyDate;
 use App\Models\User;
 use Matcher\Models\Peergroup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Facades\Matcher;
@@ -16,7 +18,7 @@ class AppointmentsController extends Controller
     {
         Gate::authorize('forMembers', $pg);
 
-        $appointments = $pg->appointments()->get();
+        $appointments = $pg->appointments()->orderByDesc('date')->orderByDesc('time')->get();
 
         return view('matcher::appointments.index', compact('pg', 'appointments'));
     }
@@ -25,7 +27,11 @@ class AppointmentsController extends Controller
     {
         Gate::authorize('edit', $pg);
 
-        return view('matcher::appointments.create', compact('pg'));
+        $appointment = new Appointment();
+        $appointment->date = Carbon::now();
+        $appointment->time = Carbon::now()->format('H:i');
+
+        return view('matcher::appointments.create', compact('pg', 'appointment'));
     }
 
     public function store(Request $request, Peergroup $pg)
@@ -35,6 +41,9 @@ class AppointmentsController extends Controller
         $input = $request->all();
 
         Validator::make($input, Appointment::rules()['create'])->validate();
+
+        $input['time'] = EasyDate::toUTCTime($input['time']);
+        $input['date'] = EasyDate::joinAndConvertToUTC($input['date'], $input['time']);
 
         $appointment = new Appointment();
         $appointment->peergroup_id = $pg->id;
@@ -47,7 +56,7 @@ class AppointmentsController extends Controller
 
     public function show(Request $request, Peergroup $pg, Appointment $appointment)
     {
-        Gate::authorize('edit', $pg);
+        Gate::authorize('forMembers', $pg);
 
         return view('matcher::appointments.show', compact('pg', 'appointment'));
     }
@@ -66,6 +75,9 @@ class AppointmentsController extends Controller
         $input = $request->all();
 
         Validator::make($input, Appointment::rules()['update'])->validate();
+
+        $input['time'] = EasyDate::toUTCTime($input['time']);
+        $input['date'] = EasyDate::toUTC($input['date']);
 
         $appointment->update($input);
 

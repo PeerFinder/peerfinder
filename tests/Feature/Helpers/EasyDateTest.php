@@ -18,7 +18,7 @@ class EasyDateTest extends TestCase
 
         $user_time = "15:00";
 
-        $utc_time = EasyDate::toUTC($user_time);
+        $utc_time = EasyDate::toUTCTime($user_time);
 
         $this->assertEquals("13:00", $utc_time);
     }
@@ -33,7 +33,7 @@ class EasyDateTest extends TestCase
 
         $database_time = "17:00";
         
-        $user_time = EasyDate::fromUTC($database_time);
+        $user_time = EasyDate::fromUTCTime($database_time);
 
         $this->assertEquals("19:00", $user_time);
     }
@@ -42,7 +42,7 @@ class EasyDateTest extends TestCase
     {
         $user_time = "15:00";
 
-        $utc_time = EasyDate::toUTC($user_time);
+        $utc_time = EasyDate::toUTCTime($user_time);
 
         $this->assertEquals("15:00", $utc_time);
     }    

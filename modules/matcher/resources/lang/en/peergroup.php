@@ -101,4 +101,11 @@ return [
     'appointments_title' => 'Appointments',
     'button_new_appointment' => 'New appointment',
     'no_appointments_yet' => 'No appointments yet.',
+    'field_subject' => 'Subject',
+    'field_details' => 'Details',
+    'field_location' => 'Location',
+    'field_date' => 'Date',
+    'field_time' => 'Time',
+    'edit_appointment_title' => 'Edit appointment',
+    'button_update_appointment' => 'Update appointment',
 ];

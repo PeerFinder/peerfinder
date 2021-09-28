@@ -2,10 +2,12 @@
 
 namespace Matcher\Models;
 
+use App\Helpers\Facades\EasyDate;
 use App\Helpers\Facades\Urler;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Matcher\Database\Factories\AppointmentFactory;
 
 class Appointment extends Model
@@ -28,7 +30,7 @@ class Appointment extends Model
     {
         $updateRules = [
             'subject' => ['required', 'string', 'max:100'],
-            'location' => ['required', 'string', 'max:255'],
+            'location' => ['nullable', 'string', 'max:255'],
             'details' => ['nullable', 'string', 'max:800'],
             'date' => ['required', 'date'],
             'time' => ['required', 'date_format:H:i'],
@@ -57,5 +59,17 @@ class Appointment extends Model
     public function peergroup()
     {
         return $this->belongsTo(Peergroup::class);
+    }
+
+    public function fullDate($user_tz = false)
+    {
+        return EasyDate::joinDateTime($this->date, $this->time, $user_tz);
+    }
+
+    public function isInPast()
+    {
+        $currentUserTime = Carbon::now();
+
+        return $currentUserTime->diffInSeconds($this->fullDate(), false) < 0;
     }
 }

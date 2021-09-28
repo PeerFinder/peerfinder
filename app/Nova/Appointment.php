@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
@@ -49,7 +50,9 @@ class Appointment extends Resource
 
             Date::make('Date')->required()->rules(ModelsAppointment::rules()['update']['date']),
 
-            Text::make('Time')->rules(ModelsAppointment::rules()['update']['time']),
+            Text::make('Time')->rules(ModelsAppointment::rules()['update']['time'])->resolveUsing(function ($time) {
+                return Carbon::parse($time)->format('H:i');
+            }),
 
             Text::make('Subject')->required()->rules(ModelsAppointment::rules()['update']['subject']),
 

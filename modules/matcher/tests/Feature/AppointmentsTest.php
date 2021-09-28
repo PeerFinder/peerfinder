@@ -5,6 +5,7 @@ namespace Matcher\Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Carbon;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Appointment;
@@ -22,10 +23,12 @@ class AppointmentsTest extends TestCase
     {
         $user = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
-        Appointment::factory()->forPeergroup($pg)->create();
+        $a = Appointment::factory()->forPeergroup($pg)->create();
 
         $response = $this->actingAs($user)->get(route('matcher.appointments.index', ['pg' => $pg->groupname]));
         $response->assertStatus(200);
+
+        $this->assertEquals($pg->id, $a->peergroup()->first()->id);
     }
 
     public function test_non_member_cannot_view_appointments()
@@ -50,7 +53,7 @@ class AppointmentsTest extends TestCase
 
         $response = $this->actingAs($user2)->get(route('matcher.appointments.index', ['pg' => $pg->groupname]));
         $response->assertStatus(200);
-    }    
+    }
 
     public function test_group_owner_can_create_appointments()
     {
@@ -64,6 +67,7 @@ class AppointmentsTest extends TestCase
     public function test_group_owner_can_store_appointments()
     {
         $user = User::factory()->create();
+
         $pg = Peergroup::factory()->byUser($user)->create();
 
         $data = [
@@ -77,7 +81,10 @@ class AppointmentsTest extends TestCase
         $response = $this->actingAs($user)->put(route('matcher.appointments.store', ['pg' => $pg->groupname]), $data);
         $response->assertSessionDoesntHaveErrors();
         $response->assertStatus(302);
-        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject']]);
+
+        $time = Carbon::parse($data['time'], $user->timezone)->setTimezone('UTC')->format('H:i:s');
+
+        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject'], 'time' => $time]);
     }
 
     public function test_group_owner_can_show_appointment()
@@ -114,13 +121,17 @@ class AppointmentsTest extends TestCase
             'time' => $this->faker->time('H:i'),
         ];
 
-        $response = $this->actingAs($user)->put(route('matcher.appointments.edit', 
-                ['pg' => $pg->groupname, 'appointment' => $a->identifier]), $data);
-        
+        $response = $this->actingAs($user)->put(route(
+            'matcher.appointments.edit',
+            ['pg' => $pg->groupname, 'appointment' => $a->identifier]
+        ), $data);
+
         $response->assertSessionDoesntHaveErrors();
         $response->assertStatus(302);
-        
-        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject']]);
+
+        $time = Carbon::parse($data['time'], $user->timezone)->setTimezone('UTC')->format('H:i:s');
+
+        $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject'], 'time' => $time]);
     }
 
     public function test_group_owner_can_destroy_appointment()
@@ -129,12 +140,14 @@ class AppointmentsTest extends TestCase
         $pg = Peergroup::factory()->byUser($user)->create();
         $a = Appointment::factory()->forPeergroup($pg)->create();
 
-        $response = $this->actingAs($user)->delete(route('matcher.appointments.destroy', 
-                ['pg' => $pg->groupname, 'appointment' => $a->identifier]));
-        
+        $response = $this->actingAs($user)->delete(route(
+            'matcher.appointments.destroy',
+            ['pg' => $pg->groupname, 'appointment' => $a->identifier]
+        ));
+
         $response->assertSessionDoesntHaveErrors();
         $response->assertStatus(302);
-        
+
         $this->assertDatabaseMissing('appointments', ['peergroup_id' => $pg->id, 'subject' => $a->subject]);
     }
 
@@ -149,5 +162,28 @@ class AppointmentsTest extends TestCase
         $pg->delete();
 
         $this->assertDatabaseMissing('appointments', ['peergroup_id' => $pg->id]);
-    }    
+    }
+
+    public function test_appointment_is_in_past()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $a = Appointment::factory()->forPeergroup($pg)->create();
+
+        $dateTime = Carbon::now()->subHour();
+
+        $a->date = $dateTime;
+        $a->time = $dateTime->format('H:i');
+        $a->save();
+
+        $this->assertTrue($a->isInPast());
+
+        $dateTime = Carbon::now()->addHour();
+
+        $a->date = $dateTime;
+        $a->time = $dateTime->format('H:i');
+        $a->save();
+
+        $this->assertFalse($a->isInPast());
+    }
 }
