@@ -29,7 +29,7 @@ class Appointment extends Model
         $updateRules = [
             'subject' => ['required', 'string', 'max:100'],
             'location' => ['required', 'string', 'max:255'],
-            'details' => ['required', 'string', 'max:800'],
+            'details' => ['nullable', 'string', 'max:800'],
             'date' => ['required', 'date'],
             'time' => ['required', 'date_format:H:i'],
         ];

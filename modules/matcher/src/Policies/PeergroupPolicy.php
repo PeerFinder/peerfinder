@@ -29,6 +29,19 @@ class PeergroupPolicy
         return false;
     }
 
+    public function forMembers(User $user, Peergroup $pg)
+    {
+        if ($pg->isOwner($user)) {
+            return true;
+        }
+
+        if ($pg->isMember($user)) {
+            return true;
+        }
+
+        return false;
+    }    
+
     public function edit(User $user, Peergroup $pg)
     {
         return $pg->isOwner($user);

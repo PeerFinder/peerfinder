@@ -14,7 +14,7 @@ class AppointmentsController extends Controller
 {
     public function index(Request $request, Peergroup $pg)
     {
-        Gate::authorize('edit', $pg);
+        Gate::authorize('forMembers', $pg);
 
         $appointments = $pg->appointments()->get();
 

@@ -17,7 +17,9 @@
                             </div>
                         </div>
                         <div class="ml-2">
-                            <a @click.prevent="props.actionRemove(props.item)" href="#" class="text-gray-400 hover:text-gray-600"><x-ui.icon name="trash" /></a>
+                            <div class="flex items-center bg-white px-2 pb-1 rounded-md space-x-4 shadow-sm">
+                                <a @click.prevent="props.actionRemove(props.item)" href="#" class="text-red-400 hover:text-red-600"><x-ui.icon name="trash" /></a>
+                            </div>
                         </div>
                     </div>
                 </template>

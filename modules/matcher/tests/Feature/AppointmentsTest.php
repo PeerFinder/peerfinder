@@ -5,6 +5,7 @@ namespace Matcher\Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Matcher\Facades\Matcher;
 use Matcher\Models\Peergroup;
 use Matcher\Models\Appointment;
 use Tests\TestCase;
@@ -16,6 +17,40 @@ class AppointmentsTest extends TestCase
 {
     use WithFaker;
     use RefreshDatabase;
+
+    public function test_group_owner_can_view_appointments()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        Appointment::factory()->forPeergroup($pg)->create();
+
+        $response = $this->actingAs($user)->get(route('matcher.appointments.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+    }
+
+    public function test_non_member_cannot_view_appointments()
+    {
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        Appointment::factory()->forPeergroup($pg)->create();
+
+        $response = $this->actingAs($user2)->get(route('matcher.appointments.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(403);
+    }
+
+    public function test_member_can_view_appointments()
+    {
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        Appointment::factory()->forPeergroup($pg)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user2)->get(route('matcher.appointments.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+    }    
 
     public function test_group_owner_can_create_appointments()
     {

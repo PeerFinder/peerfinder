@@ -36,9 +36,4 @@ class EasyDate
 
         return $time->format('H:i');
     }
-
-    public function localizedMonth($datetime, $long = true)
-    {
-        
-    }
 }
