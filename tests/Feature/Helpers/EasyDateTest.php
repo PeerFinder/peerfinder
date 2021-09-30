@@ -4,6 +4,7 @@ namespace Tests\Feature\Helpers;
 
 use App\Helpers\Facades\EasyDate;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class EasyDateTest extends TestCase
@@ -16,11 +17,11 @@ class EasyDateTest extends TestCase
 
         $this->be($user);
 
-        $user_time = "15:00";
+        $user_time = Carbon::parse("15:00", $user->timezone);
 
-        $utc_time = EasyDate::toUTCTime($user_time);
+        $utc_time = EasyDate::toUTC($user_time);
 
-        $this->assertEquals("13:00", $utc_time);
+        $this->assertEquals("13:00", $utc_time->format('H:i'));
     }
 
     public function test_conversion_from_utc()
@@ -31,19 +32,19 @@ class EasyDateTest extends TestCase
 
         $this->be($user);
 
-        $database_time = "17:00";
+        $database_time = Carbon::parse("17:00");
         
-        $user_time = EasyDate::fromUTCTime($database_time);
+        $user_time = EasyDate::fromUTC($database_time);
 
-        $this->assertEquals("19:00", $user_time);
+        $this->assertEquals("19:00", $user_time->format('H:i'));
     }
 
-    public function test_conversion_to_utc_without_tz()
+    public function test_conversion_from_utc_without_tz()
     {
-        $user_time = "15:00";
+        $database_time = Carbon::parse("17:00");
 
-        $utc_time = EasyDate::toUTCTime($user_time);
+        $user_time = EasyDate::fromUTC($database_time);
 
-        $this->assertEquals("15:00", $utc_time);
-    }    
+        $this->assertEquals("17:00", $user_time->format('H:i'));
+    }
 }

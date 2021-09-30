@@ -1243,6 +1243,15 @@ select {
 .-ml-px {
 	margin-left: -1px;
 }
+.ml-5 {
+	margin-left: 1.25rem;
+}
+.mt-7 {
+	margin-top: 1.75rem;
+}
+.ml-4 {
+	margin-left: 1rem;
+}
 .block {
 	display: block;
 }
@@ -1623,6 +1632,14 @@ select {
 .bg-yellow-300 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
+}
+.bg-black {
+	--tw-bg-opacity: 1;
+	background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+}
+.bg-red-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
 }
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));

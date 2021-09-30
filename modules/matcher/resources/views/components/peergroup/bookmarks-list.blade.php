@@ -2,7 +2,7 @@
 <x-ui.card title="{{ __('matcher::peergroup.caption_bookmarks') }}" 
             subtitle="{{ __('matcher::peergroup.visible_for_members') }}" 
             edit="{{ route('matcher.bookmarks.edit', ['pg' => $pg->groupname]) }}" :can="auth()->user()->can('edit', $pg)">
-    <div class="p-2">
+    <div class="p-4">
         <ul class="space-y-1">
             @foreach ($pg->bookmarks as $bookmark)
             <li>

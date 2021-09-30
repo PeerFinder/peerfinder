@@ -98,7 +98,9 @@ return [
     'appointment_updated_successfully' => 'Appointment was updated successfully!',
     'appointment_deleted_successfully' => 'Appointment was deleted successfully!',
     'button_edit_appointments' => 'Edit appointments',
+    'button_edit_appointment' => 'Edit appointment',
     'appointments_title' => 'Appointments',
+    'appointment_title' => 'Appointment',
     'button_new_appointment' => 'New appointment',
     'no_appointments_yet' => 'No appointments yet.',
     'field_subject' => 'Subject',
@@ -108,4 +110,7 @@ return [
     'field_time' => 'Time',
     'edit_appointment_title' => 'Edit appointment',
     'button_update_appointment' => 'Update appointment',
+    'caption_next_appointments' => 'Next appointment',
+    'appointment_in_past_notice' => 'This appointment occurs in the past!',
+    'all_appointments' => 'All appointments',
 ];

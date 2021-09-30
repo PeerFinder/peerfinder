@@ -1,6 +1,6 @@
 <x-ui.card title="{{ __('matcher::peergroup.caption_members_list') }}">
     @if ($pg && $pg->getMembers()->count() > 0)
-    <div class="space-y-1 m-2">
+    <div class="p-2 space-y-1 m-2">
         @foreach ($pg->memberships as $membership)
             @if ($membership->user)
             <div class="border p-2 rounded-md @if (auth()->id() == $membership->user_id) border-pf-midorange @endif">

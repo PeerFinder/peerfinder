@@ -11,7 +11,6 @@
             @endcan
 
             @forelse ($appointments as $appointment)
-
             <div class="bg-gray-50 border p-2 rounded-md flex items-center">
                 <div>
                     <div @class(['bg-red-400 border border-red-400 w-10 text-center rounded-md overflow-none shadow-sm', 'bg-gray-400 border-gray-400' => $appointment->isInPast()])>
