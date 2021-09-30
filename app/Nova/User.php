@@ -67,6 +67,10 @@ class User extends Resource
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
+            Text::make('Timezone')
+                ->sortable()
+                ->rules('required', 'timezone'),           
+
             Text::make('Slogan')
                 ->hideFromIndex()
                 ->rules(UserModel::rules()['create']['slogan']),

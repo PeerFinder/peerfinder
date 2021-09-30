@@ -81,6 +81,9 @@ class MatcherServiceProvider extends ServiceProvider
                     $query->where('approved', true);
                 },
                 'bookmarks',
+                'appointments' => function ($query) {
+                    $query->orderBy('date', 'desc')->limit(1);
+                },
             ])->firstOrFail();
         });
 

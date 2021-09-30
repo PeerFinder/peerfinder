@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\Facades\EasyDate;
 use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;

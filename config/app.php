@@ -183,6 +183,7 @@ return [
         App\Providers\AvatarServiceProvider::class,
         Talk\TalkServiceProvider::class,
         Matcher\MatcherServiceProvider::class,
+        App\Providers\EasyDateServiceProvider::class,
     ],
 
     /*
@@ -239,6 +240,7 @@ return [
         'Urler' => App\Helpers\Facades\Urler::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Avatar' => App\Helpers\Facades\Avatar::class,
+        'EasyDate' => App\Helpers\Facades\EasyDate::class,
     ],
 
 ];

@@ -6,7 +6,7 @@
             <div class="flex-1">
                 @if ($subtitle)
                 <h2 class="text-lg font-semibold pb-0 py-2 text-gray-600">{{ $title }}</h2>
-                <h3 class="text-smpb-2 pb-2 text-gray-600">{{ $subtitle }}</h3>
+                <h3 class="text-sm pb-2 text-gray-600">{{ $subtitle }}</h3>
                 @else
                 <h2 class="text-lg font-semibold py-2 text-gray-600">{{ $title }}</h2>
                 @endif

@@ -9,7 +9,7 @@ use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Peergroup;
 
-class PeergroupController extends Controller
+class PeergroupsController extends Controller
 {
     public function index(Request $request)
     {

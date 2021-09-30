@@ -130,4 +130,13 @@ class BookmarkTest extends TestCase
         $response->assertSessionDoesntHaveErrors();
         $this->assertDatabaseMissing('bookmarks', ['peergroup_id' => $pg->id]);
     }
+
+    public function test_bookmark_belongs_to_peergroup()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $bookmark = Bookmark::factory()->forPeergroup($pg)->create();
+
+        $this->assertEquals($pg->id, $bookmark->peergroup()->first()->id);
+    }
 }
