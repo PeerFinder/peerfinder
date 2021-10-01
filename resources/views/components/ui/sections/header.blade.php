@@ -19,8 +19,7 @@
             
             @auth
             <div class="flex-1 flex justify-center">
-                <x-ui.sections.header.button class="bg-pf-darkblue hover:bg-pf-lightblue active:bg-pf-midblue mr-2" href="{{ route('matcher.index') }}">Find group</x-ui.sections.header.button>
-                <x-ui.sections.header.button class="bg-pf-darkblue hover:bg-pf-lightblue active:bg-pf-midblue mr-10" href="{{ route('matcher.create') }}">Start group</x-ui.sections.header.button>
+                <x-ui.sections.header.button class="bg-pf-darkblue hover:bg-pf-lightblue active:bg-pf-midblue mr-2" href="{{ route('matcher.index') }}">Find peers</x-ui.sections.header.button>
             </div>
 
             <div class="flex items-center">

@@ -28,6 +28,15 @@ class PeergroupTest extends TestCase
         $this->assertNotNull($pg->groupname);
     }
 
+    public function test_user_can_list_groups()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory(5)->byUser()->create();
+
+        $response = $this->actingAs($user)->get(route('matcher.index'));
+        $response->assertStatus(200);
+    }
+
     public function test_user_can_create_new_peergroup()
     {
         $user = User::factory()->create();
