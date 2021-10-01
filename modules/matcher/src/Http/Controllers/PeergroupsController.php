@@ -13,7 +13,12 @@ class PeergroupsController extends Controller
 {
     public function index(Request $request)
     {
-        return view('matcher::peergroups.index');
+        $peergroups = Peergroup::with('memberships.user', 'members', 'memberships', 'languages')
+            ->whereOpen(true)
+            ->wherePrivate(false)
+            ->get();
+
+        return view('matcher::peergroups.index', compact('peergroups'));
     }
 
     public function create()

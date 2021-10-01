@@ -6,10 +6,14 @@
             @if ($pg)
             <div class="px-4 sm:p-0">
                 <a href="{{ $pg->getUrl() }}">
-                    <h1 class="text-3xl font-semibold">@if($pg->private)<x-matcher::ui.badge icon="lock-closed" class="bg-yellow-300">{{ __('matcher::peergroup.badge_private') }}</x-matcher::ui.badge> @endif{{ $pg->title }}</h1>
+                    <h1 class="text-3xl font-semibold">
+                        {{ $pg->title }}
+                    </h1>
+                    @if($pg->private)<x-matcher::ui.badge icon="eye-off" class="bg-purple-400 mt-2">{{ __('matcher::peergroup.badge_private') }}</x-matcher::ui.badge>@endif
+                    @if(!$pg->open)<x-matcher::ui.badge icon="lock-closed" class="bg-yellow-400 mt-2">{{ __('matcher::peergroup.badge_closed') }}</x-matcher::ui.badge>@endif
                 </a>
 
-                <div class="mt-4 space-x-5">
+                <div class="mt-7 space-x-5">
                     <x-matcher::ui.user :user="$pg->user" role="{{ __('matcher::peergroup.role_founder') }}" class="inline-flex" />
                 </div>
             </div>

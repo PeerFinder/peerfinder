@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'peergroups_title' => 'Groups',
+    'no_groups_yet' => 'No groups yet.',
+    'number_of_members' => '{1} One member|[2,*] :count members',
     'group_description' => 'About the group',
     'role_founder' => 'Group Founder',
     'detail_begin' => 'Begin',
@@ -113,4 +116,5 @@ return [
     'caption_next_appointments' => 'Next appointment',
     'appointment_in_past_notice' => 'This appointment occurs in the past!',
     'all_appointments' => 'All appointments',
+    'badge_closed' => 'Completed',
 ];

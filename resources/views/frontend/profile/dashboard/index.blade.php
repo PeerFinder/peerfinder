@@ -13,7 +13,7 @@
             <x-ui.card title="{{ __('dashboard/dashboard.owned_groups') }}">
                 <div class="space-y-2 p-2">
                     @forelse ($own_peergroups as $pg)
-                    <x-peergroup.card :pg="$pg" />
+                    <x-matcher::peergroup.card :pg="$pg" />
                     @empty
                     <p class="p-4 text-center">{{ __('dashboard/dashboard.no_owned_groups') }}</p>
                     @endforelse
@@ -27,7 +27,7 @@
             <x-ui.card title="{{ __('dashboard/dashboard.member_in_groups') }}">
                 <div class="space-y-2 p-2">
                     @forelse ($member_peergroups as $pg)
-                    <x-peergroup.card :pg="$pg" />
+                    <x-matcher::peergroup.card :pg="$pg" />
                     @empty
                     <p class="p-4 text-center">{{ __('dashboard/dashboard.no_memberships') }}</p>
                     @endforelse
