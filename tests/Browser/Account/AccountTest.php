@@ -28,7 +28,7 @@ class AccountTest extends DuskTestCase
                     ->visitRoute('account.account.edit')
                     ->type('password', 'password')
                     ->press(__('account/account.button_delete_account'))
-                    ->assertRouteIs('index')
+                    ->assertRouteIs('homepage.show', ['language' => 'en'])
                     ->assertGuest();
         });
     }
