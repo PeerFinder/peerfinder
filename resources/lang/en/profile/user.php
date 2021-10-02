@@ -16,4 +16,5 @@ return [
     'button_register' => 'Sign up',
     'button_login' => 'Sign in',
     'button_send_message' => 'Send Message',
+    'menu_find_peers' => 'Find new peers!',
 ];

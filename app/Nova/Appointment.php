@@ -15,6 +15,8 @@ use Matcher\Models\Appointment as ModelsAppointment;
 
 class Appointment extends Resource
 {
+    public static $group = 'Matcher';
+
     /**
      * The model the resource corresponds to.
      *
