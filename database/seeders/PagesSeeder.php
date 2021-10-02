@@ -37,5 +37,13 @@ class PagesSeeder extends Seeder
             'body_de' => "Inhalt von Impressum",
             'body_en' => "Content of Imprint",
         ]);
+
+        Page::firstOrCreate([
+            'slug' => 'homepage',
+            'title_de' => "Homepage",
+            'title_en' => "Homepage",
+            'body_de' => "Inhalt von Homepage",
+            'body_en' => "Content of Homepage",
+        ]);        
     }
 }

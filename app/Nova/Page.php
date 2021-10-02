@@ -48,9 +48,9 @@ class Page extends Resource
 
             Text::make('Slug')->sortable()->required()->rules('string'),
 
-            Text::make('Title (de)', 'title_de')->required()->hideFromIndex()->rules('string'),
+            Text::make('Title (de)', 'title_de')->required()->rules('string'),
 
-            Text::make('Title (en)', 'title_en')->required()->hideFromIndex()->rules('string'),
+            Text::make('Title (en)', 'title_en')->required()->rules('string'),
 
             Textarea::make('Body (de)', 'body_de')->required()->hideFromIndex()->rules('string'),
 
