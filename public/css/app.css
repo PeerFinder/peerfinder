@@ -1189,6 +1189,9 @@ select {
 .mt-5 {
 	margin-top: 1.25rem;
 }
+.mb-5 {
+	margin-bottom: 1.25rem;
+}
 .ml-2 {
 	margin-left: 0.5rem;
 }
@@ -1200,9 +1203,6 @@ select {
 }
 .mr-3 {
 	margin-right: 0.75rem;
-}
-.mb-5 {
-	margin-bottom: 1.25rem;
 }
 .mr-1 {
 	margin-right: 0.25rem;
@@ -1765,6 +1765,9 @@ select {
 .text-center {
 	text-align: center;
 }
+.align-middle {
+	vertical-align: middle;
+}
 .text-xl {
 	font-size: 1.25rem;
 	line-height: 1.75rem;
@@ -2098,16 +2101,12 @@ select {
 		margin-top: 2.5rem;
 	}
 
-	.sm\:mt-0 {
-		margin-top: 0px;
-	}
-
-	.sm\:mb-5 {
-		margin-bottom: 1.25rem;
-	}
-
 	.sm\:mb-10 {
 		margin-bottom: 2.5rem;
+	}
+
+	.sm\:mt-0 {
+		margin-top: 0px;
 	}
 
 	.sm\:block {
@@ -2154,6 +2153,10 @@ select {
 		grid-template-columns: repeat(10, minmax(0, 1fr));
 	}
 
+	.sm\:flex-row {
+		flex-direction: row;
+	}
+
 	.sm\:items-center {
 		align-items: center;
 	}
@@ -2164,6 +2167,10 @@ select {
 
 	.sm\:justify-center {
 		justify-content: center;
+	}
+
+	.sm\:justify-between {
+		justify-content: space-between;
 	}
 
 	.sm\:gap-5 {
@@ -2180,6 +2187,18 @@ select {
 		--tw-space-y-reverse: 0;
 		margin-top: calc(1.75rem * calc(1 - var(--tw-space-y-reverse)));
 		margin-bottom: calc(1.75rem * var(--tw-space-y-reverse));
+	}
+
+	.sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
+		--tw-space-x-reverse: 0;
+		margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+		margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+	}
+
+	.sm\:space-x-1 > :not([hidden]) ~ :not([hidden]) {
+		--tw-space-x-reverse: 0;
+		margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+		margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 	}
 
 	.sm\:rounded-md {

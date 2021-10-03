@@ -1,6 +1,6 @@
 @props(['pg', 'cancel' => null])
 
-<div class="space-x-2 flex justify-between">
+<div class="space-y-2 sm:space-y-0 sm:space-x-2 flex sm:justify-between flex-col sm:flex-row">
     @if (strlen($slot))
     <x-ui.forms.button {{ $attributes }}>{{ $slot }}</x-ui.forms.button>
     @else

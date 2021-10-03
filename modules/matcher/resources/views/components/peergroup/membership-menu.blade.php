@@ -1,15 +1,14 @@
 <x-ui.card class="p-4 text-center">
     @if ($pg->isMember())
-    <div class="flex items-center justify-between">
-        <div class="text-center flex-1">
+    <div class="flex flex-col sm:flex-row items-center sm:justify-between space-y-5 sm:space-y-0">
+        <div class="text-center sm:flex-1">
             {{ __('matcher::peergroup.notice_member_of_group') }}
         </div>
-        <div class="space-x-1">
+        <div class="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-1">
             <x-ui.forms.button action="inform" tag="a" href="{{ route('matcher.membership.edit', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_edit_membership') }}</x-ui.forms.button>
             <x-ui.forms.button action="destroy" tag="a" href="{{ route('matcher.membership.delete', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.button_leave_group') }}</x-ui.forms.button>
         </div>
     </div>
-    
     @else
         @if ($pg->isPending())
         <x-ui.flash class="bg-yellow-100 p-3 border-t border-b sm:border border-yellow-400 shadow text-center sm:rounded-md">
