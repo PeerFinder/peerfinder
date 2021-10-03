@@ -22,7 +22,7 @@
 
                     <div class="col-span-9 sm:col-span-4">
                         <div class="px-10 pt-10 sm:flex justify-between items-center space-y-5 sm:space-y-0">
-                            <h2 class="text-2xl">{{ $title }}</h2>
+                            <h2 class="font-semibold text-2xl">{{ $title }}</h2>
                             @if (Route::currentRouteNamed(['account.profile.edit', 'account.avatar.edit']))
                             <div>
                                 <x-ui.forms.button tag="a" href="{{ Urler::userProfileUrl($currentUser) }}" target="_blank" action="inform">{{ __('account/account.button_show_profile') }}</x-ui.forms.button>

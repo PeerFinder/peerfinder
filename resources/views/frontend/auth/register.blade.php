@@ -5,7 +5,7 @@
 
             @if (Route::has('register'))
             <p>{{ __('auth.or') }}
-                <x-ui.link href="{{ route('login') }}" class="font-bold">{{ __('auth.sign_in') }}</x-ui.link>
+                <x-ui.link href="{{ route('login') }}" class="font-semibold">{{ __('auth.sign_in') }}</x-ui.link>
             </p>
             @endif
         </x-slot>

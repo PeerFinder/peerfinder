@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Helpers;
+
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Str;
 
 class Urler
@@ -87,5 +89,15 @@ class Urler
     public function userProfileUrl($user)
     {
         return $user->profileUrl();
+    }
+
+    /**
+     * @source: https://gist.github.com/Krato/1c8d71b8688f646a3c9df3501ce341f3 
+     */
+    function versioned_asset($path, $secure = null)
+    {
+        $timestamp = @filemtime(public_path($path)) ?: 0;
+
+        return asset($path, $secure) . '?' . $timestamp;
     }
 }

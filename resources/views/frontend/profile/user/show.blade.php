@@ -15,7 +15,7 @@
             </div>
             <div class="information sm:w-3/4">
                 <div class="p-10 sm:pl-0 sm:pr-10 sm:py-12">
-                    <h1 class="text-3xl font-bold">{{ $user->name }}</h1>
+                    <h1 class="text-3xl font-semibold">{{ $user->name }}</h1>
 
                     @if ($user->slogan)
                     <p class="text-gray-400 mb-4">{{ $user->slogan }}</p>

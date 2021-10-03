@@ -3,7 +3,7 @@
         <x-slot name="title">
             <x-auth.headline>{{ __('auth.reset_your_password') }}</x-auth.headline>
             <p>{{ __('auth.or') }}
-                <x-ui.link href="{{ route('login') }}" class="font-bold">{{ __('auth.sign_in') }}</x-ui.link>
+                <x-ui.link href="{{ route('login') }}" class="font-semibold">{{ __('auth.sign_in') }}</x-ui.link>
             </p>
         </x-slot>
 
