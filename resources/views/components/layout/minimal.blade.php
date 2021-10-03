@@ -4,7 +4,7 @@
 
         <x-ui.status />
 
-        <x-base.container class="mb-10 sm:px-3 min-h-screen">
+        <x-base.container class="sm:px-3 min-h-screen">
             {{ $slot }}
         </x-base.container>
 

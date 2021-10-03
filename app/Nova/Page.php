@@ -52,9 +52,9 @@ class Page extends Resource
 
             Text::make('Title (en)', 'title_en')->required()->rules('string'),
 
-            Textarea::make('Body (de)', 'body_de')->required()->hideFromIndex()->rules('string'),
+            Textarea::make('Body (de)', 'body_de')->required()->hideFromIndex()->rules('string')->rows(15),
 
-            Textarea::make('Body (en)', 'body_en')->required()->hideFromIndex()->rules('string'),            
+            Textarea::make('Body (en)', 'body_en')->required()->hideFromIndex()->rules('string')->rows(15),
         ];
     }
 

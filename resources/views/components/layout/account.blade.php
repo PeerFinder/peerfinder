@@ -4,7 +4,7 @@
 
         <x-ui.status />
 
-        <x-base.container class="mb-10 sm:px-3 pt-10">
+        <x-base.container class="mb-10 sm:px-3 pt-10 min-h-screen">
             <div class="bg-white shadow-sm after:bg-gradient-to-r after:from-yellow-400 after:to-yellow-600 after:h-1 after:block sm:rounded-md overflow-hidden">
 
                 <div class="grid grid-cols-10 sm:grid-cols-5">
