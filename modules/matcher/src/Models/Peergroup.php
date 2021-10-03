@@ -215,7 +215,7 @@ class Peergroup extends Model
     {
         $members = $this->getMembers();
 
-        $owner = $this->user()->first();
+        $owner = $this->user;
 
         $filtered = $members->reject(function ($value, $key) use ($owner) {
             return $value->id == $owner->id;

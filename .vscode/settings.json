@@ -4,5 +4,6 @@
         "conversationable",
         "urler"
     ],
-    "php.suggest.basic": false
+    "php.suggest.basic": false,
+    "cSpell.language": "en,de-DE"
 }
