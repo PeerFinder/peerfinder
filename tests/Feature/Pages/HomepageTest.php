@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Profile;
+namespace Tests\Feature\Pages;
 
 use App\Helpers\Facades\Urler;
 use App\Models\Page;
