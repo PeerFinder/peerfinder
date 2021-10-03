@@ -183,13 +183,9 @@ class Conversation extends Model
      * @param mixed|null $reply Reply Object
      * @return string URL
      */
-    public function getUrl($reply = null)
+    public function getUrl()
     {
-        if ($reply) {
-            return route('talk.show', ['conversation' => $this->identifier, '#reply-' . $reply->identifier]);
-        } else {
-            return route('talk.show', ['conversation' => $this->identifier]);
-        }
+        return route('talk.show', ['conversation' => $this->identifier]);
     }
 
     /**

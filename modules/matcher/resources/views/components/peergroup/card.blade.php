@@ -3,7 +3,7 @@
 <a href="{{ $pg->getUrl() }}" class="border rounded-md block shadow-sm bg-gray-50">
     <div class="">
         <div class="p-4 bg-white rounded-t">
-            <h2 class="font-semibold text-xl inline-flex items-center">@if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1" />@endif{{ $pg->title }}</h2>
+            <h2 class="font-semibold inline-flex items-center">@if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1" />@endif{{ $pg->title }}</h2>
         </div>
         <div>
             <div class="px-4 pb-4 bg-white">

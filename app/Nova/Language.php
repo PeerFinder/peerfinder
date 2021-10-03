@@ -10,6 +10,8 @@ use Matcher\Models\Language as ModelsLanguage;
 
 class Language extends Resource
 {
+    public static $group = 'Matcher';
+    
     /**
      * The model the resource corresponds to.
      *

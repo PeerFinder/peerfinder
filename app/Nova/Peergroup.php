@@ -20,6 +20,8 @@ use Matcher\Models\Peergroup as ModelsPeergroup;
 
 class Peergroup extends Resource
 {
+    public static $group = 'Matcher';
+    
     /**
      * The model the resource corresponds to.
      *

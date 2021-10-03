@@ -5,7 +5,7 @@
 
             @if (Route::has('register'))
             <p>{{ __('auth.or') }}
-                <x-ui.link href="{{ route('login') }}" class="font-bold">{{ __('auth.sign_in') }}</x-ui.link>
+                <x-ui.link href="{{ route('login') }}" class="font-semibold">{{ __('auth.sign_in') }}</x-ui.link>
             </p>
             @endif
         </x-slot>
@@ -24,7 +24,7 @@
                 <x-ui.forms.input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>{{ __('auth.field_password_confirmation') }}</x-ui.forms.input>
             </div>
             <div class="prose">
-                <p>{!! __('auth.accepting_policy', ['terms' => route('info', ['slug' => 'terms-of-service', 'language' => app()->getLocale()]), 'privacy' => route('info', ['slug' => 'privacy-policy', 'language' => app()->getLocale()])]) !!}</p>
+                <p>{!! __('auth.accepting_policy', ['terms' => route('page.show', ['slug' => 'terms-of-service', 'language' => app()->getLocale()]), 'privacy' => route('page.show', ['slug' => 'privacy-policy', 'language' => app()->getLocale()])]) !!}</p>
             </div>
             <div class="text-center">
                 @csrf

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,26 +21,7 @@ Route::get('/logout', function() {
     return redirect('/');
 })->name('logout');
 
-/* TEMP TEMP TEMP TEMP TEMP */
-Route::get('/', function() {
-    return view('frontend.index.index');
-})->name('index');
+Route::get('/pages/{language}/{slug}', [PageController::class, 'show'])->name('page.show');
 
-/* TEMP TEMP TEMP TEMP TEMP */
-
-/* TEMP TEMP TEMP TEMP TEMP */
-Route::get('/secret', function() {
-    return 'Secret';
-})->middleware(['auth', 'password.confirm']);
-
-
-
-/* TEMP TEMP TEMP TEMP TEMP */
-Route::get('/info/{language}/{slug}', function($language, $slug) {
-    return 'Content of '.$slug;
-})->name('info');
-
-/* TEMP TEMP TEMP TEMP TEMP */
-Route::group(['prefix' => '/profile', 'as' => 'profile.', 'middleware' => 'auth'], function () {
-    Route::get('/', fn() => 'Profile')->name('index');
-});
+Route::get('/{language}', [HomepageController::class, 'show'])->where('language', '[a-z]{2}')->name('homepage.show');
+Route::get('/', [HomepageController::class, 'index'])->name('index');

@@ -2,7 +2,7 @@
     <x-base.container class="px-3 flex py-2 items-center">
         <div>
             <a href="{{ Auth::check() ? route('dashboard.index') : route('index') }}" class="flex items-center">
-                <img src="{{ asset('/images/peerfinder_logo.png') }}" srcset="{{ asset('/images/peerfinder_logo@2x.png') }} 2x" class="w-7" />
+                <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="w-7" />
                 <div class="text-2xl ml-2 text-gray-200">{{ config('app.name') }}</div>
             </a>
         </div>
@@ -19,7 +19,7 @@
             
             @auth
             <div class="flex-1 flex justify-center">
-                <x-ui.sections.header.button class="bg-pf-darkblue hover:bg-pf-lightblue active:bg-pf-midblue mr-2" href="{{ route('matcher.index') }}">Find peers</x-ui.sections.header.button>
+                <x-ui.sections.header.button class="bg-pf-darkblue hover:bg-pf-lightblue active:bg-pf-midblue mr-2" href="{{ route('matcher.index') }}">{{ __('profile/user.menu_find_peers') }}</x-ui.sections.header.button>
             </div>
 
             <div class="flex items-center">
@@ -38,7 +38,7 @@
                     </template>
                     <template v-slot:content>
                         <p class="text-sm px-5 pt-4">{{ __('profile/user.signed_in_as') }}</p>
-                        <h2 class="text-xl font-bold px-5 pb-3">{{ $user->name }}</h2>
+                        <h2 class="text-xl font-semibold px-5 pb-3">{{ $user->name }}</h2>
                         <nav class="mb-4">
                             <x-ui.sections.header.nav-item route="dashboard.index">{{ __('profile/user.menu_my_dashboard') }}</x-ui.sections.header.nav-item>
                             <x-ui.sections.header.nav-item route="profile.user.index">{{ __('profile/user.menu_my_profile') }}</x-ui.sections.header.nav-item>

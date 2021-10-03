@@ -12,6 +12,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Conversation extends Resource
 {
+    public static $group = 'Talk';
+
     /**
      * The model the resource corresponds to.
      *

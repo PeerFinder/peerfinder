@@ -129,7 +129,7 @@ class ReplyTest extends TestCase
 
         $this->assertTrue(Talk::userHasUnreadConversations($user2));
 
-        $this->assertEquals(route('talk.show', ['conversation' => $conversation->identifier, '#reply-' . $reply1->identifier]),
+        $this->assertEquals(route('talk.show', ['conversation' => $conversation->identifier]),
                     Talk::dynamicConversationsUrl($user2));
     }
 

@@ -11,6 +11,8 @@ use Matcher\Models\Bookmark as ModelsBookmark;
 
 class Bookmark extends Resource
 {
+    public static $group = 'Matcher';
+    
     /**
      * The model the resource corresponds to.
      *

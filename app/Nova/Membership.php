@@ -11,6 +11,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Membership extends Resource
 {
+    public static $group = 'Matcher';
+    
     /**
      * The model the resource corresponds to.
      *

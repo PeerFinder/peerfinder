@@ -184,6 +184,7 @@ return [
         Talk\TalkServiceProvider::class,
         Matcher\MatcherServiceProvider::class,
         App\Providers\EasyDateServiceProvider::class,
+        App\Providers\PagesServiceProvider::class,
     ],
 
     /*
@@ -241,6 +242,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Avatar' => App\Helpers\Facades\Avatar::class,
         'EasyDate' => App\Helpers\Facades\EasyDate::class,
+        'Pages' => App\Helpers\Facades\Pages::class,
     ],
 
 ];

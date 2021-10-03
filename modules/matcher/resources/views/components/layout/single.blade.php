@@ -1,7 +1,7 @@
 @props(['pg' => null])
 
 <x-layout.minimal :title="$pg ? $pg->title : __('matcher::peergroup.new_peergroup_title')">
-    <div class="mt-5 sm:mt-10 sm:grid sm:grid-cols-10 gap-7">
+    <div class="mt-5 sm:mt-10 mb-5 sm:mb-10 sm:grid sm:grid-cols-10 gap-7">
         <div class="sm:col-span-6 lg:col-span-7">
             @if ($pg)
             <div class="px-4 sm:p-0">
