@@ -10,7 +10,7 @@
                     <div class="flex items-center border p-2 rounded-md shadow-sm bg-gray-50">
                         <div class="flex-1 grid grid-cols-2 gap-2">
                             <div>
-                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.url" name="url[]" type="url" placeholder="{{ __('matcher::peergroup.bookmark_url') }}"  :class="props.item.data.error.url.length && 'border-red-300 bg-red-50'" />
+                                <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.url" name="url[]" type="url" required placeholder="{{ __('matcher::peergroup.bookmark_url') }}" :class="props.item.data.error.url.length && 'border-red-300 bg-red-50'" />
                             </div>
                             <div>
                                 <input class="w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent" v-model="props.item.data.title" name="title[]" type="text" placeholder="{{ __('matcher::peergroup.bookmark_title') }}" :class="props.item.data.error.title.length && 'border-red-300 bg-red-50'" />

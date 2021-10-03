@@ -34,14 +34,19 @@
         }
         @font-face {
             font-family: 'Quicksand';
-            src: url('{{ asset("/fonts/quicksand/Quicksand-Bold.ttf") }}') format('truetype');
-            font-weight: 700;
+            src: url('{{ asset("/fonts/quicksand/Quicksand-Medium.ttf") }}') format('truetype');
+            font-weight: 500;
         }
         @font-face {
             font-family: 'Quicksand';
             src: url('{{ asset("/fonts/quicksand/Quicksand-SemiBold.ttf") }}') format('truetype');
             font-weight: 600;
-        }
+        }     
+        @font-face {
+            font-family: 'Quicksand';
+            src: url('{{ asset("/fonts/quicksand/Quicksand-Bold.ttf") }}') format('truetype');
+            font-weight: 700;
+        }           
     </style>
 </head>
 

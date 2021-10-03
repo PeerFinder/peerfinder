@@ -13,5 +13,7 @@ return [
     'menu_my_account' => 'Mein Konto',
     'menu_logout' => 'Abmelden',
     'button_register' => 'Registrieren',
-    'button_login' => 'Anmelden',    
+    'button_login' => 'Anmelden',
+    'button_send_message' => 'Nachricht schicken',
+    'menu_find_peers' => 'Peers finden!',    
 ];

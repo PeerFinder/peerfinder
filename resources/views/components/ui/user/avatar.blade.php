@@ -1,6 +1,6 @@
 @props(['user', 'size' => 100])
 
-@if ($user->avatar)
+@if ($user->avatar && $user->hasVerifiedEmail())
 <img src="{{ route('account.avatar.show', ['user' => $user->username, 'size' => $size]) }}" srcset="{{ route('account.avatar.show', ['user' => $user->username, 'size' => $size * 2]) }} 2x" alt="{{ $user->name }}" {{ $attributes->merge(['class' => '']) }} width="{{ $size }}" height="{{ $size }}" />
 @else
 <svg xmlns="http://www.w3.org/2000/svg" {{ $attributes->merge(['class' => 'max-w-full h-auto']) }} viewBox="2 2 16 16" fill="currentColor" width="{{ $size }}" height="{{ $size }}">
