@@ -4,6 +4,8 @@ namespace App\Rules;
 
 use App\Helpers\Facades\Urler;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Str;
 
 class UrlerValidUrl implements Rule
 {
@@ -29,6 +31,7 @@ class UrlerValidUrl implements Rule
     public function passes($attribute, $value)
     {
         $this->attribute = $attribute;
+
         return Urler::validate($value);
     }
 
@@ -39,6 +42,8 @@ class UrlerValidUrl implements Rule
      */
     public function message()
     {
-        return __('validation.url', ['attribute' => $this->attribute]);
+        $title = Lang::has('validation.attributes.' . $this->attribute) ? __('validation.attributes.' . $this->attribute) :  Str::ucfirst($this->attribute);
+
+        return __('validation.url', ['attribute' => $title]);
     }
 }

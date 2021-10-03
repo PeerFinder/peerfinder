@@ -108,7 +108,6 @@ return [
     'no_appointments_yet' => 'No appointments yet.',
     'field_subject' => 'Subject',
     'field_details' => 'Details',
-    'field_location' => 'Location',
     'field_date' => 'Date',
     'field_time' => 'Time',
     'edit_appointment_title' => 'Edit appointment',

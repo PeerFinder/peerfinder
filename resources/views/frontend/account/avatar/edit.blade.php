@@ -10,7 +10,7 @@
                 <x-ui.user.avatar :user="$user" size="200" class="inline-block rounded-full" />
             </div>
 
-            <x-account.form :action="route('account.avatar.destroy')" class="space-y-6">
+            <x-account.form :action="route('account.avatar.destroy')" class="space-y-6 text-center">
                 <div>
                     @csrf
                     @method('DELETE')
