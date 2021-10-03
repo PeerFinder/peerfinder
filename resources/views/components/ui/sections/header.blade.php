@@ -2,8 +2,8 @@
     <x-base.container class="px-3 flex py-2 items-center">
         <div>
             <a href="{{ Auth::check() ? route('dashboard.index') : route('index') }}" class="flex items-center">
-                <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="w-7" />
-                <div class="text-2xl ml-2 text-gray-200">{{ config('app.name') }}</div>
+                <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="w-7" alt="{{ config('app.name') }}" />
+                <div class="text-2xl ml-2 text-gray-200 hidden sm:block">{{ config('app.name') }}</div>
             </a>
         </div>
 
