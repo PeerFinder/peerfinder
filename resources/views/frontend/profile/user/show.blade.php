@@ -7,13 +7,9 @@
                         <div class="image">
                             <x-ui.user.avatar :user="$user" class="rounded-full text-gray-400" size="200" />
                         </div>
-                        @if ($user != auth()->user())
-                        <div class="mt-5">
-                            <x-ui.forms.button tag="a" href="{{ route('talk.create.user', ['user' => $user->username]) }}">{{ __('profile/user.button_send_message') }}</x-ui.forms.button>
-                        </div>
-                        @endif
                     </div>
                 </div>
+
                 <div class="information sm:w-3/4">
                     <div class="p-10 sm:pl-0 sm:pr-10 sm:py-12">
                         <x-ui.h1>{{ $user->name }}</x-ui.h1>
@@ -42,9 +38,13 @@
                         @endif
 
                         @if ($user == auth()->user())
-                        <div class="mt-5 space-x-2">
+                        <div class="flex flex-col sm:flex-row mt-5 space-y-2 sm:space-y-0 sm:space-x-2">
                             <x-ui.forms.button tag="a" href="{{ route('account.profile.edit') }}" action="inform">{{ __('profile/user.button_edit_profile') }}</x-ui.forms.button>
                             <x-ui.forms.button tag="a" href="{{ route('account.avatar.edit') }}" action="inform">{{ __('profile/user.button_edit_avatar') }}</x-ui.forms.button>
+                        </div>
+                        @else
+                        <div class="mt-5 flex flex-col sm:flex-row">
+                            <x-ui.forms.button tag="a" href="{{ route('talk.create.user', ['user' => $user->username]) }}">{{ __('profile/user.button_send_message') }}</x-ui.forms.button>
                         </div>
                         @endif
                     </div>

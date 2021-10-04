@@ -1,10 +1,12 @@
 <!-- Auth Card -->
 <div class="content min-h-screen flex items-center justify-center">
-    <div class="sm:max-w-sm w-full flex flex-col space-y-6 mb-12 items-stretch">
+    <div class="sm:max-w-sm w-full flex flex-col space-y-5 mb-12 items-stretch">
         <!-- Branding -->
         <div class="text-center">
-            <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="inline-block w-9 mt-2" />
-            <span class="block text-xl mt-2">{{ config('app.name') }}</span>
+            <a href="{{ route('index') }}" class="inline-flex items-center space-x-2 mt-2">
+                <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="inline-block w-9 mt-2" />
+                <span class="block text-2xl mt-2">{{ config('app.name') }}</span>
+            </a>
         </div>
 
         <!-- Title -->

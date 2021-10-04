@@ -10,17 +10,14 @@
 	<meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="{{ config('app.name') }}">
     <meta name="apple-mobile-web-app-status-bar-style" content="#1F303A">
-    
     <link rel="icon" type="image/png" href="{{ Urler::versioned_asset('/images/favicon-16x16.png') }}" sizes="16x16">
     <link rel="icon" type="image/png" href="{{ Urler::versioned_asset('/images/favicon-32x32.png') }}" sizes="32x32">
     <link rel="icon" type="image/png" href="{{ Urler::versioned_asset('/images/favicon-96x96.png') }}" sizes="96x96">
-
+    <link rel="apple-touch-icon" href="{{ Urler::versioned_asset('/images/apple-touch-icon.png') }}">
 
     <title>{{ $title }} - {{ config('app.name') }}</title>
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <!-- TODO: Favicon -->
-    <!-- TODO: Twitter Card -->
 
     <style>
         @font-face {
