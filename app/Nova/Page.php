@@ -57,7 +57,8 @@ class Page extends Resource
 
             Textarea::make('Body (en)', 'body_en')->required()->hideFromIndex()->rules('string')->rows(15),
 
-            Boolean::make('Markdown'),        ];
+            Boolean::make('Markdown'),
+        ];
     }
 
     /**

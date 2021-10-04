@@ -27,6 +27,7 @@ class PageFactory extends Factory
             'title_en' => $this->faker->text(10),
             'body_de' => $this->faker->text(50),
             'body_en' => $this->faker->text(50),
+            'markdown' => false,
         ];
     }
 }
