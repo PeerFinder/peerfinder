@@ -24,7 +24,12 @@ class Pages
 
         return [
             'title' => $page->$titleField,
-            'body' => $page->$bodyField,
+            'body' => $page->markdown ? $this->markdown($page->$bodyField) : $page->$bodyField,
         ];
+    }
+
+    public function markdown($markdown)
+    {
+        return Str::markdown($markdown);
     }
 }

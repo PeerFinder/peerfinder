@@ -1324,9 +1324,6 @@ select {
 .w-2\/3 {
 	width: 66.666667%;
 }
-.w-auto {
-	width: auto;
-}
 .max-w-5xl {
 	max-width: 64rem;
 }
@@ -1636,10 +1633,6 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(251, 191, 36, var(--tw-bg-opacity));
 }
-.bg-red-500 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
-}
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
@@ -1664,6 +1657,9 @@ select {
 }
 .p-4 {
 	padding: 1rem;
+}
+.p-7 {
+	padding: 1.75rem;
 }
 .p-5 {
 	padding: 1.25rem;
@@ -2135,10 +2131,6 @@ select {
 		width: 75%;
 	}
 
-	.sm\:w-auto {
-		width: auto;
-	}
-
 	.sm\:max-w-sm {
 		max-width: 24rem;
 	}
@@ -2189,6 +2181,12 @@ select {
 		margin-bottom: calc(0px * var(--tw-space-y-reverse));
 	}
 
+	.sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
+		--tw-space-x-reverse: 0;
+		margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+		margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+	}
+
 	.sm\:space-y-7 > :not([hidden]) ~ :not([hidden]) {
 		--tw-space-y-reverse: 0;
 		margin-top: calc(1.75rem * calc(1 - var(--tw-space-y-reverse)));
@@ -2199,12 +2197,6 @@ select {
 		--tw-space-x-reverse: 0;
 		margin-right: calc(0.25rem * var(--tw-space-x-reverse));
 		margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
-	}
-
-	.sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
-		--tw-space-x-reverse: 0;
-		margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-		margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 	}
 
 	.sm\:rounded-md {
