@@ -6,9 +6,9 @@
             @if ($pg)
             <div class="px-4 sm:p-0">
                 <a href="{{ $pg->getUrl() }}">
-                    <h1 class="text-3xl font-semibold">
+                    <x-ui.h1>
                         {{ $pg->title }}
-                    </h1>
+                    </x-ui.h1>
                     @if($pg->private)<x-matcher::ui.badge icon="eye-off" class="bg-purple-400 mt-2">{{ __('matcher::peergroup.badge_private') }}</x-matcher::ui.badge>@endif
                     @if(!$pg->open)<x-matcher::ui.badge icon="lock-closed" class="bg-yellow-400 mt-2">{{ __('matcher::peergroup.badge_closed') }}</x-matcher::ui.badge>@endif
                 </a>
@@ -19,7 +19,7 @@
             </div>
             @else
             <div class="px-4 sm:p-0">
-                <h1 class="text-3xl font-semibold">{{ __('matcher::peergroup.new_peergroup') }}</h1>
+                <x-ui.h1>{{ __('matcher::peergroup.new_peergroup') }}</x-ui.h1>
 
                 <div class="mt-4 space-x-5">
                     <x-matcher::ui.user :user="auth()->user()" role="{{ __('matcher::peergroup.role_founder') }}" class="inline-flex" />
@@ -27,12 +27,12 @@
             </div>
             @endif
 
-            <div class="mt-5 space-y-2 sm:space-y-7">
+            <div class="mt-5 space-y-5 sm:space-y-7">
                 {{ $slot }}
             </div>
         </div>
 
-        <div class="sm:col-span-4 lg:col-span-3 space-y-2 sm:space-y-7 mt-2 sm:mt-0">
+        <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 sm:mt-0">
             <x-matcher::peergroup.next-appointment :pg="$pg" />
             <x-matcher::peergroup.meeting-link :pg="$pg" />
             <x-matcher::peergroup.bookmarks-list :pg="$pg" />

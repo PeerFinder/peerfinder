@@ -5,7 +5,7 @@
         </x-slot>
     
         <div class="mt-5 sm:mt-10">
-            <h1 class="text-3xl font-semibold">{{ $title }}</h1>
+            <x-ui.h1>{{ $title }}</x-ui.h1>
         </div>
     
         <div class="mt-5 bg-white p-4 w-full rounded-md shadow-sm">

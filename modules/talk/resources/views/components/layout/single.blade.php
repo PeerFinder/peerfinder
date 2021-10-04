@@ -1,6 +1,6 @@
 @props(['conversation' => null])
 
-<x-layout.minimal title="{{ $conversation ? $conversation->getTitle() : __('talk::talk.conversations_title') }}">
+<x-layout.minimal title="{{ $conversation ? __('talk::talk.conversation_title', ['title' => $conversation->getTitle()]) : __('talk::talk.conversations_title') }}">
     @if ($conversation)
     <div class="block sm:hidden p-3 bg-gray-50 border-b">
         <x-ui.link class="block text-center" href="{{ route('talk.index') }}">All conversations</x-ui.link>

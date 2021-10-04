@@ -163,6 +163,7 @@ return [
         'second'                => 'Sekunde',
         'sex'                   => 'Geschlecht',
         'size'                  => 'Größe',
+        'slogan'                => 'Slogan',
         'time'                  => 'Uhrzeit',
         'title'                 => 'Titel',
         'username'              => 'Benutzername',

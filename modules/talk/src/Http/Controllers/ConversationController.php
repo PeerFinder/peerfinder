@@ -26,8 +26,12 @@ class ConversationController extends Controller
             return $ret;
         }
 
+        $conversation = new Conversation();
+        $conversation->title = __('talk::talk.start_conversation_with', ['participants' => Talk::usersAsString(Talk::filterUsers([$user]))]);
+
         return view('talk::conversations.create', [
             'participants' => [$user],
+            'conversation' => $conversation,
         ]);
     }
 
