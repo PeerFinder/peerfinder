@@ -4,15 +4,20 @@
     </x-slot>
 
     <div class="mt-5 sm:mt-10 mb-5 sm:mb-10">
-        <div class="flex items-center">
-            <x-ui.user.avatar :user="auth()->user()" size="40" class="rounded-full block mr-2" />
-            <h1 class="text-3xl font-semibold">{{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }}</h1>
+        <div class="sm:flex sm:items-center space-y-2 text-center sm:text-left">
+            <div class="flex-1 inline-flex items-center mr-2">
+                <x-ui.user.avatar :user="auth()->user()" size="40" class="rounded-full block mr-2" />
+                <x-ui.h1>{{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }}</x-ui.h1>
+            </div>
+            <div>
+                <x-ui.forms.button tag="a" href="{{ route('account.profile.edit') }}" action="inform">{{ __('profile/user.button_edit_profile') }}</x-ui.forms.button>
+            </div>
         </div>
 
         <div class="mt-5 sm:mt-10 grid sm:grid-cols-2 gap-2 sm:gap-5">
             <div class="col-span-1">
                 <x-ui.card title="{{ __('dashboard/dashboard.owned_groups') }}">
-                    <div class="space-y-2 p-2">
+                    <div class="space-y-4 p-4">
                         <p class="p-4 py-6 border rounded-md border-dashed text-center">
                             <x-ui.forms.button tag="a" href="{{ route('matcher.create') }}" action="create">{{ __('dashboard/dashboard.button_create_group') }}</x-ui.forms.button>
                         </p>
@@ -26,7 +31,7 @@
             </div>
             <div class="col-span-1">
                 <x-ui.card title="{{ __('dashboard/dashboard.member_in_groups') }}">
-                    <div class="space-y-2 p-2">
+                    <div class="space-y-4 p-4">
                         <p class="p-4 py-6 border rounded-md border-dashed text-center">
                             <x-ui.forms.button tag="a" href="{{ route('matcher.index') }}">{{ __('dashboard/dashboard.button_find_group') }}</x-ui.forms.button>
                         </p>

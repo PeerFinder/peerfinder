@@ -1252,6 +1252,9 @@ select {
 .inline-block {
 	display: inline-block;
 }
+.inline {
+	display: inline;
+}
 .flex {
 	display: flex;
 }
@@ -1381,6 +1384,9 @@ select {
 .gap-7 {
 	gap: 1.75rem;
 }
+.gap-4 {
+	gap: 1rem;
+}
 .space-y-6 > :not([hidden]) ~ :not([hidden]) {
 	--tw-space-y-reverse: 0;
 	margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
@@ -1435,11 +1441,6 @@ select {
 	--tw-space-x-reverse: 0;
 	margin-right: calc(1.5rem * var(--tw-space-x-reverse));
 	margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)));
-}
-.space-x-1 > :not([hidden]) ~ :not([hidden]) {
-	--tw-space-x-reverse: 0;
-	margin-right: calc(0.25rem * var(--tw-space-x-reverse));
-	margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
 }
 .overflow-hidden {
 	overflow: hidden;
@@ -1635,10 +1636,6 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(251, 191, 36, var(--tw-bg-opacity));
 }
-.bg-red-500 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
-}
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
@@ -1764,9 +1761,6 @@ select {
 }
 .text-center {
 	text-align: center;
-}
-.align-middle {
-	vertical-align: middle;
 }
 .text-xl {
 	font-size: 1.25rem;
@@ -2117,6 +2111,10 @@ select {
 		display: flex;
 	}
 
+	.sm\:inline-flex {
+		display: inline-flex;
+	}
+
 	.sm\:grid {
 		display: grid;
 	}
@@ -2189,16 +2187,16 @@ select {
 		margin-bottom: calc(1.75rem * var(--tw-space-y-reverse));
 	}
 
-	.sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
-		--tw-space-x-reverse: 0;
-		margin-right: calc(0.5rem * var(--tw-space-x-reverse));
-		margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
-	}
-
 	.sm\:space-x-1 > :not([hidden]) ~ :not([hidden]) {
 		--tw-space-x-reverse: 0;
 		margin-right: calc(0.25rem * var(--tw-space-x-reverse));
 		margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+	}
+
+	.sm\:space-x-2 > :not([hidden]) ~ :not([hidden]) {
+		--tw-space-x-reverse: 0;
+		margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+		margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 	}
 
 	.sm\:rounded-md {
@@ -2235,12 +2233,26 @@ select {
 		padding-bottom: 3rem;
 	}
 
+	.sm\:px-4 {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
 	.sm\:pl-0 {
 		padding-left: 0px;
 	}
 
 	.sm\:pr-10 {
 		padding-right: 2.5rem;
+	}
+
+	.sm\:text-left {
+		text-align: left;
+	}
+
+	.sm\:text-3xl {
+		font-size: 1.875rem;
+		line-height: 2.25rem;
 	}
 }
 @media (min-width: 1024px) {

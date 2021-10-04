@@ -2,7 +2,7 @@
 
 <x-ui.card class="p-4 mt-5">
     @if ($peergroups->count() > 0)
-        <div class="grid sm:grid-cols-2 gap-2">
+        <div class="grid sm:grid-cols-2 gap-4">
         @foreach ($peergroups as $pg)
             <x-matcher::peergroup.card :pg="$pg" />
         @endforeach

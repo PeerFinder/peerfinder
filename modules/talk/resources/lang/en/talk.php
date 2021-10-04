@@ -2,6 +2,7 @@
 
 return [
     'conversations_title' => 'My conversations',
+    'conversation_title' => 'Conversation with :title',
     'no_conversations_yet' => 'No conversations yet',
     'edit_conversation' => 'Edit conversation',
     'field_title' => 'Title',
