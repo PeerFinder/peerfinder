@@ -2,7 +2,7 @@
     <x-base.container class="mb-5 px-3">
         <footer class="text-center">
             <div class="text-sm">
-                Presented by {{ config('app.name') }}. Made in Hannover with ❤️ by <a href="https://twitter.com/leonidlezner">Leonid Lezner</a>.
+                Presented by {{ config('app.name') }}. Made in Hannover with ❤️
             </div>
     
             <nav class="mt-2 text-center space-x-3 text-sm">

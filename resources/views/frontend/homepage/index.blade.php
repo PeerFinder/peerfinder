@@ -1,7 +1,9 @@
-<x-layout.minimal>
+<x-layout.fullwidth>
     <x-slot name="title">
         {{ $title }}
     </x-slot>
-    
-    {!! $body !!}
-</x-layout.minimal>
+
+    <div class="min-h-screen">
+        {!! $body !!}
+    </div>
+</x-layout.fullwidth>
