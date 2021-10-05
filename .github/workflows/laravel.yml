@@ -29,7 +29,7 @@ jobs:
         php-version: '8.0'
     - uses: actions/checkout@v2
     - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
+      run: php -r "file_exists('.env.testing') || copy('.env.ci', '.env.testing');"
     - name: Set Repository for Laravel Nova
       run: composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
     - name: Install Dependencies
