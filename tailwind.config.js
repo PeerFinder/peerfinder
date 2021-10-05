@@ -7,7 +7,7 @@ module.exports = {
     './modules/**/resources/**/*.blade.php',
     './modules/**/resources/**/*.js.php',
     './modules/**/resources/**/*.vue.php',
-    './public/content/*.html',
+    './public/content/**/*.html',
   ],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
