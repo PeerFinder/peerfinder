@@ -29,13 +29,13 @@ jobs:
         php-version: '8.0'
     - uses: actions/checkout@v2
     - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.ci', '.env');"
+      run: php -r "file_exists('.env') || copy('.env.ci', '.env'); copy('.env', '.env.testing');"
     - name: Set Repository for Laravel Nova
       run: composer config http-basic.nova.laravel.com ${{ secrets.NOVA_USERNAME }} ${{ secrets.NOVA_PASSWORD }}
     - name: Install Dependencies
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
     - name: Generate key
-      run: php artisan key:generate
+      run: php artisan key:generate --env testing && php artisan key:generate
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Run Tests
