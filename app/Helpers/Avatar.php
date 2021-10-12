@@ -71,7 +71,18 @@ class Avatar
         }, 10);
 
         return Response::make($img, 200, array(
-            'Content-Type' => 'image/jpg'
+            'Content-Type' => 'image/jpg',
+            'filename' => 'image.jpg',
         ));
-    }    
+    }
+
+    public function placeholder($size = 0)
+    {
+        $img = Storage::disk('local')->get('media/placeholders/avatar.svg');
+
+        return Response::make($img, 200, array(
+            'Content-Type' => 'image/svg+xml',
+            'filename' => 'placeholder.svg',
+        ));
+    }
 }

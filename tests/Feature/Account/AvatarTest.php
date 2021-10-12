@@ -18,7 +18,7 @@ class AvatarTest extends TestCase
 
     public function test_user_can_render_avatar_view()
     {
-        $user = User::factory()->create();        
+        $user = User::factory()->create();
         $response = $this->actingAs($user)->get(route('account.avatar.edit'));
         $response->assertStatus(200);
         $response->assertViewIs('frontend.account.avatar.edit');
@@ -71,7 +71,7 @@ class AvatarTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
         $this->assertEquals('test.jpg', $user->avatar);
-    }    
+    }
 
     public function test_user_cannot_upload_wrong_file_format()
     {
@@ -109,14 +109,14 @@ class AvatarTest extends TestCase
         $response->assertStatus(302);
         $response->assertSessionHasErrors();
         $this->assertNull($user->avatar);
-    }    
+    }
 
     public function test_user_can_remove_avatar()
     {
         $user = User::factory()->create([
             'avatar' => 'test.jpg'
         ]);
-        
+
         Storage::fake('local');
 
         Storage::disk('local')->put('avatars/test.jpg', "dummy-data");
@@ -133,7 +133,7 @@ class AvatarTest extends TestCase
         $user = User::factory()->create([
             'avatar' => 'test.jpg'
         ]);
-        
+
         Storage::fake('local');
 
         Storage::disk('local')->put('avatars/test.jpg', "dummy-data");
@@ -161,7 +161,7 @@ class AvatarTest extends TestCase
 
         $response->assertSessionHasNoErrors();
 
-        $response = $this->actingAs($user2)->get(route('account.avatar.show', [
+        $response = $this->actingAs($user2)->get(route('media.avatar', [
             'user' => $user->username,
             'size' => 100
         ]));
@@ -169,9 +169,9 @@ class AvatarTest extends TestCase
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'image/jpg');
 
-        $response = $this->actingAs($user2)->get(route('account.avatar.show', [
+        $response = $this->actingAs($user2)->get(route('media.avatar', [
             'user' => $user2->username,
-            'size' => 100            
+            'size' => 100,
         ]));
 
         $response->assertStatus(404);
@@ -183,11 +183,24 @@ class AvatarTest extends TestCase
             'avatar' => 'image.jpg'
         ]);
 
-        $response = $this->actingAs($user)->get(route('account.avatar.show', [
+        $response = $this->actingAs($user)->get(route('media.avatar', [
             'user' => $user->username,
-            'size' => 100            
+            'size' => 100
         ]));
 
         $response->assertStatus(404);
+    }
+
+    public function test_guest_can_download_avatar_placeholder()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->get(route('media.avatar', [
+            'user' => $user->username,
+            'size' => 100
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertHeader('filename', 'placeholder.svg');
     }
 }

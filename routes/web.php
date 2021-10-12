@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::group(['prefix' => 'media', 'as' => 'media.'], function () {
+    Route::get('/avatar/{user}_{size}.jpg', [MediaController::class, 'avatar'])->where('size', '[0-9]+')->name('avatar');
+});
+
 
 Route::get('/logout', function() {
     Auth::logout();
