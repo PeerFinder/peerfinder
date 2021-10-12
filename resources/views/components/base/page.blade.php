@@ -1,3 +1,4 @@
+@props(['twittercard' => null, 'title' => null])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -14,6 +15,8 @@
     <link rel="icon" type="image/png" href="{{ Urler::versioned_asset('/images/favicon-32x32.png') }}" sizes="32x32">
     <link rel="icon" type="image/png" href="{{ Urler::versioned_asset('/images/favicon-96x96.png') }}" sizes="96x96">
     <link rel="apple-touch-icon" href="{{ Urler::versioned_asset('/images/apple-touch-icon.png') }}">
+
+    {{ $twittercard }}
 
     <title>{{ $title }} - {{ config('app.name') }}</title>
 

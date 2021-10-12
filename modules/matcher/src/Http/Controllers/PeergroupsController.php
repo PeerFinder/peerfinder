@@ -34,8 +34,39 @@ class PeergroupsController extends Controller
         return view('matcher::peergroups.create', compact('pg'));
     }
 
+    public function preview(Request $request, $groupname)
+    {
+        $pg = Peergroup::whereGroupname($groupname)
+                ->with([
+                    'user',
+                    'memberships.user',
+                    'memberships' => function ($query) {
+                        $query->where('approved', true);
+                    },
+                ])
+                ->wherePrivate(false)
+                ->firstOrFail();
+
+        if (auth()->check() && Gate::allows('view', $pg)) {
+            return redirect($pg->getUrl());
+        }
+
+        session()->put('url.intended', $pg->getUrl());
+
+        return view('matcher::peergroups.preview', compact('pg'));
+    }
+
     public function show(Request $request, Peergroup $pg)
     {
+        if (auth()->check()) {
+            if (!auth()->user()->hasVerifiedEmail()) {
+                session()->put('url.intended', $pg->getUrl());
+                return redirect(route('verification.notice'));
+            }
+        } else {
+            return redirect(route('matcher.preview', ['groupname' => $pg->groupname]));
+        }
+
         Gate::authorize('view', $pg);
 
         $pending = null;

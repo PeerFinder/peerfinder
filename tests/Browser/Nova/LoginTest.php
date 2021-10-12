@@ -33,7 +33,6 @@ class LoginTest extends DuskTestCase
             $browser->visit(config('nova.path'))
                     ->type('email', $admin->email)
                     ->type('password', 'password')
-                    ->screenshot('entered_data')
                     ->press('Login')
                     ->assertSee('Dashboard');
         });

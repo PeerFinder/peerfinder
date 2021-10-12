@@ -17,17 +17,6 @@ class AvatarController extends Controller
         ]);
     }
 
-    public function show(User $user, Request $request)
-    {
-        $size = filter_var($request->size, FILTER_VALIDATE_INT, [ 'options' => [
-            'default' => config('user.avatar.size_default'),
-            'min_range' => config('user.avatar.size_min'),
-            'max_range' => config('user.avatar.size_max'),
-        ]]);
-
-        return Avatar::forUser($user, $size);
-    }
-
     public function update(Request $request)
     {
         Avatar::setForUser($request->user(), $request);

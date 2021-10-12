@@ -462,4 +462,64 @@ class PeergroupTest extends TestCase
         $this->assertDatabaseMissing('language_peergroup', ['peergroup_id' => $pg->id]);
         $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id]);
     }
+
+    public function test_guest_can_preview_group()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->get(route('matcher.preview', ['groupname' => $pg->groupname]));
+
+        $response->assertStatus(200);
+        $response->assertSee($pg->title);
+    }    
+
+    public function test_guest_cannot_preview_private_group()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create([
+            'private' => true,
+        ]);
+
+        $response = $this->get(route('matcher.preview', ['groupname' => $pg->groupname]));
+
+        $response->assertStatus(404);
+    }
+
+    public function test_user_cannot_preview_group()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->get(route('matcher.preview', ['groupname' => $pg->groupname]));
+
+        $response->assertStatus(302);
+    }
+
+    public function test_guest_gets_redirected_to_preview()
+    {
+        $user = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->get(route('matcher.show', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('matcher.preview', ['groupname' => $pg->groupname]));
+    }
+
+    public function test_unverified_user_gets_redirected_to_verify()
+    {
+        $user = User::factory()->create();
+
+        $user->email_verified_at = null;
+        $user->save();
+
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->get(route('matcher.show', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('verification.notice'));
+    }    
 }

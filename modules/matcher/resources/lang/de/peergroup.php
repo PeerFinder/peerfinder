@@ -116,4 +116,6 @@ return [
     'appointment_in_past_notice' => 'Dieses Treffen fand in der Vergangenheit statt!',
     'all_appointments' => 'Alle Treffen',
     'badge_closed' => 'Geschlossen',
+    'preview_only_visible_for_users' => 'Nur sichtbar für eingeloggte User',
+    'please_login_to_see_details' => 'Bitte anmelden, um alle Gruppeninformationen zu sehen!',
 ];

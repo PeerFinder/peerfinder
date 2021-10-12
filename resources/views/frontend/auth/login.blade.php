@@ -28,7 +28,7 @@
         </x-auth.form>
 
         @if (Route::has('register'))
-        <x-slot name="aftercard">
+        <x-slot name="subcard">
             <div class="p-4 flex justify-between items-center">
                 <div class="flex-1 text-center font-semibold">{{ __('auth.no_account') }}</div>
                 <x-ui.forms.button tag="a" action="create" href="{{ route('register') }}">{{ __('auth.sign_up_new_account') }}</x-ui.forms.button>
