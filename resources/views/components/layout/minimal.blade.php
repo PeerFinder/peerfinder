@@ -1,4 +1,6 @@
-<x-base.page :title="$title">
+@props(['title', 'twittercard' => null])
+
+<x-base.page :title="$title" :twittercard="$twittercard">
     <x-base.app>
         <x-ui.sections.header :user="$currentUser" />
 

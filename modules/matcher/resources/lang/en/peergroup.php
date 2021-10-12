@@ -116,4 +116,6 @@ return [
     'appointment_in_past_notice' => 'This appointment occurs in the past!',
     'all_appointments' => 'All appointments',
     'badge_closed' => 'Completed',
+    'preview_only_visible_for_users' => 'Only visible for logged in users',
+    'please_login_to_see_details' => 'Please login to see all group details!',
 ];

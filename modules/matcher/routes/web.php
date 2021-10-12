@@ -11,8 +11,10 @@ Route::get('/', [PeergroupsController::class, 'index'])->name('index');
 Route::get('/create', [PeergroupsController::class, 'create'])->name('create');
 Route::put('/create', [PeergroupsController::class, 'store'])->name('store');
 
+Route::get('/{pg:groupname}', [PeergroupsController::class, 'show'])->withoutMiddleware(['auth', 'verified'])->name('show');
+Route::get('/{groupname}/preview', [PeergroupsController::class, 'preview'])->withoutMiddleware(['auth', 'verified'])->name('preview');
+
 Route::group(['prefix' => '/{pg:groupname}'], function () {
-    Route::get('/', [PeergroupsController::class, 'show'])->name('show');
     Route::get('/edit', [PeergroupsController::class, 'edit'])->name('edit');
     Route::put('/edit', [PeergroupsController::class, 'update'])->name('update');
     Route::post('/complete', [PeergroupsController::class, 'complete'])->name('complete');

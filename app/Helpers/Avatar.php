@@ -77,7 +77,7 @@ class Avatar
 
     public function placeholder($size = 0)
     {
-        $img = Storage::disk('local')->get('public/media/placeholders/avatar.svg');
+        $img = file_get_contents(resource_path('images/placeholders/avatar.svg'));
 
         return Response::make($img, 200, array(
             'Content-Type' => 'image/svg+xml',
