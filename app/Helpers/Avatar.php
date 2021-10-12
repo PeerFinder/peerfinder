@@ -72,13 +72,12 @@ class Avatar
 
         return Response::make($img, 200, array(
             'Content-Type' => 'image/jpg',
-            'filename' => 'image.jpg',
         ));
     }
 
     public function placeholder($size = 0)
     {
-        $img = Storage::disk('local')->get('media/placeholders/avatar.svg');
+        $img = Storage::disk('local')->get('public/media/placeholders/avatar.svg');
 
         return Response::make($img, 200, array(
             'Content-Type' => 'image/svg+xml',
