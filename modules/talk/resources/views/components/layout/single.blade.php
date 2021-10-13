@@ -3,7 +3,7 @@
 <x-layout.minimal title="{{ $conversation ? __('talk::talk.conversation_title', ['title' => $conversation->getTitle()]) : __('talk::talk.conversations_title') }}">
     @if ($conversation)
     <div class="block sm:hidden p-3 bg-gray-50 border-b">
-        <x-ui.link class="block text-center" href="{{ route('talk.index') }}">All conversations</x-ui.link>
+        <x-ui.link class="block text-center" href="{{ route('talk.index') }}">{{ __('talk::talk.all_conversations_link') }}</x-ui.link>
     </div>
     @endif
 

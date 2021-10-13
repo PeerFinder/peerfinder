@@ -17,4 +17,5 @@ return [
     'select_a_conversation_on_the_left_side' => 'Bitte eine Unterhaltung auf der linken Seite auswählen!',
     'start_conversation_with' => 'Unterhaltung mit :participants beginnen',
     'no_replies_yet' => 'Noch keine Beiträge! Sei die/der Erste!',
+    'all_conversations_link' => 'Alle Unterhaltungen',
 ];
