@@ -27,4 +27,32 @@ class LanguageSelectionTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('<html lang="en">', false);
     }
+
+    public function test_locale_set_from_user_locale()
+    {
+        $user = User::factory()->create([
+            'locale' => 'de',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('profile.user.show', ['user' => $user->username]), [
+            'HTTP_ACCEPT_LANGUAGE' => 'en',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertSee('<html lang="de">', false);
+    }
+
+    public function test_locale_set_from_user_bad_locale()
+    {
+        $user = User::factory()->create([
+            'locale' => 'xy',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('profile.user.show', ['user' => $user->username]), [
+            'HTTP_ACCEPT_LANGUAGE' => 'en',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertSee('<html lang="en">', false);
+    }    
 }

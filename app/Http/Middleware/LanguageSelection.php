@@ -17,9 +17,19 @@ class LanguageSelection
      */
     public function handle(Request $request, Closure $next)
     {
-        $clientLocale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        if (auth()->check()) {
+            $user_locale = auth()->user()->locale;
+            
+            if (!in_array($user_locale, config('app.available_locales'))) {
+                $user_locale = null;
+            }
+        } else {
+            $user_locale = null;
+        }
 
-        if (in_array($clientLocale, ['en', 'de'])) {
+        $clientLocale = $user_locale ?: substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+
+        if (in_array($clientLocale, config('app.available_locales'))) {
             App::setLocale($clientLocale);
         } else {
             App::setLocale(config('app.fallback_locale'));

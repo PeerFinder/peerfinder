@@ -5,6 +5,7 @@ use App\Http\Controllers\Account\EmailController;
 use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AvatarController;
+use App\Http\Controllers\Account\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
@@ -38,5 +39,10 @@ Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         Route::get('/', [AvatarController::class, 'edit'])->name('edit');
         Route::put('/update', [AvatarController::class, 'update'])->name('update');
         Route::delete('/destroy', [AvatarController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
+        Route::get('/', [SettingsController::class, 'edit'])->name('edit');
+        Route::put('/update', [SettingsController::class, 'update'])->name('update');
     });
 });

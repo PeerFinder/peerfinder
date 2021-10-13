@@ -7,6 +7,7 @@ return [
     'menu_email' => 'E-Mail',
     'menu_password' => 'Passwort',
     'menu_account' => 'Konto',
+    'menu_settings' => 'Einstellungen',
     'button_delete_account' => 'Konto löschen',
     'deletion_warning' => 'Dein Konto wird unwiderruflich von unseren Servern gelöscht. Eine Wiederherstellung ist nicht möglich.',
     'confirm_with_password' => 'Um das Konto zu löschen, bitte mit Deinem Passwort bestätigen.',

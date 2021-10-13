@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'twitter_profile',
         'linkedin_profile',
         'xing_profile',
+        'locale',
     ];
 
     protected $attributes = [
