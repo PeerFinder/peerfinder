@@ -13,7 +13,7 @@ class PeergroupsController extends Controller
 {
     public function index(Request $request)
     {
-        $peergroups = Peergroup::with('memberships.user', 'members', 'memberships', 'languages')
+        $peergroups = Peergroup::withDefaults()
             ->whereOpen(true)
             ->wherePrivate(false)
             ->get();
@@ -37,13 +37,7 @@ class PeergroupsController extends Controller
     public function preview(Request $request, $groupname)
     {
         $pg = Peergroup::whereGroupname($groupname)
-                ->with([
-                    'user',
-                    'memberships.user',
-                    'memberships' => function ($query) {
-                        $query->where('approved', true);
-                    },
-                ])
+                ->with(Peergroup::defaultRelationships())
                 ->wherePrivate(false)
                 ->firstOrFail();
 
