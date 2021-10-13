@@ -14,13 +14,11 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        $own_peergroups = $user->peergroups()->with(['members', 'memberships.user', 'languages', 'memberships' => function ($query) {
-            $query->where('approved', true);
-        }])->get();
+        $own_peergroups = $user->peergroups()->with(Peergroup::defaultRelationships())->get();
 
         $memberships = $user->memberships()->where('approved', true)->pluck('peergroup_id');
 
-        $member_peergroups = Peergroup::whereIn('id', $memberships->all())->with(['members', 'memberships.user', 'memberships', 'languages'])->get();
+        $member_peergroups = Peergroup::whereIn('id', $memberships->all())->with(Peergroup::defaultRelationships())->get();
 
         return view('frontend.profile.dashboard.index', compact('own_peergroups', 'member_peergroups'));
     }

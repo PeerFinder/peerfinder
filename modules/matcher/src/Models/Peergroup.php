@@ -56,6 +56,23 @@ class Peergroup extends Model
         ];
     }
 
+    public static function defaultRelationships()
+    {
+        return [
+            'members',
+            'memberships.user',
+            'memberships' => function ($query) {
+                $query->where('approved', true);
+            },
+            'languages',
+        ];
+    }
+
+    public static function withDefaults()
+    {
+        return Peergroup::with(Peergroup::defaultRelationships());
+    }
+
     protected static function boot()
     {
         parent::boot();

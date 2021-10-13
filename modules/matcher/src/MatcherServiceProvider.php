@@ -84,6 +84,7 @@ class MatcherServiceProvider extends ServiceProvider
                 'appointments' => function ($query) {
                     $query->orderBy('date', 'desc')->limit(1);
                 },
+                'languages',
             ])->firstOrFail();
         });
 
