@@ -130,7 +130,9 @@ class PeergroupsController extends Controller
 
         $pg = Matcher::storePeergroupData(null, $request);
 
-        return redirect(route('matcher.membership.create', ['pg' => $pg->groupname]))->with('success', __('matcher::peergroup.peergroup_created_successfully'));
+        Matcher::addOwnerAsMemberToGroup($pg);
+
+        return redirect(route('matcher.show', ['pg' => $pg->groupname]))->with('success', __('matcher::peergroup.peergroup_created_successfully'));
     }
 
     public function update(Request $request, Peergroup $pg)
