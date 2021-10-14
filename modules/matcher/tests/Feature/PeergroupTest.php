@@ -67,10 +67,15 @@ class PeergroupTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertStatus(302);
 
+        $pg = $user->peergroups()->first();
+        $response->assertRedirect($pg->getUrl());
+
         # Unset because languages are a part of language_peergroup table, not peergroups
         unset($data['languages']);
 
         $this->assertDatabaseHas('peergroups', $data);
+
+        $this->assertTrue($pg->isMember($user));
     }
 
 

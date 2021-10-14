@@ -46,6 +46,7 @@ class Matcher
         } else {
             $pg = new Peergroup($input);
             $pg->user()->associate($request->user());
+            $pg->open = true;
             $pg->save();
         }
 
@@ -145,6 +146,15 @@ class Matcher
         $membership->save();
 
         $pg->updateStates();
+
+        return $membership;
+    }
+
+    public function addOwnerAsMemberToGroup(Peergroup $pg)
+    {
+        $input = [];
+
+        $membership = $this->addMemberToGroup($pg, $pg->user, $input);
 
         return $membership;
     }
