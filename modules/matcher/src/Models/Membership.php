@@ -42,8 +42,12 @@ class Membership extends Model
         });
 
         static::created(function ($membership) {
-            if ($membership->approved && $membership->user) {
-                Matcher::afterMemberAdded($membership->peergroup, $membership->user, $membership);
+            if ($membership->user) {
+                if ($membership->approved) {
+                    Matcher::afterMemberAdded($membership->peergroup, $membership->user, $membership);
+                } else {
+                    Matcher::afterUserRequestedToJoin($membership->peergroup, $membership->user, $membership);
+                }
             }
         });
 

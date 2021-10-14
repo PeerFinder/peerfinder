@@ -23,11 +23,17 @@
             </div>
 
             <div class="flex items-center">
-                <div class="mr-5">
+                <div class="mr-5 flex space-x-2">
                     <div class="relative">
-                        <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-gray-400 hover:text-white" /></a>
+                        <a href="{{ route('notifications.index') }}"><x-ui.icon name="bell" class="w-7 h-7 text-gray-300 hover:text-white" /></a>
+                        @if ($user->unreadNotifications->isNotEmpty())
+                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500"></div>
+                        @endif
+                    </div>
+                    <div class="relative">
+                        <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-gray-300 hover:text-white" /></a>
                         @if (Talk::userHasUnreadConversations($user))
-                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-pf-darkorange"></div>
+                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500"></div>
                         @endif
                     </div>
                 </div>

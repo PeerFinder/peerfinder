@@ -13,6 +13,7 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
+use Matcher\Events\UserRequestedToJoin;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
@@ -440,4 +441,22 @@ class MembershipTest extends TestCase
 
         $this->assertDatabaseMissing('memberships', ['user_id' => $user2->id]);
     }
+
+    public function test_event_is_triggered_when_user_requests_to_join()
+    {
+        Event::fake(UserRequestedToJoin::class);
+
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+
+        Event::assertDispatched(UserRequestedToJoin::class, function (UserRequestedToJoin $event) use ($pg, $user2, $m1) {
+            return ($event->pg->id == $pg->id) && ($event->user->id == $user2->id) && ($event->membership->id == $m1->id);
+        });
+    }    
 }

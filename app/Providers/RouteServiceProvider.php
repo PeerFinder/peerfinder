@@ -54,6 +54,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware(['web', 'auth', 'verified'])
                 ->namespace('App\Http\Controllers\Dashboard')
                 ->group(base_path('routes/verified/dashboard.php'));
+
+            Route::middleware(['web', 'auth', 'verified'])
+                ->namespace('App\Http\Controllers\Notifications')
+                ->group(base_path('routes/verified/notifications.php'));
             
             Route::middleware(['web', 'auth', 'verified'])
                 ->namespace('App\Http\Controllers\Profile')

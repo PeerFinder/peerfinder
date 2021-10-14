@@ -10,6 +10,7 @@ use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
 use Matcher\Events\PeergroupCreated;
 use Matcher\Events\PeergroupDeleted;
+use Matcher\Events\UserRequestedToJoin;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Models\Bookmark;
 use Matcher\Models\Peergroup;
@@ -195,6 +196,11 @@ class Matcher
     public function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)
     {
         MemberJoinedPeergroup::dispatch($pg, $user, $membership);
+    }
+
+    public function afterUserRequestedToJoin(Peergroup $pg, User $user, Membership $membership)
+    {
+        UserRequestedToJoin::dispatch($pg, $user, $membership);
     }
 
     public function beforeMemberRemoved(Peergroup $pg, User $user)
