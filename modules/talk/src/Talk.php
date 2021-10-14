@@ -188,8 +188,13 @@ class Talk
     {
         $html = Str::of($raw_message)->markdown([
             'html_input' => 'strip',
+            'renderer' => [
+                'soft_break' => "<br>\n",
+            ]
         ]);
 
-        return nl2br(trim($html));
+        $html = trim($html);
+
+        return $html;
     }
 }

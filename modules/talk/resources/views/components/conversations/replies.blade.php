@@ -1,10 +1,10 @@
 <div class="space-y-4">
     {{ $replies->links('talk::components.ui.pagination') }}
 
-    <div class="space-y-5">
+    <div class="space-y-6">
         @forelse ($replies->reverse() as $reply)
         <div id="reply-{{ $reply->identifier }}">
-            <div class="flex space-x-2">
+            <div class="flex space-x-3">
                 <div>
                     <x-ui.user.avatar :user="$reply->user" size="40" class="rounded-full inline-block" />
                 </div>

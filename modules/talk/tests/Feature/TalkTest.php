@@ -104,5 +104,7 @@ class TalkTest extends TestCase
         $this->assertEquals('<p>Hello</p>', Talk::renderReplyMessage('Hello'));
         $this->assertEquals('<h1>Hello</h1>', Talk::renderReplyMessage('# Hello'));
         $this->assertEquals('<p>Hello</p>', Talk::renderReplyMessage('<strong>Hello</strong>'));
+        $this->assertEquals("<p>A<br>\nB</p>", Talk::renderReplyMessage("A\nB"));
+        $this->assertEquals("<p>A</p>\n<p>B</p>", Talk::renderReplyMessage("A\n\nB"));
     }
 }
