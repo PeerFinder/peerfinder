@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\NewAppointments;
+use App\Nova\Metrics\NewMemberships;
+use App\Nova\Metrics\NewPeergroups;
+use App\Nova\Metrics\NewReplies;
 use App\Nova\Metrics\NewUsers;
 use App\Nova\Metrics\UsersPerDay;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +65,10 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         return [
             new NewUsers,
             new UsersPerDay,
+            new NewPeergroups,
+            new NewMemberships,
+            new NewReplies,
+            new NewAppointments,
         ];
     }
 

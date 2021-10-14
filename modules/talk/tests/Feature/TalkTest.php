@@ -98,4 +98,11 @@ class TalkTest extends TestCase
 
         $this->assertEquals($datetime->format('H:i - d.m.y'), Talk::formatDateTime($datetime2));
     }
+
+    public function test_format_reply_message()
+    {
+        $this->assertEquals('<p>Hello</p>', Talk::renderReplyMessage('Hello'));
+        $this->assertEquals('<h1>Hello</h1>', Talk::renderReplyMessage('# Hello'));
+        $this->assertEquals('<p>Hello</p>', Talk::renderReplyMessage('<strong>Hello</strong>'));
+    }
 }

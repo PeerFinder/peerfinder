@@ -1,22 +1,28 @@
 <div class="space-y-4">
     {{ $replies->links('talk::components.ui.pagination') }}
 
-    @forelse ($replies->reverse() as $reply)
-    <div id="reply-{{ $reply->identifier }}">
-        <div class="flex justify-between mb-1 text-sm">
-            <div class="flex items-center">
-                <x-ui.user.avatar :user="$reply->user" size="20" class="rounded-full inline-block mr-1" />
-                <a class="font-semibold" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }}</a>
+    <div class="space-y-5">
+        @forelse ($replies->reverse() as $reply)
+        <div id="reply-{{ $reply->identifier }}">
+            <div class="flex space-x-2">
+                <div>
+                    <x-ui.user.avatar :user="$reply->user" size="40" class="rounded-full inline-block" />
+                </div>
+                <div class="flex-1">
+                    <div class="space-x-2 text-sm">
+                        <a class="font-semibold inline-block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }}</a>
+                        <span class="inline-block text-xs text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
+                    </div>
+                    <div class="prose prose-purple">
+                        {!! Talk::renderReplyMessage($reply->message) !!}
+                    </div>
+                </div>
             </div>
-            <span class="inline-block mt-1 text-xs text-gray-300">{{ Talk::formatDateTime($reply->created_at) }}</span>
         </div>
-        <div class="border border-gray-200 mb-1 bg-gray-50 rounded-md px-3 py-2 shadow-sm">
-            {{ $reply->message }}
-        </div>
+        @empty
+        <p class="text-center">{{ __('talk::talk.no_replies_yet') }}</p>
+        @endforelse
     </div>
-    @empty
-    <p class="text-center">{{ __('talk::talk.no_replies_yet') }}</p>
-    @endforelse
 
     {{ $replies->links('talk::components.ui.pagination') }}
 </div>
