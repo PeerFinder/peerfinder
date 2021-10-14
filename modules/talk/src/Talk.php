@@ -8,6 +8,7 @@ use Matcher\Models\Peergroup;
 use Talk\Models\Conversation;
 use Talk\Models\Receipt;
 use Talk\Models\Reply;
+use Illuminate\Support\Str;
 
 class Talk
 {
@@ -181,5 +182,14 @@ class Talk
         }
 
         return $datetime->format('H:i - d.m.y');
+    }
+
+    public function renderReplyMessage($raw_message)
+    {
+        $html = Str::of($raw_message)->markdown([
+            'html_input' => 'strip',
+        ]);
+
+        return nl2br(trim($html));
     }
 }
