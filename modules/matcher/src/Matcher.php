@@ -10,6 +10,7 @@ use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
 use Matcher\Events\PeergroupCreated;
 use Matcher\Events\PeergroupDeleted;
+use Matcher\Events\UserApproved;
 use Matcher\Events\UserRequestedToJoin;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Models\Bookmark;
@@ -168,7 +169,7 @@ class Matcher
     public function getPendingMemberships(Peergroup $pg)
     {
         $memberships = Membership::where(['peergroup_id' => $pg->id, 'approved' => false])->with('user')->get()->all();
-        
+
         return $memberships;
     }
 
@@ -196,6 +197,11 @@ class Matcher
     public function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)
     {
         MemberJoinedPeergroup::dispatch($pg, $user, $membership);
+    }
+
+    public function afterUserApproved(Peergroup $pg, User $user, Membership $membership)
+    {
+        UserApproved::dispatch($pg, $user, $membership);
     }
 
     public function afterUserRequestedToJoin(Peergroup $pg, User $user, Membership $membership)
@@ -226,7 +232,7 @@ class Matcher
 
         Bookmark::where('peergroup_id', $pg->id)->delete();
 
-        for($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; $i++) {
             $bookmark = [
                 'peergroup_id' => $pg->id,
                 'url' => $input['url'][$i],

@@ -37,6 +37,7 @@ class Membership extends Model
             $membership->peergroup()->first()->updateStates();
 
             if ($membership->wasChanged('approved') && $membership->approved) {
+                Matcher::afterUserApproved($membership->peergroup()->first(), $membership->user()->first(), $membership);
                 Matcher::afterMemberAdded($membership->peergroup()->first(), $membership->user()->first(), $membership);
             }
         });

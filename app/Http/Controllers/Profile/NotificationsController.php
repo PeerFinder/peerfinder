@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\NewMemberInGroup;
+use App\Notifications\UserApprovedInGroup;
 use App\Notifications\UserRequestsToJoinGroup;
 use Illuminate\Http\Request;
 
@@ -38,6 +39,14 @@ class NotificationsController extends Controller
                     $notification_data = [
                         'title' => __('notifications/notifications.user_requests_to_join_title'),
                         'details' => __('notifications/notifications.user_requests_to_join_details', $notification->data),
+                        'url' => $notification->data['url'],
+                        'by_user' => $by_user,
+                    ];
+                    break;
+                case UserApprovedInGroup::class:
+                    $notification_data = [
+                        'title' => __('notifications/notifications.request_approved_title'),
+                        'details' => __('notifications/notifications.request_approved_details', $notification->data),
                         'url' => $notification->data['url'],
                         'by_user' => $by_user,
                     ];

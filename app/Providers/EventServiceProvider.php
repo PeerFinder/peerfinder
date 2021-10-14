@@ -7,6 +7,7 @@ use App\Listeners\CreateConversationForPeergroup;
 use App\Listeners\DeleteConversationsForPeergroup;
 use App\Listeners\RemoveUserFromConversationWhenLeavingPeergroup;
 use App\Listeners\SendNewMemberNotification;
+use App\Listeners\SendUserApprovedNotification;
 use App\Listeners\SendUserRequestsToJoinGroupNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -16,6 +17,7 @@ use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
 use Matcher\Events\PeergroupCreated;
 use Matcher\Events\PeergroupDeleted;
+use Matcher\Events\UserApproved;
 use Matcher\Events\UserRequestedToJoin;
 
 class EventServiceProvider extends ServiceProvider
@@ -44,6 +46,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserRequestedToJoin::class => [
             SendUserRequestsToJoinGroupNotification::class,
+        ],
+        UserApproved::class => [
+            SendUserApprovedNotification::class,
         ],
     ];
 

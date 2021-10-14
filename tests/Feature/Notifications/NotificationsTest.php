@@ -4,6 +4,7 @@ namespace Tests\Feature\Notifications;
 
 use App\Models\User;
 use App\Notifications\NewMemberInGroup;
+use App\Notifications\UserApprovedInGroup;
 use App\Notifications\UserRequestsToJoinGroup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -63,5 +64,25 @@ class NotificationsTest extends TestCase
         $this->assertEquals(UserRequestsToJoinGroup::class, $notification->type);
         $this->assertEquals($pg->id, $notification->data['peergroup_id']);
         $this->assertEquals($user2->name, $notification->data['user_name']);
+    }
+
+    public function test_notification_generated_when_user_is_approved()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+        $m1->approve();
+
+        $notification = $user2->unreadNotifications()->first();
+        $this->assertNotNull($notification);
+
+        $this->assertEquals(UserApprovedInGroup::class, $notification->type);
+        $this->assertEquals($pg->id, $notification->data['peergroup_id']);
+        $this->assertEquals($user1->name, $notification->data['user_name']);
     }
 }
