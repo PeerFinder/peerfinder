@@ -21,7 +21,7 @@
                             {{ $conv->getTitle() }}
                         </div>
                         @if ($conv->replies->first())
-                        <div class="line-clamp-2 text-sm ml-2">{{ $conv->replies->first()->message }}</div>
+                        <div class="line-clamp-2 text-sm ml-2">{!! Talk::renderReplyMessage($conv->replies->first()->message) !!}</div>
                         @endif
                     </div>
                 </div>
