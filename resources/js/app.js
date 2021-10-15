@@ -5,6 +5,7 @@ import HeaderMenu from './components/HeaderMenu.vue';
 import TimezoneSelect from './components/TimezoneSelect.vue';
 import ConditionalElements from './components/ConditionalElements.vue';
 import EditableList from './components/EditableList.vue';
+import Conversation from './components/Conversation.vue';
 import vClickOutside from "click-outside-vue3";
 
 const app = createApp({
@@ -13,6 +14,7 @@ const app = createApp({
         'timezone-select': TimezoneSelect,
         'conditional-elements': ConditionalElements,
         'editable-list': EditableList,
+        'conversation': Conversation,
     }
 });
 

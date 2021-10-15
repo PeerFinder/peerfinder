@@ -1694,6 +1694,9 @@ select {
 .bg-opacity-10 {
 	--tw-bg-opacity: 0.1;
 }
+.bg-opacity-60 {
+	--tw-bg-opacity: 0.6;
+}
 .bg-gradient-to-b {
 	background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }

@@ -1,4 +1,4 @@
-@props(['new' => false, 'reply' => null, 'conversation' => null, 'action' => null])
+@props(['new' => false, 'reply' => false, 'conversation' => null, 'action' => null])
 
 <x-ui.forms.form :action="$action ?: route('talk.reply.store', ['conversation' => $conversation->identifier])">
 
@@ -18,7 +18,7 @@
         @csrf
         @method('PUT')
         @if ($reply)
-        <input name="reply" type="hidden" value="{{ $reply->identifier }}" />
+        <input name="reply" type="text" v-bind:value="props.reply" />
         @endif
         @if ($new)
         <x-ui.forms.button action="create">{{ __('talk::talk.button_start_conversation') }}</x-ui.forms.button>
