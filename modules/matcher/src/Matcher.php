@@ -18,6 +18,7 @@ use Matcher\Models\Peergroup;
 use Matcher\Models\Language;
 use Matcher\Models\Membership;
 use Matcher\Rules\IsGroupMember;
+use Illuminate\Support\Str;
 
 class Matcher
 {
@@ -242,4 +243,18 @@ class Matcher
             Bookmark::create($bookmark);
         }
     }
+
+    public function renderMarkdown($raw_text)
+    {
+        $html = Str::of($raw_text)->markdown([
+            'html_input' => 'strip',
+            'renderer' => [
+                'soft_break' => "<br>\n",
+            ]
+        ]);
+
+        $html = trim($html);
+
+        return $html;
+    }    
 }

@@ -9,7 +9,7 @@
         <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_languages') }}" icon="translate">{{ $pg->languages->implode('title', ', ') }}</x-matcher::ui.group-detail>
     </div>
 
-    <div class="px-4 pb-4">
-        {{ $pg->description }}
+    <div class="px-4 pt-2 pb-4 prose prose-blue">
+        {!! Matcher::renderMarkdown($pg->description) !!}
     </div>
 </x-ui.card>
