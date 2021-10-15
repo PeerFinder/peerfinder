@@ -153,4 +153,65 @@ class ReplyTest extends TestCase
         $this->assertNotNull($unreadConversation);
         $this->assertEquals($conversation->id, $unreadConversation->id);
     }
+
+    public function test_user_can_store_reply_to_reply()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user2)->create();
+        $conversation->addUser($user1);
+
+        $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+
+        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+            'message' => $this->faker->text(),
+            'reply' => $r1->identifier,
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('replies', ['user_id' => $user1->id, 'reply_id' => $r1->id]);
+    }
+
+    public function test_user_cannot_store_reply_to_reply_for_wrong_conversation()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user2)->create();
+        $conversation2 = Conversation::factory()->byUser($user2)->create();
+
+        $conversation->addUser($user1);
+
+        $r1 = Talk::createReply($conversation2, $user1, ['message' => $this->faker->text()]);
+
+        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+            'message' => $this->faker->text(),
+            'reply' => $r1->identifier,
+        ]);
+
+        $response->assertStatus(404);
+        $this->assertDatabaseMissing('replies', ['reply_id' => $r1->id]);
+    }
+
+    public function test_load_replies_tree()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $conversation = Conversation::factory()->byUser($user1)->create();
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+        $r2 = Talk::createReply($conversation, $user2, ['message' => $this->faker->text()]);
+        $r3 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+        $r2_1 = Talk::createReply($r2, $user1, ['message' => $this->faker->text()]);
+        $r2_2 = Talk::createReply($r2, $user2, ['message' => $this->faker->text()]);
+
+        $tree = Talk::repliesTree($conversation);
+
+        $this->assertEquals($r1->user->id, $tree->get(0)->user->id);
+        $this->assertEquals($r2_2->user->id, $tree->get(1)->replies->get(1)->user->id);
+    }
 }

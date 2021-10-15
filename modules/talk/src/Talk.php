@@ -54,7 +54,7 @@ class Talk
 
         if ($parent instanceof Reply) {
             $conversation = $parent->conversation()->first();
-            $reply->parent()->associate($parent);
+            $reply->reply()->associate($parent);
         }
 
         $reply->conversation()->associate($conversation);
@@ -160,7 +160,7 @@ class Talk
         
         return view('talk::conversations.embedded.show', [
             'conversation' => $conversation,
-            'replies' => $conversation->getReplies(),
+            'replies' => $this->repliesTree($conversation),
         ]);
     }
 
@@ -196,5 +196,36 @@ class Talk
         $html = trim($html);
 
         return $html;
+    }
+
+    private function traverseRepliesTree($replies, $callback)
+    {
+        $replies->each(function($reply) use($callback) {
+            $callback($reply);
+            $this->traverseRepliesTree($reply->replies, $callback);
+        });
+    }
+
+    public function repliesTree(Conversation $conversation)
+    {
+        $user_cache = [];
+
+        $top_replies = $conversation->getReplies();
+
+        $this->traverseRepliesTree($top_replies, function ($reply) use (&$user_cache) {
+            $user_cache[$reply->user_id] = null;
+        });
+
+        $users = User::whereIn('id', array_keys($user_cache))->get();
+
+        $users->each(function($user) use (&$user_cache) {
+            $user_cache[$user->id] = $user;
+        });
+
+        $this->traverseRepliesTree($top_replies, function ($reply) use ($user_cache) {
+            $reply->user = $user_cache[$reply->user_id];
+        });
+
+        return $top_replies;
     }
 }

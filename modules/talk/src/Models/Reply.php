@@ -13,6 +13,8 @@ class Reply extends Model
 {
     use HasFactory;
 
+    protected $touches = ['conversation'];
+
     protected $fillable = [
         'message',
     ];
@@ -47,8 +49,13 @@ class Reply extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function parent()
+    public function reply()
     {
         return $this->belongsTo(Reply::class, 'reply_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class, 'reply_id', 'id')->with(['replies']);
     }
 }

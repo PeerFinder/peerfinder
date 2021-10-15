@@ -17,10 +17,11 @@
     </div>
 
     <div class="p-4">
-        <x-talk::conversations.replies :replies="$replies" />
+        <x-talk::conversations.replies :replies="$replies" :conversation="$conversation" />
     </div>
 
-    <x-ui.forms.form :action="route('talk.reply.store', ['conversation' => $conversation->identifier])" class="p-4 border-t">
-        <x-talk::conversations.reply-form />
-    </x-ui.forms.form>
+    <div class="p-4 border-t">
+        <x-talk::conversations.reply-form :conversation="$conversation" />
+    </div>
+
 </x-talk::layout.single>
