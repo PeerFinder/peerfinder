@@ -152,7 +152,7 @@ class PeergroupTest extends TestCase
         $response = $this->actingAs($user1)->get(route('matcher.show', ['pg' => $pg->groupname]));
 
         $response->assertStatus(200);
-    }    
+    }
 
     public function test_owner_can_edit_peergroup()
     {
@@ -344,7 +344,7 @@ class PeergroupTest extends TestCase
     {
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
-        
+
         $pg = Peergroup::factory()->byUser($user1)->create();
 
         Matcher::addMemberToGroup($pg, $user1);
@@ -353,7 +353,7 @@ class PeergroupTest extends TestCase
         $response = $this->actingAs($user1)->get(route('matcher.editOwner', ['pg' => $pg->groupname]));
 
         $response->assertStatus(200);
-    }    
+    }
 
     public function test_owner_cannot_transfer_the_group_ownership_to_non_member()
     {
@@ -441,7 +441,7 @@ class PeergroupTest extends TestCase
         $language = Language::factory()->create();
 
         $pg->languages()->attach($language);
-        
+
         Matcher::addMemberToGroup($pg, $user);
         Matcher::addMemberToGroup($pg, $user2);
         Matcher::addMemberToGroup($pg, $user3);
@@ -477,7 +477,7 @@ class PeergroupTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee($pg->title);
-    }    
+    }
 
     public function test_guest_cannot_preview_private_group()
     {
@@ -526,5 +526,14 @@ class PeergroupTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect(route('verification.notice'));
-    }    
+    }
+
+    public function test_format_description()
+    {
+        $this->assertEquals('<p>Hello</p>', Matcher::renderMarkdown('Hello'));
+        $this->assertEquals('<h1>Hello</h1>', Matcher::renderMarkdown('# Hello'));
+        $this->assertEquals('<p>Hello</p>', Matcher::renderMarkdown('<strong>Hello</strong>'));
+        $this->assertEquals("<p>A<br>\nB</p>", Matcher::renderMarkdown("A\nB"));
+        $this->assertEquals("<p>A</p>\n<p>B</p>", Matcher::renderMarkdown("A\n\nB"));
+    }
 }
