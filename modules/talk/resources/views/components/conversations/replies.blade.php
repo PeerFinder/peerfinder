@@ -13,7 +13,7 @@
                         <a class="font-semibold inline-block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }}</a>
                         <span class="inline-block text-xs text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
                     </div>
-                    <div class="prose prose-purple">
+                    <div class="prose prose-blue">
                         {!! Talk::renderReplyMessage($reply->message) !!}
                     </div>
                 </div>
