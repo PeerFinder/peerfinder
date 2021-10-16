@@ -17,7 +17,8 @@
     </div>
 
     <div class="p-4">
-        <x-talk::conversations.replies :replies="$replies" :conversation="$conversation" />
+        @include('talk::components.conversations.replies')
+        {{-- <x-talk::conversations.replies :replies="$replies" :conversation="$conversation" /> --}}
     </div>
 
     <div class="p-4 border-t">

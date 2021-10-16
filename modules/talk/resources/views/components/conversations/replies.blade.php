@@ -1,4 +1,4 @@
-@props(['replies', 'reply' => null, 'conversation'])
+{{-- @props(['replies', 'reply' => null, 'conversation']) --}}
 
 <div class="space-y-4">
     {{ $replies->links('talk::components.ui.pagination') }}
@@ -6,7 +6,8 @@
     <conversation>
         <template v-slot:replies="props">
             @forelse ($replies->reverse() as $reply)
-            <x-talk::conversations.reply :reply="$reply" :conversation="$conversation" />
+            @include('talk::components.conversations.reply')
+            {{-- <x-talk::conversations.reply :reply="$reply" :conversation="$conversation" /> --}}
             @empty
             <p class="text-center">{{ __('talk::talk.no_replies_yet') }}</p>
             @endforelse

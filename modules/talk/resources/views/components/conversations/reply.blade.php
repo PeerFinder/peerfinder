@@ -24,7 +24,8 @@
             @if ($reply->replies->count())
             <div class="mt-3 space-y-2 border bg-gray-50 p-2 rounded-md">
                 @foreach ($reply->replies as $sub_reply)
-                <x-talk::conversations.reply :reply="$sub_reply" :conversation="$conversation" />
+                @include('talk::components.conversations.reply', ['reply' => $sub_reply])
+                {{-- <x-talk::conversations.reply :reply="$sub_reply" :conversation="$conversation" /> --}}
                 @endforeach
             </div>
             @endif
