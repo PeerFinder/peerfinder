@@ -75,11 +75,23 @@ class ConversationController extends Controller
 
         $unread = $conversation->markAsRead();
 
-        return view('talk::conversations.show', [
+        $view = view('talk::conversations.show', [
             'conversation' => $conversation,
             'replies' => Talk::repliesTree($conversation),
             'unread' => $unread,
         ]);
+
+        #$start = microtime(true);
+        #$view->render();
+        #$time_elapsed_secs = microtime(true) - $start;
+        #dd($time_elapsed_secs * 1000);
+
+        return $view;
+    }
+
+    public function repliesJson(Request $request, Conversation $conversation)
+    {
+        return response()->json(['a' => 'b']);
     }
 
     public function edit(Conversation $conversation, Request $request)
