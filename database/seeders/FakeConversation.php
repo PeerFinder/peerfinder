@@ -45,6 +45,12 @@ class FakeConversation extends Seeder
 
         $r3_1 = Talk::createReply($r3, $user1, ['message' => $this->faker->text()]);
 
+        for ($i=0; $i < 10; $i++) { 
+            $r = Talk::createReply($r3, $user1, ['message' => $this->faker->text()]);
+            $r = Talk::createReply($r, $user2, ['message' => $this->faker->text()]);
+            $r = Talk::createReply($r, $user3, ['message' => $this->faker->text()]);
+        }
+
 
         dump($conversation->identifier);
     }
