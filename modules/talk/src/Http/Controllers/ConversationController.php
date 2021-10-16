@@ -89,11 +89,6 @@ class ConversationController extends Controller
         return $view;
     }
 
-    public function repliesJson(Request $request, Conversation $conversation)
-    {
-        return response()->json(['a' => 'b']);
-    }
-
     public function edit(Conversation $conversation, Request $request)
     {
         Gate::authorize('edit', $conversation);
