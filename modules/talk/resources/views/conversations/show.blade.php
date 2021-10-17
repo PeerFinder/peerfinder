@@ -17,12 +17,10 @@
     </div>
 
     <div class="p-4">
-        @include('talk::components.conversations.replies')
-        {{-- <x-talk::conversations.replies :replies="$replies" :conversation="$conversation" /> --}}
+        @include('talk::partials.replies')
     </div>
 
     <div class="p-4 border-t">
         <x-talk::conversations.reply-form :conversation="$conversation" />
     </div>
-
 </x-talk::layout.single>

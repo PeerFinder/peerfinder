@@ -6,7 +6,7 @@
     <conversation>
         <template v-slot:replies="props">
             @forelse ($replies->reverse() as $reply)
-            @include('talk::components.conversations.reply')
+            @include('talk::partials.reply')
             {{-- <x-talk::conversations.reply :reply="$reply" :conversation="$conversation" /> --}}
             @empty
             <p class="text-center">{{ __('talk::talk.no_replies_yet') }}</p>

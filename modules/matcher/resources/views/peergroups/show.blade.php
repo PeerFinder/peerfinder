@@ -1,9 +1,6 @@
 <x-matcher::layout.single :pg="$pg">
-    <x-matcher::peergroup.pending-list :pending="$pending" :pg="$pg" />
-
-    <x-matcher::peergroup.membership-menu :pg="$pg" />
-    
-    <x-matcher::peergroup.group-description :pg="$pg" />
-
-    <x-matcher::peergroup.conversations :pg="$pg" :conversations="$conversations" />
+    @include('matcher::partials.pending-list')
+    @include('matcher::partials.membership-menu')
+    @include('matcher::partials.group-description')
+    @include('matcher::partials.conversations')
 </x-matcher::layout.single>

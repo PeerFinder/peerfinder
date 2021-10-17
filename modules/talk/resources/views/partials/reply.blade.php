@@ -2,9 +2,9 @@
     <div class="flex space-x-3">
         <div>
             @if ($reply->reply_id)
-            <x-ui.user.avatar :user="$reply->user" size="30" class="rounded-full inline-block" />
+                @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => 30]) 
             @else
-            <x-ui.user.avatar :user="$reply->user" size="40" class="rounded-full inline-block" />
+                @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => 40]) 
             @endif
         </div>
         <div class="flex-1">
@@ -24,8 +24,7 @@
             @if ($reply->replies->count())
             <div class="mt-3 space-y-2 border bg-gray-50 p-2 rounded-md">
                 @foreach ($reply->replies as $sub_reply)
-                @include('talk::components.conversations.reply', ['reply' => $sub_reply])
-                {{-- <x-talk::conversations.reply :reply="$sub_reply" :conversation="$conversation" /> --}}
+                    @include('talk::partials.reply', ['reply' => $sub_reply])
                 @endforeach
             </div>
             @endif
