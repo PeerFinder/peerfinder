@@ -24,7 +24,8 @@ class FakeConversation extends Seeder
         $user1 = User::factory()->create();
         $user2 = User::whereEmail('twols@me.com')->first();
         $user3 = User::factory()->create();
-        $conversation = Conversation::factory()->byUser($user1)->create(); #Conversation::whereIdentifier('2448ff5c-89d2-4df8-928a-f99ad2385ae0')->first(); 
+        #$conversation = Conversation::whereIdentifier('2448ff5c-89d2-4df8-928a-f99ad2385ae0')->first(); 
+        $conversation = Conversation::factory()->byUser($user1)->create();
         $conversation->addUser($user1);
         $conversation->addUser($user2);
         $conversation->addUser($user3);

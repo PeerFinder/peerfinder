@@ -1,12 +1,9 @@
 <div id="reply-{{ $reply->identifier }}">
     <div class="flex space-x-3">
         <div>
-            @if ($reply->reply_id)
-                @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => 30]) 
-            @else
-                @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => 40]) 
-            @endif
+            @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40]) 
         </div>
+        
         <div class="flex-1">
             <div class="space-x-2 text-sm">
                 <a class="font-semibold inline-block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }}</a>
