@@ -14,10 +14,10 @@
                 {!! Talk::renderReplyMessage($reply->message) !!}
             </div>
 
-            <div class="mt-1">
-                <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block px-2 bg-gray-100 rounded-md hover:bg-pf-midblue hover:text-white">Reply</a>
+            <div class="edit-bar mt-1">
+                <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block text-pf-midblue hover:text-pf-lightblue">Reply</a>
             </div>
-
+            
             @if ($reply->replies->count())
             <div class="mt-3 space-y-2 border bg-gray-50 p-2 rounded-md">
                 @foreach ($reply->replies as $sub_reply)

@@ -18,7 +18,7 @@
         @csrf
         @method('PUT')
         @if ($reply)
-        <input name="reply" type="text" v-bind:value="props.reply" />
+        <input name="reply" type="hidden" v-bind:value="props.reply" />
         @endif
         @if ($new)
         <x-ui.forms.button action="create">{{ __('talk::talk.button_start_conversation') }}</x-ui.forms.button>

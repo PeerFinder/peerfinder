@@ -1,22 +1,31 @@
 <template>
     <div class="space-y-6">
-        <slot name="replies" :actionReply="reply"></slot>
-        <slot name="reply-form" :reply="replyId"></slot>
-
+        <slot name="replies" :actionReply="reply" :reply="replyId"></slot>
+        <teleport :to="'#reply-' + replyId + ' .edit-bar'" v-if="replyId">
+            <slot name="reply-form" :reply="replyId"></slot>
+        </teleport>
     </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 export default {
-    setup() {
+    props: {
+        reply: String,
+    },
+    setup(props) {
         const replyId = ref();
 
         function reply(identifier) {
-            console.log('Reply: ' + identifier);
             replyId.value = identifier;
         }
+
+        onMounted(() => {
+            if (props.reply) {
+                reply(props.reply);
+            }
+        });
 
         return {
             replyId,
