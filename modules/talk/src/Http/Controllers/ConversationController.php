@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Talk\Facades\Talk;
 use Talk\Models\Conversation;
 use Talk\Models\Receipt;
+use Talk\Models\Reply;
 
 class ConversationController extends Controller
 {
@@ -52,7 +53,16 @@ class ConversationController extends Controller
     {
         Gate::authorize('view', $conversation);
 
-        $reply = Talk::createReply($conversation, auth()->user(), $request->all());
+        $input = $request->input();
+
+        if (key_exists('reply', $input)) {
+            $parent = Reply::whereIdentifier($input['reply'])
+                                ->whereConversationId($conversation->id)->firstOrFail();
+        } else {
+            $parent = $conversation;
+        }
+
+        Talk::createReply($parent, auth()->user(), $input);
 
         return redirect()->back()->with('success', __('talk::talk.reply_posted_successfully'));
     }
@@ -65,11 +75,18 @@ class ConversationController extends Controller
 
         $unread = $conversation->markAsRead();
 
-        return view('talk::conversations.show', [
+        $view = view('talk::conversations.show', [
             'conversation' => $conversation,
-            'replies' => $conversation->getReplies(),
+            'replies' => Talk::repliesTree($conversation),
             'unread' => $unread,
         ]);
+
+        #$start = microtime(true);
+        #$view->render();
+        #$time_elapsed_secs = microtime(true) - $start;
+        #dd($time_elapsed_secs * 1000);
+
+        return $view;
     }
 
     public function edit(Conversation $conversation, Request $request)

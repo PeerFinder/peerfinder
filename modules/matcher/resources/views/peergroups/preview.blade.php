@@ -49,7 +49,7 @@
         </div>
 
         <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 sm:mt-0">
-            <x-matcher::peergroup.members-list :pg="$pg" anonymous="true" />
+            @include('matcher::partials.members-list', ['anonymous' =>  true])
         </div>
     </div>
 </x-layout.minimal>

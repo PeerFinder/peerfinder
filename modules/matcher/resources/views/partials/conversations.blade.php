@@ -1,5 +1,3 @@
-@props(['conversations'])
-
 @if ($conversations)
     <x-ui.card title="{{ __('matcher::peergroup.caption_conversations') }}">
     @forelse ($conversations as $conversation)

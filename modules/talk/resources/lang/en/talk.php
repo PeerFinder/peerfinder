@@ -13,9 +13,11 @@ return [
     'button_send_reply' => 'Reply',
     'button_save_conversation' => 'Save',
     'field_message' => 'Post',
+    'field_reply' => 'Reply',
     'no_conversation_selected' => 'No conversation selected',
     'select_a_conversation_on_the_left_side' => 'Select a conversation on the left side!',
     'start_conversation_with' => 'Start conversation with :participants',
     'no_replies_yet' => 'No posts yet. Be the first one!',
     'all_conversations_link' => 'All conversations',
+    'button_reply_to_reply' => 'Reply',
 ];

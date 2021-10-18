@@ -85,4 +85,26 @@ class NotificationsTest extends TestCase
         $this->assertEquals($pg->id, $notification->data['peergroup_id']);
         $this->assertEquals($user1->name, $notification->data['user_name']);
     }
+
+    public function test_user_can_show_notifications()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+        $m1->approve();
+
+        $response = $this->actingAs($user1)->get(route('notifications.index'));
+        $response->assertStatus(200);
+        $response->assertSee(__('notifications/notifications.new_member_in_group_details', ['user_name' => $user2->name, 'title' => $pg->title]));
+        $response->assertSee(__('notifications/notifications.user_requests_to_join_details', ['user_name' => $user2->name, 'title' => $pg->title]));
+
+        $response = $this->actingAs($user2)->get(route('notifications.index'));
+        $response->assertStatus(200);
+        $response->assertSee(__('notifications/notifications.request_approved_details', ['user_name' => $user1->name, 'title' => $pg->title]));
+    }
 }

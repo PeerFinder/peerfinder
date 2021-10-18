@@ -13,7 +13,7 @@
                 @endif
                 <div class="p-2 flex items-center" >
                     <div class="w-10 h-10 flex-none relative">
-                        <x-talk::conversations.avatars :users="Talk::filterUsersForConversation($conv)" />
+                        @include('talk::partials.avatars', ['users' => Talk::filterUsersForConversation($conv)])
                     </div>
                     <div class="flex-1">
                         <div class="line-clamp-1 font-semibold ml-2">

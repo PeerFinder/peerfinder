@@ -148,7 +148,8 @@ class Conversation extends Model
     public function getReplies()
     {
         return Reply::where('conversation_id', $this->id)
-                    ->with('user')
+                    ->where('reply_id', null)
+                    ->with(['replies'])
                     ->orderBy('created_at', 'desc')
                     ->paginate(config('talk.replies_per_page', 20), '*', 'page');
     }
