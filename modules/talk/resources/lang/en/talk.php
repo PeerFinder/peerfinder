@@ -19,4 +19,5 @@ return [
     'start_conversation_with' => 'Start conversation with :participants',
     'no_replies_yet' => 'No posts yet. Be the first one!',
     'all_conversations_link' => 'All conversations',
+    'button_reply_to_reply' => 'Reply',
 ];

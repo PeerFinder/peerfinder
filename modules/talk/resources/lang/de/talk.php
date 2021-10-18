@@ -18,4 +18,5 @@ return [
     'start_conversation_with' => 'Unterhaltung mit :participants beginnen',
     'no_replies_yet' => 'Noch keine Beiträge! Sei die/der Erste!',
     'all_conversations_link' => 'Alle Unterhaltungen',
+    'button_reply_to_reply' => 'Antworten',
 ];

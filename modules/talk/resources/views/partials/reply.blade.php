@@ -15,7 +15,7 @@
             </div>
 
             <div class="edit-bar mt-1">
-                <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block text-pf-midblue hover:text-pf-lightblue">Reply</a>
+                <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block text-pf-midblue hover:text-pf-lightblue">{{ __('talk::talk.button_reply_to_reply') }}</a>
             </div>
             
             @if ($reply->replies->count())
