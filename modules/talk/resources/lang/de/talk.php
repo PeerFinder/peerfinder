@@ -13,6 +13,7 @@ return [
     'button_send_reply' => 'Antworten',
     'button_save_conversation' => 'Unterhaltung ändern',
     'field_message' => 'Beitrag',
+    'field_reply' => 'Antwort',
     'no_conversation_selected' => 'Keine Unterhaltung ausgewählt.',
     'select_a_conversation_on_the_left_side' => 'Bitte eine Unterhaltung auf der linken Seite auswählen!',
     'start_conversation_with' => 'Unterhaltung mit :participants beginnen',

@@ -25,7 +25,7 @@ class ConversationsList extends Component
                 $query->where('user_id', $this->user->id);
             }, 
             'replies' => function ($query) {
-                $query->where('reply_id', null)->orderBy('updated_at', 'desc');
+                $query->orderBy('created_at', 'desc');
             },
             'conversationable',
         ])->orderBy('updated_at', 'desc')->get();

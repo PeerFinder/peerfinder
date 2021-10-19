@@ -33,7 +33,7 @@ class UserRequestsToJoinGroup extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'mail'];
     }
 
     /**
@@ -45,9 +45,11 @@ class UserRequestsToJoinGroup extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->greeting(__('mail/general.greeting'))
+                    ->subject(__('mail/peergroup.subject_user_wants_to_join_group', ['user_name' => $this->user->name]))
+                    ->line(__('mail/peergroup.notification_user_wants_to_join_group', ['user_name' => $this->user->name, 'title' => $this->pg->title]))
+                    ->action(__('mail/peergroup.button_show_request'), $this->pg->getUrl())
+                    ->line(__('mail/general.thank_you_for_using'));
     }
 
     /**

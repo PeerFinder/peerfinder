@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\Facades\Avatar;
 use App\Helpers\Facades\Urler;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +14,7 @@ use Matcher\Traits\UserPeergroups;
 use Talk\Facades\Talk;
 use Talk\Traits\UserConversations;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
     use HasFactory, Notifiable, UserConversations, UserPeergroups;
 
@@ -61,7 +62,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public static function rules() {
+    public static function rules()
+    {
         $updateRules = [
             'name' => ['required', 'string', 'max:255'],
             'slogan' => ['nullable', 'string', 'max:255'],
@@ -98,5 +100,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function profileUrl()
     {
         return route('profile.user.show', ['user' => $this->username]);
+    }
+
+    public function preferredLocale()
+    {
+        return $this->locale;
     }
 }
