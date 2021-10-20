@@ -3,6 +3,7 @@
 namespace Talk;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Models\Peergroup;
 use Talk\Models\Conversation;
@@ -42,24 +43,20 @@ class Talk
         return implode(", ", array_map(fn ($user) => $user->name, $users));
     }
 
-    public function createReply($parent, User $user, $input)
+    public function createReply(Conversation $conversation, User $user, $input)
     {
         Validator::make($input, Reply::rules()['create'])->validate();
 
         $reply = new Reply();
 
-        if ($parent instanceof Conversation) {
-            $conversation = $parent;
-        }
-
-        if ($parent instanceof Reply) {
-            $conversation = $parent->conversation()->first();
+        if (key_exists('reply', $input)) {
+            $parent = Reply::whereIdentifier($input['reply'])->whereConversationId($conversation->id)->firstOrFail();
             $reply->reply()->associate($parent);
         }
 
         $reply->conversation()->associate($conversation);
         $reply->user()->associate($user);
-        $reply->message = $input['message'];
+        $reply->message = key_exists('reply_message', $input) ? $input['reply_message'] : $input['message'];
         $reply->save();
 
         $conversation->touch();
@@ -114,6 +111,7 @@ class Talk
 
         $user->replies()->each(function ($reply) {
             $reply->delete();
+            #TODO: Delete children replies
         });
 
         $user->participated_conversations()->detach();
@@ -157,10 +155,13 @@ class Talk
     public function embedConversation(Conversation $conversation)
     {
         $conversation->markAsRead();
-        
+
+        $last_reply = $conversation->replies()->orderByDesc('created_at')->first('identifier');
+
         return view('talk::conversations.embedded.show', [
             'conversation' => $conversation,
             'replies' => $this->repliesTree($conversation),
+            'highlighted_reply' => $last_reply ? $last_reply->identifier : null,
         ]);
     }
 
@@ -168,8 +169,7 @@ class Talk
     {
         if ($this->userHasUnreadConversations($user)) {
             $conversation = $this->getRecentUnreadConversationForUser($user);
-            $reply = $user->receipts->first()->reply;
-            return $conversation->getUrl($reply);
+            return $conversation->getUrl();
         } else {
             return route('talk.index');
         }

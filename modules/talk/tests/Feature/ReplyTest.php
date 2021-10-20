@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Talk\Models\Conversation;
 use Illuminate\Support\Str;
+use Matcher\Models\Peergroup;
 use Talk\Facades\Talk;
 use Talk\Models\Receipt;
 use Tests\TestCase;
@@ -35,6 +36,7 @@ class ReplyTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
+
         $this->assertDatabaseHas('replies', ['user_id' => $user1->id]);
     }
 
@@ -107,7 +109,7 @@ class ReplyTest extends TestCase
         $conversation->addUser($user2);
 
         $reply1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
-        $reply2 = Talk::createReply($reply1, $user1, ['message' => $this->faker->text()]);
+        $reply2 = Talk::createReply($conversation, $user1, ['reply_message' => $this->faker->text(), 'reply' => $reply1->identifier]);
 
         $this->assertDatabaseHas('replies', ['reply_id' => $reply1->id]);
     }
@@ -129,8 +131,7 @@ class ReplyTest extends TestCase
 
         $this->assertTrue(Talk::userHasUnreadConversations($user2));
 
-        $this->assertEquals(route('talk.show', ['conversation' => $conversation->identifier]),
-                    Talk::dynamicConversationsUrl($user2));
+        $this->assertEquals(route('talk.show', ['conversation' => $conversation->identifier]), Talk::dynamicConversationsUrl($user2));
     }
 
     public function test_get_unread_conversations_for_user()
@@ -165,7 +166,7 @@ class ReplyTest extends TestCase
         $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
 
         $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
-            'message' => $this->faker->text(),
+            'reply_message' => $this->faker->text(),
             'reply' => $r1->identifier,
         ]);
 
@@ -187,7 +188,7 @@ class ReplyTest extends TestCase
         $r1 = Talk::createReply($conversation2, $user1, ['message' => $this->faker->text()]);
 
         $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
-            'message' => $this->faker->text(),
+            'reply_message' => $this->faker->text(),
             'reply' => $r1->identifier,
         ]);
 
@@ -206,8 +207,8 @@ class ReplyTest extends TestCase
         $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
         $r2 = Talk::createReply($conversation, $user2, ['message' => $this->faker->text()]);
         $r3 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
-        $r2_1 = Talk::createReply($r2, $user1, ['message' => $this->faker->text()]);
-        $r2_2 = Talk::createReply($r2, $user2, ['message' => $this->faker->text()]);
+        $r2_1 = Talk::createReply($conversation, $user1, ['reply_message' => $this->faker->text(), 'reply' => $r2->identifier]);
+        $r2_2 = Talk::createReply($conversation, $user2, ['reply_message' => $this->faker->text(), 'reply' => $r2->identifier]);
 
         $tree = Talk::repliesTree($conversation);
 

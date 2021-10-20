@@ -2,6 +2,7 @@
 
 namespace Talk\Http\Controllers;
 
+use App\Helpers\Facades\Urler;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Gate;
@@ -55,14 +56,7 @@ class ConversationController extends Controller
 
         $input = $request->input();
 
-        if (key_exists('reply', $input)) {
-            $parent = Reply::whereIdentifier($input['reply'])
-                                ->whereConversationId($conversation->id)->firstOrFail();
-        } else {
-            $parent = $conversation;
-        }
-
-        Talk::createReply($parent, auth()->user(), $input);
+        Talk::createReply($conversation, auth()->user(), $input);
 
         return redirect()->back()->with('success', __('talk::talk.reply_posted_successfully'));
     }
@@ -75,16 +69,14 @@ class ConversationController extends Controller
 
         $unread = $conversation->markAsRead();
 
+        $last_reply = $conversation->replies()->orderByDesc('created_at')->first('identifier');
+
         $view = view('talk::conversations.show', [
             'conversation' => $conversation,
             'replies' => Talk::repliesTree($conversation),
             'unread' => $unread,
+            'highlighted_reply' => $last_reply ? $last_reply->identifier : null,
         ]);
-
-        #$start = microtime(true);
-        #$view->render();
-        #$time_elapsed_secs = microtime(true) - $start;
-        #dd($time_elapsed_secs * 1000);
 
         return $view;
     }

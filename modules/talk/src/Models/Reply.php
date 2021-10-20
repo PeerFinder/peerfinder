@@ -21,7 +21,9 @@ class Reply extends Model
 
     public static function rules() {
         $updateRules = [
-            'message' => ['required', 'string', 'max:1000'],
+            'reply' => ['nullable', 'uuid'],
+            'message' => ['required_without:reply', 'string', 'max:1000'],
+            'reply_message' => ['required_with:reply', 'string', 'max:1000'],
         ];
 
         return [

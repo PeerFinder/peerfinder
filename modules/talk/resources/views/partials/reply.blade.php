@@ -1,5 +1,5 @@
 <div id="reply-{{ $reply->identifier }}">
-    <div class="flex space-x-3">
+    <div @class(["flex space-x-3", $highlighted_reply == $reply->identifier ? "bg-yellow-100 border border-yellow-200 p-2 rounded-md" : ""])>
         <div>
             @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40]) 
         </div>
