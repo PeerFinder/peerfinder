@@ -5,13 +5,11 @@
     <x-ui.errors :errors="$errors" class="p-3 mb-2" />
 
     <div>
-        <x-ui.forms.textarea id="message" value="{{ old('message') }}" name="message" rows="3" required>
-            @if ($reply)
-            {{ __('talk::talk.field_reply') }}
-            @else
-            {{ __('talk::talk.field_message') }}
-            @endif
-        </x-ui.forms.textarea>
+        @if ($reply)
+        <x-ui.forms.textarea id="reply_message" value="{{ old('reply_message') }}" name="reply_message" rows="3" required>{{ __('talk::talk.field_reply') }}</x-ui.forms.textarea>
+        @else
+        <x-ui.forms.textarea id="message" value="{{ old('message') }}" name="message" rows="3" required>{{ __('talk::talk.field_message') }}</x-ui.forms.textarea>
+        @endif
     </div>
 
     <div class="mt-2">
