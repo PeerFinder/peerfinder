@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Nova\Metrics\ApprovedMemberships;
 use App\Nova\Metrics\NewAppointments;
 use App\Nova\Metrics\NewMemberships;
 use App\Nova\Metrics\NewPeergroups;
 use App\Nova\Metrics\NewReplies;
 use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\OpenPeergroups;
 use App\Nova\Metrics\UsersPerDay;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -69,6 +71,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             new NewMemberships,
             new NewReplies,
             new NewAppointments,
+            new ApprovedMemberships,
+            new OpenPeergroups,
         ];
     }
 

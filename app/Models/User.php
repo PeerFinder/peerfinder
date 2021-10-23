@@ -11,12 +11,19 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Matcher\Facades\Matcher;
 use Matcher\Traits\UserPeergroups;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\CausesActivity;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Talk\Facades\Talk;
 use Talk\Traits\UserConversations;
 
 class User extends Authenticatable implements MustVerifyEmail, HasLocalePreference
 {
-    use HasFactory, Notifiable, UserConversations, UserPeergroups;
+    use HasFactory, 
+        Notifiable,
+        UserConversations,
+        UserPeergroups,
+        LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -105,5 +112,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public function preferredLocale()
     {
         return $this->locale;
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logFillable()->logExcept(['password']);
     }
 }

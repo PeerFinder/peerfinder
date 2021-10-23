@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Matcher\Database\Factories\PeergroupFactory;
 use Matcher\Facades\Matcher;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Talk\Traits\PeergroupConversations;
 
 class Peergroup extends Model
 {
-    use HasFactory, PeergroupConversations;
+    use HasFactory, PeergroupConversations, LogsActivity;
 
     protected $casts = [
         'begin' => 'date',
@@ -275,5 +277,10 @@ class Peergroup extends Model
         if ($this->isFull()) {
             $this->complete();
         }
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logAll();
     }
 }

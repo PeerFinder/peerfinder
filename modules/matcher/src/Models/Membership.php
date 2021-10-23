@@ -5,9 +5,13 @@ namespace Matcher\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Matcher\Facades\Matcher;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Membership extends Model
 {
+    use LogsActivity;
+
     protected $fillable = [
         'comment',
         'begin',
@@ -74,4 +78,9 @@ class Membership extends Model
         $this->approved = true;
         $this->save();
     }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->logAll();
+    }    
 }

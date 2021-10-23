@@ -3,36 +3,28 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\HasManyThrough;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\MorphTo;
-use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Activity as ModelsActivity;
 
-class Conversation extends Resource
+class Activity extends Resource
 {
-    public static $group = 'Talk';
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \Talk\Models\Conversation::class;
+    public static $model = ModelsActivity::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public function title()
-    {
-        return $this->getTitle();
-    }
+    public static $title = 'id';
 
     /**
      * The columns that should be searched.
@@ -41,12 +33,7 @@ class Conversation extends Resource
      */
     public static $search = [
         'id',
-        'title',
     ];
-
-    public static function indexQuery(NovaRequest $request, $query) {
-        return $query->withCount('replies')->with(['users']);
-    }    
 
     /**
      * Get the fields displayed by the resource.
@@ -58,19 +45,38 @@ class Conversation extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
+            
+            Text::make('Subject ID')->readonly(),
 
-            Text::make('Title', function () {
-                return Str::limit($this->getTitle());
-            }),
+            Text::make('Subject Type')->readonly(),
 
-            MorphTo::make('Belongs to', 'Conversationable')->types([
-                User::class,
-                Peergroup::class,
-            ])->sortable(),
+            Text::make('Properties', function () {
+                $ret = [];
 
-            Number::make('Replies', 'replies_count')->onlyOnIndex(),
+                $props = $this->properties;
 
-            BelongsToMany::make('Users')->hideFromIndex(),
+                $ret[] = '<table class="w-full">';
+
+                foreach ($props['old'] as $key => $prop) {
+                    if ($props['old'][$key] != $props['attributes'][$key]) {
+                        $style = "background: yellow;";
+                    } else {
+                        $style = "";
+                    }
+
+                    $ret[] = sprintf('<tr class="border" style="%s"><td>%s</td><td>%s</td><td>%s</td></tr>', $style, $key, $props['old'][$key], $props['attributes'][$key]);
+                }
+
+                $ret[] = '</table>';
+
+                return join($ret);
+            })->onlyOnDetail()->asHtml(),
+
+            Text::make('Description')->readonly(),
+
+            BelongsTo::make('User', 'Causer')->readonly(),
+
+            DateTime::make('Created At')->readonly(),
         ];
     }
 
