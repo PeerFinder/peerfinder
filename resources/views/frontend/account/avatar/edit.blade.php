@@ -7,7 +7,7 @@
 
         <div class="space-y-5 p-5 border border-gray-300 inline-block rounded-md shadow-sm">
             <div class="text-center">
-                <x-ui.user.avatar :user="$user" size="200" class="inline-block rounded-full" />
+                <x-ui.user.avatar :user="$user" size="200" nocache="true" class="inline-block rounded-full" />
             </div>
 
             <x-account.form :action="route('account.avatar.destroy')" class="space-y-6 text-center">

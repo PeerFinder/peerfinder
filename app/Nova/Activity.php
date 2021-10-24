@@ -12,6 +12,8 @@ use Spatie\Activitylog\Models\Activity as ModelsActivity;
 
 class Activity extends Resource
 {
+    public static $group = 'Analytics';
+
     /**
      * The model the resource corresponds to.
      *
@@ -55,16 +57,22 @@ class Activity extends Resource
 
                 $props = $this->properties;
 
+                if ($props->has('old')) {
+                    $old_props = $props['old'];
+                } else {
+                    $old_props = $props['attributes'];
+                }
+
                 $ret[] = '<table class="w-full">';
 
-                foreach ($props['old'] as $key => $prop) {
-                    if ($props['old'][$key] != $props['attributes'][$key]) {
+                foreach ($old_props as $key => $prop) {
+                    if ($old_props[$key] != $props['attributes'][$key]) {
                         $style = "background: yellow;";
                     } else {
                         $style = "";
                     }
 
-                    $ret[] = sprintf('<tr class="border" style="%s"><td>%s</td><td>%s</td><td>%s</td></tr>', $style, $key, $props['old'][$key], $props['attributes'][$key]);
+                    $ret[] = sprintf('<tr class="border" style="%s"><td>%s</td><td style="word-break: break-all;">%s</td><td style="word-break: break-all;">%s</td></tr>', $style, $key, $old_props[$key], $props['attributes'][$key]);
                 }
 
                 $ret[] = '</table>';

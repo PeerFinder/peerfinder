@@ -116,6 +116,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->logFillable()->logExcept(['password']);
+        return LogOptions::defaults()->logAll()->logExcept(['password']);
     }
 }
