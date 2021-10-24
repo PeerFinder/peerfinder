@@ -14,12 +14,16 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
+        $all_peergroups_count = Peergroup::whereOpen(true)->wherePrivate(false)->count();
+
+        $users_count = User::where('email_verified_at', '!=', null)->count();
+
         $own_peergroups = $user->peergroups()->with(Peergroup::defaultRelationships())->get();
 
         $memberships = $user->memberships()->where('approved', true)->pluck('peergroup_id');
 
         $member_peergroups = Peergroup::whereIn('id', $memberships->all())->with(Peergroup::defaultRelationships())->get();
 
-        return view('frontend.profile.dashboard.index', compact('own_peergroups', 'member_peergroups'));
+        return view('frontend.profile.dashboard.index', compact('own_peergroups', 'member_peergroups', 'all_peergroups_count', 'users_count'));
     }
 }
