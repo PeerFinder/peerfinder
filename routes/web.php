@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::group(['prefix' => 'media', 'as' => 'media.'], function () {
-    Route::get('/avatar/{user}_{size}.jpg', [MediaController::class, 'avatar'])->where('size', '[0-9]+')->name('avatar');
+    Route::get('/avatar/{user}_{size}_nocache.jpg', [MediaController::class, 'avatar'])->where('size', '[0-9]+')->name('avatar.nocache');
+    Route::get('/avatar/{user}_{size}.jpg', [MediaController::class, 'avatar'])->where('size', '[0-9]+')->middleware('cache.headers:private;max_age=300;etag')->name('avatar');
 });
 
 

@@ -1,10 +1,10 @@
 <div id="reply-{{ $reply->identifier }}">
-    <div @class(["flex space-x-3", $highlighted_reply == $reply->identifier ? "bg-yellow-100 border border-yellow-200 p-2 rounded-md" : ""])>
-        <div>
-            @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40]) 
+    <div @class(["flex space-x-4", $highlighted_reply == $reply->identifier ? "bg-yellow-100 border border-yellow-200 p-2 rounded-md" : ""])>
+        <div class="flex-shrink-0">
+            @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40])
         </div>
         
-        <div class="flex-1">
+        <div class="flex-1 overflow-hidden">
             <div class="space-x-2 text-sm">
                 <a class="font-semibold inline-block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }}</a>
                 <span class="inline-block text-xs text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
