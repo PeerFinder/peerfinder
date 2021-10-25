@@ -16,29 +16,31 @@
 
         <div class="mt-5 sm:mt-10 grid sm:grid-cols-2 gap-2 sm:gap-5">
             <div class="col-span-1">
-                <x-ui.card title="{{ __('dashboard/dashboard.owned_groups') }}">
+                <x-ui.card title="{{ __('dashboard/dashboard.member_in_groups') }}">
                     <div class="space-y-4 p-4">
-                        <p class="p-4 py-6 border rounded-md border-dashed text-center">
-                            <x-ui.forms.button tag="a" href="{{ route('matcher.create') }}" action="create">{{ __('dashboard/dashboard.button_create_group') }}</x-ui.forms.button>
-                        </p>
-                        @forelse ($own_peergroups as $pg)
+                        <div class="p-4 py-6 border rounded-md border-dashed text-center">
+                            <div class="mb-3"><span class="block text-2xl font-semibold">{{ $all_peergroups_count }}</span> {{ trans_choice('dashboard/dashboard.groups_waiting_for_you', $all_peergroups_count) }}</div>
+                            <x-ui.forms.button tag="a" href="{{ route('matcher.index') }}" action="attention">{{ __('dashboard/dashboard.button_find_group') }}</x-ui.forms.button>
+                        </div>
+                        @forelse ($member_peergroups as $pg)
                         <x-matcher::peergroup.card :pg="$pg" />
                         @empty
-                        <p class="p-4 text-center">{{ __('dashboard/dashboard.no_owned_groups') }}</p>
+                        <p class="p-4 text-center">{{ __('dashboard/dashboard.no_memberships') }}</p>
                         @endforelse
                     </div>
                 </x-ui.card>
             </div>
             <div class="col-span-1">
-                <x-ui.card title="{{ __('dashboard/dashboard.member_in_groups') }}">
+                <x-ui.card title="{{ __('dashboard/dashboard.owned_groups') }}">
                     <div class="space-y-4 p-4">
-                        <p class="p-4 py-6 border rounded-md border-dashed text-center">
-                            <x-ui.forms.button tag="a" href="{{ route('matcher.index') }}">{{ __('dashboard/dashboard.button_find_group') }}</x-ui.forms.button>
-                        </p>
-                        @forelse ($member_peergroups as $pg)
+                        <div class="p-4 py-6 border rounded-md border-dashed text-center">
+                            <div class="mb-3"><span class="block text-2xl font-semibold">{{ $users_count }}</span> {{ trans_choice('dashboard/dashboard.users_waiting_for_your_group', $users_count) }}</div>
+                            <x-ui.forms.button tag="a" href="{{ route('matcher.create') }}" action="create">{{ __('dashboard/dashboard.button_create_group') }}</x-ui.forms.button>
+                        </div>
+                        @forelse ($own_peergroups as $pg)
                         <x-matcher::peergroup.card :pg="$pg" />
                         @empty
-                        <p class="p-4 text-center">{{ __('dashboard/dashboard.no_memberships') }}</p>
+                        <p class="p-4 text-center">{{ __('dashboard/dashboard.no_owned_groups') }}</p>
                         @endforelse
                     </div>
                 </x-ui.card>

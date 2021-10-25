@@ -16,5 +16,9 @@ return [
     'button_register' => 'Registrieren',
     'button_login' => 'Anmelden',
     'button_send_message' => 'Nachricht schicken',
-    'menu_find_peers' => 'Peers finden!',    
+    'menu_find_peers' => 'Gruppe finden',
+    'menu_new_group' => 'Gruppe gründen',
+    'menu' => 'Menu',
+    'member_in_groups' => 'Mitglied von Gruppen',
+    'no_memberships' => 'Noch keiner Gruppe beigetreten.',
 ];

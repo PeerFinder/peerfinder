@@ -16,5 +16,9 @@ return [
     'button_register' => 'Sign up',
     'button_login' => 'Sign in',
     'button_send_message' => 'Send Message',
-    'menu_find_peers' => 'Find new peers!',
+    'menu_find_peers' => 'Find group',
+    'menu_new_group' => 'Start group',
+    'menu' => 'Menu',
+    'member_in_groups' => 'Member of groups',
+    'no_memberships' => 'No memberships yet.',
 ];

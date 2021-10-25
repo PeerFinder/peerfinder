@@ -7,6 +7,7 @@ use App\Models\User as UserModel;
 use App\Nova\Actions\ShowUserProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
@@ -106,6 +107,10 @@ class User extends Resource
             Text::make('Xing Profile')
                 ->hideFromIndex()
                 ->rules(UserModel::rules()['create']['xing_profile']),
+
+            Boolean::make('Email verified', function () {
+                return $this->email_verified_at != null;
+            }),
 
 /*             Password::make('Password')
                 ->onlyOnForms()

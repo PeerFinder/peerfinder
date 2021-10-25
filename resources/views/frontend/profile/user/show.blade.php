@@ -51,5 +51,19 @@
                 </div>
             </div>
         </x-ui.card>
+
+        <x-ui.card title="{{ __('profile/user.member_in_groups') }}" class="mt-5 sm:mt-10">
+            <div class="space-y-4 p-4">
+                @if ($member_peergroups->count() > 0)
+                <div class="grid sm:grid-cols-2 gap-4">
+                    @foreach ($member_peergroups as $pg)
+                    <x-matcher::peergroup.card :pg="$pg" />
+                    @endforeach
+                </div>
+                @else
+                <p class="p-4 text-center">{{ __('profile/user.no_memberships') }}</p>
+                @endif
+            </div>
+        </x-ui.card>
     </div>
 </x-layout.minimal>
