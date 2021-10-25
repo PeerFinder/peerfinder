@@ -9,9 +9,8 @@
         </div>
 
         <div class="flex-1 flex items-center justify-between">
+            @auth
             {{-- Generic menu --}}
-
-            
             <div class="flex-1 flex justify-center mx-2">
                 <header-menu class="md:hidden">
                     <template v-slot:trigger>
@@ -35,7 +34,8 @@
                     <li><a class="text-pf-lightblue hover:text-white font-semibold" href="{{ route('matcher.create') }}">@lang('profile/user.menu_new_group')</a></li>
                 </ul>
             </div>
-
+            @endauth
+            
             @guest
             {{-- Login and register menu --}}
             <div class="flex-1 flex justify-end items-center space-x-2 py-1">

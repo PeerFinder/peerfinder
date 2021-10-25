@@ -1,6 +1,6 @@
-<x-matcher::layout.single :pg="$pg">
+<x-matcher::layout.single :pg="$pg" edit="true">
 
-    <x-ui.card class="my-2 sm:my-5" title="{{ __('matcher::peergroup.change_owner') }}">
+    <x-ui.card title="{{ __('matcher::peergroup.change_owner') }}">
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
         <x-ui.forms.form :action="route('matcher.editOwner', ['pg' => $pg->groupname])">

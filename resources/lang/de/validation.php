@@ -156,6 +156,7 @@ return [
         'language'              => 'Sprache',
         'languages'             => 'Sprachen',
         'last_name'             => 'Nachname',
+        'Meeting_link'          => 'Meeting Link',
         'minute'                => 'Minute',
         'mobile'                => 'Handynummer',
         'month'                 => 'Monat',

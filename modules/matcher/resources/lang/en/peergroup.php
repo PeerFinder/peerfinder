@@ -126,4 +126,6 @@ return [
     'button_delete_image' => 'Remove image',
     'field_image' => 'Upload new image',
     'current_image' => 'Current image',
+    'button_edit_image' => 'Edit',
+    'image_upload_notice' => 'The image shall have an aspect ratio of :r:1. Minimal image dimensions: :w x :h px.',
 ];

@@ -41,7 +41,7 @@ class ImageTest extends TestCase
         $user = User::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
     
-        Storage::fake('local');
+        Storage::fake('public');
     
         $min_upload_width = config('matcher.image.min_upload_width');
         $min_upload_height = config('matcher.image.min_upload_height');
@@ -56,7 +56,7 @@ class ImageTest extends TestCase
 
         $this->assertNotNull($pg->image);
 
-        Storage::disk('local')->assertExists('matcher/images/' . $pg->image);
+        Storage::disk('public')->assertExists('matcher/images/' . $pg->image);
     }
 
     public function test_owner_can_override_group_image()
@@ -66,7 +66,7 @@ class ImageTest extends TestCase
             'image' => 'test.jpg',
         ]);
     
-        Storage::fake('local');
+        Storage::fake('public');
     
         $min_upload_width = config('matcher.image.min_upload_width');
         $min_upload_height = config('matcher.image.min_upload_height');
@@ -81,7 +81,7 @@ class ImageTest extends TestCase
 
         $this->assertNotNull($pg->image);
 
-        Storage::disk('local')->assertExists('matcher/images/' . $pg->image);
+        Storage::disk('public')->assertExists('matcher/images/' . $pg->image);
     }
 
     public function test_owner_can_remove_group_image()
@@ -92,9 +92,9 @@ class ImageTest extends TestCase
             'image' => 'test.jpg'
         ]);
 
-        Storage::fake('local');
+        Storage::fake('public');
 
-        Storage::disk('local')->put('matcher/images/test.jpg', "dummy-data");
+        Storage::disk('public')->put('matcher/images/test.jpg', "dummy-data");
 
         $response = $this->actingAs($user)->delete(route('matcher.image.destroy', ['pg' => $pg->groupname]));
 
@@ -106,6 +106,6 @@ class ImageTest extends TestCase
 
         $this->assertNull($pg->image);
 
-        Storage::disk('local')->assertMissing('matcher/images/test.jpg');
+        Storage::disk('public')->assertMissing('matcher/images/test.jpg');
     }    
 }

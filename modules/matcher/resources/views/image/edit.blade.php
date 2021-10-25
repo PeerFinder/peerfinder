@@ -1,7 +1,9 @@
-<x-matcher::layout.single :pg="$pg">
+<x-matcher::layout.single :pg="$pg" edit="true">
 
-    <x-ui.card class="my-5" title="{{ __('matcher::peergroup.update_image_title') }}">
+    <x-ui.card title="{{ __('matcher::peergroup.update_image_title') }}">
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
+
+        <p class="p-4">@lang('matcher::peergroup.image_upload_notice', ['w' => config('matcher.image.min_upload_width'), 'h' => config('matcher.image.min_upload_height'), 'r' => config('matcher.image.min_upload_width') / config('matcher.image.min_upload_height')])</p>
 
         @if ($pg->image)
         <div class="p-4">
@@ -9,7 +11,7 @@
     
             <div class="space-y-5 p-5 border border-gray-300 inline-block rounded-md shadow-sm">
                 <div class="text-center">
-                    
+                    <img src="{{ Matcher::getGroupImageLink($pg, true) }}" alt="{{ $pg->image_alt }}" />
                 </div>
     
                 <x-account.form :action="route('matcher.image.destroy', ['pg' => $pg->groupname])" class="space-y-6 text-center">
