@@ -2,6 +2,7 @@
 
 namespace Matcher;
 
+use App\Helpers\Facades\Urler;
 use App\Models\User;
 use App\Rules\ConfirmCheckbox;
 use Illuminate\Http\Request;
@@ -19,12 +20,18 @@ use Matcher\Models\Language;
 use Matcher\Models\Membership;
 use Matcher\Rules\IsGroupMember;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class Matcher
 {
     public function __construct()
     {
         $this->user = auth()->user();
+
+        $this->min_upload_width = config('matcher.image.min_upload_width');
+        $this->min_upload_height = config('matcher.image.min_upload_height');
+        $this->max_upload_file = config('matcher.image.max_upload_file');
     }
 
     public function cleanupForUser(User $user)
@@ -256,5 +263,80 @@ class Matcher
         $html = trim($html);
 
         return $html;
-    }    
+    }
+
+    public function storeGroupImage(Peergroup $pg, Request $request)
+    {
+        $request->validate([
+            'image' => sprintf(
+                'required|image|max:%d|dimensions:min_width=%d,min_height=%d',
+                $this->max_upload_file,
+                $this->min_upload_width,
+                $this->min_upload_height,
+            ),
+        ]);
+
+        $image = Image::make($request->file('image'))->orientate();
+
+        $this->saveImageForPeergroup($pg, $image);
+    }
+
+    public function saveImageForPeergroup(Peergroup $pg, \Intervention\Image\Image $image)
+    {
+        if ($pg->image) {
+            $newFileName = $pg->image;
+        } else {
+            $newFileName = Str::uuid() . '.jpg';
+        }
+
+        $fitted_image = $image->fit($this->min_upload_width, $this->min_upload_height);
+
+        Storage::disk('public')->put('matcher/images/' . $newFileName, (string) $fitted_image->encode('jpg'));
+
+        $small_image = $image->resize($this->min_upload_width / 2, $this->min_upload_height / 2);
+
+        Storage::disk('public')->put('matcher/images/thumbnails/' . $newFileName, (string) $small_image->encode('jpg'));
+
+        $pg->image = $newFileName;
+
+        $pg->save();
+    }
+
+    public function removeGroupImage(Peergroup $pg, Request $request)
+    {
+        if ($pg->image) {
+            Storage::disk('public')->delete('matcher/images/' . $pg->image);
+            Storage::disk('public')->delete('matcher/images/thumbnails/' . $pg->image);
+            $pg->image = null;
+            $pg->save();
+        }
+    }
+
+    public function getGroupImageLink(Peergroup $pg, $thumbnail = false)
+    {
+        if ($pg->image == null) {
+            $this->generatePlaceholderImage($pg);
+        }
+
+        return Urler::versioned_asset('/storage' . ($thumbnail ? '/matcher/images/thumbnails/' : '/matcher/images/') . $pg->image);
+    }
+
+    public function generatePlaceholderImage(Peergroup $pg)
+    {
+        $colors = [
+            'EF919B', 'F8B392', 'A0CFA2', '71BEE7', '8380B3', 'D6BAD4', '9796BC', '9CBFCF', 'FFCDAB', 'CBD9BF', 'BAD8FF', 'FFCFCF',
+        ];
+
+        $color = '#' . $colors[rand(0, count($colors) - 1)];
+
+        $image = Image::canvas($this->min_upload_width, $this->min_upload_height, $color);
+
+        $overlay = Image::make(resource_path('images/placeholders/group.png'));
+
+        $overlay->resize($image->width(), $image->height());
+
+        $image->insert($overlay, 'center');
+
+        $this->saveImageForPeergroup($pg, $image);
+    }
 }

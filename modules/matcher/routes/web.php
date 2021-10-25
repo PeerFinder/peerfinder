@@ -5,6 +5,7 @@ use Matcher\Http\Controllers\AppointmentsController;
 use Matcher\Http\Controllers\BookmarksController;
 use Matcher\Http\Controllers\MembershipsController;
 use Matcher\Http\Controllers\PeergroupsController;
+use Matcher\Http\Controllers\ImageController;
 
 Route::get('/', [PeergroupsController::class, 'index'])->name('index');
 
@@ -47,6 +48,12 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
         Route::get('/{appointment:identifier}/edit', [AppointmentsController::class, 'edit'])->name('edit');
         Route::put('/{appointment:identifier}/edit', [AppointmentsController::class, 'update'])->name('update');
         Route::delete('/{appointment:identifier}/delete', [AppointmentsController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::group(['prefix' => 'image', 'as' => 'image.'], function () {
+        Route::get('/edit', [ImageController::class, 'edit'])->name('edit');
+        Route::put('/update', [ImageController::class, 'update'])->name('update');
+        Route::delete('/destroy', [ImageController::class, 'destroy'])->name('destroy');
     });
 });
 

@@ -23,6 +23,17 @@ php -r "phpinfo();" | grep "php.ini"
 
 Install XDebug with "pecl install xdebug". If it fails, run "brew upgrade" and remove shown directories manually.
 
+## Installing Imagick on Mac
+
+<pre>
+brew install imagemagick
+brew install pcre2
+
+sudo ln -s /opt/homebrew/include/pcre2.h /usr/local/include/
+pecl install imagick
+valet restart
+</pre>
+
 ## Icons used in the project
 
 * Many Heroicons

@@ -118,4 +118,14 @@ return [
     'badge_closed' => 'Geschlossen',
     'preview_only_visible_for_users' => 'Nur sichtbar für eingeloggte User',
     'please_login_to_see_details' => 'Bitte anmelden, um alle Gruppeninformationen zu sehen!',
+
+    'image_changed_successfully' => 'Gruppenbild wurde erfolgreich geändert!',
+    'image_removed_successfully' => 'Gruppenbild wurde erfolgreich entfernt!',
+    'update_image_title' => 'Gruppenbild ändern',
+    'button_update_image' => 'Bild hochladen',
+    'button_delete_image' => 'Bild entfernen',
+    'field_image' => 'Neues Bild hochladen',
+    'current_image' => 'Aktuelles Bild',
+    'button_edit_image' => 'Bearbeiten',
+    'image_upload_notice' => 'Das Bild sollte ein Seitenverhältnis von :r:1 haben. Minimale Abmessungen: :w x :h px.',
 ];

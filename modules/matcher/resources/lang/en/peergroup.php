@@ -118,4 +118,14 @@ return [
     'badge_closed' => 'Completed',
     'preview_only_visible_for_users' => 'Only visible for logged in users',
     'please_login_to_see_details' => 'Please login to see all group details!',
+
+    'image_changed_successfully' => 'Group image was changed successfully!',
+    'image_removed_successfully' => 'Group image was removed successfully!',
+    'update_image_title' => 'Change group image',
+    'button_update_image' => 'Upload image',
+    'button_delete_image' => 'Remove image',
+    'field_image' => 'Upload new image',
+    'current_image' => 'Current image',
+    'button_edit_image' => 'Edit',
+    'image_upload_notice' => 'The image shall have an aspect ratio of :r:1. Minimal image dimensions: :w x :h px.',
 ];

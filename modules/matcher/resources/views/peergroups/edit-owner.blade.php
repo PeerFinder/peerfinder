@@ -1,11 +1,11 @@
-<x-matcher::layout.single :pg="$pg">
+<x-matcher::layout.single :pg="$pg" edit="true">
 
-    <x-ui.card class="my-2 sm:my-5" title="{{ __('matcher::peergroup.change_owner') }}">
+    <x-ui.card title="{{ __('matcher::peergroup.change_owner') }}">
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
         <x-ui.forms.form :action="route('matcher.editOwner', ['pg' => $pg->groupname])">
             <div class="p-4">
-                <p>{{ __('matcher::peergroup.change_owner_notice') }}</p>
+                <p>@lang('matcher::peergroup.change_owner_notice')</p>
             </div>
 
             <div class="p-4 space-y-2 w-1/2">
@@ -18,14 +18,14 @@
                     </div>
                 </div>
             @empty
-            {{ __('matcher::peergroup.change_owner_no_members') }}
+            @lang('matcher::peergroup.change_owner_no_members')
             @endforelse
             </div>
 
             <div class="mt-2 p-4 border-t">
                 @csrf
                 @method('PUT')
-                <x-matcher::ui.edit-buttons :pg="$pg">{{ __('matcher::peergroup.button_change_owner') }}</x-matcher::ui.edit-buttons>
+                <x-matcher::ui.edit-buttons :pg="$pg">@lang('matcher::peergroup.button_change_owner')</x-matcher::ui.edit-buttons>
             </div>
         </x-ui.forms.form>
     </x-ui.card>
