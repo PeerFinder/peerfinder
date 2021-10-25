@@ -5,6 +5,7 @@
         <meta property="og:url" content="{{ route('matcher.preview', ['groupname' => $pg->groupname]) }}" />
         <meta property="og:title" content="{{ $pg->title }}" />
         <meta property="og:description" content="{{ $pg->description }}" />
+        <meta property="og:image" content="{{ Matcher::getGroupImageLink($pg) }}" />
     </x-slot>
 
     <div class="sm:mt-10 md:grid md:grid-cols-10 gap-7 mb-5 sm:mb-7">
