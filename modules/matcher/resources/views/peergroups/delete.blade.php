@@ -5,7 +5,7 @@
 
         <x-ui.forms.form :action="route('matcher.delete', ['pg' => $pg->groupname])">
             <div class="p-4 space-y-4">
-                <p>{{ __('matcher::peergroup.delete_group_notice') }}</p>
+                <p>@lang('matcher::peergroup.delete_group_notice')</p>
 
                 @if ($pg->hasMoreMembersThanOwner())
                 <p class="text-yellow-500">
@@ -15,13 +15,13 @@
             </div>
 
             <div class="p-4">
-                <x-ui.forms.checkbox id="confirm_delete" name="confirm_delete">{{ __('matcher::peergroup.delete_group_confirm') }}</x-ui.forms.checkbox>
+                <x-ui.forms.checkbox id="confirm_delete" name="confirm_delete">@lang('matcher::peergroup.delete_group_confirm')</x-ui.forms.checkbox>
             </div>
             
             <div class="mt-2 p-4 border-t">
                 @csrf
                 @method('DELETE')
-                <x-matcher::ui.edit-buttons action="destroy" :pg="$pg">{{ __('matcher::peergroup.button_delete_group') }}</x-matcher::ui.edit-buttons>
+                <x-matcher::ui.edit-buttons action="destroy" :pg="$pg">@lang('matcher::peergroup.button_delete_group')</x-matcher::ui.edit-buttons>
             </div>
         </x-ui.forms.form>
     </x-ui.card>

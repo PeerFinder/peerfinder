@@ -19,12 +19,18 @@ use Matcher\Models\Language;
 use Matcher\Models\Membership;
 use Matcher\Rules\IsGroupMember;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class Matcher
 {
     public function __construct()
     {
         $this->user = auth()->user();
+
+        $this->min_upload_width = config('matcher.image.min_upload_width');
+        $this->min_upload_height = config('matcher.image.min_upload_height');
+        $this->max_upload_file = config('matcher.image.max_upload_file');
     }
 
     public function cleanupForUser(User $user)
@@ -256,5 +262,40 @@ class Matcher
         $html = trim($html);
 
         return $html;
-    }    
+    }
+
+    public function storeGroupImage(Peergroup $pg, Request $request)
+    {
+        $request->validate([
+            'image' => sprintf(
+                'required|image|max:%d|dimensions:min_width=%d,min_height=%d',
+                $this->max_upload_file,
+                $this->min_upload_width,
+                $this->min_upload_height,
+            ),
+        ]);
+
+        if ($pg->image) {
+            $newFileName = $pg->image;
+        } else {
+            $newFileName = Str::uuid() . '.jpg';
+        }
+        
+        $image = Image::make($request->file('image'))->orientate();
+
+        Storage::disk('local')->put('matcher/images/' . $newFileName, (string) $image->encode('jpg'));
+
+        $pg->image = $newFileName;
+
+        $pg->save();
+    }
+
+    public function removeGroupImage(Peergroup $pg, Request $request)
+    {
+        if ($pg->image) {
+            Storage::disk('local')->delete('matcher/images/' . $pg->image);
+            $pg->image = null;
+            $pg->save();
+        }
+    }
 }
