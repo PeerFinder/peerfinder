@@ -17,4 +17,6 @@ return [
     'button_login' => 'Anmelden',
     'button_send_message' => 'Nachricht schicken',
     'menu_find_peers' => 'Gruppe finden',
+    'menu_new_group' => 'Gruppe gründen',
+    'menu' => 'Menu',
 ];

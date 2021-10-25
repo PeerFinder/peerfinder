@@ -19,7 +19,7 @@
                 <x-ui.card title="{{ __('dashboard/dashboard.member_in_groups') }}">
                     <div class="space-y-4 p-4">
                         <div class="p-4 py-6 border rounded-md border-dashed text-center">
-                            <div class="mb-3"><span class="block text-2xl font-semibold">{{ $all_peergroups_count }}</span> offene Gruppen warten auf Dich!</div>
+                            <div class="mb-3"><span class="block text-2xl font-semibold">{{ $all_peergroups_count }}</span> {{ trans_choice('dashboard/dashboard.groups_waiting_for_you', $all_peergroups_count) }}</div>
                             <x-ui.forms.button tag="a" href="{{ route('matcher.index') }}" action="attention">{{ __('dashboard/dashboard.button_find_group') }}</x-ui.forms.button>
                         </div>
                         @forelse ($member_peergroups as $pg)
@@ -34,7 +34,7 @@
                 <x-ui.card title="{{ __('dashboard/dashboard.owned_groups') }}">
                     <div class="space-y-4 p-4">
                         <div class="p-4 py-6 border rounded-md border-dashed text-center">
-                            <div class="mb-3"><span class="block text-2xl font-semibold">{{ $users_count }}</span> Nutzer:innen freuen sich auf Deine Gruppe</div>
+                            <div class="mb-3"><span class="block text-2xl font-semibold">{{ $users_count }}</span> {{ trans_choice('dashboard/dashboard.users_waiting_for_your_group', $users_count) }}</div>
                             <x-ui.forms.button tag="a" href="{{ route('matcher.create') }}" action="create">{{ __('dashboard/dashboard.button_create_group') }}</x-ui.forms.button>
                         </div>
                         @forelse ($own_peergroups as $pg)

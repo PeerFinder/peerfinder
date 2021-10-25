@@ -17,4 +17,6 @@ return [
     'button_login' => 'Sign in',
     'button_send_message' => 'Send Message',
     'menu_find_peers' => 'Find group',
+    'menu_new_group' => 'Start group',
+    'menu' => 'Menu',
 ];

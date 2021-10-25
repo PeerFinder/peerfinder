@@ -8,4 +8,6 @@ return [
     'button_find_group' => 'Find group',
     'member_in_groups' => 'Member of groups',
     'owned_groups' => 'Founded groups',
+    'groups_waiting_for_you' => '{1}open group is waiting for you!|[2,*]open groups are waiting for you!',
+    'users_waiting_for_your_group' => 'users waiting for your group!',
 ];
