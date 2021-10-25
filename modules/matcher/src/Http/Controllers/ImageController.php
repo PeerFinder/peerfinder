@@ -27,7 +27,7 @@ class ImageController extends Controller
 
         Matcher::storeGroupImage($pg, $request);
         
-        return redirect()->back()->with('success', __('matcher::peergroup.image_changed_successfully'));
+        return redirect()->to($pg->getUrl())->with('success', __('matcher::peergroup.image_changed_successfully'));
     }
 
     public function destroy(Request $request, Peergroup $pg)
@@ -36,6 +36,6 @@ class ImageController extends Controller
 
         Matcher::removeGroupImage($pg, $request);
         
-        return redirect()->back()->with('success', __('matcher::peergroup.image_removed_successfully'));
+        return redirect()->to($pg->getUrl())->with('success', __('matcher::peergroup.image_removed_successfully'));
     }
 }
