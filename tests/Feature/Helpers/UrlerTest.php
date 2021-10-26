@@ -74,6 +74,11 @@ class UrlerTest extends TestCase
             'https://facebook.com/SomeUserBlahBlah',
             Urler::sanitizeSocialMediaProfileUrl('facebook', 'https://m.facebook.com/SomeUserBlahBlah?ref=bookmarks')
         );
+
+        $this->assertEquals(
+            'https://twitter.com/your-username',
+            Urler::sanitizeSocialMediaProfileUrl('twitter', '@your-username')
+        );
     }
 
     public function test_user_profile_url()
