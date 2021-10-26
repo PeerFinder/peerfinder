@@ -61,9 +61,12 @@ class Urler
 
     public function sanitizeSocialMediaProfileUrl($socialMediaPlatform, $socialMediaProfileUrl)
     {
+        $socialMediaProfileUrl = str_replace('@', '', $socialMediaProfileUrl);
+        
         $template = $this->socialMediaPlatforms[$socialMediaPlatform];
 
         $regex_list = $template['regex'];
+
         $fullUrl = $template['fullUrl'];
 
         foreach ($regex_list as $regex) {
