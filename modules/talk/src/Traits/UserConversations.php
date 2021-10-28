@@ -8,6 +8,8 @@ use Talk\Models\Reply;
 
 trait UserConversations
 {
+    public $anonymous_replies = false;
+
     public function participated_conversations()
     {
         return $this->belongsToMany(Conversation::class)->withTimestamps();

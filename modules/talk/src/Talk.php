@@ -109,10 +109,15 @@ class Talk
             $receipt->delete();
         });
 
-        $user->replies()->each(function ($reply) {
-            $reply->delete();
-            #TODO: Delete children replies
-        });
+        if ($user->anonymous_replies) {
+            $user->replies()->each(function ($reply) {
+                
+            });
+        } else {
+            $user->replies()->each(function ($reply) {
+                $reply->delete();
+            });            
+        }
 
         $user->participated_conversations()->detach();
 

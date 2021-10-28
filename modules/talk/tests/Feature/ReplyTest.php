@@ -232,5 +232,27 @@ class ReplyTest extends TestCase
         $r2->delete();
         
         $this->assertDatabaseMissing('replies', ['conversation_id' => $conversation->id]);
+    }
+
+    public function test_make_replies_anonymous()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user1)->create();
+
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $r2 = Talk::createReply($conversation, $user2, ['message' => $this->faker->text()]);
+        $r2_1 = Talk::createReply($conversation, $user2, ['reply_message' => $this->faker->text(), 'reply' => $r2->identifier]);
+        $r2_2 = Talk::createReply($conversation, $user2, ['reply_message' => $this->faker->text(), 'reply' => $r2_1->identifier]);
+        $r2_2_1 = Talk::createReply($conversation, $user2, ['reply_message' => $this->faker->text(), 'reply' => $r2_2->identifier]);
+
+        $user2->anonymous_replies = true;
+        $user2->delete();
+        
+        $this->assertDatabaseMissing('replies', ['user_id' => $user2->id]);
+        $this->assertDatabaseHas('replies', ['conversation_id' => $conversation->id]);
     }    
 }
