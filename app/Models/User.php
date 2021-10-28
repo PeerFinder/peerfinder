@@ -12,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
 use Matcher\Facades\Matcher;
 use Matcher\Traits\UserPeergroups;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Talk\Facades\Talk;
 use Talk\Traits\UserConversations;

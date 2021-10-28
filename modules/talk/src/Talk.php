@@ -109,10 +109,16 @@ class Talk
             $receipt->delete();
         });
 
-        $user->replies()->each(function ($reply) {
-            $reply->delete();
-            #TODO: Delete children replies
-        });
+        if ($user->anonymous_replies) {
+            $user->replies()->each(function ($reply) {
+                $reply->user_id = null;
+                $reply->save();
+            });
+        } else {
+            $user->replies()->each(function ($reply) {
+                $reply->delete();
+            });            
+        }
 
         $user->participated_conversations()->detach();
 
@@ -213,7 +219,9 @@ class Talk
         $top_replies = $conversation->getReplies();
 
         $this->traverseRepliesTree($top_replies, function ($reply) use (&$user_cache) {
-            $user_cache[$reply->user_id] = null;
+            if ($reply->user_id) {
+                $user_cache[$reply->user_id] = null;
+            }
         });
 
         $users = User::whereIn('id', array_keys($user_cache))->get();
@@ -223,7 +231,9 @@ class Talk
         });
 
         $this->traverseRepliesTree($top_replies, function ($reply) use ($user_cache) {
-            $reply->user = $user_cache[$reply->user_id];
+            if ($reply->user_id) {
+                $reply->user = $user_cache[$reply->user_id];
+            }
         });
 
         return $top_replies;
