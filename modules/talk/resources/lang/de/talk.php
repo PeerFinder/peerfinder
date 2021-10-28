@@ -20,4 +20,5 @@ return [
     'no_replies_yet' => 'Noch keine Beiträge! Sei die/der Erste!',
     'all_conversations_link' => 'Alle Unterhaltungen',
     'button_reply_to_reply' => 'Antworten',
+    'anonymous_user' => 'Gelöschte:r Nutzer:in',
 ];

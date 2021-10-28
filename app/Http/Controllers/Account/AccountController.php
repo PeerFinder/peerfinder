@@ -39,6 +39,7 @@ class AccountController extends Controller
 
         Auth::logout();
 
+        $user->anonymous_replies = true;
         $user->delete();
 
         return redirect()->route('index')->with('success', __('account/account.account_deleted_message'));
