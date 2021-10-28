@@ -10,9 +10,4 @@ class Receipt extends Model
     {
         return $this->belongsTo(Conversation::class);
     }
-
-    public function reply()
-    {
-        return $this->belongsTo(Reply::class);
-    }    
 }
