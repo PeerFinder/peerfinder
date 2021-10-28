@@ -215,4 +215,22 @@ class ReplyTest extends TestCase
         $this->assertEquals($r1->user->id, $tree->get(0)->user->id);
         $this->assertEquals($r2_2->user->id, $tree->get(1)->replies->get(1)->user->id);
     }
+
+    public function test_replies_are_deleted_recursively()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $conversation = Conversation::factory()->byUser($user1)->create();
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $r2 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+        $r2_1 = Talk::createReply($conversation, $user1, ['reply_message' => $this->faker->text(), 'reply' => $r2->identifier]);
+        $r2_2 = Talk::createReply($conversation, $user2, ['reply_message' => $this->faker->text(), 'reply' => $r2_1->identifier]);
+        $r2_2_1 = Talk::createReply($conversation, $user2, ['reply_message' => $this->faker->text(), 'reply' => $r2_2->identifier]);
+
+        $r2->delete();
+        
+        $this->assertDatabaseMissing('replies', ['conversation_id' => $conversation->id]);
+    }    
 }

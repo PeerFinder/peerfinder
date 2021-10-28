@@ -39,6 +39,12 @@ class Reply extends Model
         static::creating(function ($reply) {
             $reply->identifier = (string) Str::uuid();
         });
+
+        static::deleting(function ($reply) {
+            $reply->replies()->each(function ($sub_reply) {
+                $sub_reply->delete();
+            });
+        });
     }
 
     public function conversation()
