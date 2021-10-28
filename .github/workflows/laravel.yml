@@ -24,8 +24,6 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-    - name: Update Chrome
-      run: sudo apt update && sudo apt --only-upgrade install google-chrome-stable
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
@@ -50,7 +48,7 @@ jobs:
     - name: Install and run node
       run: npm install && npm run production
     - name: Upgrade Chrome Driver
-      run: php artisan dusk:chrome-driver
+      run: php artisan dusk:chrome-driver `/opt/google/chrome/chrome --version | cut -d " " -f3 | cut -d "." -f1`
     - name: Start Chrome Driver
       run: ./vendor/laravel/dusk/bin/chromedriver-linux &
     - name: Run Laravel Server
