@@ -37,7 +37,7 @@
                             <p>{{ $user->about }}</p>
                         @endif
 
-                        @if ($user == auth()->user())
+                        @if ($user->id == auth()->id())
                         <div class="flex flex-col sm:flex-row mt-5 space-y-2 sm:space-y-0 sm:space-x-2">
                             <x-ui.forms.button tag="a" href="{{ route('account.profile.edit') }}" action="inform">{{ __('profile/user.button_edit_profile') }}</x-ui.forms.button>
                             <x-ui.forms.button tag="a" href="{{ route('account.avatar.edit') }}" action="inform">{{ __('profile/user.button_edit_avatar') }}</x-ui.forms.button>
