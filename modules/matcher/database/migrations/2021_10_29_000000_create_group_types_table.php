@@ -14,8 +14,8 @@ class CreateGroupTypesTable extends Migration
             $table->string('title_en');
             $table->text('description_de');
             $table->text('description_en');
-            $table->string('reference_de');
-            $table->string('reference_en');
+            $table->string('reference_de')->nullable();
+            $table->string('reference_en')->nullable();
             $table->foreignId('group_type_id')->nullable();
             $table->timestamps();
         });

@@ -136,7 +136,12 @@ class Peergroup extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
-    }    
+    }
+
+    public function groupType()
+    {
+        return $this->belongsTo(GroupType::class);
+    }
 
     public function members()
     {
