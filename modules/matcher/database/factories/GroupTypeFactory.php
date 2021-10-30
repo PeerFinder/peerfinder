@@ -19,4 +19,13 @@ class GroupTypeFactory extends Factory
             'description_en' => $this->faker->text(),
         ];
     }
+
+    public function withParent(GroupType $gt)
+    {
+        return $this->state(function ($attributes) use ($gt) {
+            return [
+                'group_type_id' => $gt->id,
+            ];
+        });
+    }    
 }

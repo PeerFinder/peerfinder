@@ -24,4 +24,15 @@ class GroupType extends Model
     {
         return $this->belongsTo(GroupType::class);
     }
+
+    public function getRecursiveTypes()
+    {
+        $types = [];
+
+        if ($this->group_type_id) {
+            $types = array_merge($types, $this->groupType()->first()->getRecursiveTypes());
+        } else {
+            $types[] = $this;
+        }
+    }
 }
