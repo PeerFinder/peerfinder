@@ -1155,6 +1155,12 @@ select {
 .bottom-2 {
 	bottom: 0.5rem;
 }
+.top-3 {
+	top: 0.75rem;
+}
+.-left-2 {
+	left: -0.5rem;
+}
 .z-10 {
 	z-index: 10;
 }
@@ -1709,9 +1715,9 @@ select {
 	--tw-bg-opacity: 1;
 	background-color: rgba(251, 191, 36, var(--tw-bg-opacity));
 }
-.bg-yellow-300 {
+.bg-gray-200 {
 	--tw-bg-opacity: 1;
-	background-color: rgba(252, 211, 77, var(--tw-bg-opacity));
+	background-color: rgba(229, 231, 235, var(--tw-bg-opacity));
 }
 .bg-opacity-30 {
 	--tw-bg-opacity: 0.3;

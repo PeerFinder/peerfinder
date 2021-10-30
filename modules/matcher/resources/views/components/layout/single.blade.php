@@ -16,6 +16,10 @@
                 @endcan
             </div>
             <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 md:mt-0 px-4 sm:px-0">
+                @if ($pg->groupType)
+                <p class="bg-pf-midblue text-white inline-block px-3 py-1 rounded-md mb-3">{{ $pg->groupType->title() }}</p>
+                @endif
+                
                 <a href="{{ $pg->getUrl() }}">
                     <x-ui.h1>
                         {{ $pg->title }}

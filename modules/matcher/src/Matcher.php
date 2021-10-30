@@ -22,6 +22,7 @@ use Matcher\Rules\IsGroupMember;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Matcher\Models\GroupType;
 
 class Matcher
 {
@@ -51,17 +52,20 @@ class Matcher
 
         Validator::make($input, Peergroup::rules()[$pg ? 'update' : 'create'])->validate();
 
+        $groupType = GroupType::find($request->group_type);
+
         if ($pg) {
-            $pg->update($input);
+            $pg->fill($input);
         } else {
             $pg = new Peergroup($input);
             $pg->user()->associate($request->user());
             $pg->open = true;
-            $pg->save();
         }
+        
+        $pg->groupType()->associate($groupType);
+        $pg->save();
 
         $languages = Language::whereIn('code', array_values($request->languages))->get();
-
         $pg->languages()->sync($languages);
 
         return $pg;

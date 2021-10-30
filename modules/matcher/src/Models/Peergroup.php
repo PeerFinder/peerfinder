@@ -50,6 +50,7 @@ class Peergroup extends Model
             'location' => ['nullable', 'string', 'max:100'],
             'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
             'languages' => ['required', 'exists:languages,code'],
+            'group_type' => ['nullable', 'exists:group_types,id'],
         ];
 
         return [
@@ -67,6 +68,7 @@ class Peergroup extends Model
                 $query->where('approved', true);
             },
             'languages',
+            'groupType',
         ];
     }
 

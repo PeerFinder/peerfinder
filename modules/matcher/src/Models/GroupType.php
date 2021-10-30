@@ -27,12 +27,18 @@ class GroupType extends Model
 
     public function getRecursiveTypes()
     {
-        $types = [];
+        $types = array($this);
 
         if ($this->group_type_id) {
             $types = array_merge($types, $this->groupType()->first()->getRecursiveTypes());
-        } else {
-            $types[] = $this;
         }
+
+        return $types;
+    }
+
+    public function title()
+    {
+        $field = 'title_' . app()->getLocale();
+        return $this->$field;
     }
 }

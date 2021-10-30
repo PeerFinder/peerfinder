@@ -85,6 +85,7 @@ class MatcherServiceProvider extends ServiceProvider
                     $query->orderBy('date', 'desc')->limit(1);
                 },
                 'languages',
+                'groupType',
             ])->firstOrFail();
         });
 
