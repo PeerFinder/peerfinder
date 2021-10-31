@@ -7,10 +7,10 @@
         </div>
         @if ($pg->groupType)
         <div>
-            <p class="bg-gray-50 text-gray-600 text-center px-4 py-1 mb-2">{{ $pg->groupType->title() }}</p>
+            <p class="px-4 mt-4 font-semibold text-pf-midblue">{{ $pg->groupType->title() }}</p>
         </div>
         @endif
-        <div class="p-4 bg-white rounded-t">
+        <div class="p-4 bg-white">
             <h2 class="font-bold text-xl inline-flex items-center">@if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1" />@endif{{ $pg->title }}</h2>
         </div>
         <div>

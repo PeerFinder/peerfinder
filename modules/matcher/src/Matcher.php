@@ -343,4 +343,9 @@ class Matcher
 
         $this->saveImageForPeergroup($pg, $image);
     }
+
+    function groupTypesSelect()
+    {
+        
+    }
 }

@@ -94,4 +94,20 @@ class GroupTypeTest extends TestCase
 
         $response->assertSessionHasErrors();
     }    
+
+    public function test_can_show_group_type_in_group()
+    {
+        $user1 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user1)->create();
+        $gt1 = GroupType::factory()->create();
+
+        $pg->groupType()->associate($gt1);
+        $pg->save();
+
+        $response = $this->actingAs($user1)->get($pg->getUrl());
+
+        $response->assertSee($gt1->title());
+        $response->assertSee($gt1->description());
+        $response->assertSee($gt1->reference());
+    }
 }

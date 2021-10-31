@@ -46,5 +46,11 @@ class GroupType extends Model
     {
         $field = 'description_' . app()->getLocale();
         return $this->$field;
-    }    
+    }
+
+    public function reference()
+    {
+        $field = 'reference_' . app()->getLocale();
+        return $this->$field;
+    }
 }
