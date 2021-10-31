@@ -2,12 +2,14 @@
 
 <a href="{{ $pg->getUrl() }}" class="rounded-md block shadow overflow-hidden">
     <div class="">
-        <div class="relative">
+        <div>
             <img src="{{ Matcher::getGroupImageLink($pg) }}" alt="{{ $pg->image_alt }}" />
-            @if ($pg->groupType)
-            <p class="bg-pf-midblue text-white inline-block px-4 py-1 rounded-full mb-2 absolute left-1/2 -translate-x-1/2 bottom-0">{{ $pg->groupType->title() }}</p>
-            @endif
         </div>
+        @if ($pg->groupType)
+        <div>
+            <p class="bg-gray-50 text-gray-600 text-center px-4 py-1 mb-2">{{ $pg->groupType->title() }}</p>
+        </div>
+        @endif
         <div class="p-4 bg-white rounded-t">
             <h2 class="font-bold text-xl inline-flex items-center">@if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1" />@endif{{ $pg->title }}</h2>
         </div>

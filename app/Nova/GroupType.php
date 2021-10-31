@@ -53,7 +53,7 @@ class GroupType extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
 
-            Stack::make('Title', [
+            Stack::make('Titles', [
                 Line::make('title_de', fn () => 'De: ' . $this->title_de),
                 Line::make('title_en', fn () => 'En: ' . $this->title_en),
             ])->onlyOnIndex(),
