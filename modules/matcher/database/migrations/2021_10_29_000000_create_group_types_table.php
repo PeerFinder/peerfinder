@@ -10,6 +10,7 @@ class CreateGroupTypesTable extends Migration
     {
         Schema::create('group_types', function (Blueprint $table) {
             $table->id();
+            $table->string('identifier')->unique();
             $table->string('title_de');
             $table->string('title_en');
             $table->text('description_de');

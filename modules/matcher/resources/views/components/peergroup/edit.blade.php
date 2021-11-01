@@ -1,4 +1,4 @@
-@props(['pg' => null, 'errors' => null])
+@props(['pg' => null, 'errors' => null, 'groupTypes'])
 
 <x-ui.card title="{{ $pg->isDirty() ? __('matcher::peergroup.new_peergroup_title') : __('matcher::peergroup.edit_title') }}">
     <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
@@ -6,7 +6,7 @@
     <x-ui.forms.form :action="$pg->isDirty() ? route('matcher.create') : route('matcher.edit', ['pg' => $pg->groupname])">
         <div class="p-4 space-y-6">
             <div>
-                <x-ui.forms.select name="group_type" id="group_type" :options="Matcher::groupTypesSelect()" value="{{ old('group_type', $pg->group_type_id) }}">{{ __('matcher::peergroup.field_group_type') }} <x-ui.link href="" class="text-sm ml-2">More about types TODO</x-ui.link></x-ui.forms.select>
+                <x-ui.forms.select name="group_type" id="group_type" :options="$groupTypes" value="{{ old('group_type', $pg->groupType ? $pg->groupType->identifier : null) }}">{{ __('matcher::peergroup.field_group_type') }} <x-ui.link href="" class="text-sm ml-2">More about types TODO</x-ui.link></x-ui.forms.select>
             </div>
             <div>
                 <x-ui.forms.input id="title" value="{{ old('title', $pg->title) }}" name="title" type="text" required>{{ __('matcher::peergroup.field_title') }}</x-ui.forms.input>

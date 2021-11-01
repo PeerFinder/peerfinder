@@ -2,6 +2,7 @@
 
 namespace Matcher\Models;
 
+use App\Helpers\Facades\Urler;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Matcher\Database\Factories\GroupTypeFactory;
@@ -9,6 +10,15 @@ use Matcher\Database\Factories\GroupTypeFactory;
 class GroupType extends Model
 {
     use HasFactory;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($groupType) {
+            Urler::createUniqueSlug($groupType, 'identifier');
+        });
+    }
 
     protected static function newFactory()
     {
@@ -18,7 +28,7 @@ class GroupType extends Model
     public function groupTypes()
     {
         return $this->hasMany(GroupType::class);
-    }    
+    }
 
     public function groupType()
     {

@@ -13,8 +13,8 @@ class GroupTypeFactory extends Factory
     public function definition()
     {
         return [
-            'title_de' => $this->faker->text(),
-            'title_en' => $this->faker->text(),
+            'title_de' => $this->faker->realText(20),
+            'title_en' => $this->faker->realText(20),
             'description_de' => $this->faker->text(),
             'description_en' => $this->faker->text(),
         ];

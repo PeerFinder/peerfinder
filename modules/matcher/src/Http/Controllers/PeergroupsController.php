@@ -31,7 +31,9 @@ class PeergroupsController extends Controller
             'begin' => Carbon::today(),
         ]);
 
-        return view('matcher::peergroups.create', compact('pg'));
+        $group_types = Matcher::groupTypesSelect();
+
+        return view('matcher::peergroups.create', compact('pg', 'group_types'));
     }
 
     public function preview(Request $request, $groupname)
@@ -80,7 +82,10 @@ class PeergroupsController extends Controller
     public function edit(Request $request, Peergroup $pg)
     {
         Gate::authorize('edit', $pg);
-        return view('matcher::peergroups.edit', compact('pg'));
+        
+        $group_types = Matcher::groupTypesSelect();
+
+        return view('matcher::peergroups.edit', compact('pg', 'group_types'));
     }
 
     public function editOwner(Request $request, Peergroup $pg)

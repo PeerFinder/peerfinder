@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Matcher\Facades\Matcher;
 use Matcher\Models\GroupType;
 use Matcher\Models\Language;
 use Matcher\Models\Peergroup;
@@ -57,7 +58,7 @@ class GroupTypeTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
-            'group_type' => $gt1->id,
+            'group_type' => $gt1->identifier,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.create'), $data);
@@ -87,7 +88,7 @@ class GroupTypeTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
-            'group_type' => $gt1->id + 1,
+            'group_type' => 'some-fake-identifier',
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.create'), $data);
@@ -109,5 +110,19 @@ class GroupTypeTest extends TestCase
         $response->assertSee($gt1->title());
         $response->assertSee($gt1->description());
         $response->assertSee($gt1->reference());
+    }
+
+    public function test_can_show_list_of_groups()
+    {
+        $gts = GroupType::factory(5)->create();
+
+        $gt_1 = GroupType::factory()->withParent($gts[1])->create();
+        $gt_2 = GroupType::factory()->withParent($gts[2])->create();
+
+        $gt_2_1 = GroupType::factory()->withParent($gt_2)->create();
+
+        $select = Matcher::groupTypesSelect();
+
+        $this->assertCount(8, $select);
     }
 }

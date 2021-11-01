@@ -52,7 +52,7 @@ class Matcher
 
         Validator::make($input, Peergroup::rules()[$pg ? 'update' : 'create'])->validate();
 
-        $groupType = GroupType::find($request->group_type);
+        $groupType = GroupType::whereIdentifier($request->group_type)->first();
 
         if ($pg) {
             $pg->fill($input);
@@ -344,8 +344,23 @@ class Matcher
         $this->saveImageForPeergroup($pg, $image);
     }
 
-    function groupTypesSelect()
+    function groupTypesSelect($type = null, $level = 0)
     {
-        
+        $options = [];
+
+        $title_field = 'title_' . app()->getLocale();
+
+        if ($type) {
+            $sub_types = $type->groupTypes;
+            $options[$type->identifier] = trim(str_repeat('-', $level - 1) . ' ' . $type->$title_field);
+        } else {
+            $sub_types = GroupType::where('group_type_id', null)->with('groupTypes')->get();
+        }
+
+        $sub_types->each(function ($el) use(&$options, $level) {
+            $options = array_merge($options, $this->groupTypesSelect($el, $level + 1));
+        });
+
+        return $options;
     }
 }
