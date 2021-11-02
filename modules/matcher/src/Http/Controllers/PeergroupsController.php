@@ -157,4 +157,9 @@ class PeergroupsController extends Controller
 
         return $result;
     }
+
+    public function groupTypes()
+    {
+        return view('matcher::peergroups.group-types');
+    }
 }

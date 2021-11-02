@@ -125,4 +125,40 @@ class GroupTypeTest extends TestCase
 
         $this->assertCount(8, $select);
     }
+
+    public function test_owner_can_set_group_type_when_updating()
+    {
+        $user = User::factory()->create();
+        $language = Language::factory()->create();
+
+        $gt1 = GroupType::factory()->create();
+        $gt2 = GroupType::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user)->create([
+            'group_type_id' => $gt1->id,
+        ]);
+
+        $data = [
+            'title' => $this->faker->realText(50),
+            'description' => $this->faker->text(),
+            'limit' => $this->faker->numberBetween(2, config('matcher.max_limit')),
+            'begin' => $this->faker->date(),
+            'virtual' => $this->faker->boolean(),
+            'private' => $this->faker->boolean(),
+            'with_approval' => $this->faker->boolean(),
+            'location' => $this->faker->city(),
+            'meeting_link' => $this->faker->url(),
+            'languages' => [$language->code],
+            'group_type' => $gt2->identifier,
+        ];
+
+        $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(302);
+
+        $pg = $user->peergroups()->first();
+
+        $this->assertEquals($gt2->id, $pg->groupType()->first()->id);
+    }    
 }

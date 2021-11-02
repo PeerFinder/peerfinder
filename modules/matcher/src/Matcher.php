@@ -33,6 +33,8 @@ class Matcher
         $this->min_upload_width = config('matcher.image.min_upload_width');
         $this->min_upload_height = config('matcher.image.min_upload_height');
         $this->max_upload_file = config('matcher.image.max_upload_file');
+
+        $this->locale = app()->getLocale();
     }
 
     public function cleanupForUser(User $user)
@@ -346,15 +348,21 @@ class Matcher
 
     function groupTypesSelect($type = null, $level = 0)
     {
-        $options = [];
-
-        $title_field = 'title_' . app()->getLocale();
+        $title_field = 'title_' . $this->locale;
 
         if ($type) {
+            $options = [];
+
             $sub_types = $type->groupTypes;
+
             $options[$type->identifier] = trim(str_repeat('-', $level - 1) . ' ' . $type->$title_field);
         } else {
-            $sub_types = GroupType::where('group_type_id', null)->with('groupTypes')->get();
+            $options = ['' => ''];
+
+            $sub_types = GroupType::where('group_type_id', null)
+                        ->with('groupTypes')
+                        ->orderBy('title_' . $this->locale)
+                        ->get();
         }
 
         $sub_types->each(function ($el) use(&$options, $level) {

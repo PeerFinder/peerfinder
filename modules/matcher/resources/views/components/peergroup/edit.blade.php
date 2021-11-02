@@ -6,7 +6,7 @@
     <x-ui.forms.form :action="$pg->isDirty() ? route('matcher.create') : route('matcher.edit', ['pg' => $pg->groupname])">
         <div class="p-4 space-y-6">
             <div>
-                <x-ui.forms.select name="group_type" id="group_type" :options="$groupTypes" value="{{ old('group_type', $pg->groupType ? $pg->groupType->identifier : null) }}">{{ __('matcher::peergroup.field_group_type') }} <x-ui.link href="" class="text-sm ml-2">More about types TODO</x-ui.link></x-ui.forms.select>
+                <x-ui.forms.select name="group_type" id="group_type" :options="$groupTypes" value="{{ old('group_type', $pg->groupType ? $pg->groupType->identifier : null) }}">{{ __('matcher::peergroup.field_group_type') }} <x-ui.link href="{{ route('matcher.group_types') }}" class="text-sm ml-2" target="_blank">@lang('matcher::peergroup.more_about_types')</x-ui.link></x-ui.forms.select>
             </div>
             <div>
                 <x-ui.forms.input id="title" value="{{ old('title', $pg->title) }}" name="title" type="text" required>{{ __('matcher::peergroup.field_title') }}</x-ui.forms.input>

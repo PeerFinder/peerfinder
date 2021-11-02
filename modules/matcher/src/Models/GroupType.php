@@ -27,7 +27,7 @@ class GroupType extends Model
 
     public function groupTypes()
     {
-        return $this->hasMany(GroupType::class);
+        return $this->hasMany(GroupType::class)->with('groupTypes')->orderBy('title_' . app()->getLocale());
     }
 
     public function groupType()

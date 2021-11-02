@@ -131,4 +131,6 @@ return [
     
     'group_type_reference' => 'More info',
     'field_group_type' => 'Type of group',
+    'more_about_types' => 'More about types',
+    'group_types_title' => 'Group Types',
 ];
