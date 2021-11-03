@@ -129,4 +129,7 @@ return [
     'image_upload_notice' => 'Das Bild sollte ein Seitenverhältnis von :r:1 haben. Minimale Abmessungen: :w x :h px.',
 
     'group_type_reference' => 'Mehr Informationen',
+    'field_group_type' => 'Gruppentyp',
+    'more_about_types' => 'Welche Typen gibt es?',
+    'group_types_title' => 'Gruppentypen',
 ];

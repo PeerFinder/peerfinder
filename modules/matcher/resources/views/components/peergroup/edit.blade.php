@@ -16,10 +16,10 @@
             </div>
             <div class="flex space-x-6">
                 <div class="w-1/3">
-                    <x-ui.forms.input id="begin" value="{{ old('begin', $pg->begin->format('Y-m-d')) }}" name="begin" type="date">{{ __('matcher::peergroup.field_begin') }}</x-ui.forms.input>
+                    <x-ui.forms.input id="begin" value="{{ old('begin', $pg->begin->format('Y-m-d')) }}" name="begin" type="date" required>{{ __('matcher::peergroup.field_begin') }}</x-ui.forms.input>
                 </div>
                 <div>
-                    <x-ui.forms.input id="limit" value="{{ old('limit', $pg->limit) }}" name="limit" type="number" min="2" max="{{ config('matcher.max_limit') }}" class="w-20">{{ __('matcher::peergroup.field_limit') }}</x-ui.forms.input>
+                    <x-ui.forms.input id="limit" value="{{ old('limit', $pg->limit) }}" name="limit" type="number" min="2" max="{{ config('matcher.max_limit') }}" class="w-20" required>{{ __('matcher::peergroup.field_limit') }}</x-ui.forms.input>
                 </div>
             </div>
             <conditional-elements trigger="virtual" class="space-y-6">
@@ -45,7 +45,7 @@
                 <x-ui.forms.checkbox id="with_approval" default="{{ $pg->with_approval }}" name="with_approval">{{ __('matcher::peergroup.field_with_approval') }}</x-ui.forms.checkbox>
             </div>
             <div>
-                <x-ui.forms.multi-checkbox :selection="\Matcher\Models\Language::all()" key="code" :default="$pg->languages" name="languages">{{ __('matcher::peergroup.field_languages') }}</x-ui.forms.multi-checkbox>
+                <x-ui.forms.multi-checkbox :selection="\Matcher\Models\Language::all()" key="code" :default="$pg->languages" name="languages" required="true">{{ __('matcher::peergroup.field_languages') }}</x-ui.forms.multi-checkbox>
             </div>
         </div>
 

@@ -94,7 +94,7 @@ class GroupTypeTest extends TestCase
         $response = $this->actingAs($user)->put(route('matcher.create'), $data);
 
         $response->assertSessionHasErrors();
-    }    
+    }
 
     public function test_can_show_group_type_in_group()
     {
@@ -123,7 +123,7 @@ class GroupTypeTest extends TestCase
 
         $select = Matcher::groupTypesSelect();
 
-        $this->assertCount(8, $select);
+        $this->assertCount(8 + 1, $select);
     }
 
     public function test_owner_can_set_group_type_when_updating()
@@ -160,5 +160,14 @@ class GroupTypeTest extends TestCase
         $pg = $user->peergroups()->first();
 
         $this->assertEquals($gt2->id, $pg->groupType()->first()->id);
-    }    
+    }
+
+    public function test_user_can_render_group_types_page()
+    {
+        $user1 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->get(route('matcher.group_types'));
+
+        $response->assertStatus(200);
+    }
 }
