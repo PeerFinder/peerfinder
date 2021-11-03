@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
+use Matcher\Models\GroupType;
 use Matcher\Models\Peergroup;
 
 class PeergroupsController extends Controller
@@ -160,6 +161,13 @@ class PeergroupsController extends Controller
 
     public function groupTypes()
     {
-        return view('matcher::peergroups.group-types');
+        $locale = app()->getLocale();
+        
+        $group_types = GroupType::where('group_type_id', null)
+            ->with('groupTypes')
+            ->orderBy('title_' . $locale)
+            ->get();
+
+        return view('matcher::peergroups.group-types', compact('group_types', 'locale'));
     }
 }
