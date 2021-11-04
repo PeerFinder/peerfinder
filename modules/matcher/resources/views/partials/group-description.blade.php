@@ -1,4 +1,4 @@
-<x-ui.card title="{{ __('matcher::peergroup.group_description') }}" edit="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" :can="auth()->user()->can('edit', $pg)">
+<x-ui.card title="{{ __('matcher::peergroup.group_description') }}" edit="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" :can="auth()->check() ? auth()->user()->can('edit', $pg) : false">
     <div class="lg:flex">
         @if ($pg->groupType)
         <div class="lg:w-1/3 flex-shrink-0">
