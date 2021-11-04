@@ -17,6 +17,8 @@ class GroupTypeFactory extends Factory
             'title_en' => $this->faker->realText(20),
             'description_de' => $this->faker->text(),
             'description_en' => $this->faker->text(),
+            'reference_de' => $this->faker->url(),
+            'reference_en' => $this->faker->url(),
         ];
     }
 

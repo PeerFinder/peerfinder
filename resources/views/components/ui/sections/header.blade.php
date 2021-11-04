@@ -47,15 +47,9 @@
             @endguest
             
             @auth
-            {{--
-            <div class="flex-1 flex justify-center">
-                <x-ui.sections.header.button class="bg-pf-darkblue hover:bg-pf-midblue mr-2" href="{{ route('matcher.index') }}">@lang('profile/user.menu_find_peers')</x-ui.sections.header.button>
-            </div>
-            --}}
-
             <div class="flex items-center">
                 {{-- Notification and Messages menu --}}
-                <div class="mr-5 flex space-x-2">
+                <div class="mr-5 flex space-x-4">
                     <div class="relative">
                         <a href="{{ route('notifications.index') }}"><x-ui.icon name="bell" class="w-7 h-7 text-gray-300 hover:text-white" /></a>
                         @if ($user->unreadNotifications->isNotEmpty())

@@ -11,8 +11,8 @@
                     <div class="line-clamp-1">{{ $conv->conversationable->title }}</div>
                 </div>
                 @endif
-                <div class="p-2 flex items-center" >
-                    <div class="w-10 h-10 flex-none relative">
+                <div class="p-2 flex items-center overflow-hidden" >
+                    <div class="w-10 h-10 flex-shrink-0 relative">
                         @include('talk::partials.avatars', ['users' => Talk::filterUsersForConversation($conv)])
                     </div>
                     <div class="flex-1">

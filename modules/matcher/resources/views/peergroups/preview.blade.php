@@ -31,22 +31,6 @@
     <div class="sm:mt-10 mb-5 sm:mb-10 sm:grid sm:grid-cols-10 gap-7">
         <div class="sm:col-span-6 lg:col-span-7">
             <div class="space-y-5 sm:space-y-7">
-                <x-ui.card title="{{ __('matcher::peergroup.group_description') }}">
-                    <div class="p-4 pb-4">
-                        <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_begin') }}" icon="calendar">{{ $pg->begin->format('d.m.y') }}</x-matcher::ui.group-detail>
-                        @if ($pg->virtual)
-                        <x-matcher::ui.group-detail icon="desktop-computer">{{ __('matcher::peergroup.detail_virtual_group') }}</x-matcher::ui.group-detail>
-                        @else
-                        <x-matcher::ui.group-detail icon="location-marker">{{ $pg->location }}</x-matcher::ui.group-detail>
-                        @endif
-                        <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_languages') }}" icon="translate">{{ $pg->languages->implode('title', ', ') }}</x-matcher::ui.group-detail>
-                    </div>
-
-                    <div class="px-4 pb-4">
-                        {{ $pg->description }}
-                    </div>
-                </x-ui.card>
-
                 <div>
                     <x-ui.card class="p-4 text-center border-2 border-pf-darkorange space-y-2">
                         <div class="mb-2">{{ __('matcher::peergroup.please_login_to_see_details') }}</div>
@@ -54,6 +38,8 @@
                         <x-ui.sections.header.button class="bg-pf-darkorange inline-flex items-center hover:bg-pf-midorange" href="{{ route('register') }}">{{ __('profile/user.button_register') }}</x-ui.sections.header.button>
                     </x-ui.card>
                 </div>
+
+                @include('matcher::partials.group-description')
             </div>
         </div>
 

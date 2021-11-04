@@ -25,12 +25,12 @@
 
             @if ($appointment->details)
             <h3 class="mt-7 font-semibold">{{ __('matcher::peergroup.field_details') }}</h3>
-            <p>{{ $appointment->details }}</p>
+            <div>{!! Matcher::renderMarkdown($appointment->details) !!}</div>
             @endif
 
             @if ($appointment->location)
             <h3 class="mt-3 font-semibold">{{ __('matcher::peergroup.field_location') }}</h3>
-            <p>{{ $appointment->location }}</p>
+            <div>{!! Matcher::renderMarkdown($appointment->location) !!}</div>
             @endif
         </div>
         
