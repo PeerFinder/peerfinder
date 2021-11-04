@@ -1,10 +1,13 @@
-@props(['pg' => null, 'errors' => null])
+@props(['pg' => null, 'errors' => null, 'groupTypes'])
 
 <x-ui.card title="{{ $pg->isDirty() ? __('matcher::peergroup.new_peergroup_title') : __('matcher::peergroup.edit_title') }}">
     <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
     <x-ui.forms.form :action="$pg->isDirty() ? route('matcher.create') : route('matcher.edit', ['pg' => $pg->groupname])">
         <div class="p-4 space-y-6">
+            <div>
+                <x-ui.forms.select name="group_type" id="group_type" :options="$groupTypes" value="{{ old('group_type', $pg->groupType ? $pg->groupType->identifier : null) }}">{{ __('matcher::peergroup.field_group_type') }} <x-ui.link href="{{ route('matcher.group_types') }}" class="text-sm ml-2" target="_blank">@lang('matcher::peergroup.more_about_types')</x-ui.link></x-ui.forms.select>
+            </div>
             <div>
                 <x-ui.forms.input id="title" value="{{ old('title', $pg->title) }}" name="title" type="text" required>{{ __('matcher::peergroup.field_title') }}</x-ui.forms.input>
             </div>
@@ -13,10 +16,10 @@
             </div>
             <div class="flex space-x-6">
                 <div class="w-1/3">
-                    <x-ui.forms.input id="begin" value="{{ old('begin', $pg->begin->format('Y-m-d')) }}" name="begin" type="date">{{ __('matcher::peergroup.field_begin') }}</x-ui.forms.input>
+                    <x-ui.forms.input id="begin" value="{{ old('begin', $pg->begin->format('Y-m-d')) }}" name="begin" type="date" required>{{ __('matcher::peergroup.field_begin') }}</x-ui.forms.input>
                 </div>
                 <div>
-                    <x-ui.forms.input id="limit" value="{{ old('limit', $pg->limit) }}" name="limit" type="number" min="2" max="{{ config('matcher.max_limit') }}" class="w-20">{{ __('matcher::peergroup.field_limit') }}</x-ui.forms.input>
+                    <x-ui.forms.input id="limit" value="{{ old('limit', $pg->limit) }}" name="limit" type="number" min="2" max="{{ config('matcher.max_limit') }}" class="w-20" required>{{ __('matcher::peergroup.field_limit') }}</x-ui.forms.input>
                 </div>
             </div>
             <conditional-elements trigger="virtual" class="space-y-6">
@@ -42,7 +45,7 @@
                 <x-ui.forms.checkbox id="with_approval" default="{{ $pg->with_approval }}" name="with_approval">{{ __('matcher::peergroup.field_with_approval') }}</x-ui.forms.checkbox>
             </div>
             <div>
-                <x-ui.forms.multi-checkbox :selection="\Matcher\Models\Language::all()" key="code" :default="$pg->languages" name="languages">{{ __('matcher::peergroup.field_languages') }}</x-ui.forms.multi-checkbox>
+                <x-ui.forms.multi-checkbox :selection="\Matcher\Models\Language::all()" key="code" :default="$pg->languages" name="languages" required="true">{{ __('matcher::peergroup.field_languages') }}</x-ui.forms.multi-checkbox>
             </div>
         </div>
 

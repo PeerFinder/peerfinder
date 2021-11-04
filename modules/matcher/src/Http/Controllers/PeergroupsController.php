@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
+use Matcher\Models\GroupType;
 use Matcher\Models\Peergroup;
 
 class PeergroupsController extends Controller
@@ -31,7 +32,9 @@ class PeergroupsController extends Controller
             'begin' => Carbon::today(),
         ]);
 
-        return view('matcher::peergroups.create', compact('pg'));
+        $group_types = Matcher::groupTypesSelect();
+
+        return view('matcher::peergroups.create', compact('pg', 'group_types'));
     }
 
     public function preview(Request $request, $groupname)
@@ -80,7 +83,10 @@ class PeergroupsController extends Controller
     public function edit(Request $request, Peergroup $pg)
     {
         Gate::authorize('edit', $pg);
-        return view('matcher::peergroups.edit', compact('pg'));
+        
+        $group_types = Matcher::groupTypesSelect();
+
+        return view('matcher::peergroups.edit', compact('pg', 'group_types'));
     }
 
     public function editOwner(Request $request, Peergroup $pg)
@@ -151,5 +157,17 @@ class PeergroupsController extends Controller
         $result = Matcher::completeGroup($pg, $request);
 
         return $result;
+    }
+
+    public function groupTypes()
+    {
+        $locale = app()->getLocale();
+        
+        $group_types = GroupType::where('group_type_id', null)
+            ->with('groupTypes')
+            ->orderBy('title_' . $locale)
+            ->get();
+
+        return view('matcher::peergroups.group-types', compact('group_types', 'locale'));
     }
 }

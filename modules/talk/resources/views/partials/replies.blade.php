@@ -1,13 +1,10 @@
+@if ($replies->count())
 <div class="space-y-4">
-    {{ $replies->links('talk::components.ui.pagination') }}
-
     <conversation reply="{{ old('reply') }}">
         <template v-slot:replies="props">
-            @forelse ($replies->reverse() as $reply)
-            @include('talk::partials.reply')
-            @empty
-            <p class="text-center">{{ __('talk::talk.no_replies_yet') }}</p>
-            @endforelse
+            @foreach ($replies->reverse() as $reply)
+                @include('talk::partials.reply')
+            @endforeach
         </template>
         <template v-slot:reply-form="props">
             <div class="bg-white border shadow-sm p-2 mt-1 rounded-md">
@@ -15,6 +12,9 @@
             </div>
         </template>
     </conversation>
-
-    {{ $replies->links('talk::components.ui.pagination') }}
+    
+    {{ $replies->links('pagination::simple-tailwind') }}
 </div>
+@else
+<p class="text-center py-4">{{ __('talk::talk.no_replies_yet') }}</p>
+@endif

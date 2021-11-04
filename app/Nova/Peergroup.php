@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\HasManyThrough;
+use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Line;
 use Laravel\Nova\Fields\Number;
@@ -86,6 +87,8 @@ class Peergroup extends Resource
             BelongsTo::make('User'),
 
             Boolean::make('Open'),
+
+            BelongsTo::make('GroupType')->nullable(),
 
             Text::make('Location')->hideFromIndex()->rules(ModelsPeergroup::rules()['update']['location']),
 

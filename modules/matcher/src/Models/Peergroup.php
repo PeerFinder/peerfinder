@@ -50,6 +50,7 @@ class Peergroup extends Model
             'location' => ['nullable', 'string', 'max:100'],
             'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
             'languages' => ['required', 'exists:languages,code'],
+            'group_type' => ['nullable', 'exists:group_types,identifier'],
         ];
 
         return [
@@ -67,6 +68,7 @@ class Peergroup extends Model
                 $query->where('approved', true);
             },
             'languages',
+            'groupType',
         ];
     }
 
@@ -136,7 +138,12 @@ class Peergroup extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
-    }    
+    }
+
+    public function groupType()
+    {
+        return $this->belongsTo(GroupType::class);
+    }
 
     public function members()
     {

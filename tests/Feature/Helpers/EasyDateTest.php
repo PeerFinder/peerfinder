@@ -17,7 +17,7 @@ class EasyDateTest extends TestCase
 
         $this->be($user);
 
-        $user_time = Carbon::parse("15:00", $user->timezone);
+        $user_time = Carbon::parse("2021-06-01 15:00", $user->timezone);
 
         $utc_time = EasyDate::toUTC($user_time);
 
@@ -32,7 +32,7 @@ class EasyDateTest extends TestCase
 
         $this->be($user);
 
-        $database_time = Carbon::parse("17:00");
+        $database_time = Carbon::parse("2021-06-01 17:00");
         
         $user_time = EasyDate::fromUTC($database_time);
 
@@ -41,7 +41,7 @@ class EasyDateTest extends TestCase
 
     public function test_conversion_from_utc_without_tz()
     {
-        $database_time = Carbon::parse("17:00");
+        $database_time = Carbon::parse("2021-06-01 17:00");
 
         $user_time = EasyDate::fromUTC($database_time);
 

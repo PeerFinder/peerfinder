@@ -155,6 +155,7 @@ return [
         'image'                 => 'Bild',
         'language'              => 'Sprache',
         'languages'             => 'Sprachen',
+        'limit'                 => 'Max. Anzahl',
         'last_name'             => 'Nachname',
         'Meeting_link'          => 'Meeting Link',
         'minute'                => 'Minute',

@@ -22,6 +22,7 @@ use Matcher\Rules\IsGroupMember;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Matcher\Models\GroupType;
 
 class Matcher
 {
@@ -32,6 +33,8 @@ class Matcher
         $this->min_upload_width = config('matcher.image.min_upload_width');
         $this->min_upload_height = config('matcher.image.min_upload_height');
         $this->max_upload_file = config('matcher.image.max_upload_file');
+
+        $this->locale = app()->getLocale();
     }
 
     public function cleanupForUser(User $user)
@@ -51,17 +54,20 @@ class Matcher
 
         Validator::make($input, Peergroup::rules()[$pg ? 'update' : 'create'])->validate();
 
+        $groupType = GroupType::whereIdentifier($request->group_type)->first();
+
         if ($pg) {
-            $pg->update($input);
+            $pg->fill($input);
         } else {
             $pg = new Peergroup($input);
             $pg->user()->associate($request->user());
             $pg->open = true;
-            $pg->save();
         }
+        
+        $pg->groupType()->associate($groupType);
+        $pg->save();
 
         $languages = Language::whereIn('code', array_values($request->languages))->get();
-
         $pg->languages()->sync($languages);
 
         return $pg;
@@ -338,5 +344,31 @@ class Matcher
         $image->insert($overlay, 'center');
 
         $this->saveImageForPeergroup($pg, $image);
+    }
+
+    function groupTypesSelect($type = null, $level = 0)
+    {
+        $title_field = 'title_' . $this->locale;
+
+        if ($type) {
+            $options = [];
+
+            $sub_types = $type->groupTypes;
+
+            $options[$type->identifier] = trim(str_repeat('-', $level - 1) . ' ' . $type->$title_field);
+        } else {
+            $options = ['' => ''];
+
+            $sub_types = GroupType::where('group_type_id', null)
+                        ->with('groupTypes')
+                        ->orderBy('title_' . $this->locale)
+                        ->get();
+        }
+
+        $sub_types->each(function ($el) use(&$options, $level) {
+            $options = array_merge($options, $this->groupTypesSelect($el, $level + 1));
+        });
+
+        return $options;
     }
 }
