@@ -371,4 +371,62 @@ class Matcher
 
         return $options;
     }
+
+    public function generateFilters($peergroups)
+    {
+        $filters = [
+            'language' => [],
+            'groupType' => [],
+            'virtual' => [],
+        ];
+
+        #$pgQuery = Peergroup::with([
+        #    'languages',
+        #    'groupType',
+        #]);
+
+        $urlParams = request()->query();
+
+        #$peergroups = $pgQuery->get();
+
+        $peergroups->each(function ($pg) use (&$filters) {
+            # Collect languages
+            $pg->languages->each(function ($lang) use (&$filters) {
+                if (!key_exists($lang->code, $filters['language'])) {
+                    $filters['language'][$lang->code] = ['title' => $lang->title, 'count' => 1];
+                } else {
+                    $filters['language'][$lang->code]['count']++;
+                }
+            });
+
+            # Collect group types
+            if ($pg->groupType) {
+                if (!key_exists($pg->groupType->identifier, $filters['groupType'])) {
+                    $filters['groupType'][$pg->groupType->identifier] = ['title' => $pg->groupType->title(), 'count' => 1];
+                } else {
+                    $filters['groupType'][$pg->groupType->identifier]['count']++;
+                }
+            }
+
+            # Collect virtual or not
+            $virtual = $pg->virtual ? 'yes' : 'no';
+            if (!key_exists($virtual, $filters['virtual'])) {
+                $filters['virtual'][$virtual] = ['title' => __('matcher::peergroup.bool_' . $virtual), 'count' => 1];
+            } else {
+                $filters['virtual'][$virtual]['count']++;
+            }
+        });
+
+        foreach ($filters as $key => $filter) {
+            $urlParamsCopy = $urlParams;
+
+            foreach ($filter as $p => $f) {
+                $urlParamsCopy[$key] = $p;
+                $filters[$key][$p]['link'] = route('matcher.index', $urlParamsCopy);
+                $filters[$key][$p]['active'] = key_exists($key, $urlParams) && $urlParams[$key] == $p;
+            }
+        }
+
+        return $filters;
+    }
 }

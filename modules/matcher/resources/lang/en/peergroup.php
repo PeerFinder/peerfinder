@@ -127,10 +127,11 @@ return [
     'current_image' => 'Current image',
     'button_edit_image' => 'Edit',
     'image_upload_notice' => 'The image shall have an aspect ratio of :r:1. Minimal image dimensions: :w x :h px.',
-    
-    
     'group_type_reference' => 'More info',
     'field_group_type' => 'Type of group',
     'more_about_types' => 'More about types',
     'group_types_title' => 'Group Types',
+
+    'bool_yes' => 'Yes',
+    'bool_no' => 'No',
 ];
