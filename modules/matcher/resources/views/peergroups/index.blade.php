@@ -9,7 +9,7 @@
         </div>
         <div class="flex-1">
             @if ($peergroups->count() > 0)
-            <div class="grid sm:grid-cols-2 gap-6">
+            <div class="grid sm:grid-cols-2 gap-4">
             @foreach ($peergroups as $pg)
                 <x-matcher::peergroup.card :pg="$pg" />
             @endforeach

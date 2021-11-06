@@ -4,7 +4,7 @@
         <div class="lg:w-1/3 flex-shrink-0">
             <div class="m-4 lg:mr-0 p-4 border rounded-md shadow-sm bg-gray-50">
                 <div class="text-center mb-2 text-gray-500">
-                    <x-ui.icon name="annotation" size="10" />
+                    <x-ui.icon name="annotation" size="w-10 h-10" />
                 </div>
                 <h2 class="font-bold mb-2">{{ $pg->groupType->title() }}</h2>
                 <p class="text-sm">{{ $pg->groupType->description() }}</p>

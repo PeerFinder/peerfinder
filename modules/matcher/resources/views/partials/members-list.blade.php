@@ -1,4 +1,4 @@
-<x-ui.card title="{{ __('matcher::peergroup.caption_members_list') }}">
+<x-ui.card title="{{ trans_choice('matcher::peergroup.number_of_members', $pg->getMembers()->count(), ['count' => $pg->getMembers()->count()]) }}">
     @if ($pg && $pg->getMembers()->count() > 0)
     <div class="p-2 space-y-1 m-2">
         @foreach ($pg->memberships as $membership)

@@ -3,7 +3,7 @@
 return [
     'peergroups_title' => 'Gruppen',
     'no_groups_yet' => 'Noch keine Gruppen.',
-    'number_of_members' => '{1} Ein Mitglied|[2,*] :count Mitglieder',
+    'number_of_members' => '{0}Keine Mitglieder|{1} Ein Mitglied|[2,*] :count Mitglieder',
     'group_description' => 'Über die Gruppe',
     'role_founder' => 'Gruppengründer:in',
     'detail_begin' => 'Start',
