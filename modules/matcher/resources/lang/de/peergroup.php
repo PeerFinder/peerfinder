@@ -132,4 +132,11 @@ return [
     'field_group_type' => 'Gruppentyp',
     'more_about_types' => 'Welche Typen gibt es?',
     'group_types_title' => 'Gruppentypen',
+
+    'bool_yes' => 'Ja',
+    'bool_no' => 'Nein',
+    'reset_filter' => 'Zurücksetzen',
+    'filter_group_types' => 'Gruppentypen',
+    'filter_languages' => 'Sprachen',
+    'filter_virtual' => 'Virtuell',
 ];

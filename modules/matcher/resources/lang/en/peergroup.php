@@ -134,4 +134,8 @@ return [
 
     'bool_yes' => 'Yes',
     'bool_no' => 'No',
+    'reset_filter' => 'Reset filter',
+    'filter_group_types' => 'Group types',
+    'filter_languages' => 'Languages',
+    'filter_virtual' => 'Virtual',
 ];

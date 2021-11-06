@@ -1,13 +1,17 @@
 <x-matcher::layout>
 
 <x-ui.card class="p-4 mt-5">
-    <div class="flex">
-        <div class="w-1/4 space-y-3">
-            <x-matcher::peergroup.filter-list :filter="$filters['groupType']" title="Group type" />
-            <x-matcher::peergroup.filter-list :filter="$filters['language']" title="Language" />
-            <x-matcher::peergroup.filter-list :filter="$filters['virtual']" title="Virtual" />
+    <div class="md:flex">
+        <div class="md:w-1/4 mb-4 md:mb-0">
+
+            <div class="md:mr-4 space-y-3">
+                <x-matcher::peergroup.filter-list :filters="$filters" key="groupType" title="{{ __('matcher::peergroup.filter_group_types') }}" />
+                <x-matcher::peergroup.filter-list :filters="$filters" key="language" title="{{ __('matcher::peergroup.filter_languages') }}" />
+                <x-matcher::peergroup.filter-list :filters="$filters" key="virtual" title="{{ __('matcher::peergroup.filter_virtual') }}" />
+            </div>
+            
         </div>
-        <div class="flex-1">
+        <div class="md:flex-1">
             @if ($peergroups->count() > 0)
             <div class="grid sm:grid-cols-2 gap-4">
             @foreach ($peergroups as $pg)

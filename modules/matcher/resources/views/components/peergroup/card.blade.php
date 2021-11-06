@@ -37,7 +37,7 @@
                 @foreach ($pg->memberships as $membership)
                     @if ($membership->user)
                     <div class="-mr-1 my-1">
-                        <x-ui.user.avatar :user="$membership->user" size="30" class="rounded-full" />
+                        <x-ui.user.avatar :user="$membership->user" size="30" class="rounded-full border border-white" />
                     </div>
                     @endif
                 @endforeach
