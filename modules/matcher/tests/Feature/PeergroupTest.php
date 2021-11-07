@@ -15,6 +15,7 @@ use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
 use Matcher\Events\PeergroupCreated;
 use Matcher\Events\PeergroupDeleted;
+use Matcher\Models\GroupType;
 
 /**
  * @group Peergroup
@@ -537,5 +538,37 @@ class PeergroupTest extends TestCase
         $this->assertEquals('<p>Hello</p>', Matcher::renderMarkdown('<strong>Hello</strong>'));
         $this->assertEquals("<p>A<br>\nB</p>", Matcher::renderMarkdown("A\nB"));
         $this->assertEquals("<p>A</p>\n<p>B</p>", Matcher::renderMarkdown("A\n\nB"));
+    }
+
+    public function test_user_can_filter_groups()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory(5)->byUser()->create();
+
+        $languages = Language::factory(3)->create();
+        $groupTypes = GroupType::factory(3)->create();
+
+        $pg[0]->languages()->attach($languages[0]);
+        $pg[1]->languages()->attach($languages[0]);
+        $pg[1]->languages()->attach($languages[1]);
+        $pg[2]->languages()->attach($languages[2]);
+
+        $pg[0]->groupType()->associate($groupTypes[0]);
+        $pg[0]->save();
+
+        $pg[1]->groupType()->associate($groupTypes[0]);
+        $pg[1]->save();
+
+        $pg[2]->groupType()->associate($groupTypes[1]);
+        $pg[2]->save();
+
+        $response = $this->actingAs($user)->get(route('matcher.index', ['groupType' => $groupTypes[0]->identifier]));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user)->get(route('matcher.index', ['language' => $languages[0]->code]));
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user)->get(route('matcher.index', ['virtual' => $pg[0]->virtual ? 'yes' : 'no']));
+        $response->assertStatus(200);
     }
 }
