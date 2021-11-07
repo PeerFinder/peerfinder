@@ -6,6 +6,7 @@ import TimezoneSelect from './components/TimezoneSelect.vue';
 import ConditionalElements from './components/ConditionalElements.vue';
 import EditableList from './components/EditableList.vue';
 import Conversation from './components/Conversation.vue';
+import CollapsedContent from './components/CollapsedContent.vue';
 import vClickOutside from "click-outside-vue3";
 
 const app = createApp({
@@ -15,6 +16,7 @@ const app = createApp({
         'conditional-elements': ConditionalElements,
         'editable-list': EditableList,
         'conversation': Conversation,
+        'collapsed-content': CollapsedContent,
     }
 });
 

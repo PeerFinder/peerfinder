@@ -3,7 +3,7 @@
 return [
     'peergroups_title' => 'Gruppen',
     'no_groups_yet' => 'Noch keine Gruppen.',
-    'number_of_members' => '{1} Ein Mitglied|[2,*] :count Mitglieder',
+    'number_of_members' => '{0}Keine Mitglieder|{1} Ein Mitglied|[2,*] :count Mitglieder',
     'group_description' => 'Über die Gruppe',
     'role_founder' => 'Gruppengründer:in',
     'detail_begin' => 'Start',
@@ -132,4 +132,12 @@ return [
     'field_group_type' => 'Gruppentyp',
     'more_about_types' => 'Welche Typen gibt es?',
     'group_types_title' => 'Gruppentypen',
+
+    'bool_yes' => 'Ja',
+    'bool_no' => 'Nein',
+    'reset_filter' => 'Zurücksetzen',
+    'filter_group_types' => 'Gruppentypen',
+    'filter_languages' => 'Sprachen',
+    'filter_virtual' => 'Virtuell',
+    'filter_groups' => 'Gruppen filtern',
 ];

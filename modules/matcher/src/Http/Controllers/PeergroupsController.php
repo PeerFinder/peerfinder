@@ -14,12 +14,31 @@ class PeergroupsController extends Controller
 {
     public function index(Request $request)
     {
-        $peergroups = Peergroup::withDefaults()
+        $query = Peergroup::withDefaults()
             ->whereOpen(true)
-            ->wherePrivate(false)
-            ->get();
+            ->wherePrivate(false);
 
-        return view('matcher::peergroups.index', compact('peergroups'));
+        if ($request->has('language')) {
+            $query->whereHas('languages', function ($query) use ($request) {
+                $query->where('code', $request->language);
+            });
+        }
+
+        if ($request->has('groupType')) {
+            $query->whereHas('groupType', function ($query) use ($request) {
+                $query->where('identifier', $request->groupType);
+            });
+        }
+
+        if ($request->has('virtual')) {
+            $query->where('virtual', ($request->virtual == 'yes'));
+        }
+            
+        $peergroups = $query->paginate();
+
+        $filters = Matcher::generateFilters($peergroups);
+
+        return view('matcher::peergroups.index', compact('peergroups', 'filters'));
     }
 
     public function create()
@@ -40,9 +59,9 @@ class PeergroupsController extends Controller
     public function preview(Request $request, $groupname)
     {
         $pg = Peergroup::whereGroupname($groupname)
-                ->with(Peergroup::defaultRelationships())
-                ->wherePrivate(false)
-                ->firstOrFail();
+            ->with(Peergroup::defaultRelationships())
+            ->wherePrivate(false)
+            ->firstOrFail();
 
         if (auth()->check() && Gate::allows('view', $pg)) {
             return redirect($pg->getUrl());
@@ -83,42 +102,16 @@ class PeergroupsController extends Controller
     public function edit(Request $request, Peergroup $pg)
     {
         Gate::authorize('edit', $pg);
-        
+
         $group_types = Matcher::groupTypesSelect();
 
         return view('matcher::peergroups.edit', compact('pg', 'group_types'));
-    }
-
-    public function editOwner(Request $request, Peergroup $pg)
-    {
-        Gate::authorize('editOwner', $pg);
-
-        $members = $pg->getMembers()->reject(function($value) use ($pg) {
-            return $value->id == $pg->user->id;
-        });
-
-        return view('matcher::peergroups.edit-owner', compact('pg', 'members'));
     }
 
     public function delete(Request $request, Peergroup $pg)
     {
         Gate::authorize('delete', $pg);
         return view('matcher::peergroups.delete', compact('pg'));
-    }
-
-    public function updateOwner(Request $request, Peergroup $pg)
-    {
-        Gate::authorize('editOwner', $pg);
-
-        Matcher::changeOwner($pg, $request);
-
-        $pg->refresh();
-
-        if (Gate::allows('view', $pg)) {
-            return redirect($pg->getUrl())->with('success', __('matcher::peergroup.owner_changed_successfully'));
-        } else {
-            return redirect(route('dashboard.index'))->with('success', __('matcher::peergroup.owner_changed_successfully'));
-        }
     }
 
     public function destroy(Request $request, Peergroup $pg)
@@ -159,15 +152,29 @@ class PeergroupsController extends Controller
         return $result;
     }
 
-    public function groupTypes()
+    public function editOwner(Request $request, Peergroup $pg)
     {
-        $locale = app()->getLocale();
-        
-        $group_types = GroupType::where('group_type_id', null)
-            ->with('groupTypes')
-            ->orderBy('title_' . $locale)
-            ->get();
+        Gate::authorize('editOwner', $pg);
 
-        return view('matcher::peergroups.group-types', compact('group_types', 'locale'));
+        $members = $pg->getMembers()->reject(function ($value) use ($pg) {
+            return $value->id == $pg->user->id;
+        });
+
+        return view('matcher::peergroups.edit-owner', compact('pg', 'members'));
+    }
+
+    public function updateOwner(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('editOwner', $pg);
+
+        Matcher::changeOwner($pg, $request);
+
+        $pg->refresh();
+
+        if (Gate::allows('view', $pg)) {
+            return redirect($pg->getUrl())->with('success', __('matcher::peergroup.owner_changed_successfully'));
+        } else {
+            return redirect(route('dashboard.index'))->with('success', __('matcher::peergroup.owner_changed_successfully'));
+        }
     }
 }

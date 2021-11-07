@@ -371,4 +371,71 @@ class Matcher
 
         return $options;
     }
+
+    public function generateFilters($peergroups)
+    {
+        $filters = [
+            'language' => [],
+            'groupType' => [],
+            'virtual' => [],
+        ];
+
+        $urlParams = request()->query();
+
+        $peergroups->each(function ($pg) use (&$filters) {
+            # Collect languages
+            $pg->languages->each(function ($lang) use (&$filters) {
+                if (!key_exists($lang->code, $filters['language'])) {
+                    $filters['language'][$lang->code] = ['title' => $lang->title, 'count' => 1, 'param' => $lang->code];
+                } else {
+                    $filters['language'][$lang->code]['count']++;
+                }
+            });
+
+            # Collect group types
+            if ($pg->groupType) {
+                if (!key_exists($pg->groupType->identifier, $filters['groupType'])) {
+                    $filters['groupType'][$pg->groupType->identifier] = ['title' => $pg->groupType->title(), 'count' => 1, 'param' => $pg->groupType->identifier];
+                } else {
+                    $filters['groupType'][$pg->groupType->identifier]['count']++;
+                }
+            }
+
+            # Collect virtual or not
+            $virtual = $pg->virtual ? 'yes' : 'no';
+            if (!key_exists($virtual, $filters['virtual'])) {
+                $filters['virtual'][$virtual] = ['title' => __('matcher::peergroup.bool_' . $virtual), 'count' => 1, 'param' => $virtual];
+            } else {
+                $filters['virtual'][$virtual]['count']++;
+            }
+        });
+
+        foreach ($filters as $key => &$filter) {
+            $urlParamsCopy = $urlParams;
+
+            usort($filter, function($a, $b) {
+                return strcmp($a['title'], $b['title']);
+            });
+
+            foreach ($filter as &$f) {
+                $urlParamsCopy[$key] = $f['param'];
+                $f['link'] = route('matcher.index', $urlParamsCopy);
+                $f['active'] = key_exists($key, $urlParams) && $urlParams[$key] == $f['param'];
+            }
+        }
+
+        return $filters;
+    }
+
+    public function getResetFilterLink($filter_key)
+    {
+        $urlParams = request()->query();
+        
+        if (key_exists($filter_key, $urlParams)) {
+            unset($urlParams[$filter_key]);
+            return route('matcher.index', $urlParams);
+        } else {
+            return null;
+        }
+    }
 }
