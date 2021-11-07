@@ -34,7 +34,7 @@ class PeergroupsController extends Controller
             $query->where('virtual', ($request->virtual == 'yes'));
         }
             
-        $peergroups = $query->paginate();
+        $peergroups = $query->get();
 
         $filters = Matcher::generateFilters($peergroups);
 
