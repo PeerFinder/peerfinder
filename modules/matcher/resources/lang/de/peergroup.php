@@ -139,4 +139,5 @@ return [
     'filter_group_types' => 'Gruppentypen',
     'filter_languages' => 'Sprachen',
     'filter_virtual' => 'Virtuell',
+    'filter_groups' => 'Gruppen filtern',
 ];
