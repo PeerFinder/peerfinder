@@ -4,6 +4,7 @@ namespace Matcher\Http\Controllers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
@@ -14,31 +15,23 @@ class PeergroupsController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Peergroup::withDefaults()
-            ->whereOpen(true)
-            ->wherePrivate(false);
+        $params = [];
 
-        if ($request->has('language')) {
-            $query->whereHas('languages', function ($query) use ($request) {
-                $query->where('code', $request->language);
-            });
+        foreach(['language', 'groupType', 'virtual'] as $p) {
+            if ($request->has($p)) {
+                $params[$p] = $request->get($p);
+            }
         }
 
-        if ($request->has('groupType')) {
-            $query->whereHas('groupType', function ($query) use ($request) {
-                $query->where('identifier', $request->groupType);
-            });
-        }
+        $filtered_peergroups = Matcher::getFilteredPeergroups($request);
 
-        if ($request->has('virtual')) {
-            $query->where('virtual', ($request->virtual == 'yes'));
-        }
-            
-        $peergroups = $query->get();
+        $filters = Matcher::generateFilters($filtered_peergroups);
 
-        $filters = Matcher::generateFilters($peergroups);
+        $peergroups = Matcher::paginate($filtered_peergroups, config('matcher.peergroups_per_page'), null, [
+            'path' => Paginator::resolveCurrentPath(),
+        ]);
 
-        return view('matcher::peergroups.index', compact('peergroups', 'filters'));
+        return view('matcher::peergroups.index', compact('peergroups', 'filters', 'params'));
     }
 
     public function create()

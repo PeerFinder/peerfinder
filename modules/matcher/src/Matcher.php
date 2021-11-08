@@ -6,6 +6,9 @@ use App\Helpers\Facades\Urler;
 use App\Models\User;
 use App\Rules\ConfirmCheckbox;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Events\MemberJoinedPeergroup;
 use Matcher\Events\MemberLeftPeergroup;
@@ -382,6 +385,8 @@ class Matcher
 
         $urlParams = request()->query();
 
+        unset($urlParams['page']);
+
         $peergroups->each(function ($pg) use (&$filters) {
             # Collect languages
             $pg->languages->each(function ($lang) use (&$filters) {
@@ -427,9 +432,48 @@ class Matcher
         return $filters;
     }
 
+    public function getFilteredPeergroups(Request $request)
+    {
+        $query = Peergroup::withDefaults()
+            ->whereOpen(true)
+            ->wherePrivate(false);
+
+        if ($request->has('language')) {
+            $query->whereHas('languages', function ($query) use ($request) {
+                $query->where('code', $request->language);
+            });
+        }
+
+        if ($request->has('groupType')) {
+            $query->whereHas('groupType', function ($query) use ($request) {
+                $query->where('identifier', $request->groupType);
+            });
+        }
+
+        if ($request->has('virtual')) {
+            $query->where('virtual', ($request->virtual == 'yes'));
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * @source https://gist.github.com/vluzrmos/3ce756322702331fdf2bf414fea27bcb
+     */
+    public function paginate($items, $perPage = 15, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+    
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+    
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
     public function getResetFilterLink($filter_key)
     {
         $urlParams = request()->query();
+
+        unset($urlParams['page']);
         
         if (key_exists($filter_key, $urlParams)) {
             unset($urlParams[$filter_key]);
