@@ -22,8 +22,36 @@ class DashboardController extends Controller
 
         $memberships = $user->memberships()->where('approved', true)->pluck('peergroup_id');
 
-        $member_peergroups = Peergroup::whereIn('id', $memberships->all())->with(Peergroup::defaultRelationships())->get();
+        $member_peergroups = Peergroup::whereIn('id', $memberships->all())
+                ->with(Peergroup::defaultRelationships())
+                ->with(['appointments' => function ($query) {
+                    $query->orderBy('date', 'asc')->where('date', '>', now());
+                }])
+                ->get();
 
-        return view('frontend.profile.dashboard.index', compact('own_peergroups', 'member_peergroups', 'all_peergroups_count', 'users_count'));
+        $appointments = [];
+
+        $member_peergroups->each(function ($pg) use (&$appointments) {
+            if ($pg->appointments->count() > 0) {
+                $appointment = $pg->appointments->get(0);
+
+                if (!$appointment->isInPast()) {
+                    $appointment->pg = $pg;
+                    $appointments[] = $appointment;
+                }
+            }
+        });
+
+        usort($appointments, function ($a, $b) {
+            return $a->date->greaterThan($b->date);
+        });
+
+        return view('frontend.profile.dashboard.index', compact(
+            'own_peergroups',
+            'member_peergroups',
+            'all_peergroups_count',
+            'users_count',
+            'appointments'
+        ));
     }
 }
