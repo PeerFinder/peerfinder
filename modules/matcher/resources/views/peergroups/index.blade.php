@@ -21,11 +21,15 @@
         </div>
         <div class="md:flex-1">
             @if ($peergroups->count() > 0)
-            <div class="grid sm:grid-cols-2 gap-4">
-            @foreach ($peergroups as $pg)
-                <x-matcher::peergroup.card :pg="$pg" />
-            @endforeach
-            </div>
+                <div class="grid sm:grid-cols-2 gap-4">
+                @foreach ($peergroups as $pg)
+                    <x-matcher::peergroup.card :pg="$pg" />
+                @endforeach
+                </div>
+
+                @if ($peergroups->hasPages())
+                <div class="mt-4">{{ $peergroups->appends($params)->links() }}</div>
+                @endif
             @else
                 <div class="text-center p-10">{{ __('matcher::peergroup.no_groups_yet') }}</div>
             @endif
