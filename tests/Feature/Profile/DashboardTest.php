@@ -59,7 +59,7 @@ class DashboardTest extends TestCase
 
         $ap3 = Appointment::factory()->forPeergroup($pgs[2])->create([
             'date' => Carbon::now()->addDay(),
-        ]);        
+        ]);
 
         Matcher::addMemberToGroup($pgs[0], $user);
         Matcher::addMemberToGroup($pgs[1], $user);
