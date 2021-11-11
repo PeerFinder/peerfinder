@@ -2,7 +2,7 @@
 
 return [
     'conversations_title' => 'Meine Unterhaltungen',
-    'conversation_title' => 'Unterhaltung mit :title',
+    'conversation_title' => 'Unterhaltung: :title',
     'no_conversations_yet' => 'Noch keine Unterhaltungen.',
     'edit_conversation' => 'Unterhaltung bearbeiten',
     'field_title' => 'Titel',

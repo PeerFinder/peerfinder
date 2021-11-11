@@ -5,11 +5,16 @@ namespace Tests\Feature\Notifications;
 use App\Models\User;
 use App\Notifications\NewMemberInGroup;
 use App\Notifications\UserApprovedInGroup;
+use App\Notifications\UserHasUnreadReplies;
 use App\Notifications\UserRequestsToJoinGroup;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Notification;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Peergroup;
+use Talk\Facades\Talk;
+use Talk\Models\Conversation;
+use Talk\Models\Receipt;
 use Tests\TestCase;
 
 /**
@@ -106,5 +111,28 @@ class NotificationsTest extends TestCase
         $response = $this->actingAs($user2)->get(route('notifications.index'));
         $response->assertStatus(200);
         $response->assertSee(__('notifications/notifications.request_approved_details', ['user_name' => $user1->name, 'title' => $pg->title]));
+    }
+
+    public function test_talk_api_notifies_about_existing_receipts()
+    {
+        Notification::fake();
+
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user2)->create();
+
+        $conversation->addUser($user2);
+        $conversation->addUser($user1);
+
+        $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+
+        $rc1 = Receipt::whereReplyId($r1->id)->whereUserId($user2->id)->first();
+        $rc1->created_at = now()->subMinutes(50);
+        $rc1->save();
+
+        Talk::sendNotificationsForReceipts();
+
+        Notification::assertSentTo([$user2], UserHasUnreadReplies::class);
     }
 }

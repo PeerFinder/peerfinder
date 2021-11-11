@@ -10,6 +10,7 @@ use Talk\Models\Conversation;
 use Talk\Models\Receipt;
 use Talk\Models\Reply;
 use Illuminate\Support\Str;
+use Talk\Events\UnreadReply;
 
 class Talk
 {
@@ -20,7 +21,7 @@ class Talk
 
     public function filterUsers($users)
     {
-        if (count($users) > 1) {
+        if (count($users) > 1 && $this->user) {
             $users = array_filter($users, fn ($user) => $this->user->id != $user->id);
         }
 
@@ -237,5 +238,41 @@ class Talk
         });
 
         return $top_replies;
+    }
+
+    /**
+     * Gets existing receipts without mail notification. From the oldest to the newest.
+     * 
+     * @param mixed $min_age Minimum age in minutes
+     * @param int $limit How many receipts shall be processed during a call
+     * @return mixed list of receipts
+     */
+    public function getUnreadReceipts($min_age, $limit = 0)
+    {
+        $receiptsQuery = Receipt::where('last_mail_notification', null)
+                            ->where('created_at', '<', now()->subMinutes($min_age))
+                            ->with(['conversation', 'user'])
+                            ->orderBy('created_at', 'asc');
+        
+        if ($limit > 0) {
+            $receiptsQuery->limit($limit);
+        }
+
+        return $receiptsQuery->get();
+    }
+
+    public function sendNotificationsForReceipts()
+    {
+        $min_age = config('talk.min_receipt_age');
+        $limit = config('talk.receipts_batch_limit');
+
+        $receipts = $this->getUnreadReceipts($min_age, $limit);
+
+        foreach ($receipts as $receipt) {
+            $receipt->last_mail_notification = now();
+            $receipt->save();
+
+            UnreadReply::dispatch($receipt);
+        }
     }
 }
