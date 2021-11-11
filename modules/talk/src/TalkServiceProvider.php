@@ -83,8 +83,8 @@ class TalkServiceProvider extends ServiceProvider
     protected function getRoutesConfiguration($interface = 'web')
     {
         return [
-            'middleware' => array_merge([$interface], config('talk.middleware', ['auth'])),
-            'prefix' => config('talk.url', 'talk'),
+            'middleware' => array_merge([$interface], config('talk.middleware.' . $interface, ['auth'])),
+            'prefix' => config('talk.url.' . $interface, 'talk'),
             'namespace' => 'Talk',
             'as' => 'talk.',
         ];

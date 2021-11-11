@@ -92,10 +92,6 @@ class MatcherServiceProvider extends ServiceProvider
         Route::group($this->getRoutesConfiguration('web'), function () {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         });
-
-        Route::group($this->getRoutesConfiguration('api'), function () {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
-        });
     }
 
     protected function getRoutesConfiguration($interface = 'web')
