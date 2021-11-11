@@ -33,11 +33,18 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
+        $locale = substr(request()->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+
+        if (!in_array($locale, config('app.available_locales'))) {
+            $locale = config('app.fallback_locale');
+        }
+
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'timezone' => $input['timezone'],
             'password' => Hash::make($input['password']),
+            'locale' => $locale,
         ]);
     }
 }

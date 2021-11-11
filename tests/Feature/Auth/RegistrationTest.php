@@ -25,6 +25,8 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register()
     {
+        $locale = $this->faker->locale();
+
         $data = [
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -33,7 +35,9 @@ class RegistrationTest extends TestCase
             'timezone' => $this->faker->timezone(),
         ];
 
-        $response = $this->post(route('register'), $data);
+        $response = $this->post(route('register'), $data, [
+            'HTTP_ACCEPT_LANGUAGE' => $locale,
+        ]);
 
         $this->assertAuthenticated();
         $response->assertRedirect(RouteServiceProvider::HOME);
@@ -41,5 +45,7 @@ class RegistrationTest extends TestCase
         $user = User::where('email', $data['email'])->first();
         $this->assertNotNull($user);
         $this->assertEquals($data['timezone'], $user->timezone);
+
+        $this->assertTrue(in_array($user->locale, config('app.available_locales')));
     }
 }
