@@ -197,6 +197,10 @@ class Conversation extends Model
      */
     public function getTitle()
     {
+        if ($this->conversationable instanceof Peergroup) {
+            return $this->conversationable->title;
+        }
+
         if ($this->title) {
             return $this->title;
         } else {

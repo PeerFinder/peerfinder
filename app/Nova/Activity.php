@@ -34,7 +34,7 @@ class Activity extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'subject_id', 'subject_type', 'description',
     ];
 
     /**

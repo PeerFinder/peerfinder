@@ -4,8 +4,13 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use LogicException;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
+use PHPUnit\Framework\ExpectationFailedException;
 use Tests\TestCase;
 
 /**
@@ -23,10 +28,11 @@ class RegistrationTest extends TestCase
         $response->assertViewIs('frontend.auth.register');
     }
 
-    public function test_new_users_can_register()
+    /**
+     * @dataProvider localeTestDataSet
+     */
+    public function test_new_users_can_register($locale, $exp_result)
     {
-        $locale = $this->faker->locale();
-
         $data = [
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -46,6 +52,16 @@ class RegistrationTest extends TestCase
         $this->assertNotNull($user);
         $this->assertEquals($data['timezone'], $user->timezone);
 
-        $this->assertTrue(in_array($user->locale, config('app.available_locales')));
+        $this->assertEquals($exp_result, $user->locale);
+    }
+
+    public function localeTestDataSet()
+    {
+        return [
+            'de' => ['de', 'de'],
+            'en' => ['en', 'en'],
+            'fr' => ['fr', 'en'],
+            'xy' => ['xy', 'en'],
+        ];
     }
 }

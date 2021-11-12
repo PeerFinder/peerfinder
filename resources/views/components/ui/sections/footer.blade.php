@@ -1,7 +1,7 @@
-<div class="bg-gray-50 pt-8 pb-3">
-    <x-base.container class="mb-5 px-3">
+<div class="bg-white mt-8 pb-3 before:bg-gradient-to-r before:from-gray-200 before:to-gray-400 before:h-1 before:block">
+    <x-base.container class="mb-5 pt-8 px-3">
         <footer class="text-center">
-            <div class="text-sm">
+            <div class="text-sm inline-block px-5 py-2 rounded-full bg-gray-50">
                 Presented by {{ config('app.name') }}. Made in Hannover with ❤️
             </div>
     

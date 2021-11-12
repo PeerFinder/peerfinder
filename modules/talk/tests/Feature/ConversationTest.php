@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Talk\Models\Conversation;
 use Illuminate\Support\Str;
+use Matcher\Models\Peergroup;
 use Talk\Facades\Talk;
 use Talk\Models\Participant;
 use Tests\TestCase;
@@ -338,7 +339,7 @@ class ConversationTest extends TestCase
         $this->assertDatabaseHas('replies', ['user_id' => $user1->id]);
     }
 
-    public function test_title_of_the_conversation_is_dynamic()
+    public function test_title_of_the_user_conversation_is_dynamic()
     {
         $user = User::factory()->create();
         $user1 = User::factory()->create();
@@ -354,4 +355,15 @@ class ConversationTest extends TestCase
         $conversation->title = '';
         $this->assertStringContainsString($user1->name, $conversation->getTitle());
     }
+
+    public function test_title_of_the_peergroup_conversation_is_dynamic()
+    {
+        $user = User::factory()->create();
+        $user1 = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $conversation = Conversation::factory()->byPeergroup($pg)->create();
+
+        $this->assertEquals($pg->title, $conversation->getTitle());
+    }    
 }
