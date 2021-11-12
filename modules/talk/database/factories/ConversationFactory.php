@@ -6,6 +6,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Matcher\Models\Peergroup;
 use Nette\NotImplementedException;
 use Talk\Models\Conversation;
 
@@ -32,10 +33,13 @@ class ConversationFactory extends Factory
         });
     }
 
-    public function byCircle()
+    public function byPeergroup(Peergroup $pg)
     {
-        return $this->state(function ($attributes) {
-            throw new Exception('Not implemented');
+        return $this->state(function ($attributes) use ($pg) {
+            return [
+                'conversationable_type' => Peergroup::class,
+                'conversationable_id' => $pg->id,
+            ];
         });
     }
 }
