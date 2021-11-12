@@ -1,5 +1,5 @@
 <header id="header" class="shadow bg-[#1F303A]">
-    <x-base.container class="px-3 flex py-2 items-center">
+    <div class="px-3 flex py-2 items-center">
         {{-- App logo --}}
         <div>
             <a href="{{ Auth::check() ? route('dashboard.index') : route('index') }}" class="flex items-center">
@@ -83,5 +83,5 @@
             </div>
             @endauth
         </div>
-    </x-base.container>
+    </div>
 </header>
