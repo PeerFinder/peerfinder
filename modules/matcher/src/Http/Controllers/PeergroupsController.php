@@ -17,14 +17,14 @@ class PeergroupsController extends Controller
     {
         $params = [];
 
-        foreach(['language', 'groupType', 'virtual'] as $p) {
+        foreach(Matcher::getDefaultFilters() as $p => $v) {
             if ($request->has($p)) {
                 $params[$p] = $request->get($p);
             }
         }
 
         $filtered_peergroups = Matcher::getFilteredPeergroups($request);
-
+        
         $filters = Matcher::generateFilters($filtered_peergroups);
 
         $peergroups = Matcher::paginate($filtered_peergroups, config('matcher.peergroups_per_page'), null, [

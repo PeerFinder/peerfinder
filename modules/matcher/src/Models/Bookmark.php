@@ -18,6 +18,8 @@ class Bookmark extends Model
         'title',
     ];
 
+    protected $touches = ['peergroup'];
+
     public static function rules()
     {
         $updateRules = [
