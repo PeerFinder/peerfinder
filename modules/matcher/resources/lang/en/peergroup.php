@@ -138,6 +138,6 @@ return [
     'filter_languages' => 'Languages',
     'filter_virtual' => 'Virtual',
     'filter_groups' => 'Filter groups',
-
+    'filter_tags' => 'Tags',
     'field_tags' => 'Tags',
 ];

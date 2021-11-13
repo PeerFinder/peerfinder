@@ -15,6 +15,7 @@
                         <x-matcher::peergroup.filter-list :filters="$filters" key="groupType" title="{{ __('matcher::peergroup.filter_group_types') }}" />
                         <x-matcher::peergroup.filter-list :filters="$filters" key="language" title="{{ __('matcher::peergroup.filter_languages') }}" />
                         <x-matcher::peergroup.filter-list :filters="$filters" key="virtual" title="{{ __('matcher::peergroup.filter_virtual') }}" />
+                        <x-matcher::peergroup.filter-list :filters="$filters" key="tag" title="{{ __('matcher::peergroup.filter_tags') }}" />
                     </div>
                 </template>
             </collapsed-content>

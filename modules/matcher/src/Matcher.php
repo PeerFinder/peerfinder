@@ -33,6 +33,7 @@ class Matcher
         'language' => [],
         'groupType' => [],
         'virtual' => [],
+        'tag' => [],
     ];
 
     public function __construct()
@@ -421,13 +422,22 @@ class Matcher
             } else {
                 $filters['virtual'][$virtual]['count']++;
             }
+
+            # Collect tags
+            $pg->tags->each(function ($tag) use (&$filters) {
+                if (!key_exists($tag->slug, $filters['tag'])) {
+                    $filters['tag'][$tag->slug] = ['title' => $tag->name, 'count' => 1, 'param' => $tag->slug];
+                } else {
+                    $filters['tag'][$tag->slug]['count']++;
+                }
+            });
         });
 
         foreach ($filters as $key => &$filter) {
             $urlParamsCopy = $urlParams;
 
             usort($filter, function($a, $b) {
-                return strcmp($a['title'], $b['title']);
+                return strcmp(strtolower($a['title']), strtolower($b['title']));
             });
 
             foreach ($filter as &$f) {
@@ -473,6 +483,10 @@ class Matcher
 
             if ($request->has('virtual')) {
                 $query->where('virtual', ($request->virtual == 'yes'));
+            }
+
+            if ($request->has('tag')) {
+                $query->withAnyTags([$request->tag]);
             }
 
             return $query->get();
