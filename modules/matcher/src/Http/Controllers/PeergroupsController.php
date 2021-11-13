@@ -25,7 +25,7 @@ class PeergroupsController extends Controller
 
         $filtered_peergroups = Matcher::getFilteredPeergroups($request);
 
-        $filters = Matcher::generateFilters($filtered_peergroups);
+        $filters = null; #Matcher::generateFilters($filtered_peergroups);
 
         $peergroups = Matcher::paginate($filtered_peergroups, config('matcher.peergroups_per_page'), null, [
             'path' => Paginator::resolveCurrentPath(),
