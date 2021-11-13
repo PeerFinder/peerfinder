@@ -131,7 +131,6 @@ return [
     'field_group_type' => 'Type of group',
     'more_about_types' => 'More about types',
     'group_types_title' => 'Group Types',
-
     'bool_yes' => 'Yes',
     'bool_no' => 'No',
     'reset_filter' => 'Reset filter',
@@ -139,4 +138,6 @@ return [
     'filter_languages' => 'Languages',
     'filter_virtual' => 'Virtual',
     'filter_groups' => 'Filter groups',
+
+    'field_tags' => 'Tags',
 ];

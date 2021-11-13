@@ -47,6 +47,9 @@
             <div>
                 <x-ui.forms.multi-checkbox :selection="\Matcher\Models\Language::all()" key="code" :default="$pg->languages" name="languages" required="true">{{ __('matcher::peergroup.field_languages') }}</x-ui.forms.multi-checkbox>
             </div>
+            <div>
+                <x-ui.forms.tags-input name="tags" :values="$pg->tags->pluck('name')">{{ __('matcher::peergroup.field_tags') }}</x-ui.forms.tags-input>
+            </div>
         </div>
 
         <div class="mt-2 p-4 border-t">
