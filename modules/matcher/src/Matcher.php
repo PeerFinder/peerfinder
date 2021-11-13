@@ -29,6 +29,12 @@ use Matcher\Models\GroupType;
 
 class Matcher
 {
+    private $filters = [
+        'language' => [],
+        'groupType' => [],
+        'virtual' => [],
+    ];
+
     public function __construct()
     {
         $this->user = auth()->user();
@@ -377,11 +383,7 @@ class Matcher
 
     public function generateFilters($peergroups)
     {
-        $filters = [
-            'language' => [],
-            'groupType' => [],
-            'virtual' => [],
-        ];
+        $filters = $this->filters;
 
         $urlParams = request()->query();
 
@@ -434,27 +436,41 @@ class Matcher
 
     public function getFilteredPeergroups(Request $request)
     {
-        $query = Peergroup::withDefaults()
-            ->whereOpen(true)
-            ->wherePrivate(false);
+        $filters = $this->filters;
 
-        if ($request->has('language')) {
-            $query->whereHas('languages', function ($query) use ($request) {
-                $query->where('code', $request->language);
-            });
+        foreach ($filters as $filter_key => &$value) {
+            if ($request->has($filter_key)) {
+                $value = $request->get($filter_key);
+            } else {
+                unset($filters[$filter_key]);
+            }
         }
 
-        if ($request->has('groupType')) {
-            $query->whereHas('groupType', function ($query) use ($request) {
-                $query->where('identifier', $request->groupType);
-            });
-        }
+        $cache_key = 'peergroups?' . http_build_query($filters);
 
-        if ($request->has('virtual')) {
-            $query->where('virtual', ($request->virtual == 'yes'));
-        }
+        $peergroups = cache()->remember($cache_key, 60, function () use ($request) {
+            $query = Peergroup::withDefaults()->whereOpen(true)->wherePrivate(false);
 
-        return $query->get();
+            if ($request->has('language')) {
+                $query->whereHas('languages', function ($query) use ($request) {
+                    $query->where('code', $request->language);
+                });
+            }
+
+            if ($request->has('groupType')) {
+                $query->whereHas('groupType', function ($query) use ($request) {
+                    $query->where('identifier', $request->groupType);
+                });
+            }
+
+            if ($request->has('virtual')) {
+                $query->where('virtual', ($request->virtual == 'yes'));
+            }
+
+            return $query->get();
+        });
+
+        return $peergroups;
     }
 
     /**
@@ -481,5 +497,10 @@ class Matcher
         } else {
             return null;
         }
+    }
+
+    public function getDefaultFilters()
+    {
+        return $this->filters;
     }
 }
