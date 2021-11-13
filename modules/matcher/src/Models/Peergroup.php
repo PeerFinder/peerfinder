@@ -70,6 +70,7 @@ class Peergroup extends Model
             },
             'languages',
             'groupType',
+            'tags',
         ];
     }
 

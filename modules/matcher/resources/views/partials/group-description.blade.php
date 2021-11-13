@@ -29,4 +29,12 @@
             </div>
         </div>
     </div>
+
+    @if ($pg->tags)
+    <div class="flex flex-wrap px-4 pb-4">
+    @foreach ($pg->tags as $tag)
+        <div class="bg-gray-50 text-gray-400 mt-1 mr-1 px-3 py-1 rounded-md">{{ $tag->name }}</div>
+    @endforeach
+    </div>
+    @endif
 </x-ui.card>

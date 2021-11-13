@@ -26,6 +26,14 @@
                 @endif
                 <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_languages') }}" icon="translate">{{ $pg->languages->implode('title', ', ') }}</x-matcher::ui.group-detail>
             </div>
+
+            @if ($pg->tags)
+            <div class="flex flex-wrap px-4 pb-4">
+            @foreach ($pg->tags as $tag)
+                <div class="bg-gray-50 text-gray-500 mt-1 mr-1 text-sm px-3 py-1 rounded-md">{{ $tag->name }}</div>
+            @endforeach
+            </div>
+            @endif
         </div>
 
         <div class="py-2 border-t flex items-center px-4">
