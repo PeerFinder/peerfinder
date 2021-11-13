@@ -22,6 +22,8 @@ class Membership extends Model
         'approved' => 'boolean',
     ];
 
+    protected $touches = ['peergroup'];
+
     public static function rules() {
         $updateRules = [
             'comment' => ['nullable', 'string', 'max:500']
@@ -38,8 +40,10 @@ class Membership extends Model
         parent::boot();
 
         static::saved(function ($membership) {
+            # Update the states of the group, like if it is full/closed or not
             $membership->peergroup()->first()->updateStates();
 
+            # Status of approved changed from false to true
             if ($membership->wasChanged('approved') && $membership->approved) {
                 Matcher::afterUserApproved($membership->peergroup()->first(), $membership->user()->first(), $membership);
                 Matcher::afterMemberAdded($membership->peergroup()->first(), $membership->user()->first(), $membership);

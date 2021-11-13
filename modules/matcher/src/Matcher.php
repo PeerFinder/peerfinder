@@ -448,6 +448,8 @@ class Matcher
 
         $cache_key = 'peergroups?' . http_build_query($filters);
 
+        # Cache all peergroups here for 60 seconds. TODO for the future: remove the cache
+        # if some peergroup was updated.
         $peergroups = cache()->remember($cache_key, 60, function () use ($request) {
             $query = Peergroup::withDefaults()->whereOpen(true)->wherePrivate(false);
 
