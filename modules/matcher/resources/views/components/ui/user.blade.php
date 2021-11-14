@@ -10,7 +10,7 @@
     </div>
     <div>
         @if ($user)
-        <h2 class="font-semibold text-sm"><a href="{{ $user->profileUrl() }}">{{ $user->name }}</a></h2>
+        <h2 class="font-semibold text-sm"><a href="{{ $user->profileUrl() }}">{{ $user->name }}</a> <x-ui.user.awards :user="$user" style="inline" /></h2>
         @else
         <h2 class="font-semibold text-sm">{{ __('matcher::peergroup.preview_only_visible_for_users') }}</h2>
         @endif

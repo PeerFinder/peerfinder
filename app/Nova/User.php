@@ -104,9 +104,11 @@ class User extends Resource
                 ->hideFromIndex()
                 ->rules(UserModel::rules()['create']['xing_profile']),
 
-            Text::make('Xing Profile')
-                ->hideFromIndex()
-                ->rules(UserModel::rules()['create']['xing_profile']),
+            Text::make('Locale'),
+
+            Boolean::make('Is Supporter')->hideFromIndex(),
+
+            Boolean::make('Is Verified Person')->hideFromIndex(),
 
             Boolean::make('Email verified', function () {
                 return $this->email_verified_at != null;

@@ -21,4 +21,6 @@ return [
     'menu' => 'Menu',
     'member_in_groups' => 'Member of groups',
     'no_memberships' => 'No memberships yet.',
+    'award_supporter' => ':name supporter',
+    'award_verified' => 'Verified profile',
 ];
