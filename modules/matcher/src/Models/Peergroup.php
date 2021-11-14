@@ -11,10 +11,11 @@ use Matcher\Facades\Matcher;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Talk\Traits\PeergroupConversations;
+use Spatie\Tags\HasTags;
 
 class Peergroup extends Model
 {
-    use HasFactory, PeergroupConversations, LogsActivity;
+    use HasFactory, PeergroupConversations, LogsActivity, HasTags;
 
     protected $casts = [
         'begin' => 'date',
@@ -69,6 +70,7 @@ class Peergroup extends Model
             },
             'languages',
             'groupType',
+            'tags',
         ];
     }
 

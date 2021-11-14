@@ -33,6 +33,7 @@ class Matcher
         'language' => [],
         'groupType' => [],
         'virtual' => [],
+        'tag' => [],
     ];
 
     public function __construct()
@@ -78,6 +79,12 @@ class Matcher
 
         $languages = Language::whereIn('code', array_values($request->languages))->get();
         $pg->languages()->sync($languages);
+
+        if ($request->has('tags')) {
+            $pg->syncTags($request->tags);
+        } else {
+            $pg->syncTags([]);
+        }
 
         return $pg;
     }
@@ -415,13 +422,22 @@ class Matcher
             } else {
                 $filters['virtual'][$virtual]['count']++;
             }
+
+            # Collect tags
+            $pg->tags->each(function ($tag) use (&$filters) {
+                if (!key_exists($tag->slug, $filters['tag'])) {
+                    $filters['tag'][$tag->slug] = ['title' => $tag->name, 'count' => 1, 'param' => $tag->name];
+                } else {
+                    $filters['tag'][$tag->slug]['count']++;
+                }
+            });
         });
 
         foreach ($filters as $key => &$filter) {
             $urlParamsCopy = $urlParams;
 
             usort($filter, function($a, $b) {
-                return strcmp($a['title'], $b['title']);
+                return strcmp(strtolower($a['title']), strtolower($b['title']));
             });
 
             foreach ($filter as &$f) {
@@ -469,6 +485,10 @@ class Matcher
                 $query->where('virtual', ($request->virtual == 'yes'));
             }
 
+            if ($request->has('tag')) {
+                $query->withAnyTags([$request->tag]);
+            }
+
             return $query->get();
         });
 
@@ -504,5 +524,16 @@ class Matcher
     public function getDefaultFilters()
     {
         return $this->filters;
+    }
+
+    public function isAnyFilterSet()
+    {
+        $urlParams = request()->query();
+
+        if(count(array_intersect_key($this->filters, $urlParams)) > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

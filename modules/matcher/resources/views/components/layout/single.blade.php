@@ -5,15 +5,17 @@
     @if ($pg)
         @if (!$edit)
         <div class="sm:mt-10 md:grid md:grid-cols-10 gap-7 mb-5 sm:mb-7">
-            <div class="sm:col-span-6 lg:col-span-7 relative">
-                <a href="{{ $pg->getUrl() }}">
-                    <img src="{{ Matcher::getGroupImageLink($pg) }}" alt="{{ $pg->image_alt }}" class="sm:rounded-md" />
-                </a>
-                @can('edit', $pg)
-                <div class="absolute right-3 bottom-2">
-                    <x-ui.forms.button tag="a" href="{{ route('matcher.image.edit', ['pg' => $pg->groupname]) }}" action="inform" class="shadow">{{ __('matcher::peergroup.button_edit_image') }}</x-ui.forms.button>
+            <div class="sm:col-span-6 lg:col-span-7">
+                <div class="relative">
+                    <a href="{{ $pg->getUrl() }}">
+                        <img src="{{ Matcher::getGroupImageLink($pg) }}" alt="{{ $pg->image_alt }}" class="sm:rounded-md" />
+                    </a>
+                    @can('edit', $pg)
+                    <div class="absolute right-3 bottom-2">
+                        <x-ui.forms.button tag="a" href="{{ route('matcher.image.edit', ['pg' => $pg->groupname]) }}" action="inform" class="shadow">{{ __('matcher::peergroup.button_edit_image') }}</x-ui.forms.button>
+                    </div>
+                    @endcan
                 </div>
-                @endcan
             </div>
             <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 md:mt-0 px-4 sm:px-0">
                 <a href="{{ $pg->getUrl() }}">

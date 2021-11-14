@@ -1,6 +1,6 @@
 @props(['pg'])
 
-<a href="{{ $pg->getUrl() }}" class="rounded-md block shadow overflow-hidden">
+<a href="{{ $pg->getUrl() }}" class="rounded-md block shadow hover:shadow-md overflow-hidden group">
     <div class="h-full flex flex-col justify-between">
         <div>
             <div>
@@ -14,7 +14,7 @@
             @endif
             
             <div class="p-4">
-                <h2 class="font-bold text-xl inline-flex items-center">@if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1" />@endif{{ $pg->title }}</h2>
+                <h2 class="font-bold text-xl inline-flex items-center text-gray-600 group-hover:text-black">@if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1" />@endif{{ $pg->title }}</h2>
             </div>
 
             <div class="px-4 pb-4">
@@ -26,11 +26,19 @@
                 @endif
                 <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_languages') }}" icon="translate">{{ $pg->languages->implode('title', ', ') }}</x-matcher::ui.group-detail>
             </div>
+
+            @if ($pg->tags)
+            <div class="flex flex-wrap px-4 pb-4">
+            @foreach ($pg->tags as $tag)
+                <div class="bg-gray-50 text-gray-500 group-hover:bg-gray-100 mt-1 mr-1 text-sm px-2 py-0.5 rounded-md">{{ $tag->name }}</div>
+            @endforeach
+            </div>
+            @endif
         </div>
 
         <div class="py-2 border-t flex items-center px-4">
             @if ($pg && $pg->getMembers()->count() > 0)
-            <div class="flex-shrink-0 flex items-center text-sm text-gray-500 py-1.5 px-3 bg-gray-50 rounded-full whitespace-nowrap mr-2">
+            <div class="flex-shrink-0 flex items-center text-sm text-gray-500 py-1.5 px-3 bg-gray-50 group-hover:bg-gray-100 rounded-full whitespace-nowrap mr-2">
                 <x-ui.icon name="user-group" /><span class="inline-block ml-2">{{ $pg->getMembers()->count() }}</span>
             </div>
             <div class="flex items-center flex-wrap">

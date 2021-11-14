@@ -96,6 +96,10 @@ class PeergroupsController extends Controller
     {
         Gate::authorize('edit', $pg);
 
+        #if ($request->old('_token') && $request->old('tags'))
+        #    dd(implode(',', $request->old('tags')));
+
+
         $group_types = Matcher::groupTypesSelect();
 
         return view('matcher::peergroups.edit', compact('pg', 'group_types'));

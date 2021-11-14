@@ -2,7 +2,7 @@
 
 return [
     'peergroups_title' => 'Groups',
-    'no_groups_yet' => 'No groups yet.',
+    'no_groups_yet' => 'Groups not found.',
     'number_of_members' => '{0} No members|{1} One member|[2,*] :count members',
     'group_description' => 'About the group',
     'role_founder' => 'Group Founder',
@@ -131,7 +131,6 @@ return [
     'field_group_type' => 'Type of group',
     'more_about_types' => 'More about types',
     'group_types_title' => 'Group Types',
-
     'bool_yes' => 'Yes',
     'bool_no' => 'No',
     'reset_filter' => 'Reset filter',
@@ -139,4 +138,7 @@ return [
     'filter_languages' => 'Languages',
     'filter_virtual' => 'Virtual',
     'filter_groups' => 'Filter groups',
+    'filter_tags' => 'Tags',
+    'field_tags' => 'Tags',
+    'reset_all_filters' => 'Reset all filters',
 ];

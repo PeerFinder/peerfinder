@@ -1,6 +1,7 @@
 <x-matcher::layout>
 
 <x-ui.card class="p-4 mt-5">
+    @if ($peergroups->count() > 0)
     <div class="md:flex">
         <div class="md:w-1/4 mb-4 md:mb-0">
             <collapsed-content break-point="768">
@@ -15,12 +16,12 @@
                         <x-matcher::peergroup.filter-list :filters="$filters" key="groupType" title="{{ __('matcher::peergroup.filter_group_types') }}" />
                         <x-matcher::peergroup.filter-list :filters="$filters" key="language" title="{{ __('matcher::peergroup.filter_languages') }}" />
                         <x-matcher::peergroup.filter-list :filters="$filters" key="virtual" title="{{ __('matcher::peergroup.filter_virtual') }}" />
+                        <x-matcher::peergroup.filter-list :filters="$filters" key="tag" title="{{ __('matcher::peergroup.filter_tags') }}" />
                     </div>
                 </template>
             </collapsed-content>
         </div>
         <div class="md:flex-1">
-            @if ($peergroups->count() > 0)
                 <div class="grid sm:grid-cols-2 gap-4">
                 @foreach ($peergroups as $pg)
                     <x-matcher::peergroup.card :pg="$pg" />
@@ -30,12 +31,17 @@
                 @if ($peergroups->hasPages())
                 <div class="mt-4">{{ $peergroups->appends($params)->links() }}</div>
                 @endif
-            @else
-                <div class="text-center p-10">{{ __('matcher::peergroup.no_groups_yet') }}</div>
-            @endif
         </div>
     </div>
+    @else
+    <div class="text-center p-10 py-20">
+        <div class="text-lg">{{ __('matcher::peergroup.no_groups_yet') }}</div>
 
+        @if (Matcher::isAnyFilterSet())
+            <x-ui.forms.button class="mt-5" tag="a" href="{{ route('matcher.index') }}">{{ __('matcher::peergroup.reset_all_filters') }}</x-ui.forms.button>
+        @endif
+    </div>
+    @endif
 </x-ui.card>
 
 </x-matcher::layout>
