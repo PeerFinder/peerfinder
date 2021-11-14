@@ -34,6 +34,7 @@ class NewAppointments extends Value
             'MTD' => __('Month To Date'),
             'QTD' => __('Quarter To Date'),
             'YTD' => __('Year To Date'),
+            'ALL' => 'All Time',
         ];
     }
 

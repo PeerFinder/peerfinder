@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Filters\PeergroupState;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -76,7 +77,7 @@ class Peergroup extends Resource
 
             Number::make('Limit')->rules(ModelsPeergroup::rules()['update']['limit'])->required(),
 
-            Date::make('Begin')->rules(ModelsPeergroup::rules()['update']['begin']),
+            Date::make('Begin')->rules(ModelsPeergroup::rules()['update']['begin'])->hideFromIndex(),
 
             Boolean::make('Virtual')->hideFromIndex(),
 
@@ -101,6 +102,8 @@ class Peergroup extends Resource
             HasMany::make('Bookmarks')->hideFromIndex(),
 
             HasMany::make('Appointments')->hideFromIndex(),
+
+            HasMany::make('Tags'),
         ];
     }
 
@@ -123,7 +126,9 @@ class Peergroup extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new PeergroupState,
+        ];
     }
 
     /**
