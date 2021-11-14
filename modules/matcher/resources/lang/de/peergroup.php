@@ -2,7 +2,7 @@
 
 return [
     'peergroups_title' => 'Gruppen',
-    'no_groups_yet' => 'Noch keine Gruppen.',
+    'no_groups_yet' => 'Keine Gruppen gefunden.',
     'number_of_members' => '{0}Keine Mitglieder|{1} Ein Mitglied|[2,*] :count Mitglieder',
     'group_description' => 'Über die Gruppe',
     'role_founder' => 'Gruppengründer:in',
@@ -142,4 +142,6 @@ return [
     'filter_groups' => 'Gruppen filtern',
     'filter_tags' => 'Tags',
     'field_tags' => 'Tags',
+
+    'reset_all_filters' => 'Alle Filter zurücksetzen',
 ];

@@ -525,4 +525,15 @@ class Matcher
     {
         return $this->filters;
     }
+
+    public function isAnyFilterSet()
+    {
+        $urlParams = request()->query();
+
+        if(count(array_intersect_key($this->filters, $urlParams)) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

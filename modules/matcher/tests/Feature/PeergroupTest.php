@@ -554,12 +554,15 @@ class PeergroupTest extends TestCase
         $pg[2]->languages()->attach($languages[2]);
 
         $pg[0]->groupType()->associate($groupTypes[0]);
+        $pg[0]->syncTags(['tag1']);
         $pg[0]->save();
 
         $pg[1]->groupType()->associate($groupTypes[0]);
+        $pg[1]->syncTags(['tag1']);
         $pg[1]->save();
 
         $pg[2]->groupType()->associate($groupTypes[1]);
+        $pg[2]->syncTags(['tag1']);
         $pg[2]->save();
 
         $response = $this->actingAs($user)->get(route('matcher.index', ['groupType' => $groupTypes[0]->identifier]));
@@ -567,8 +570,39 @@ class PeergroupTest extends TestCase
 
         $response = $this->actingAs($user)->get(route('matcher.index', ['language' => $languages[0]->code]));
         $response->assertStatus(200);
+        $response->assertDontSee(__('matcher::peergroup.no_groups_yet'));
 
         $response = $this->actingAs($user)->get(route('matcher.index', ['virtual' => $pg[0]->virtual ? 'yes' : 'no']));
         $response->assertStatus(200);
+        $response->assertDontSee(__('matcher::peergroup.no_groups_yet'));
+
+        $response = $this->actingAs($user)->get(route('matcher.index', ['tag' => 'tag1']));
+        $response->assertStatus(200);
+        $response->assertDontSee(__('matcher::peergroup.no_groups_yet'));
+        $response->assertDontSee(__('matcher::peergroup.reset_all_filters'));
+    }
+
+    public function test_user_cannot_filter_by_unknown_value()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory(5)->byUser()->create();
+
+        $pg[0]->syncTags(['tag1']);
+        $pg[1]->syncTags(['tag2']);
+        $pg[2]->syncTags(['tag3']);
+
+        $response = $this->actingAs($user)->get(route('matcher.index', ['tag' => 'unknown']));
+        $response->assertStatus(200);
+        $response->assertSee(__('matcher::peergroup.no_groups_yet'));
+        $response->assertSee(__('matcher::peergroup.reset_all_filters'));
+    }
+
+    public function test_user_cannot_reset_filters_when_not_set()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get(route('matcher.index'));
+        $response->assertStatus(200);
+        $response->assertSee(__('matcher::peergroup.no_groups_yet'));
+        $response->assertDontSee(__('matcher::peergroup.reset_all_filters'));
     }
 }
