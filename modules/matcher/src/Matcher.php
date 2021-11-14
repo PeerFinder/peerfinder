@@ -426,7 +426,7 @@ class Matcher
             # Collect tags
             $pg->tags->each(function ($tag) use (&$filters) {
                 if (!key_exists($tag->slug, $filters['tag'])) {
-                    $filters['tag'][$tag->slug] = ['title' => $tag->name, 'count' => 1, 'param' => $tag->slug];
+                    $filters['tag'][$tag->slug] = ['title' => $tag->name, 'count' => 1, 'param' => $tag->name];
                 } else {
                     $filters['tag'][$tag->slug]['count']++;
                 }
