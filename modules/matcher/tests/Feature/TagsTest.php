@@ -92,7 +92,7 @@ class TagsTest extends TestCase
         $language = Language::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
 
-        $pg->syncTags(['a', 'b', 'c']);
+        $pg->syncTagsWithoutLocale(['a', 'b', 'c']);
         $pg->save();
 
         $data = [
