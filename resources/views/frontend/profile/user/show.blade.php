@@ -18,6 +18,8 @@
                         <p class="text-gray-400 mb-4">{{ $user->slogan }}</p>
                         @endif
 
+                        <x-ui.user.awards :user="$user" style="full" />
+
                         @if ($user->company)
                         <p class="my-3"><x-ui.icon name="office-building" class="text-gray-400" /> {{ $user->company }}</p>
                         @endif

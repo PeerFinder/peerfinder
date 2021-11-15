@@ -33,8 +33,8 @@
     @if ($pg->tags)
     <div class="flex flex-wrap px-4 pb-4">
     @foreach ($pg->tags as $tag)
-        <a class="block bg-gray-50 text-gray-400 hover:bg-pf-midblue hover:text-white mt-1 mr-1 px-3 py-1 rounded-md" href="{{ route('matcher.index', ['tag' => $tag->name]) }}">
-            {{ $tag->name }}
+        <a class="block bg-gray-50 text-gray-400 hover:bg-pf-midblue hover:text-white mt-1 mr-1 px-3 py-1 rounded-md" href="{{ route('matcher.index', ['tag' => $tag->getTranslation('name', 'en')]) }}">
+            {{ $tag->getTranslation('name', 'en') }}
         </a>
     @endforeach
     </div>

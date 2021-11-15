@@ -30,7 +30,7 @@
             @if ($pg->tags)
             <div class="flex flex-wrap px-4 pb-4">
             @foreach ($pg->tags as $tag)
-                <div class="bg-gray-50 text-gray-500 group-hover:bg-gray-100 mt-1 mr-1 text-sm px-2 py-0.5 rounded-md">{{ $tag->name }}</div>
+                <div class="bg-gray-50 text-gray-500 group-hover:bg-gray-100 mt-1 mr-1 text-sm px-2 py-0.5 rounded-md">{{ $tag->getTranslation('name', 'en') }}</div>
             @endforeach
             </div>
             @endif

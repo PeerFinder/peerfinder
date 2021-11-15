@@ -7,7 +7,7 @@
         <div class="sm:flex sm:items-center space-y-2 text-center sm:text-left">
             <div class="flex-1 inline-flex items-center mr-2">
                 <x-ui.user.avatar :user="auth()->user()" size="40" class="rounded-full block mr-2" />
-                <x-ui.h1>{{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }}</x-ui.h1>
+                <x-ui.h1>{{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }} <x-ui.user.awards :user="auth()->user()" style="inline" /></x-ui.h1>
             </div>
             <div>
                 <x-ui.forms.button tag="a" href="{{ route('account.profile.edit') }}" action="inform">{{ __('profile/user.button_edit_profile') }}</x-ui.forms.button>

@@ -7,7 +7,7 @@
         <div class="flex-1 overflow-hidden">
             <div class="space-x-2 text-sm">
                 @if ($reply->user_id)
-                <a class="font-semibold inline-block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }}</a>
+                <a class="font-semibold inline-block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }} <x-ui.user.awards :user="$reply->user" style="inline" /></a>
                 @else
                 <span class="font-semibold text-gray-400">{{ __('talk::talk.anonymous_user') }}</span>
                 @endif

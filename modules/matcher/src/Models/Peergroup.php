@@ -4,8 +4,11 @@ namespace Matcher\Models;
 
 use App\Helpers\Facades\Urler;
 use App\Models\User;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Database\Eloquent\Model;
+use InvalidArgumentException;
 use Matcher\Database\Factories\PeergroupFactory;
 use Matcher\Facades\Matcher;
 use Spatie\Activitylog\LogOptions;
@@ -291,5 +294,47 @@ class Peergroup extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logAll();
+    }
+
+    /**
+     * Overridden from Spatie\Tags
+     * src/HasTags.php
+     */
+    public function syncTagsWithoutLocale($tags)
+    {
+        $className = static::getTagClassName();
+
+        $tags = collect($className::findOrCreate($tags, null, 'en'));
+
+        $this->tags()->sync($tags->pluck('id')->toArray());
+
+        return $this;
+    }
+
+    /**
+     * Overridden from Spatie\Tags
+     * src/HasTags.php
+     */
+    public function scopeWithAnyTagsWithoutLocale($query, $tags, $type = null)
+    {
+        $tags = static::convertToTags($tags, $type, 'en');
+
+        return $query
+            ->whereHas('tags', function ($query) use ($tags) {
+                $tagIds = collect($tags)->pluck('id');
+
+                $query->whereIn('tags.id', $tagIds);
+            });
+    }
+
+    public function tagsWithNames()
+    {
+        $names = [];
+
+        foreach ($this->tags as $tag) {
+            $names[] = $tag->getTranslation('name', 'en');
+        }
+
+        return $names;
     }
 }

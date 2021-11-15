@@ -93,4 +93,14 @@ class Tag extends Resource
     {
         return [];
     }
+
+    public static function authorizedToCreate(Request $request)
+    {
+        return false;
+    }
+
+    public function authorizedToUpdate(Request $request)
+    {
+        return false;
+    }    
 }

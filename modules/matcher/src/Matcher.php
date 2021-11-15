@@ -81,9 +81,9 @@ class Matcher
         $pg->languages()->sync($languages);
 
         if ($request->has('tags')) {
-            $pg->syncTags($request->tags);
+            $pg->syncTagsWithoutLocale($request->tags);
         } else {
-            $pg->syncTags([]);
+            $pg->syncTagsWithoutLocale([]);
         }
 
         return $pg;
@@ -426,7 +426,7 @@ class Matcher
             # Collect tags
             $pg->tags->each(function ($tag) use (&$filters) {
                 if (!key_exists($tag->slug, $filters['tag'])) {
-                    $filters['tag'][$tag->slug] = ['title' => $tag->name, 'count' => 1, 'param' => $tag->name];
+                    $filters['tag'][$tag->slug] = ['title' => $tag->getTranslation('name', 'en'), 'count' => 1, 'param' => $tag->getTranslation('name', 'en')];
                 } else {
                     $filters['tag'][$tag->slug]['count']++;
                 }
@@ -486,7 +486,7 @@ class Matcher
             }
 
             if ($request->has('tag')) {
-                $query->withAnyTags([$request->tag]);
+                $query->withAnyTagsWithoutLocale([$request->tag]);
             }
 
             return $query->get();
