@@ -52,6 +52,23 @@ class TagsTest extends TestCase
         $this->assertEquals(3, $pg->tags->count());
     }
 
+    public function test_owner_can_edit_group_tags()
+    {
+        $user = User::factory()->create();
+        $language = Language::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $pg->syncTagsWithoutLocale(['bla1', 'bla2']);
+
+        $response = $this->actingAs($user)->get(route('matcher.edit', ['pg' => $pg->groupname]));
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(200);
+
+        $response->assertSee('bla1');
+        $response->assertSee('bla2');
+    }
+
     public function test_owner_can_update_group_tags()
     {
         $user = User::factory()->create();

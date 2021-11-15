@@ -326,4 +326,15 @@ class Peergroup extends Model
                 $query->whereIn('tags.id', $tagIds);
             });
     }
+
+    public function tagsWithNames()
+    {
+        $names = [];
+
+        foreach ($this->tags as $tag) {
+            $names[] = $tag->getTranslation('name', 'en');
+        }
+
+        return $names;
+    }
 }
