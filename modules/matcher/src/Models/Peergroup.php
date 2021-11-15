@@ -296,43 +296,12 @@ class Peergroup extends Model
         return LogOptions::defaults()->logAll();
     }
 
-    /**
-     * Overridden from Spatie\Tags
-     * src/HasTags.php
-     */
-    public function syncTagsWithoutLocale($tags)
-    {
-        $className = static::getTagClassName();
-
-        $tags = collect($className::findOrCreate($tags, null, 'en'));
-
-        $this->tags()->sync($tags->pluck('id')->toArray());
-
-        return $this;
-    }
-
-    /**
-     * Overridden from Spatie\Tags
-     * src/HasTags.php
-     */
-    public function scopeWithAnyTagsWithoutLocale($query, $tags, $type = null)
-    {
-        $tags = static::convertToTags($tags, $type, 'en');
-
-        return $query
-            ->whereHas('tags', function ($query) use ($tags) {
-                $tagIds = collect($tags)->pluck('id');
-
-                $query->whereIn('tags.id', $tagIds);
-            });
-    }
-
     public function tagsWithNames()
     {
         $names = [];
 
         foreach ($this->tags as $tag) {
-            $names[] = $tag->getTranslation('name', 'en');
+            $names[] = $tag->name;
         }
 
         return $names;
