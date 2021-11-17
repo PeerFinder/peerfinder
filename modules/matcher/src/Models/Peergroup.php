@@ -295,15 +295,4 @@ class Peergroup extends Model
     {
         return LogOptions::defaults()->logAll();
     }
-
-    public function tagsWithNames()
-    {
-        $names = [];
-
-        foreach ($this->tags as $tag) {
-            $names[] = $tag->name;
-        }
-
-        return $names;
-    }
 }
