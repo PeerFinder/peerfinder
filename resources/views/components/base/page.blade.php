@@ -25,12 +25,13 @@
     <style>
         @font-face {
             font-family: 'Quicksand';
-            src: url('{{ asset("/fonts/quicksand/Quicksand-Regular.ttf") }}') format('truetype');
+            src: url('{{ asset("/fonts/quicksand/Quicksand-Light.ttf") }}') format('truetype');
+            font-weight: 300;
         }
         @font-face {
             font-family: 'Quicksand';
-            src: url('{{ asset("/fonts/quicksand/Quicksand-Light.ttf") }}') format('truetype');
-            font-weight: 300;
+            src: url('{{ asset("/fonts/quicksand/Quicksand-Regular.ttf") }}') format('truetype');
+            font-weight: 400;
         }
         @font-face {
             font-family: 'Quicksand';
@@ -46,7 +47,22 @@
             font-family: 'Quicksand';
             src: url('{{ asset("/fonts/quicksand/Quicksand-Bold.ttf") }}') format('truetype');
             font-weight: 700;
-        }           
+        }
+        @font-face {
+            font-family: 'RobotoSlab';
+            src: url('{{ asset("/fonts/Roboto_Slab/static/RobotoSlab-Light.ttf") }}') format('truetype');
+            font-weight: 300;
+        }
+        @font-face {
+            font-family: 'RobotoSlab';
+            src: url('{{ asset("/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf") }}') format('truetype');
+            font-weight: 400;
+        }
+        @font-face {
+            font-family: 'RobotoSlab';
+            src: url('{{ asset("/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf") }}') format('truetype');
+            font-weight: 700;
+        }
     </style>
 </head>
 

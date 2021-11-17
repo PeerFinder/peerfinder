@@ -26,6 +26,7 @@ module.exports = {
     },
     fontFamily: {
       'sans': ['Quicksand', 'sans-serif'],
+      'serif': ['RobotoSlab', 'serif'],
     },
   },
   variants: {

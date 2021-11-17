@@ -5,6 +5,7 @@
     @if ($pg)
         @if (!$edit)
         <div class="sm:mt-10 md:grid md:grid-cols-10 gap-7 mb-5 sm:mb-7">
+            {{-- Group Image --}}
             <div class="sm:col-span-6 lg:col-span-7">
                 <div class="relative">
                     <a href="{{ $pg->getUrl() }}">
@@ -17,6 +18,8 @@
                     @endcan
                 </div>
             </div>
+
+            {{-- Title and Founder --}}
             <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 md:mt-0 px-4 sm:px-0">
                 <a href="{{ $pg->getUrl() }}">
                     <x-ui.h1>
@@ -29,6 +32,8 @@
                 <div class="mt-7 space-x-5">
                     <x-matcher::ui.user :user="$pg->user" role="{{ __('matcher::peergroup.role_founder') }}" class="inline-flex" />
                 </div>
+
+                <x-matcher::peergroup.tags-list :pg="$pg" :asLinks="true" />
             </div>
         </div>
         @else

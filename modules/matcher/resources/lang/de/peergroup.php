@@ -9,6 +9,7 @@ return [
     'detail_begin' => 'Start',
     'detail_virtual_group' => 'Virtuell',
     'detail_languages' => 'Sprachen',
+    'detail_location' => 'Ort',
     'button_join_group' => 'Der Gruppe beitreten',
     'button_apply_membership' => 'Beitritt anfragen',
     'new_peergroup' => 'Neue Gruppe',

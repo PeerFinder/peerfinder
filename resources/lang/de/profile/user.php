@@ -23,4 +23,5 @@ return [
     'no_memberships' => 'Noch keiner Gruppe beigetreten.',
     'award_supporter' => ':name Supporter:in',
     'award_verified' => 'Verifiziertes Profil',
+    'about_me' => 'Über mich',
 ];

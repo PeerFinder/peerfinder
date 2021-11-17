@@ -36,7 +36,8 @@
                         @endif
 
                         @if ($user->about)
-                            <p>{{ $user->about }}</p>
+                            <h3 class="font-semibold mb-1">{{ __('profile/user.about_me') }}</h3>
+                            <p class="font-serif font-light">{{ $user->about }}</p>
                         @endif
 
                         @if ($user->id == auth()->id())
