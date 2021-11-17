@@ -554,15 +554,15 @@ class PeergroupTest extends TestCase
         $pg[2]->languages()->attach($languages[2]);
 
         $pg[0]->groupType()->associate($groupTypes[0]);
-        $pg[0]->syncTagsWithoutLocale(['tag1']);
+        $pg[0]->syncTags(['tag1']);
         $pg[0]->save();
 
         $pg[1]->groupType()->associate($groupTypes[0]);
-        $pg[1]->syncTagsWithoutLocale(['tag1']);
+        $pg[1]->syncTags(['tag1']);
         $pg[1]->save();
 
         $pg[2]->groupType()->associate($groupTypes[1]);
-        $pg[2]->syncTagsWithoutLocale(['tag1']);
+        $pg[2]->syncTags(['tag1']);
         $pg[2]->save();
 
         $response = $this->actingAs($user)->get(route('matcher.index', ['groupType' => $groupTypes[0]->identifier]));
@@ -587,9 +587,9 @@ class PeergroupTest extends TestCase
         $user = User::factory()->create();
         $pg = Peergroup::factory(5)->byUser()->create();
 
-        $pg[0]->syncTagsWithoutLocale(['tag1']);
-        $pg[1]->syncTagsWithoutLocale(['tag2']);
-        $pg[2]->syncTagsWithoutLocale(['tag3']);
+        $pg[0]->syncTags(['tag1']);
+        $pg[1]->syncTags(['tag2']);
+        $pg[2]->syncTags(['tag3']);
 
         $response = $this->actingAs($user)->get(route('matcher.index', ['tag' => 'unknown']));
         $response->assertStatus(200);

@@ -58,7 +58,7 @@ class TagsTest extends TestCase
         $language = Language::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
 
-        $pg->syncTagsWithoutLocale(['bla1', 'bla2']);
+        $pg->syncTags(['bla1', 'bla2']);
 
         $response = $this->actingAs($user)->get(route('matcher.edit', ['pg' => $pg->groupname]));
 
@@ -109,7 +109,7 @@ class TagsTest extends TestCase
         $language = Language::factory()->create();
         $pg = Peergroup::factory()->byUser($user)->create();
 
-        $pg->syncTagsWithoutLocale(['a', 'b', 'c']);
+        $pg->syncTags(['a', 'b', 'c']);
         $pg->save();
 
         $data = [

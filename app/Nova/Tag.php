@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Spatie\Tags\Tag as TagsTag;
 
 class Tag extends Resource
 {
@@ -17,7 +16,7 @@ class Tag extends Resource
      *
      * @var string
      */
-    public static $model = TagsTag::class;
+    public static $model = \Matcher\Models\Tag::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -93,7 +92,7 @@ class Tag extends Resource
     {
         return [];
     }
-
+/* 
     public static function authorizedToCreate(Request $request)
     {
         return false;
@@ -102,5 +101,5 @@ class Tag extends Resource
     public function authorizedToUpdate(Request $request)
     {
         return false;
-    }    
+    }     */
 }
