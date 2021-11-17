@@ -14,7 +14,7 @@
                 <span class="inline-block text-xs text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
             </div>
 
-            <div class="prose prose-blue">
+            <div class="font-serif font-light prose prose-blue">
                 {!! Talk::renderReplyMessage($reply->message) !!}
             </div>
 

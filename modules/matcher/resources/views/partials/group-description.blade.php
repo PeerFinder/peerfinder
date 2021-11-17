@@ -1,42 +1,48 @@
 <x-ui.card title="{{ __('matcher::peergroup.group_description') }}" edit="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" :can="auth()->check() ? auth()->user()->can('edit', $pg) : false">
-    <div class="lg:flex">
+    <div>
+
+        <div class="p-4 flex items-stretch gap-4 text-center flex-col md:flex-row">
+            <div class="border rounded-md p-2 flex-1 flex flex-col justify-evenly shadow-sm">
+                <h3 class="font-semibold mb-2 text-gray-600"><x-ui.icon name="calendar" viewBox="0 3 20 20" /> {{ __('matcher::peergroup.detail_begin') }}</h3>
+                <div class="text-xl">{{ $pg->begin->format('d.m.y') }}</div>
+            </div>
+            <div class="border rounded-md p-2 flex-1 flex flex-col justify-evenly shadow-sm">
+                @if ($pg->virtual)
+                <h3 class="font-semibold text-gray-600"><x-ui.icon name="desktop-computer" viewBox="0 2 20 20" /> {{ __('matcher::peergroup.detail_virtual_group') }}</h3>
+                @else
+                <h3 class="font-semibold mb-2 text-gray-600"><x-ui.icon name="location-marker" viewBox="0 2 20 20" /> {{ __('matcher::peergroup.detail_location') }}</h3>
+                <div>{{ $pg->location }}</div>
+                @endif
+            </div>
+            <div class="border rounded-md p-2 flex-1 flex flex-col justify-evenly shadow-sm">
+                <h3 class="font-semibold mb-2 text-gray-600"><x-ui.icon name="translate" viewBox="0 3 20 20" /> {{ __('matcher::peergroup.detail_languages') }}</h3>
+                <div>{{ $pg->languages->implode('title', ', ') }}</div>
+            </div>
+        </div>
+
         @if ($pg->groupType)
-        <div class="lg:w-1/3 flex-shrink-0">
-            <div class="m-4 lg:mr-0 p-4 border rounded-md shadow-sm bg-gray-50">
-                <div class="text-center mb-2 text-gray-500">
+        <div>
+            <div class="mx-4 mb-4 p-4 border rounded-md shadow-sm flex items-center">
+                <div class="text-center text-gray-500 mr-4">
                     <x-ui.icon name="annotation" size="w-10 h-10" />
                 </div>
-                <h2 class="font-bold mb-2">{{ $pg->groupType->title() }}</h2>
-                <p class="text-sm">{{ $pg->groupType->description() }}</p>
-                @if ($pg->groupType->reference())
-                <p class="text-sm text-center mt-2"><a href="{{ $pg->groupType->reference() }}" target="_blank" class="inline-flex items-center py-1 bg-white text-gray-500 hover:text-pf-midblue px-2 rounded-md"><x-ui.icon name="arrow-circle-right" class="mr-1" /> @lang('matcher::peergroup.group_type_reference')</a></p>
-                @endif
+                <div>
+                    <h2 class="font-bold mb-2 text-gray-600">{{ $pg->groupType->title() }}</h2>
+                    <p class="font-serif font-light">
+                        {{ $pg->groupType->description() }}
+                        @if ($pg->groupType->reference())
+                        <x-ui.link href="{{ $pg->groupType->reference() }}" target="_blank">@lang('matcher::peergroup.group_type_reference')</x-ui.link>
+                        @endif 
+                    </p>
+                </div>
             </div>
         </div>
         @endif
-        <div>
-            <div class="p-4 pb-4">
-                <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_begin') }}" icon="calendar">{{ $pg->begin->format('d.m.y') }}</x-matcher::ui.group-detail>
-                @if ($pg->virtual)
-                <x-matcher::ui.group-detail icon="desktop-computer">{{ __('matcher::peergroup.detail_virtual_group') }}</x-matcher::ui.group-detail>
-                @else
-                <x-matcher::ui.group-detail icon="location-marker">{{ $pg->location }}</x-matcher::ui.group-detail>
-                @endif
-                <x-matcher::ui.group-detail title="{{ __('matcher::peergroup.detail_languages') }}" icon="translate">{{ $pg->languages->implode('title', ', ') }}</x-matcher::ui.group-detail>
-            </div>
-            <div class="px-4 pt-2 pb-4 prose prose-blue">
-                {!! Matcher::renderMarkdown($pg->description) !!}
-            </div>
+
+        <h3 class="font-bold border-t pt-8 px-8 mb-4 text-gray-600">Beschreibung</h3>
+
+        <div class="px-8 mb-8 font-serif font-light prose prose-blue">
+            {!! Matcher::renderMarkdown($pg->description) !!}
         </div>
     </div>
-
-    @if ($pg->tags)
-    <div class="flex flex-wrap px-4 pb-4">
-    @foreach ($pg->tags as $tag)
-        <a class="block bg-gray-50 text-gray-400 hover:bg-pf-midblue hover:text-white mt-1 mr-1 px-3 py-1 rounded-md" href="{{ route('matcher.index', ['tag' => $tag->name]) }}">
-            {{ $tag->name }}
-        </a>
-    @endforeach
-    </div>
-    @endif
 </x-ui.card>

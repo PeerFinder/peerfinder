@@ -9,6 +9,7 @@ return [
     'detail_begin' => 'Begin',
     'detail_virtual_group' => 'Virtual',
     'detail_languages' => 'Languages',
+    'detail_location' => 'Location',
     'button_join_group' => 'Join this group',
     'button_apply_membership' => 'Apply for membership',
     'new_peergroup' => 'New group',
