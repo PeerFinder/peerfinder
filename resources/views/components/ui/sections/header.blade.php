@@ -1,5 +1,5 @@
 <header id="header" class="shadow bg-[#1F303A]">
-    <div class="px-3 flex py-2.5 items-center">
+    <div class="max-w-6xl mx-auto px-3 flex py-2.5 items-center">
         {{-- App logo --}}
         <div class="mr-10">
             <a href="{{ Auth::check() ? route('dashboard.index') : route('index') }}" class="flex items-center">
@@ -30,13 +30,11 @@
                 </header-menu> --}}
 
                 <div class="flex flex-1 items-center mr-10">
-                    <x-ui.forms.form method="get" action="{{ route('matcher.index') }}" class="flex-1">
-                        <input class="px-3 py-2 rounded-l-md bg-pf-darkblue border border-pf-midblue w-full min-w-60 shadow-inner placeholder-gray-300 text-white" name="search" value="{{ request()->get('search') }}" placeholder="@lang('profile/user.search_placeholder')" />
+                    <x-ui.forms.form method="get" action="{{ route('matcher.index') }}" class="flex-1 flex" autocomplete="off">
+                        <input class="px-3 py-2 rounded-r-none rounded-md bg-pf-darkblue border border-pf-midblue w-full min-w-60 shadow-inner placeholder-gray-300 text-white focus:outline-none focus:border-pf-lightblue" name="search" value="{{ request()->get('search') }}" placeholder="@lang('profile/user.search_placeholder')" />
+                        <button class="py-2 px-4 border border-pf-midblue border-l-0 active:bg-pf-darkblue rounded-md rounded-l-none text-pf-lightblue hover:text-white" href="#">@lang('profile/user.menu_browse_groups')</button>
+                        <a class="block ml-1 py-2 px-4 border whitespace-nowrap border-green-700 active:bg-green-600 rounded-md text-green-400 hover:text-white" href="#"><x-ui.icon name="plus-circle" viewBox="0 2 20 20" /> @lang('profile/user.menu_new_group')</a>
                     </x-ui.forms.form>
-                    <div class="flex-shrink-0 flex space-x-1">
-                        <a class="block py-2 px-4 border border-pf-midblue border-l-0 active:bg-pf-darkblue rounded-r-md text-pf-lightblue hover:text-white" href="#">@lang('profile/user.menu_browse_groups')</a>
-                        <a class="block py-2 px-4 border border-green-700 active:bg-green-600 rounded-md text-green-400 hover:text-white" href="#"><x-ui.icon name="plus-circle" viewBox="0 2 20 20" /> @lang('profile/user.menu_new_group')</a>
-                    </div>
                 </div>
 
                 <ul class="flex space-x-4 items-center justify-center">
