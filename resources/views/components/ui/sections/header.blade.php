@@ -62,15 +62,15 @@
                 {{-- Notification and Messages menu --}}
                 <div class="mr-5 flex space-x-4">
                     <div class="relative">
-                        <a href="{{ route('notifications.index') }}"><x-ui.icon name="bell" class="w-7 h-7 text-gray-300 hover:text-white" /></a>
+                        <a href="{{ route('notifications.index') }}"><x-ui.icon name="bell" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
                         @if ($user->unreadNotifications->isNotEmpty())
-                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500"></div>
+                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm"></div>
                         @endif
                     </div>
                     <div class="relative">
-                        <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-gray-300 hover:text-white" /></a>
+                        <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
                         @if (Talk::userHasUnreadConversations($user))
-                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500"></div>
+                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm"></div>
                         @endif
                     </div>
                 </div>
@@ -78,7 +78,7 @@
                 {{-- User menu --}}
                 <header-menu>
                     <template v-slot:trigger>
-                        <span class="text-gray-200 hover:text-white"><x-ui.user.avatar :user="$user" size="40" class="rounded-full inline-block" /><x-ui.icon name="chevron" class="" /></span>
+                        <span class="text-pf-lightblue hover:text-white group whitespace-nowrap"><x-ui.user.avatar :user="$user" size="40" class="rounded-full inline-block border-2 border-pf-lightblue group-hover:border-white" /><x-ui.icon name="chevron" /></span>
                     </template>
                     <template v-slot:content>
                         <p class="text-sm px-5 pt-4">@lang('profile/user.signed_in_as')</p>
