@@ -29,12 +29,14 @@
                     </template>
                 </header-menu> --}}
 
-                <div class="flex items-center space-x-1">
-                    <x-ui.forms.form method="get" action="{{ route('matcher.index') }}">
-                        <input class="px-3 py-2 rounded-md bg-white w-80 shadow-inner" name="search" value="{{ request()->get('search') }}" placeholder="@lang('profile/user.search_placeholder')" />
+                <div class="flex flex-1 items-center mr-10">
+                    <x-ui.forms.form method="get" action="{{ route('matcher.index') }}" class="flex-1">
+                        <input class="px-3 py-2 rounded-l-md bg-pf-darkblue border border-pf-midblue w-full min-w-60 shadow-inner placeholder-gray-300 text-white" name="search" value="{{ request()->get('search') }}" placeholder="@lang('profile/user.search_placeholder')" />
                     </x-ui.forms.form>
-                    <a class="py-2 px-4 border border-pf-midblue active:bg-pf-darkblue rounded-md text-pf-lightblue hover:text-white" href="#">@lang('profile/user.menu_browse_groups')</a>
-                    <a class="py-2 px-4 border border-green-700 active:bg-green-600 rounded-md text-green-400 hover:text-white" href="#"><x-ui.icon name="plus-circle" viewBox="0 2 20 20" /> @lang('profile/user.menu_new_group')</a>
+                    <div class="flex-shrink-0 flex space-x-1">
+                        <a class="block py-2 px-4 border border-pf-midblue border-l-0 active:bg-pf-darkblue rounded-r-md text-pf-lightblue hover:text-white" href="#">@lang('profile/user.menu_browse_groups')</a>
+                        <a class="block py-2 px-4 border border-green-700 active:bg-green-600 rounded-md text-green-400 hover:text-white" href="#"><x-ui.icon name="plus-circle" viewBox="0 2 20 20" /> @lang('profile/user.menu_new_group')</a>
+                    </div>
                 </div>
 
                 <ul class="flex space-x-4 items-center justify-center">
