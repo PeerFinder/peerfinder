@@ -1,7 +1,7 @@
 <header id="header" class="shadow bg-[#1F303A]">
-    <div class="px-3 flex py-2 items-center">
+    <div class="px-3 flex py-2.5 items-center">
         {{-- App logo --}}
-        <div>
+        <div class="mr-10">
             <a href="{{ Auth::check() ? route('dashboard.index') : route('index') }}" class="flex items-center">
                 <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="w-7" alt="{{ config('app.name') }}" />
                 <div class="text-2xl ml-2 text-gray-200 hidden sm:block">{{ config('app.name') }}</div>
@@ -11,8 +11,8 @@
         <div class="flex-1 flex items-center justify-between">
             @auth
             {{-- Generic menu --}}
-            <div class="flex-1 flex justify-center mx-2">
-                <header-menu class="md:hidden">
+            <div class="flex-1 flex justify-between">
+                {{-- <header-menu class="md:hidden">
                     <template v-slot:trigger>
                         <div class="text-gray-200 hover:text-white bg-pf-darkblue inline-flex p-2 px-3 rounded-md space-x-2 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -27,15 +27,26 @@
                             <x-ui.sections.header.nav-item route="matcher.create">@lang('profile/user.menu_new_group')</x-ui.sections.header.nav-item>
                         </nav>
                     </template>
-                </header-menu>
+                </header-menu> --}}
 
-                <ul class="hidden md:flex space-x-4">
-                    <li><a class="text-pf-lightblue hover:text-white font-semibold" href="{{ route('matcher.index') }}">@lang('profile/user.menu_find_peers')</a></li>
-                    <li><a class="text-pf-lightblue hover:text-white font-semibold" href="{{ route('matcher.create') }}">@lang('profile/user.menu_new_group')</a></li>
+                <div class="flex items-center space-x-1">
+                    <x-ui.forms.form method="get" action="{{ route('matcher.index') }}">
+                        <input class="px-3 py-2 rounded-md bg-white w-80 shadow-inner" name="search" value="{{ request()->get('search') }}" placeholder="@lang('profile/user.search_placeholder')" />
+                    </x-ui.forms.form>
+                    <a class="py-2 px-4 border border-pf-midblue active:bg-pf-darkblue rounded-md text-pf-lightblue hover:text-white" href="#">@lang('profile/user.menu_browse_groups')</a>
+                    <a class="py-2 px-4 border border-green-700 active:bg-green-600 rounded-md text-green-400 hover:text-white" href="#"><x-ui.icon name="plus-circle" viewBox="0 2 20 20" /> @lang('profile/user.menu_new_group')</a>
+                </div>
+
+                <ul class="flex space-x-4 items-center justify-center">
+                    <li><a class="text-pf-lightblue hover:text-white font-semibold" href="{{ route('matcher.create') }}">Feedback</a></li>
+                    <li><a class="text-pf-lightblue hover:text-white font-semibold" href="{{ route('matcher.create') }}">Help</a></li>
+                    <li><a class="text-pf-lightblue hover:text-white font-semibold" href="{{ route('matcher.create') }}">Blog</a></li>
                 </ul>
             </div>
             @endauth
-            
+        </div>
+
+        <div class="flex justify-end ml-10">
             @guest
             {{-- Login and register menu --}}
             <div class="flex-1 flex justify-end items-center space-x-2 py-1">
@@ -85,3 +96,11 @@
         </div>
     </div>
 </header>
+
+{{-- 
+<div class="bg-white">
+    <ul class="flex justify-center space-x-5 shadow">
+        <li><a class="py-4 block text-pf-midblue hover:text-pf-lightblue font-semibold" href="{{ route('matcher.index') }}">@lang('profile/user.menu_browse_groups')</a></li>
+        <li><a class="py-4 block text-pf-midblue hover:text-pf-lightblue font-semibold" href="{{ route('matcher.create') }}">@lang('profile/user.menu_new_group')</a></li>
+    </ul>
+</div> --}}
