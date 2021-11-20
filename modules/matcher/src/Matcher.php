@@ -26,6 +26,7 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Matcher\Models\GroupType;
+use Matcher\Models\Tag;
 
 class Matcher
 {
@@ -34,6 +35,7 @@ class Matcher
         'groupType' => [],
         'virtual' => [],
         'tag' => [],
+        'search' => [],
     ];
 
     public function __construct()
@@ -487,6 +489,17 @@ class Matcher
 
             if ($request->has('tag')) {
                 $query->withAnyTags([$request->tag]);
+            }
+
+            if ($request->has('search') && $request->search) {
+                $query->where(function ($query) use ($request) {
+                    $tags = Tag::containing($request->search)->get();
+                    $query->withAnyTags($tags);
+
+                    $query->orWhere('title', 'LIKE', '%' . $request->search .'%');
+                    $query->orWhere('description', 'LIKE', '%' . $request->search .'%');
+                    $query->orWhere('location', 'LIKE', '%' . $request->search .'%');
+                });
             }
 
             return $query->get();
