@@ -78,7 +78,7 @@
                 {{-- User menu --}}
                 <header-menu>
                     <template v-slot:trigger>
-                        <span class="text-pf-lightblue hover:text-white group whitespace-nowrap"><x-ui.user.avatar :user="$user" size="40" class="rounded-full inline-block border-2 border-pf-lightblue group-hover:border-white" /><x-ui.icon name="chevron" /></span>
+                        <span class="text-pf-lightblue hover:text-white group whitespace-nowrap"><x-ui.user.avatar :user="$user" size="40" class="rounded-full inline-block" /><x-ui.icon name="chevron" /></span>
                     </template>
                     <template v-slot:content>
                         <p class="text-sm px-5 pt-4">@lang('profile/user.signed_in_as')</p>
