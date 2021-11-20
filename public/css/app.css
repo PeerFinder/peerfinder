@@ -2291,6 +2291,8 @@ select {
 }
 
 #header-nav .not-collapsed .links {
+	margin-left: 0.75rem;
+	margin-right: 0.75rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;

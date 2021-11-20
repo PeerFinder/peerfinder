@@ -26,4 +26,6 @@ return [
     'about_me' => 'About me',
     'search_placeholder' => 'Search groups...',
     'menu_browse_groups' => 'Browse',
+    'menu_link_blog' => 'Blog',
+    'menu_link_help' => 'Help',
 ];

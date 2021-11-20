@@ -12,25 +12,9 @@
             @auth
             {{-- Generic menu --}}
             <div class="flex-1">
-                {{-- <header-menu class="md:hidden">
-                    <template v-slot:trigger>
-                        <div class="text-gray-200 hover:text-white bg-pf-darkblue inline-flex p-2 px-3 rounded-md space-x-2 items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                            </svg>
-                            <span>@lang('profile/user.menu')</span>
-                        </div>
-                    </template>
-                    <template v-slot:content>
-                        <nav class="my-4">
-                            <x-ui.sections.header.nav-item route="matcher.index">@lang('profile/user.menu_find_peers')</x-ui.sections.header.nav-item>
-                            <x-ui.sections.header.nav-item route="matcher.create">@lang('profile/user.menu_new_group')</x-ui.sections.header.nav-item>
-                        </nav>
-                    </template>
-                </header-menu> --}}
                 <collapsable-header-menu break-point="900" dropdown-class="w-64">
                     <template v-slot:trigger>
-                        <div class="text-pf-lightblue hover:text-white bg-pf-darkblue inline-flex p-2 px-3 rounded-md space-x-2 items-center">
+                        <div class="text-pf-lightblue hover:text-white bg-pf-darkblue inline-flex p-2 px-3 rounded-md space-x-2 items-center border border-pf-darkblue">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
                             </svg>
@@ -42,14 +26,13 @@
                             <x-ui.forms.form method="get" action="{{ route('matcher.index') }}" autocomplete="off">
                                 <input class="search-field" name="search" value="{{ request()->get('search') }}" placeholder="@lang('profile/user.search_placeholder')" />
                                 <button class="browse-button" href="#">@lang('profile/user.menu_browse_groups')</button>
-                                <a class="new-button" href="#"><x-ui.icon name="plus-circle" viewBox="0 2 20 20" /> @lang('profile/user.menu_new_group')</a>
+                                <a class="new-button" href="{{ route('matcher.create') }}"><x-ui.icon name="plus-circle" viewBox="0 2 20 20" /> @lang('profile/user.menu_new_group')</a>
                             </x-ui.forms.form>
                         </div>
 
                         <ul class="links">
-                            <li><a href="{{ route('matcher.create') }}">Feedback</a></li>
-                            <li><a href="{{ route('matcher.create') }}">Help</a></li>
-                            <li><a href="{{ route('matcher.create') }}">Blog</a></li>
+                            <li><a href="https://peerfinder.app/blog/" target="_blank">@lang('profile/user.menu_link_blog')</a></li>
+                            <li><a href="https://peerfinder.app/blog/category/hilfe/" target="_blank">@lang('profile/user.menu_link_help')</a></li>
                         </ul>
                     </template>
                 </collapsable-header-menu>
@@ -107,11 +90,3 @@
         </div>
     </div>
 </header>
-
-{{-- 
-<div class="bg-white">
-    <ul class="flex justify-center space-x-5 shadow">
-        <li><a class="py-4 block text-pf-midblue hover:text-pf-lightblue font-semibold" href="{{ route('matcher.index') }}">@lang('profile/user.menu_browse_groups')</a></li>
-        <li><a class="py-4 block text-pf-midblue hover:text-pf-lightblue font-semibold" href="{{ route('matcher.create') }}">@lang('profile/user.menu_new_group')</a></li>
-    </ul>
-</div> --}}

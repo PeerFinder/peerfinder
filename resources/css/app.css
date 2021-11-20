@@ -35,7 +35,7 @@
 }
 
 #header-nav .not-collapsed .links {
-    @apply flex space-x-4 items-center justify-center;
+    @apply flex space-x-4 items-center justify-center mx-3;
 }
 
 #header-nav .not-collapsed .links a {
