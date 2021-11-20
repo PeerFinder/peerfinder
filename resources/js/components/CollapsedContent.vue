@@ -46,7 +46,7 @@ export default {
                 window.addEventListener('resize', onResize, { passive: true });
                 onResize();
             } else {
-                collapsable.value = true;
+                collapsable.value = false;
             }
 
             isVisible.value = false;
