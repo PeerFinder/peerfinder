@@ -579,7 +579,6 @@ class PeergroupTest extends TestCase
         $response = $this->actingAs($user)->get(route('matcher.index', ['tag' => 'tag1']));
         $response->assertStatus(200);
         $response->assertDontSee(__('matcher::peergroup.no_groups_yet'));
-        $response->assertDontSee(__('matcher::peergroup.reset_all_filters'));
     }
 
     public function test_user_cannot_filter_by_unknown_value()

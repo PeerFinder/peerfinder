@@ -394,7 +394,7 @@ class Matcher
     {
         $filters = $this->filters;
 
-        $urlParams = request()->query();
+        $urlParams = array_filter(request()->query());
 
         unset($urlParams['page']);
 
@@ -457,7 +457,7 @@ class Matcher
         $filters = $this->filters;
 
         foreach ($filters as $filter_key => &$value) {
-            if ($request->has($filter_key)) {
+            if ($request->get($filter_key)) {
                 $value = $request->get($filter_key);
             } else {
                 unset($filters[$filter_key]);
@@ -471,27 +471,27 @@ class Matcher
         $peergroups = cache()->remember($cache_key, 60, function () use ($request) {
             $query = Peergroup::withDefaults()->whereOpen(true)->wherePrivate(false);
 
-            if ($request->has('language')) {
+            if ($request->get('language')) {
                 $query->whereHas('languages', function ($query) use ($request) {
                     $query->where('code', $request->language);
                 });
             }
 
-            if ($request->has('groupType')) {
+            if ($request->get('groupType')) {
                 $query->whereHas('groupType', function ($query) use ($request) {
                     $query->where('identifier', $request->groupType);
                 });
             }
 
-            if ($request->has('virtual')) {
+            if ($request->get('virtual')) {
                 $query->where('virtual', ($request->virtual == 'yes'));
             }
 
-            if ($request->has('tag')) {
+            if ($request->get('tag')) {
                 $query->withAnyTags([$request->tag]);
             }
 
-            if ($request->has('search') && $request->search) {
+            if ($request->get('search')) {
                 $query->where(function ($query) use ($request) {
                     $tags = Tag::containing($request->search)->get();
                     $query->withAnyTags($tags);
@@ -522,7 +522,7 @@ class Matcher
 
     public function getResetFilterLink($filter_key)
     {
-        $urlParams = request()->query();
+        $urlParams = array_filter(request()->query());
 
         unset($urlParams['page']);
         
@@ -541,7 +541,7 @@ class Matcher
 
     public function isAnyFilterSet()
     {
-        $urlParams = request()->query();
+        $urlParams = array_filter(request()->query());
 
         if(count(array_intersect_key($this->filters, $urlParams)) > 0) {
             return true;
