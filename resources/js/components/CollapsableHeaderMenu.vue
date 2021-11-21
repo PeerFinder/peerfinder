@@ -1,6 +1,6 @@
 <template>
     <div class="relative" v-if="collapsed" v-click-outside="closeMenu">
-        <div>
+        <div class="trigger">
             <a @click.prevent="toggleMenu" href="#" ref="trigger"><slot name="trigger"></slot></a>
         </div>
         <div class="dropdown z-10 transition-opacity absolute collapsed" :class="containerClasses">
