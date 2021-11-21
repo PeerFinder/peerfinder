@@ -11,4 +11,3 @@ class Tag extends SpatieTag
         return 'en';
     }
 }
-

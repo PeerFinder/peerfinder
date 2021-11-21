@@ -579,7 +579,6 @@ class PeergroupTest extends TestCase
         $response = $this->actingAs($user)->get(route('matcher.index', ['tag' => 'tag1']));
         $response->assertStatus(200);
         $response->assertDontSee(__('matcher::peergroup.no_groups_yet'));
-        $response->assertDontSee(__('matcher::peergroup.reset_all_filters'));
     }
 
     public function test_user_cannot_filter_by_unknown_value()
@@ -592,7 +591,7 @@ class PeergroupTest extends TestCase
         $pg[2]->syncTags(['tag3']);
 
         $response = $this->actingAs($user)->get(route('matcher.index', ['tag' => 'unknown']));
-        $response->assertStatus(200);
+        $response->assertStatus(404);
         $response->assertSee(__('matcher::peergroup.no_groups_yet'));
         $response->assertSee(__('matcher::peergroup.reset_all_filters'));
     }
@@ -601,8 +600,28 @@ class PeergroupTest extends TestCase
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get(route('matcher.index'));
-        $response->assertStatus(200);
+        $response->assertStatus(404);
         $response->assertSee(__('matcher::peergroup.no_groups_yet'));
         $response->assertDontSee(__('matcher::peergroup.reset_all_filters'));
+    }
+
+     public function test_search_group_by_string()
+    {
+        $user = User::factory()->create();
+        $pgs = Peergroup::factory(5)->byUser()->create();
+
+        $pgs[0]->save();
+
+        $response = $this->actingAs($user)->get(route('matcher.index', ['search' => $pgs[0]->title]));
+        $response->assertStatus(200);
+        $response->assertSee($pgs[0]->title);
+
+        $pgs[0]->syncTags(['tag1']);
+        $pgs[1]->syncTags(['tag2']);
+        $pgs[2]->syncTags(['tag3']);
+        
+        $response = $this->actingAs($user)->get(route('matcher.index', ['search' => 'tag1']));
+        $response->assertStatus(200);
+        $response->assertSee($pgs[0]->title);
     }
 }

@@ -2,8 +2,12 @@
 
 <x-ui.card class="p-4 mt-5">
     @if ($peergroups->count() > 0)
-    <div class="md:flex">
+    <div class="md:flex md:gap-4">
         <div class="md:w-1/4 mb-4 md:mb-0">
+            @if (Matcher::isAnyFilterSet())
+            <x-ui.forms.button tag="a" class="mb-4 w-full" href="{{ route('matcher.index') }}">{{ __('matcher::peergroup.reset_all_filters') }}</x-ui.forms.button>
+            @endif
+
             <collapsed-content break-point="768">
                 <template v-slot:trigger>
                     <div class="flex items-center justify-center space-x-2 bg-gray-50 py-1 rounded-md">
@@ -12,7 +16,7 @@
                     </div>
                 </template>
                 <template v-slot:content>
-                    <div class="mt-3 md:mt-0 md:mr-4 space-y-3">
+                    <div class="mt-3 md:mt-0 space-y-3">
                         <x-matcher::peergroup.filter-list :filters="$filters" key="groupType" title="{{ __('matcher::peergroup.filter_group_types') }}" />
                         <x-matcher::peergroup.filter-list :filters="$filters" key="language" title="{{ __('matcher::peergroup.filter_languages') }}" />
                         <x-matcher::peergroup.filter-list :filters="$filters" key="virtual" title="{{ __('matcher::peergroup.filter_virtual') }}" />

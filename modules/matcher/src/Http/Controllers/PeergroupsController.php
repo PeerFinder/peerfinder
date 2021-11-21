@@ -31,7 +31,13 @@ class PeergroupsController extends Controller
             'path' => Paginator::resolveCurrentPath(),
         ]);
 
-        return view('matcher::peergroups.index', compact('peergroups', 'filters', 'params'));
+        $ret = response()->view('matcher::peergroups.index', compact('peergroups', 'filters', 'params'));
+
+        if ($peergroups->count() < 1) {
+            $ret->setStatusCode(404);
+        }
+
+        return $ret;
     }
 
     public function create()

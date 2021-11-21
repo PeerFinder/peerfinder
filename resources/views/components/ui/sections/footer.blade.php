@@ -1,4 +1,4 @@
-<div class="bg-white mt-8 pb-3 before:bg-gradient-to-r before:from-gray-200 before:to-gray-400 before:h-1 before:block">
+<div class="bg-white mt-8 pb-3 before:bg-gradient-to-r before:from-gray-200 before:to-gray-400 before:h-0.5 before:block">
     <x-base.container class="mb-5 pt-8 px-3">
         <footer class="text-center">
             <div class="text-sm inline-block px-5 py-2 rounded-full bg-gray-50">
