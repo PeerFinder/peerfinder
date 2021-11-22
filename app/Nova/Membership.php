@@ -55,7 +55,9 @@ class Membership extends Resource
 
             Boolean::make('Approved'),
 
-            Select::make('Role', 'member_role_id')->options(ModelsMembership::memberRoles()),
+            Select::make('Role', 'member_role_id')->displayUsing(function($role_id) {
+                return ModelsMembership::memberRoles()[(int) $role_id];
+            })->options(ModelsMembership::memberRoles()),
 
             Textarea::make('Comment')->hideFromIndex(),
         ];

@@ -550,12 +550,18 @@ class Matcher
         }
     }
 
-    public function notifyAllOwners($pg, $notification)
+    public function notifyAllOwners($pg, $notification, $ignore_user = null)
     {
-        $owners = [$pg->user];
+        $owners = [];
+        
+        if ($ignore_user == null || $ignore_user->id != $pg->user_id) {
+            $owners[] = $pg->user;
+        }
 
         foreach($pg->memberships as $membership) {
-            if ($membership->member_role_id == Membership::ROLE_CO_OWNER && $membership->user_id != $pg->user_id) {
+            if ($membership->member_role_id == Membership::ROLE_CO_OWNER && 
+                    $membership->user_id != $pg->user_id && 
+                    ($ignore_user == null || $ignore_user->id != $membership->user_id)) {
                 $owners[] = $membership->user;
             }
         }

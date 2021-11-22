@@ -28,8 +28,6 @@ class SendNewMemberNotification
     public function handle($event)
     {
         # Don't send the notification if the owner is joining the group
-        if ($event->pg->user->id != $event->user->id) {
-            Matcher::notifyAllOwners($event->pg, new NewMemberInGroup($event->pg, $event->user));
-        }
+        Matcher::notifyAllOwners($event->pg, new NewMemberInGroup($event->pg, $event->user), $event->user);
     }
 }
