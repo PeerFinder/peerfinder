@@ -9,6 +9,7 @@ use Illuminate\Support\Carbon;
 use Matcher\Exceptions\MembershipException;
 use Matcher\Facades\Matcher;
 use Matcher\Models\GroupType;
+use Matcher\Models\Membership;
 use Matcher\Models\Peergroup;
 
 class PeergroupsController extends Controller
@@ -23,10 +24,13 @@ class PeergroupsController extends Controller
             }
         }
 
+        # Get all available groups applying filters
         $filtered_peergroups = Matcher::getFilteredPeergroups($request);
         
+        # Go through groups and collect date for filtering
         $filters = Matcher::generateFilters($filtered_peergroups);
 
+        # Paginate on the collection, not database
         $peergroups = Matcher::paginate($filtered_peergroups, config('matcher.peergroups_per_page'), null, [
             'path' => Paginator::resolveCurrentPath(),
         ]);
@@ -87,11 +91,11 @@ class PeergroupsController extends Controller
         $pending = null;
         $conversations = null;
 
-        if ($pg->isOwner($request->user())) {
+        if (Gate::allows('manage-members', $pg)) {
             $pending = Matcher::getPendingMemberships($pg);
         }
 
-        if ($pg->isMember($request->user())) {
+        if (Gate::allows('for-members', $pg)) {
             $conversations = $pg->conversations()->get();
         }
 
@@ -110,6 +114,7 @@ class PeergroupsController extends Controller
     public function delete(Request $request, Peergroup $pg)
     {
         Gate::authorize('delete', $pg);
+
         return view('matcher::peergroups.delete', compact('pg'));
     }
 
@@ -153,7 +158,7 @@ class PeergroupsController extends Controller
 
     public function editOwner(Request $request, Peergroup $pg)
     {
-        Gate::authorize('editOwner', $pg);
+        Gate::authorize('edit-owner', $pg);
 
         $members = $pg->getMembers()->reject(function ($value) use ($pg) {
             return $value->id == $pg->user->id;
@@ -164,7 +169,7 @@ class PeergroupsController extends Controller
 
     public function updateOwner(Request $request, Peergroup $pg)
     {
-        Gate::authorize('editOwner', $pg);
+        Gate::authorize('edit-owner', $pg);
 
         Matcher::changeOwner($pg, $request);
 

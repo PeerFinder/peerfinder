@@ -60,5 +60,10 @@ class PeergroupPolicy
     public function delete(User $user, Peergroup $pg)
     {
         return $pg->isOwner($user);
-    }    
+    }
+
+    public function manageMembers(User $user, Peergroup $pg)
+    {
+        return $pg->isOwner($user);
+    }
 }
