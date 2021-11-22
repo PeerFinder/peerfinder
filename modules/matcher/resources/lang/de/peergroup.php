@@ -19,7 +19,7 @@ return [
     'button_uncomplete_group' => 'Gruppe eröffnen',
     'button_transfer_ownership' => 'Gruppe übertragen',
     'group_administration' => 'Administration der Gruppe',
-    'group_administration_notice' => 'Nur Du als Eigentümer:in kannst dieses Menü sehen.',
+    'group_administration_notice' => 'Nur Besitzer:in und Mitbesitzer:innen können dieses Menü sehen.',
     'button_leave_group' => 'Gruppe verlassen',
     'field_title' => 'Titel',
     'field_description' => 'Beschreibung',
@@ -145,4 +145,7 @@ return [
     'field_tags' => 'Tags',
 
     'reset_all_filters' => 'Alle Filter zurücksetzen',
+
+    'role_member' => 'Mitglied',
+    'role_co_owner' => 'Mitbesitzer:in der Gruppe',
 ];

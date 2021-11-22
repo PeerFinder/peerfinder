@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Notifications\NewMemberInGroup;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Matcher\Facades\Matcher;
 
 class SendNewMemberNotification
 {
@@ -26,9 +27,9 @@ class SendNewMemberNotification
      */
     public function handle($event)
     {
-        # Don't send the notification if the user owner is joining the group
+        # Don't send the notification if the owner is joining the group
         if ($event->pg->user->id != $event->user->id) {
-            $event->pg->user->notify(new NewMemberInGroup($event->pg, $event->user));
+            Matcher::notifyAllOwners($event->pg, new NewMemberInGroup($event->pg, $event->user));
         }
     }
 }

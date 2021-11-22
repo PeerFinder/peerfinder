@@ -9,7 +9,11 @@
                 </div>
                 @else
                 <div class="border p-2 rounded-md @if (auth()->id() == $membership->user_id) border-pf-midorange @endif">
+                    @if ($membership->member_role_id)
+                    <x-matcher::ui.user :user="$membership->user" :role="$membership->memberRole()" />
+                    @else
                     <x-matcher::ui.user :user="$membership->user" />
+                    @endif
                     @if ($membership->comment)
                     <div class="bg-gray-50 text-sm mt-2 py-1 px-2 rounded-md">{{ $membership->comment }}</div>
                     @endif

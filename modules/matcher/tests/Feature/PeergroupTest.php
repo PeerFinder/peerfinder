@@ -156,7 +156,7 @@ class PeergroupTest extends TestCase
 
         $response->assertStatus(200);
     }
-
+    
     public function test_owner_can_edit_peergroup()
     {
         $user = User::factory()->create();

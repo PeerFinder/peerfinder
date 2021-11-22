@@ -115,7 +115,7 @@ class MembershipsController extends Controller
         $user = User::where(['username' => $username])->firstOrFail();
         $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id, 'approved' => false])->firstOrFail();
 
-        Gate::authorize('decline', [$membership, $pg]);
+        Gate::authorize('approve', [$membership, $pg]);
 
         $membership->delete();
         

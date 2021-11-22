@@ -44,16 +44,6 @@ class MembershipPolicy
      */
     public function approve(User $user, Membership $membership, Peergroup $pg)
     {
-        return $pg->isOwner($user);
-    }
-
-    /**
-     * Declining the membership
-     * Allowed to:
-     *  + owner of the group
-     */
-    public function decline(User $user, Membership $membership, Peergroup $pg)
-    {
-        return $pg->isOwner($user);
+        return $pg->isOwner($user) || $pg->memberHasRole($user, Membership::ROLE_CO_OWNER);
     }
 }

@@ -48,7 +48,7 @@ class NotificationsController extends Controller
                         'title' => __('notifications/notifications.request_approved_title'),
                         'details' => __('notifications/notifications.request_approved_details', $notification->data),
                         'url' => $notification->data['url'],
-                        'by_user' => $by_user,
+                        'by_user' => null,
                     ];
                     break;
             }

@@ -88,15 +88,16 @@ class PeergroupsController extends Controller
 
         Gate::authorize('view', $pg);
 
-        $pending = null;
-        $conversations = null;
-
         if (Gate::allows('manage-members', $pg)) {
             $pending = Matcher::getPendingMemberships($pg);
+        } else {
+            $pending = null;
         }
 
         if (Gate::allows('for-members', $pg)) {
             $conversations = $pg->conversations()->get();
+        } else {
+            $conversations = null;
         }
 
         return view('matcher::peergroups.show', compact('pg', 'pending', 'conversations'));

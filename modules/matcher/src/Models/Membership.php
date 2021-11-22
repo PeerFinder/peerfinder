@@ -12,6 +12,9 @@ class Membership extends Model
 {
     use LogsActivity;
 
+    public const ROLE_MEMBER = 0;
+    public const ROLE_CO_OWNER = 1;
+
     protected $fillable = [
         'comment',
         'begin',
@@ -24,7 +27,8 @@ class Membership extends Model
 
     protected $touches = ['peergroup'];
 
-    public static function rules() {
+    public static function rules()
+    {
         $updateRules = [
             'comment' => ['nullable', 'string', 'max:500']
         ];
@@ -32,6 +36,14 @@ class Membership extends Model
         return [
             'update' => $updateRules,
             'create' => $updateRules,
+        ];
+    }
+
+    public static function memberRoles()
+    {
+        return [
+            static::ROLE_MEMBER => __('matcher::peergroup.role_member'),
+            static::ROLE_CO_OWNER => __('matcher::peergroup.role_co_owner'),
         ];
     }
 
@@ -86,5 +98,10 @@ class Membership extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logAll();
-    }    
+    }
+
+    public function memberRole()
+    {
+        return $this->memberRoles()[$this->member_role_id];
+    }
 }

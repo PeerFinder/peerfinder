@@ -15,7 +15,7 @@ class AppointmentsController extends Controller
 {
     public function index(Request $request, Peergroup $pg)
     {
-        Gate::authorize('forMembers', $pg);
+        Gate::authorize('for-members', $pg);
 
         $appointments = $pg->appointments()->orderByDesc('date')->get();
 
@@ -53,7 +53,7 @@ class AppointmentsController extends Controller
 
     public function show(Request $request, Peergroup $pg, Appointment $appointment)
     {
-        Gate::authorize('forMembers', $pg);
+        Gate::authorize('for-members', $pg);
 
         return view('matcher::appointments.show', compact('pg', 'appointment'));
     }

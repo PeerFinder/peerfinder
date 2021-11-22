@@ -549,4 +549,19 @@ class Matcher
             return false;
         }
     }
+
+    public function notifyAllOwners($pg, $notification)
+    {
+        $owners = [$pg->user];
+
+        foreach($pg->memberships as $membership) {
+            if ($membership->member_role_id == Membership::ROLE_CO_OWNER && $membership->user_id != $pg->user_id) {
+                $owners[] = $membership->user;
+            }
+        }
+
+        foreach ($owners as $owner) {
+            $owner->notify($notification);
+        }
+    }
 }

@@ -19,7 +19,7 @@ return [
     'button_uncomplete_group' => 'Reopen group',
     'button_transfer_ownership' => 'Change owner',
     'group_administration' => 'Group administration',
-    'group_administration_notice' => 'Only you as owner of this group can see this menu.',
+    'group_administration_notice' => 'Only owner and co-owner of this group can see this menu.',
     'button_leave_group' => 'Leave group',
     'field_title' => 'Title',
     'field_description' => 'Description',
@@ -142,4 +142,7 @@ return [
     'filter_tags' => 'Tags',
     'field_tags' => 'Tags',
     'reset_all_filters' => 'Reset all filters',
+
+    'role_member' => 'Member',
+    'role_co_owner' => 'Co-Owner of the group',
 ];
