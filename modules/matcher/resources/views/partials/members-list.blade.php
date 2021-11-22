@@ -9,7 +9,9 @@
                 </div>
                 @else
                 <div class="border p-2 rounded-md @if (auth()->id() == $membership->user_id) border-pf-midorange @endif">
-                    @if ($membership->member_role_id)
+                    @if ($pg->user_id == $membership->user_id)
+                    <x-matcher::ui.user :user="$membership->user" role="{{ __('matcher::peergroup.role_founder') }}" />
+                    @elseif ($membership->member_role_id)
                     <x-matcher::ui.user :user="$membership->user" :role="$membership->memberRole()" />
                     @else
                     <x-matcher::ui.user :user="$membership->user" />
