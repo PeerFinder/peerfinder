@@ -13,9 +13,9 @@ use Matcher\Models\Membership;
 
 class MembershipsController extends Controller
 {
-    private function getMembershipOrFail(Request $request, Peergroup $pg, $approved = true)
+    private function getMembershipOrFail(User $user, Peergroup $pg, $approved = true)
     {
-        return Membership::where(['peergroup_id' => $pg->id, 'user_id' => $request->user()->id, 'approved' => $approved])->firstOrFail();
+        return Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id, 'approved' => $approved])->firstOrFail();
     }
 
     public function create(Request $request, Peergroup $pg)
@@ -33,7 +33,7 @@ class MembershipsController extends Controller
 
     public function edit(Request $request, Peergroup $pg)
     {
-        $membership = $this->getMembershipOrFail($request, $pg);
+        $membership = $this->getMembershipOrFail($request->user(), $pg);
 
         Gate::authorize('edit', [$membership, $pg]);
 
@@ -42,7 +42,7 @@ class MembershipsController extends Controller
 
     public function update(Request $request, Peergroup $pg)
     {
-        $membership = $this->getMembershipOrFail($request, $pg);
+        $membership = $this->getMembershipOrFail($request->user(), $pg);
 
         Gate::authorize('edit', [$membership, $pg]);
 
@@ -57,7 +57,7 @@ class MembershipsController extends Controller
 
     public function delete(Request $request, Peergroup $pg)
     {
-        $membership = $this->getMembershipOrFail($request, $pg);
+        $membership = $this->getMembershipOrFail($request->user(), $pg);
 
         Gate::authorize('delete', [$membership, $pg]);
 
@@ -83,13 +83,19 @@ class MembershipsController extends Controller
         }
     }
 
-    public function destroy(Request $request, Peergroup $pg)
+    public function destroy(Request $request, Peergroup $pg, $username = null)
     {
-        $membership = $this->getMembershipOrFail($request, $pg);
+        if ($username) {
+            $user = User::whereUsername($username)->firstOrFail();
+        } else {
+            $user = $request->user();
+        }
+
+        $membership = $this->getMembershipOrFail($user, $pg);
 
         Gate::authorize('delete', [$membership, $pg]);
 
-        Matcher::removeMemberFromGroup($pg, $request->user());
+        Matcher::removeMemberFromGroup($pg, $user);
 
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.peergroup_left_successfully'));
     }
@@ -120,5 +126,5 @@ class MembershipsController extends Controller
         $membership->delete();
         
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.member_declined_successfully'));
-    }    
+    }
 }

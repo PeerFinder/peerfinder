@@ -33,9 +33,9 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
         Route::get('/edit', [MembershipsController::class, 'edit'])->name('edit');
         Route::put('/update', [MembershipsController::class, 'update'])->name('update');
         Route::get('/delete', [MembershipsController::class, 'delete'])->name('delete');
-        Route::delete('/delete', [MembershipsController::class, 'destroy'])->name('destroy');
-        Route::post('/{username}/approve', [MembershipsController::class, 'approve'])->name('approve');
-        Route::post('/{username}/decline', [MembershipsController::class, 'decline'])->name('decline');
+        Route::delete('/delete/{username?}', [MembershipsController::class, 'destroy'])->name('destroy');
+        Route::post('/approve/{username}', [MembershipsController::class, 'approve'])->name('approve');
+        Route::post('/decline/{username}', [MembershipsController::class, 'decline'])->name('decline');
     });
 
     Route::group(['as' => 'bookmarks.', 'prefix' => 'bookmarks'], function () {

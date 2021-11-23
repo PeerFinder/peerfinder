@@ -148,4 +148,24 @@ class PoliciesTest extends TestCase
         $this->assertEquals($pg->id, $notification->data['peergroup_id']);
         $this->assertEquals($user3->name, $notification->data['user_name']);
     }
+
+    public function test_co_owner_can_delete_members_membership()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user3);
+        $m1->member_role_id = Membership::ROLE_CO_OWNER;
+        $m1->approve();     
+        
+        $response = $this->actingAs($user3)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);  
+    }    
 }

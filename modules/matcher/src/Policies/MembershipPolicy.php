@@ -31,16 +31,20 @@ class MembershipPolicy
      * Deleting the membership (= leaving the group)
      * Allowed to: 
      *  + member of the group
+     *  + owner
+     *  + co-owner
      */
     public function delete(User $user, Membership $membership, Peergroup $pg)
     {
-        return ($membership->peergroup()->first()->id) == ($pg->id && $membership->user_id == $user->id);
+        return ($membership->peergroup()->first()->id == $pg->id) && 
+            (($membership->user_id == $user->id) || $pg->isOwner($user) || $pg->memberHasRole($user, Membership::ROLE_CO_OWNER));
     }
 
     /**
      * Approving the membership
      * Allowed to: 
      *  + owner of the group
+     *  + co-owner
      */
     public function approve(User $user, Membership $membership, Peergroup $pg)
     {

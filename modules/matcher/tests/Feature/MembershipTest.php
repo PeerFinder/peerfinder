@@ -479,5 +479,25 @@ class MembershipTest extends TestCase
         Event::assertDispatched(UserApproved::class, function (UserApproved $event) use ($pg, $user2, $m1) {
             return ($event->pg->id == $pg->id) && ($event->user->id == $user2->id) && ($event->membership->id == $m1->id);
         });
-    }    
+    }
+
+    public function test_owner_can_delete_members_membership()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+        Matcher::addMemberToGroup($pg, $user3);
+
+        $response = $this->actingAs($user3)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(403);      
+        
+        $response = $this->actingAs($user1)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);  
+    }
 }
