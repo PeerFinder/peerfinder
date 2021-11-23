@@ -28,7 +28,7 @@ class MembershipPolicy
     }    
 
     /**
-     * Deleting the membership (= leaving the group)
+     * Deleting the membership (= leaving the group). Owner's membership
      * Allowed to: 
      *  + member of the group
      *  + owner
@@ -36,7 +36,8 @@ class MembershipPolicy
      */
     public function delete(User $user, Membership $membership, Peergroup $pg)
     {
-        return ($membership->peergroup()->first()->id == $pg->id) && 
+        return ($membership->peergroup()->first()->id == $pg->id) && // check for the correct group
+            ($pg->isOwner($user) || !$pg->isOwner($membership->user)) && // owner's membership can only be removed by the owner
             (($membership->user_id == $user->id) || $pg->isOwner($user) || $pg->memberHasRole($user, Membership::ROLE_CO_OWNER));
     }
 

@@ -145,4 +145,11 @@ return [
 
     'role_member' => 'Member',
     'role_co_owner' => 'Co-Owner of the group',
+    'edit_membership_roles_title' => 'Manage members',
+    'button_change_membership_roles' => 'Update members',
+    'button_remove' => 'Remove',
+    'remove_member_title' => 'Remove member',
+    'button_remove_member' => 'Remove member',
+    'remove_member_notice' => 'Do you really want to remove :name from this group?',
+    'member_removed_successfully' => 'User :name removed from this group successfully!',
 ];

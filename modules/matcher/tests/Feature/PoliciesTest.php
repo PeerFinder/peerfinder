@@ -167,5 +167,42 @@ class PoliciesTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);  
+    }
+
+    public function test_co_owner_can_list_members()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user3);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+        $m1->member_role_id = Membership::ROLE_CO_OWNER;
+        $m1->approve();
+
+        $response = $this->actingAs($user2)->get(route('matcher.membership.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+    }
+
+    public function test_co_owner_cannot_delete_owners_membership()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user1);
+        Matcher::addMemberToGroup($pg, $user2);
+        
+        $m1 = Matcher::addMemberToGroup($pg, $user3);
+        $m1->member_role_id = Membership::ROLE_CO_OWNER;
+        $m1->approve();
+
+        $response = $this->actingAs($user3)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user1->username]));
+        $response->assertStatus(403);
     }    
 }

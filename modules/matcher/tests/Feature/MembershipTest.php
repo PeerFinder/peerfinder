@@ -481,6 +481,36 @@ class MembershipTest extends TestCase
         });
     }
 
+    public function test_owner_can_list_members()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+        Matcher::addMemberToGroup($pg, $user3);
+
+        $response = $this->actingAs($user1)->get(route('matcher.membership.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+    }
+
+    public function test_owner_can_not_list_members()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+        Matcher::addMemberToGroup($pg, $user3);
+
+        $response = $this->actingAs($user2)->get(route('matcher.membership.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(403);
+    }    
+
     public function test_owner_can_delete_members_membership()
     {
         $user1 = User::factory()->create();
@@ -494,7 +524,7 @@ class MembershipTest extends TestCase
 
         $response = $this->actingAs($user3)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user2->username]));
         $response->assertStatus(403);      
-        
+
         $response = $this->actingAs($user1)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user2->username]));
         $response->assertStatus(302);
 
