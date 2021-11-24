@@ -46,8 +46,8 @@ class UserApprovedInGroup extends Notification
     {
         return (new MailMessage)
                 ->greeting(__('mail/general.greeting'))
-                ->subject(__('mail/peergroup.subject_owner_approved_your_request', ['user_name' => $this->pg->user->name]))
-                ->line(__('mail/peergroup.notification_owner_approved_your_request', ['user_name' => $this->pg->user->name, 'title' => $this->pg->title]))
+                ->subject(__('mail/peergroup.subject_owner_approved_your_request'))
+                ->line(__('mail/peergroup.notification_owner_approved_your_request', ['title' => $this->pg->title]))
                 ->action(__('mail/peergroup.button_show_group'), $this->pg->getUrl())
                 ->line(__('mail/general.thank_you_for_using'));
     }

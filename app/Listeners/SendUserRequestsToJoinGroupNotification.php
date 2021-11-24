@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Notifications\UserRequestsToJoinGroup;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Matcher\Facades\Matcher;
 
 class SendUserRequestsToJoinGroupNotification
 {
@@ -26,6 +27,6 @@ class SendUserRequestsToJoinGroupNotification
      */
     public function handle($event)
     {
-        $event->pg->user->notify(new UserRequestsToJoinGroup($event->pg, $event->user));
+        Matcher::notifyAllOwners($event->pg, new UserRequestsToJoinGroup($event->pg, $event->user));
     }
 }

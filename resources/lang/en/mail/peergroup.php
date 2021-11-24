@@ -7,6 +7,6 @@ return [
     'subject_user_joined_group' => ':user_name joined your group',
     'notification_user_joined_group' => ':user_name joined your group ":title".',
     'button_show_group' => 'Show group',
-    'subject_owner_approved_your_request' => ':user_name approved your request to join group',
-    'notification_owner_approved_your_request' => ':user_name approved your request to join group ":title".',
+    'subject_owner_approved_your_request' => 'Your request to join group was accepted',
+    'notification_owner_approved_your_request' => 'Your request to join group ":title" was accepted.',
 ];

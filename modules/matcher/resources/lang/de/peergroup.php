@@ -19,7 +19,7 @@ return [
     'button_uncomplete_group' => 'Gruppe eröffnen',
     'button_transfer_ownership' => 'Gruppe übertragen',
     'group_administration' => 'Administration der Gruppe',
-    'group_administration_notice' => 'Nur Du als Eigentümer:in kannst dieses Menü sehen.',
+    'group_administration_notice' => 'Nur Besitzer:in und Mitbesitzer:innen können dieses Menü sehen.',
     'button_leave_group' => 'Gruppe verlassen',
     'field_title' => 'Titel',
     'field_description' => 'Beschreibung',
@@ -145,4 +145,16 @@ return [
     'field_tags' => 'Tags',
 
     'reset_all_filters' => 'Alle Filter zurücksetzen',
+
+    'role_member' => 'Mitglied',
+    'role_co_owner' => 'Mitbesitzer:in der Gruppe',
+    'edit_membership_roles_title' => 'Mitglieder verwalten',
+    'button_change_membership_roles' => 'Rollen ändern',
+    'button_remove' => 'Entfernen',
+    'remove_member_title' => 'Mitglied entfernen',
+    'button_remove_member' => 'Mitglied entfernen',
+    'remove_member_notice' => 'Willst Du wirklich :name aus dieser Gruppe entfernen?',
+    'member_removed_successfully' => 'Mitglied :name erfolgreich aus der Gruppe entfernt!',
+    'members_managed_successfully' => 'Mitgliederrollen erfolgreich geändert!',
+    'button_manage_members' => 'Mitglieder verwalten',
 ];

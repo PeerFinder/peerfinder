@@ -7,6 +7,6 @@ return [
     'subject_user_joined_group' => ':user_name ist Deiner Gruppe beigetreten',
     'notification_user_joined_group' => ':user_name ist Deiner Gruppe ":title" beigetreten.',
     'button_show_group' => 'Gruppe zeigen',
-    'subject_owner_approved_your_request' => ':user_name hat Deine Anfrage akzeptiert',
-    'notification_owner_approved_your_request' => ':user_name hat dich als Mitglied in der Gruppe ":title" bestätigt.',    
+    'subject_owner_approved_your_request' => 'Deine Anfrage wurde akzeptiert',
+    'notification_owner_approved_your_request' => 'Du wurdest als Mitglied in der Gruppe ":title" bestätigt.',    
 ];

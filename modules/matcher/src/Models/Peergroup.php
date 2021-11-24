@@ -229,6 +229,18 @@ class Peergroup extends Model
         }
     }
 
+    public function memberHasRole(User $user = null, $member_role_id = Membership::ROLE_MEMBER)
+    {
+        $user = $user ?: auth()->user();
+
+        $query = Membership::where(['user_id' => $user->id, 
+                                    'peergroup_id' => $this->id, 
+                                    'approved' => true,
+                                    'member_role_id' => $member_role_id]);
+        
+        return $query->exists();
+    }
+
     public function isPending(User $user = null)
     {
         $user = $user ?: auth()->user();

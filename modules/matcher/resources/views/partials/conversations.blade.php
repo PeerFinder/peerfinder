@@ -1,5 +1,5 @@
 @if ($conversations)
-    <x-ui.card title="{{ __('matcher::peergroup.caption_conversations') }}">
+    <x-ui.card title="{{ __('matcher::peergroup.caption_conversations') }}" subtitle="{{ __('matcher::peergroup.visible_for_members') }}">
     @forelse ($conversations as $conversation)
         {{ Talk::embedConversation($conversation) }}
     @empty

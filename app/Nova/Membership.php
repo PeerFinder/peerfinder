@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Matcher\Models\Membership as ModelsMembership;
 
 class Membership extends Resource
 {
@@ -52,6 +54,10 @@ class Membership extends Resource
             BelongsTo::make('User'),
 
             Boolean::make('Approved'),
+
+            Select::make('Role', 'member_role_id')->displayUsing(function($role_id) {
+                return ModelsMembership::memberRoles()[(int) $role_id];
+            })->options(ModelsMembership::memberRoles()),
 
             Textarea::make('Comment')->hideFromIndex(),
         ];

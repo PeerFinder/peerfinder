@@ -479,5 +479,106 @@ class MembershipTest extends TestCase
         Event::assertDispatched(UserApproved::class, function (UserApproved $event) use ($pg, $user2, $m1) {
             return ($event->pg->id == $pg->id) && ($event->user->id == $user2->id) && ($event->membership->id == $m1->id);
         });
+    }
+
+    public function test_owner_can_list_members()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+        Matcher::addMemberToGroup($pg, $user3);
+
+        $response = $this->actingAs($user1)->get(route('matcher.membership.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+    }
+
+    public function test_owner_can_not_list_members()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+        Matcher::addMemberToGroup($pg, $user3);
+
+        $response = $this->actingAs($user2)->get(route('matcher.membership.index', ['pg' => $pg->groupname]));
+        $response->assertStatus(403);
+    }    
+
+    public function test_owner_can_delete_members_membership()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+        Matcher::addMemberToGroup($pg, $user3);
+
+        $response = $this->actingAs($user3)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(403);      
+
+        $response = $this->actingAs($user1)->delete(route('matcher.membership.destroy', ['pg' => $pg->groupname, 'username' => $user2->username]));
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id]);  
+    }
+
+    public function test_owner_can_manage_members()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+        $user4 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        Matcher::addMemberToGroup($pg, $user2);
+        $m1 = Matcher::addMemberToGroup($pg, $user3);
+        $m1->member_role_id = Membership::ROLE_CO_OWNER;
+        $m1->save();
+        $m1 = Matcher::addMemberToGroup($pg, $user4);
+        $m1->member_role_id = Membership::ROLE_CO_OWNER;
+        $m1->save();        
+
+        $response = $this->actingAs($user1)->put(route('matcher.membership.manage', ['pg' => $pg->groupname]), [
+            'roles' => [
+                Membership::ROLE_CO_OWNER,
+                Membership::ROLE_MEMBER,
+            ],
+            'usernames' => [
+                $user2->username,
+            ]
+        ]);
+
+        $response->assertStatus(404);        
+
+        $response = $this->actingAs($user1)->put(route('matcher.membership.manage', ['pg' => $pg->groupname]), [
+            'roles' => [
+                Membership::ROLE_CO_OWNER,
+                Membership::ROLE_CO_OWNER,
+                Membership::ROLE_MEMBER,
+                Membership::ROLE_CO_OWNER + 5,
+            ],
+            'usernames' => [
+                $user1->username,
+                $user2->username,
+                $user3->username,
+                $user4->username,
+            ]
+        ]);
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user2->id, 'member_role_id' => Membership::ROLE_CO_OWNER]);  
+        $this->assertDatabaseHas('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user3->id, 'member_role_id' => Membership::ROLE_MEMBER]);  
+        $this->assertDatabaseHas('memberships', ['peergroup_id' => $pg->id, 'user_id' => $user4->id, 'member_role_id' => Membership::ROLE_CO_OWNER]);  
     }    
 }

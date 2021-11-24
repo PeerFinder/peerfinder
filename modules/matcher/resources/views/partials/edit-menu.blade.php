@@ -5,6 +5,7 @@
         
         <x-ui.forms.button tag="a" href="{{ route('matcher.appointments.index', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_edit_appointments') }}</x-ui.forms.button>
 
+        @can('complete', $pg)
         <x-ui.forms.form :action="route('matcher.complete', ['pg' => $pg->groupname])" method="post">
             @csrf
             @if ($pg->isOpen())
@@ -19,14 +20,23 @@
             @endif
             @endif
         </x-ui.forms.form>
+        @endcan
+
+        @can('manage-members', $pg)
+        <x-ui.forms.button tag="a" href="{{ route('matcher.membership.index', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_manage_members') }}</x-ui.forms.button>
+        @endcan
 
         <x-ui.forms.button tag="a" href="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_edit_group') }}</x-ui.forms.button>
         
-        @if ($pg->hasMoreMembersThanOwner())
-        <x-ui.forms.button tag="a" href="{{ route('matcher.editOwner', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_transfer_ownership') }}</x-ui.forms.button>
-        @endif
+        @can('edit-owner', $pg)
+            @if ($pg->hasMoreMembersThanOwner())
+            <x-ui.forms.button tag="a" href="{{ route('matcher.editOwner', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_transfer_ownership') }}</x-ui.forms.button>
+            @endif
+        @endcan
 
+        @can('delete', $pg)
         <x-ui.forms.button tag="a" href="{{ route('matcher.delete', ['pg' => $pg->groupname]) }}" action="destroy">{{ __('matcher::peergroup.button_delete_group') }}</x-ui.forms.button>
+        @endcan
     </div>
 </x-ui.card>
 @endcan
