@@ -152,4 +152,5 @@ return [
     'button_remove_member' => 'Remove member',
     'remove_member_notice' => 'Do you really want to remove :name from this group?',
     'member_removed_successfully' => 'User :name removed from this group successfully!',
+    'members_managed_successfully' => 'Member roles changed successfully!',
 ];

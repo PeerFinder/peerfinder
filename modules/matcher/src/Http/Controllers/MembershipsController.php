@@ -153,4 +153,13 @@ class MembershipsController extends Controller
         
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.member_declined_successfully'));
     }
+
+    public function manage(Request $request, Peergroup $pg)
+    {
+        Gate::authorize('manage-members', $pg);
+
+        Matcher::applyMemberRoles($request, $pg);
+
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.members_managed_successfully'));
+    }
 }

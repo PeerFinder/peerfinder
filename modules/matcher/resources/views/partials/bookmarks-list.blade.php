@@ -1,4 +1,4 @@
-@if ($pg && $pg->isMember() && $pg->bookmarks->count())
+@if ($pg->isMember() && $pg->bookmarks->count())
 <x-ui.card title="{{ __('matcher::peergroup.caption_bookmarks') }}" 
             subtitle="{{ __('matcher::peergroup.visible_for_members') }}" 
             edit="{{ route('matcher.bookmarks.edit', ['pg' => $pg->groupname]) }}" :can="auth()->user()->can('edit', $pg)">

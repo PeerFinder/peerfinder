@@ -62,6 +62,7 @@
             </div>
         </div>
 
+        @if ($pg)
         <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 sm:mt-0">
             @include('matcher::partials.next-appointment')
             @include('matcher::partials.meeting-link')
@@ -69,5 +70,6 @@
             @include('matcher::partials.members-list')
             @include('matcher::partials.edit-menu')
         </div>
+        @endif
     </div>
 </x-layout.minimal>

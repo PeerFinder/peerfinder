@@ -570,4 +570,32 @@ class Matcher
             $owner->notify($notification);
         }
     }
+
+    public function applyMemberRoles(Request $request, Peergroup $pg)
+    {
+        $roles = $request->get('roles', []);
+        $usernames = $request->get('usernames', []);
+
+        if (count($roles) != count($usernames) || count($roles) < 1) {
+            abort(404);
+        }
+
+        for ($i = 0; $i < count($usernames); $i++) {
+            $user = User::whereUsername($usernames[$i])->firstOrFail();
+
+            if (!key_exists($roles[$i], Membership::memberRoles())) {
+                continue;
+            }
+
+            // Don't apply any changes to the owner's membership
+            if ($pg->isOwner($user)) {
+                continue;
+            }
+
+            $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id, 'approved' => true])->firstOrFail();
+
+            $membership->member_role_id = $roles[$i];
+            $membership->save();
+        }
+    }    
 }

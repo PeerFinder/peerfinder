@@ -1,5 +1,7 @@
-<x-ui.card title="{{ trans_choice('matcher::peergroup.number_of_members', $pg ? $pg->getMembers()->count() : 0, ['count' => $pg ? $pg->getMembers()->count() : 0]) }}">
-    @if ($pg && $pg->getMembers()->count() > 0)
+<x-ui.card title="{{ trans_choice('matcher::peergroup.number_of_members', $pg->getMembers()->count(), ['count' => $pg->getMembers()->count()]) }}"
+    edit="{{ route('matcher.membership.index', ['pg' => $pg->groupname]) }}" :can="auth()->check() ? auth()->user()->can('manage-members', $pg) : false">
+    
+    @if ($pg->getMembers()->count() > 0)
     <div class="p-2 space-y-1 m-2">
         @foreach ($pg->memberships as $membership)
             @if ($membership->user)
