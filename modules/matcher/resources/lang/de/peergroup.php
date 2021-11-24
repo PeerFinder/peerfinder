@@ -148,4 +148,13 @@ return [
 
     'role_member' => 'Mitglied',
     'role_co_owner' => 'Mitbesitzer:in der Gruppe',
+    'edit_membership_roles_title' => 'Mitglieder verwalten',
+    'button_change_membership_roles' => 'Rollen ändern',
+    'button_remove' => 'Entfernen',
+    'remove_member_title' => 'Mitglied entfernen',
+    'button_remove_member' => 'Mitglied entfernen',
+    'remove_member_notice' => 'Willst Du wirklich :name aus dieser Gruppe entfernen?',
+    'member_removed_successfully' => 'Mitglied :name erfolgreich aus der Gruppe entfernt!',
+    'members_managed_successfully' => 'Mitgliederrollen erfolgreich geändert!',
+    'button_manage_members' => 'Mitglieder verwalten',
 ];

@@ -22,6 +22,10 @@
         </x-ui.forms.form>
         @endcan
 
+        @can('manage-members', $pg)
+        <x-ui.forms.button tag="a" href="{{ route('matcher.membership.index', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_manage_members') }}</x-ui.forms.button>
+        @endcan
+
         <x-ui.forms.button tag="a" href="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" action="inform">{{ __('matcher::peergroup.button_edit_group') }}</x-ui.forms.button>
         
         @can('edit-owner', $pg)

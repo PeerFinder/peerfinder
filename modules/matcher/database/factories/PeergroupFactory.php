@@ -16,7 +16,7 @@ class PeergroupFactory extends Factory
         return [
             'title' => $this->faker->realText(50),
             'description' => $this->faker->text(),
-            'limit' => $this->faker->numberBetween(2, config('matcher.max_limit')),
+            'limit' => $this->faker->numberBetween(6, config('matcher.max_limit')),
             'begin' => $this->faker->date(),
             'virtual' => false,
             'private' => false,
