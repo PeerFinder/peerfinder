@@ -59,25 +59,40 @@ class Activity extends Resource
 
                 if ($props->has('old')) {
                     $old_props = $props['old'];
-                } else {
+                } else if ($props->has('attributes')) {
                     $old_props = $props['attributes'];
+                } else {
+                    $old_props = null;
                 }
 
-                $ret[] = '<table class="w-full">';
+                if ($props->has('attributes')) {
+                    $props = $props['attributes'];
+                } else if ($props->has('old')) {
+                    $props = $props['old'];
+                } else {
+                    $props = null;
+                }
 
-                foreach ($old_props as $key => $prop) {
-                    if ($old_props[$key] != $props['attributes'][$key]) {
-                        $style = "background: yellow;";
-                    } else {
-                        $style = "";
+                if ($old_props && $props) {
+                    $ret[] = '<table class="w-full">';
+                    $ret[] = '<tr class="border"><th>Attribute</th><th>Old value</th><th>New Value</th></tr>';
+    
+                    foreach ($old_props as $key => $prop) {
+
+                        if ($old_props[$key] != $props[$key]) {
+                            $style = "background: yellow;";
+                        } else {
+                            $style = "";
+                        }
+    
+                        $ret[] = sprintf('<tr class="border" style="%s"><td>%s</td><td style="word-break: break-all;">%s</td><td style="word-break: break-all;">%s</td></tr>', $style, $key, $old_props[$key], $props[$key]);
                     }
-
-                    $ret[] = sprintf('<tr class="border" style="%s"><td>%s</td><td style="word-break: break-all;">%s</td><td style="word-break: break-all;">%s</td></tr>', $style, $key, $old_props[$key], $props['attributes'][$key]);
+    
+                    $ret[] = '</table>';
                 }
-
-                $ret[] = '</table>';
-
+                
                 return join($ret);
+
             })->onlyOnDetail()->asHtml(),
 
             Text::make('Description')->readonly(),
