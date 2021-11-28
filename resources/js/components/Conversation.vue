@@ -1,8 +1,13 @@
 <template>
     <div class="space-y-6">
-        <slot name="replies" :actionReply="reply" :reply="replyId"></slot>
+        <slot name="replies" :actionReply="reply" :actionEdit="edit" :reply="replyId" :editing="editingId"></slot>
+
         <teleport :to="'#reply-' + replyId + ' .edit-bar'" v-if="replyId">
             <slot name="reply-form" :reply="replyId"></slot>
+        </teleport>
+
+        <teleport :to="'#reply-' + editingId + ' .content'" v-if="editingId">
+            <slot name="editing-form" :edit="editingId"></slot>
         </teleport>
     </div>
 </template>
@@ -17,9 +22,16 @@ export default {
     },
     setup(props) {
         const replyId = ref();
+        const editingId = ref();
 
         function reply(identifier) {
             replyId.value = identifier;
+            editingId.value = null;
+        }
+
+        function edit(identifier) {
+            editingId.value = identifier;
+            replyId.value = null;
         }
 
         function scrollToReply(reply) {
@@ -41,12 +53,14 @@ export default {
 
         return {
             replyId,
-            reply
+            editingId,
+            reply,
+            edit,
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

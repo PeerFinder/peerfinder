@@ -19393,9 +19393,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   },
   setup: function setup(props) {
     var replyId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
+    var editingId = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)();
 
     function reply(identifier) {
       replyId.value = identifier;
+      editingId.value = null;
+    }
+
+    function edit(identifier) {
+      editingId.value = identifier;
+      replyId.value = null;
     }
 
     function scrollToReply(reply) {
@@ -19419,7 +19426,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     });
     return {
       replyId: replyId,
-      reply: reply
+      editingId: editingId,
+      reply: reply,
+      edit: edit
     };
   }
 });
@@ -19744,12 +19753,21 @@ var _hoisted_1 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "replies", {
     actionReply: $setup.reply,
-    reply: $setup.replyId
+    actionEdit: $setup.edit,
+    reply: $setup.replyId,
+    editing: $setup.editingId
   }), $setup.replyId ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Teleport, {
     key: 0,
     to: '#reply-' + $setup.replyId + ' .edit-bar'
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "reply-form", {
     reply: $setup.replyId
+  })], 8
+  /* PROPS */
+  , ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $setup.editingId ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Teleport, {
+    key: 1,
+    to: '#reply-' + $setup.editingId + ' .content'
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "editing-form", {
+    edit: $setup.editingId
   })], 8
   /* PROPS */
   , ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);

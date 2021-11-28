@@ -5,20 +5,24 @@
         </div>
         
         <div class="flex-1 overflow-hidden">
-            <div class="space-x-2 text-sm">
+            <div class="space-x-2 text-sm flex items-center">
                 @if ($reply->user_id)
-                <a class="font-semibold inline-block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }} <x-ui.user.awards :user="$reply->user" style="inline" /></a>
+                <a class="font-semibold block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }} <x-ui.user.awards :user="$reply->user" style="inline" /></a>
                 @else
-                <span class="font-semibold text-gray-400">{{ __('talk::talk.anonymous_user') }}</span>
+                <span class="font-semibold block text-gray-400">{{ __('talk::talk.anonymous_user') }}</span>
                 @endif
-                <span class="inline-block text-xs text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
+
+                <span class="block text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
+
                 @can('edit', $reply)
-                    Edit
+                <a @click.prevent="props.actionEdit('{{ $reply->identifier }}')" href="#" title="{{ __('talk::talk.button_edit_reply') }}" class="text-gray-300 hover:text-gray-500 block"><x-ui.icon name="pencil-alt" size="h-4 w-4" viewBox="0 2 20 20" /></a>
                 @endcan
             </div>
 
-            <div class="font-serif font-light prose prose-blue">
-                {!! Talk::renderReplyMessage($reply->message) !!}
+            <div class="content">
+                <div class="font-serif font-light prose prose-blue" v-if="props.editing != '{{ $reply->identifier }}'">
+                    {!! Talk::renderReplyMessage($reply->message) !!}
+                </div>
             </div>
 
             <div class="edit-bar mt-1">

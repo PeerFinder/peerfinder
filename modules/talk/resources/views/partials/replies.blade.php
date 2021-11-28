@@ -15,6 +15,11 @@
                 <x-talk::conversations.reply-form reply="true" :conversation="$conversation" />
             </div>
         </template>
+        <template v-slot:editing-form="props">
+            <div class="border bg-yellow-300 p-2 rounded-md">
+                bla
+            </div>
+        </template>        
     </conversation>
     
     {{ $replies->links('pagination::simple-tailwind') }}

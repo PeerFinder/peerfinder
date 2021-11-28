@@ -22,4 +22,5 @@ return [
     'button_reply_to_reply' => 'Antworten',
     'anonymous_user' => 'Gelöschte:r Nutzer:in',
     'jump_to_last_reply' => 'Zum letzten Beitrag springen',
+    'button_edit_reply' => 'Bearbeiten',
 ];

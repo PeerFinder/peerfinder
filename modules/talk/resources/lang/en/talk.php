@@ -22,4 +22,5 @@ return [
     'button_reply_to_reply' => 'Reply',
     'anonymous_user' => 'Deleted user',
     'jump_to_last_reply' => 'Jump to recent reply',
+    'button_edit_reply' => 'Edit',
 ];
