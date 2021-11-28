@@ -21,4 +21,5 @@ return [
     'all_conversations_link' => 'Alle Unterhaltungen',
     'button_reply_to_reply' => 'Antworten',
     'anonymous_user' => 'Gelöschte:r Nutzer:in',
+    'jump_to_last_reply' => 'Zum letzten Beitrag springen',
 ];

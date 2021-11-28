@@ -1,6 +1,10 @@
 @if ($replies->count())
+@if ($embedded && $highlighted_reply)
+<div class="text-center mb-5"><x-ui.forms.button tag="a" href="#reply-{{ $highlighted_reply }}" action="inform">{{ __('talk::talk.jump_to_last_reply') }}</x-ui.forms.button></div>
+@endif
+
 <div class="space-y-4">
-    <conversation reply="{{ old('reply') }}">
+    <conversation reply="{{ old('reply') }}" highlighted="{{ $embedded ? null : $highlighted_reply }}">
         <template v-slot:replies="props">
             @foreach ($replies->reverse() as $reply)
                 @include('talk::partials.reply')

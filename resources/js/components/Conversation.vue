@@ -13,6 +13,7 @@ import { ref, onMounted } from 'vue';
 export default {
     props: {
         reply: String,
+        highlighted: String,
     },
     setup(props) {
         const replyId = ref();
@@ -21,9 +22,20 @@ export default {
             replyId.value = identifier;
         }
 
+        function scrollToReply(reply) {
+            var highlightedReply = document.getElementById('reply-' + reply);
+
+            if (typeof(highlightedReply) != undefined) {
+                highlightedReply.scrollIntoView({block: "end", inline: "nearest"});
+            }
+        }
+
         onMounted(() => {
             if (props.reply) {
                 reply(props.reply);
+                scrollToReply(props.reply);
+            } else if (props.highlighted) {
+                scrollToReply(props.highlighted);
             }
         });
 

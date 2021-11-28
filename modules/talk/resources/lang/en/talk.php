@@ -21,4 +21,5 @@ return [
     'all_conversations_link' => 'All conversations',
     'button_reply_to_reply' => 'Reply',
     'anonymous_user' => 'Deleted user',
+    'jump_to_last_reply' => 'Jump to recent reply',
 ];

@@ -17,7 +17,7 @@
     </div>
 
     <div class="p-4">
-        @include('talk::partials.replies')
+        @include('talk::partials.replies', ['embedded' => false])
     </div>
 
     <div class="p-4 border-t">
