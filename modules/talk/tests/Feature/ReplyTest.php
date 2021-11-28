@@ -30,7 +30,7 @@ class ReplyTest extends TestCase
         $conversation = Conversation::factory()->byUser($user2)->create();
         $conversation->addUser($user1);
 
-        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+        $response = $this->actingAs($user1)->put(route('talk.replies.store', ['conversation' => $conversation->identifier]), [
             'message' => $this->faker->text(),
         ]);
 
@@ -165,7 +165,7 @@ class ReplyTest extends TestCase
 
         $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
 
-        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+        $response = $this->actingAs($user1)->put(route('talk.replies.store', ['conversation' => $conversation->identifier]), [
             'reply_message' => $this->faker->text(),
             'reply' => $r1->identifier,
         ]);
@@ -187,7 +187,7 @@ class ReplyTest extends TestCase
 
         $r1 = Talk::createReply($conversation2, $user1, ['message' => $this->faker->text()]);
 
-        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+        $response = $this->actingAs($user1)->put(route('talk.replies.store', ['conversation' => $conversation->identifier]), [
             'reply_message' => $this->faker->text(),
             'reply' => $r1->identifier,
         ]);

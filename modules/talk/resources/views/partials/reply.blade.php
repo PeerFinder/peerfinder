@@ -12,6 +12,9 @@
                 <span class="font-semibold text-gray-400">{{ __('talk::talk.anonymous_user') }}</span>
                 @endif
                 <span class="inline-block text-xs text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
+                @can('edit', $reply)
+                    Edit
+                @endcan
             </div>
 
             <div class="font-serif font-light prose prose-blue">

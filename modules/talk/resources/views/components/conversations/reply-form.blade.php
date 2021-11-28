@@ -1,6 +1,6 @@
 @props(['new' => false, 'reply' => false, 'conversation' => null, 'action' => null])
 
-<x-ui.forms.form :action="$action ?: route('talk.reply.store', ['conversation' => $conversation->identifier])">
+<x-ui.forms.form :action="$action ?: route('talk.replies.store', ['conversation' => $conversation->identifier])">
 
     <x-ui.errors :errors="$errors" class="p-3 mb-2" />
 

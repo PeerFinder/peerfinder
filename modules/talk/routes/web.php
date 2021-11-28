@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Talk\Http\Controllers\ConversationController;
+use Talk\Http\Controllers\RepliesController;
 
 Route::get('/', [ConversationController::class, 'index'])->name('index');
 Route::get('/create/{user:username}', [ConversationController::class, 'createForUser'])->name('create.user');
@@ -11,4 +12,5 @@ Route::put('/create/{user:username}', [ConversationController::class, 'storeForU
 Route::get('/{conversation:identifier}', [ConversationController::class, 'show'])->name('show');
 Route::get('/{conversation:identifier}/edit', [ConversationController::class, 'edit'])->name('edit');
 Route::put('/{conversation:identifier}/update', [ConversationController::class, 'update'])->name('update');
-Route::put('/{conversation:identifier}/replies/create', [ConversationController::class, 'replyStore'])->name('reply.store');
+
+Route::put('/{conversation:identifier}/replies/create', [RepliesController::class, 'store'])->name('replies.store');
