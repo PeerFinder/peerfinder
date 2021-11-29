@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-6">
+    <div class="space-y-4">
         <slot name="replies" :actionReply="reply" :actionEdit="edit" :reply="replyId" :editing="editingId"></slot>
 
         <teleport :to="'#reply-' + replyId + ' .edit-bar'" v-if="replyId">
@@ -38,7 +38,7 @@ export default {
             var highlightedReply = document.getElementById('reply-' + reply);
 
             if (typeof(highlightedReply) != undefined) {
-                highlightedReply.scrollIntoView({block: "end", inline: "nearest"});
+                highlightedReply.scrollIntoView({inline: "nearest"});
             }
         }
 

@@ -1,5 +1,5 @@
-<div id="reply-{{ $reply->identifier }}">
-    <div @class(["flex space-x-4", $highlighted_reply == $reply->identifier ? "bg-yellow-100 border border-yellow-200 p-2 rounded-md" : ""])>
+<div id="reply-{{ $reply->identifier }}" class="bg-gray-50 rounded-md">
+    <div @class(["flex space-x-4 p-2 rounded-md", $highlighted_reply == $reply->identifier ? "bg-yellow-100" : ""])>
         <div class="flex-shrink-0">
             @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40])
         </div>
@@ -30,7 +30,7 @@
             </div>
             
             @if ($reply->replies->count())
-            <div class="mt-3 space-y-2 border bg-gray-50 p-2 rounded-md">
+            <div class="mt-3 space-y-2">
                 @foreach ($reply->replies as $sub_reply)
                     @include('talk::partials.reply', ['reply' => $sub_reply])
                 @endforeach
