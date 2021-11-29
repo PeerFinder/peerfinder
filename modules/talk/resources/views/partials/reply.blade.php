@@ -1,10 +1,16 @@
-<div id="reply-{{ $reply->identifier }}" class="bg-gray-50 rounded-md">
-    <div @class(["flex space-x-4 p-2 rounded-md", $highlighted_reply == $reply->identifier ? "bg-yellow-100" : ""])>
+<div id="reply-{{ $reply->identifier }}" class="rounded-md relative">
+    @if ($reply->reply_id)
+    <a href="#reply-{{ $reply->identifier }}" class="block bg-gray-100 hover:bg-gray-400 w-1 left-[1.2rem] top-9 bottom-0 absolute rounded-full"><span class="sr-only">Jump to comment</span></a>
+    @else
+    <a href="#reply-{{ $reply->identifier }}" class="block bg-gray-200 hover:bg-gray-400 w-1 left-[1.6rem] top-12 bottom-0 absolute rounded-full"><span class="sr-only">Jump to comment</span></a>
+    @endif
+
+    <div class="flex space-x-4 px-2 rounded-md">
         <div class="flex-shrink-0">
             @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40])
         </div>
         
-        <div class="flex-1 overflow-hidden">
+        <div @class(["flex-1 overflow-hidden rounded-md", $highlighted_reply == $reply->identifier ? "bg-yellow-100 p-3" : ""])>
             <div class="space-x-2 text-sm flex items-center">
                 @if ($reply->user_id)
                 <a class="font-semibold block" href="{{ $reply->user->profileUrl() }}">{{ $reply->user->name }} <x-ui.user.awards :user="$reply->user" style="inline" /></a>
@@ -25,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="edit-bar mt-1">
+            <div class="edit-bar mt-1 mb-1">
                 <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block text-pf-midblue hover:text-pf-lightblue">{{ __('talk::talk.button_reply_to_reply') }}</a>
             </div>
             
