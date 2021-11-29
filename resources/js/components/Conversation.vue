@@ -43,6 +43,10 @@ export default {
         }
 
         onMounted(() => {
+            if (history.scrollRestoration) {
+                history.scrollRestoration = 'manual';
+            }
+
             if (props.reply) {
                 reply(props.reply);
                 scrollToReply(props.reply);
