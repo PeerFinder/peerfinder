@@ -1,5 +1,5 @@
 <template>
-    <div class="space-y-4">
+    <div class="space-y-2">
         <slot name="replies" :actionReply="reply" :actionEdit="edit" :reply="replyId" :editing="editingId"></slot>
 
         <teleport :to="'#reply-' + replyId + ' .edit-bar'" v-if="replyId">
@@ -7,7 +7,7 @@
         </teleport>
 
         <teleport :to="'#reply-' + editingId + ' .content'" v-if="editingId">
-            <slot name="editing-form" :edit="editingId"></slot>
+            <slot name="editing-form" :edit="editingId" :actionSave="save" :actionCancel="cancel"></slot>
         </teleport>
     </div>
 </template>
@@ -34,12 +34,31 @@ export default {
             replyId.value = null;
         }
 
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+
         function scrollToReply(reply) {
             var highlightedReply = document.getElementById('reply-' + reply);
 
-            if (typeof(highlightedReply) != undefined) {
+            if (typeof(highlightedReply) != undefined && !isInViewport(highlightedReply)) {
                 highlightedReply.scrollIntoView({inline: "nearest"});
             }
+        }
+
+        function save() {
+            alert("save");
+        }
+
+        function cancel() {
+            alert("cancel");
         }
 
         onMounted(() => {
@@ -60,6 +79,8 @@ export default {
             editingId,
             reply,
             edit,
+            save,
+            cancel,
         }
     }
 }
