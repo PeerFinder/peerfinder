@@ -11,8 +11,8 @@
         <input name="reply" type="hidden" v-bind:value="props.reply" />
         
         <div class="flex items-center justify-between">
-            <x-ui.forms.button tag="a" href="#" vueClick="props.actionSave()">{{ __('talk::talk.button_update_reply') }}</x-ui.forms.button>
-            <x-ui.forms.button action="inform" tag="a" href="#" vueClick="props.actionCancel()">{{ __('talk::talk.button_cancel') }}</x-ui.forms.button>
+            <x-ui.forms.button vueClick="props.actionSave">{{ __('talk::talk.button_update_reply') }}</x-ui.forms.button>
+            <x-ui.forms.button action="inform" vueClick="props.actionCancel">{{ __('talk::talk.button_cancel') }}</x-ui.forms.button>
         </div>
     </div>
 </x-ui.forms.form>

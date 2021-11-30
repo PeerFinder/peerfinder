@@ -58,12 +58,14 @@
                     <div class="relative">
                         <a href="{{ route('notifications.index') }}"><x-ui.icon name="bell" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
                         @if ($user->unreadNotifications->isNotEmpty())
+                        <div class="animate-ping absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm"></div>
                         <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm"></div>
                         @endif
                     </div>
                     <div class="relative">
                         <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
                         @if (Talk::userHasUnreadConversations($user))
+                        <div class="animate-ping absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm"></div>
                         <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm"></div>
                         @endif
                     </div>

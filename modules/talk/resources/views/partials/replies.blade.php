@@ -4,7 +4,7 @@
 @endif
 
 <div class="space-y-4">
-    <conversation reply="{{ old('reply') }}" highlighted="{{ $embedded ? null : $highlighted_reply }}">
+    <conversation reply="{{ old('reply') }}" highlighted="{{ $embedded ? null : $highlighted_reply }}" conversation="{{ $conversation->identifier }}">
         <template v-slot:replies="props">
             @foreach ($replies->reverse() as $reply)
                 @include('talk::partials.reply')

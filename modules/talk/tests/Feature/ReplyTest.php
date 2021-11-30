@@ -254,5 +254,22 @@ class ReplyTest extends TestCase
         
         $this->assertDatabaseMissing('replies', ['user_id' => $user2->id]);
         $this->assertDatabaseHas('replies', ['conversation_id' => $conversation->id]);
-    }    
+    }
+
+    public function test_show_reply_json()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user1)->create();
+
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $r2 = Talk::createReply($conversation, $user2, ['message' => $this->faker->text()]);
+        
+        $response = $this->actingAs($user2)->get(route('talk.replies.show', ['conversation' => $conversation, 'reply' => $r2]));
+
+        $response->assertStatus(200);
+    }
 }

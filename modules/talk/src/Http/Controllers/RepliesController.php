@@ -25,4 +25,11 @@ class RepliesController extends Controller
 
         return redirect()->back()->with('success', __('talk::talk.reply_posted_successfully'));
     }
+
+    public function show(Conversation $conversation, Reply $reply, Request $request)
+    {
+        Gate::authorize('view', [$reply, $conversation]);
+
+        
+    }
 }

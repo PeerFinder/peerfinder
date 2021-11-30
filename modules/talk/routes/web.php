@@ -14,3 +14,4 @@ Route::get('/{conversation:identifier}/edit', [ConversationController::class, 'e
 Route::put('/{conversation:identifier}/update', [ConversationController::class, 'update'])->name('update');
 
 Route::put('/{conversation:identifier}/replies/create', [RepliesController::class, 'store'])->name('replies.store');
+Route::get('/{conversation:identifier}/replies/{reply:identifier}/show', [RepliesController::class, 'show'])->name('replies.show');

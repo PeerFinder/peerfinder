@@ -20,8 +20,10 @@
 
                 <span class="block text-gray-400">{{ Talk::formatDateTime($reply->created_at) }}</span>
 
-                @can('edit', $reply)
-                <a @click.prevent="props.actionEdit('{{ $reply->identifier }}')" href="#" title="{{ __('talk::talk.button_edit_reply') }}" class="text-gray-300 hover:text-gray-500 block"><x-ui.icon name="pencil-alt" size="h-4 w-4" viewBox="0 2 20 20" /></a>
+                @can('edit', [$reply, $conversation])
+                <div id="edit-bar-{{ $reply->identifier }}" class="flex space-x-1 items-center">
+                    <a @click.prevent="props.actionEdit('{{ $reply->identifier }}')" href="#" title="{{ __('talk::talk.button_edit_reply') }}" class="text-gray-300 hover:text-gray-500 block"><x-ui.icon name="pencil-alt" size="h-4 w-4" viewBox="0 2 20 20" /></a>
+                </div>
                 @endcan
             </div>
 
