@@ -28,8 +28,11 @@
             </div>
 
             <div class="content">
-                <div class="font-serif font-light prose prose-blue" v-if="props.editing != '{{ $reply->identifier }}'">
-                    {!! Talk::renderReplyMessage($reply->message) !!}
+                <div v-if="props.editing != '{{ $reply->identifier }}'">
+                    <div v-if="!props.updates['{{ $reply->identifier }}']" class="font-serif font-light prose prose-blue">
+                        {!! Talk::renderReplyMessage($reply->message) !!}
+                    </div>
+                    <div v-if="props.updates['{{ $reply->identifier }}']" v-html="props.updates['{{ $reply->identifier }}']" class="font-serif font-light prose prose-blue"></div>
                 </div>
             </div>
 

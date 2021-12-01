@@ -158,6 +158,7 @@ return [
         'limit'                 => 'Max. Anzahl',
         'last_name'             => 'Nachname',
         'Meeting_link'          => 'Meeting Link',
+        'message'               => 'Nachricht',
         'minute'                => 'Minute',
         'mobile'                => 'Handynummer',
         'month'                 => 'Monat',

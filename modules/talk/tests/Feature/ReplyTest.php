@@ -271,5 +271,34 @@ class ReplyTest extends TestCase
         $response = $this->actingAs($user2)->get(route('talk.replies.show', ['conversation' => $conversation, 'reply' => $r2]));
 
         $response->assertStatus(200);
+
+        $response = $this->actingAs($user2)->get(route('talk.replies.show', ['conversation' => $conversation, 'reply' => $r2, 'raw' => 'false']));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_update_reply_json()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user1)->create();
+
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $r2 = Talk::createReply($conversation, $user2, ['message' => $this->faker->text()]);
+
+        $response = $this->actingAs($user2)->put(route('talk.replies.update', ['conversation' => $conversation, 'reply' => $r2]), []);
+        $response->assertStatus(422);
+
+        $response = $this->actingAs($user2)->put(route('talk.replies.update', ['conversation' => $conversation, 'reply' => $r2]), [
+            'message' => 'New Text',
+        ]);
+
+        $response->assertStatus(200);
+        $r2->refresh();
+
+        $this->assertEquals('New Text', $r2->message);
     }
 }

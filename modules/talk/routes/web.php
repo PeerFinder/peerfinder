@@ -15,3 +15,4 @@ Route::put('/{conversation:identifier}/update', [ConversationController::class, 
 
 Route::put('/{conversation:identifier}/replies/create', [RepliesController::class, 'store'])->name('replies.store');
 Route::get('/{conversation:identifier}/replies/{reply:identifier}/show', [RepliesController::class, 'show'])->name('replies.show');
+Route::put('/{conversation:identifier}/replies/{reply:identifier}/update', [RepliesController::class, 'update'])->name('replies.update');

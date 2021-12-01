@@ -29,6 +29,6 @@ class ExceptionTest extends TestCase
 
         $response->assertStatus(404);
 
-        $response->assertJson(['message' => __('Not Found!')]);
+        $response->assertJson(['message' => 'Not Found']);
     }
 }

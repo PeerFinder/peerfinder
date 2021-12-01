@@ -2,7 +2,7 @@
 
 <x-ui.forms.form :action="$action ?: route('talk.replies.store', ['conversation' => $conversation->identifier])">
 
-    <x-ui.forms.textarea id="reply-content" value="" name="reply-content" rows="3" required>{{ __('talk::talk.field_edit_reply') }}</x-ui.forms.textarea>
+    <x-ui.forms.textarea id="reply-content" v-model="props.message" name="reply-content" rows="3" required>{{ __('talk::talk.field_edit_reply') }}</x-ui.forms.textarea>
 
     <div class="mt-2">
         @csrf

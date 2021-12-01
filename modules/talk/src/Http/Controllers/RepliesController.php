@@ -30,6 +30,28 @@ class RepliesController extends Controller
     {
         Gate::authorize('view', [$reply, $conversation]);
 
-        
+        if ($request->get('raw', 'true') == 'true') {
+            return response()->json(['message' => $reply->message]);
+        } else {
+            return response()->json(['message' => Talk::renderReplyMessage($reply->message)]);
+        }
+    }
+
+    public function update(Conversation $conversation, Reply $reply, Request $request)
+    {
+        Gate::authorize('edit', [$reply, $conversation]);
+
+        $input = $request->all();
+
+        $validator = Validator::make($input, Reply::rules()['create']);
+
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), 422);
+        }
+
+        $conversation->touch();
+
+        $reply->message = $input['message'];
+        $reply->save();
     }
 }

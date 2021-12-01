@@ -16,7 +16,7 @@
             </div>
         </template>
         <template v-slot:editing-form="props">
-            <div class="border p-2 shadow-sm rounded-md">
+            <div class="border p-2 shadow-sm rounded-md bg-white">
                 <x-talk::conversations.edit-form :conversation="$conversation" />
             </div>
         </template>        

@@ -1,6 +1,6 @@
 <template>
     <div class="space-y-2">
-        <slot name="replies" :actionReply="reply" :actionEdit="edit" :reply="replyId" :editing="editingId" :isBusy="isBusy"></slot>
+        <slot name="replies" :actionReply="reply" :actionEdit="edit" :reply="replyId" :editing="editingId" :isBusy="isBusy" :updates="updates"></slot>
 
         <teleport :to="'#reply-' + replyId + ' .edit-bar'" v-if="replyId">
             <slot name="reply-form" :reply="replyId"></slot>
@@ -16,11 +16,11 @@
         </teleport>
 
         <teleport :to="'#reply-' + editingId + ' .content'" v-if="editingId">
-            <div class="bg-red-300 border-red-500 rounded-lg shadow border py-2 px-3" v-if="error">
+            <div class="bg-red-300 border-red-500 rounded-lg shadow border py-2 px-3 mb-1" v-if="error">
                 {{ error }}
             </div>
 
-            <!-- <slot name="editing-form" :edit="editingId" :actionSave="save" :actionCancel="cancel" :isBusy="isBusy"></slot> -->
+            <slot name="editing-form" :edit="editingId" :actionSave="save" :actionCancel="cancel" :isBusy="isBusy" :message="rawMessage" v-if="rawMessage"></slot>
         </teleport>
     </div>
 </template>
@@ -40,6 +40,8 @@ export default {
         const editingId = ref();
         const isBusy = ref(false);
         const error = ref();
+        const rawMessage = ref();
+        const updates = ref({});
 
         function reply(identifier) {
             replyId.value = identifier;
@@ -51,17 +53,18 @@ export default {
             isBusy.value = true;
             editingId.value = identifier;
             error.value = null;
+            rawMessage.value = null;
 
             loadReplyFromServer(identifier)
-            .then(function () {
-                
-            })
-            .catch(function (e) {
-                error.value = e.response.data.message;
-            })
-            .finally(function () {
-                isBusy.value = false;
-            });
+                .then(function (response) {
+                    rawMessage.value = response.data.message;
+                })
+                .catch(function (e) {
+                    error.value = e.response.data.message;
+                })
+                .finally(function () {
+                    isBusy.value = false;
+                });
         }
 
         function isInViewport(element) {
@@ -83,8 +86,18 @@ export default {
             }
         }
 
-        async function loadReplyFromServer(reply) {
-            let url = "/conversations/" + props.conversation + '/replies/' + reply + '/show';
+        async function sendReplyToServer(reply, data) {
+            let url = "/conversations/" + props.conversation + '/replies/' + reply + '/update';
+
+            return axios.put(url, data, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+        }        
+
+        async function loadReplyFromServer(reply, raw = true) {
+            let url = "/conversations/" + props.conversation + '/replies/' + reply + '/show?raw=' + raw;
 
             return axios.get(url, {
                 headers: {
@@ -96,11 +109,42 @@ export default {
         function save(event) {
             isBusy.value = true;
 
-            
+            let inputElement = document.getElementById('reply-content');
+
+            if (inputElement.value) {
+                rawMessage.value = inputElement.value;
+            }
+
+            sendReplyToServer(editingId.value, {
+                'message': inputElement.value
+            }).then(function (response) {
+                    loadReplyFromServer(editingId.value, false)
+                        .then(function (response) {
+                            updates.value[editingId.value] = response.data.message;
+                            editingId.value = null;
+                        })
+                        .catch(function (e) {
+                            error.value = e.response.data.message;
+                        })
+                        .finally(function () {
+                            isBusy.value = false;
+                        });
+                })
+                .catch(function (e) {
+                    if (Array.isArray(e.response.data.message)) {
+                        error.value = e.response.data.message[0];
+                    } else {
+                        error.value = e.response.data.message;
+                    }
+                })
+                .finally(function () {
+                    isBusy.value = false;
+                });
         }
 
         function cancel(event) {
-            
+            replyId.value = null;
+            editingId.value = null;
         }
 
         onMounted(() => {
@@ -121,6 +165,8 @@ export default {
             editingId,
             isBusy,
             error,
+            rawMessage,
+            updates,
             reply,
             edit,
             save,
