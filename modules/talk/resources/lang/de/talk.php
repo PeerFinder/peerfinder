@@ -14,6 +14,7 @@ return [
     'button_save_conversation' => 'Unterhaltung ändern',
     'field_message' => 'Beitrag',
     'field_reply' => 'Antwort',
+    'field_edit_reply' => 'Beitrag bearbeiten',
     'no_conversation_selected' => 'Keine Unterhaltung ausgewählt.',
     'select_a_conversation_on_the_left_side' => 'Bitte eine Unterhaltung auf der linken Seite auswählen!',
     'start_conversation_with' => 'Unterhaltung mit :participants beginnen',
@@ -21,4 +22,8 @@ return [
     'all_conversations_link' => 'Alle Unterhaltungen',
     'button_reply_to_reply' => 'Antworten',
     'anonymous_user' => 'Gelöschte:r Nutzer:in',
+    'jump_to_last_reply' => 'Zum letzten Beitrag springen',
+    'button_edit_reply' => 'Bearbeiten',
+    'button_update_reply' => 'Speichern',
+    'button_cancel' => 'Abbrechen',
 ];

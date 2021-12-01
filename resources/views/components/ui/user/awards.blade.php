@@ -16,7 +16,7 @@
             <div title="{{ __('profile/user.award_verified') }}"><x-ui.icon name="badge-check" class="text-pf-midblue pb-0" viewBox="0 1 20 20" /></div>
             @endif
             @if ($user->is_supporter)
-            <div title="{{ __('profile/user.award_supporter', ['name' => config('app.name')]) }}"><x-ui.icon name="heart" class="text-pf-darkorange pb-0" viewBox="0 1 20 20" /></div>
+            <div title="{{ __('profile/user.award_supporter', ['name' => config('app.name')]) }}"><x-ui.icon name="heart" class="text-pf-darkorange pb-0" viewBox="0 2 20 20" /></div>
             @endif
         </div>
     @endif

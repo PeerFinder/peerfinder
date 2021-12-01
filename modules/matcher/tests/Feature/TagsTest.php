@@ -134,4 +134,18 @@ class TagsTest extends TestCase
 
         $this->assertEquals(0, $pg->tags->count());
     }
+
+    public function test_tags_are_not_case_sensitive()
+    {
+        $user = User::factory()->create();
+        $language = Language::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $pg->syncTags(['a', 'b', 'c']);
+        $pg->save();
+
+        $res = Peergroup::withAnyTags(['A'])->first();
+
+        $this->assertEquals($pg->id, $res->id);
+    }
 }

@@ -30,7 +30,7 @@ class ReplyTest extends TestCase
         $conversation = Conversation::factory()->byUser($user2)->create();
         $conversation->addUser($user1);
 
-        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+        $response = $this->actingAs($user1)->put(route('talk.replies.store', ['conversation' => $conversation->identifier]), [
             'message' => $this->faker->text(),
         ]);
 
@@ -165,7 +165,7 @@ class ReplyTest extends TestCase
 
         $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
 
-        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+        $response = $this->actingAs($user1)->put(route('talk.replies.store', ['conversation' => $conversation->identifier]), [
             'reply_message' => $this->faker->text(),
             'reply' => $r1->identifier,
         ]);
@@ -187,7 +187,7 @@ class ReplyTest extends TestCase
 
         $r1 = Talk::createReply($conversation2, $user1, ['message' => $this->faker->text()]);
 
-        $response = $this->actingAs($user1)->put(route('talk.reply.store', ['conversation' => $conversation->identifier]), [
+        $response = $this->actingAs($user1)->put(route('talk.replies.store', ['conversation' => $conversation->identifier]), [
             'reply_message' => $this->faker->text(),
             'reply' => $r1->identifier,
         ]);
@@ -254,5 +254,51 @@ class ReplyTest extends TestCase
         
         $this->assertDatabaseMissing('replies', ['user_id' => $user2->id]);
         $this->assertDatabaseHas('replies', ['conversation_id' => $conversation->id]);
-    }    
+    }
+
+    public function test_show_reply_json()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user1)->create();
+
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $r2 = Talk::createReply($conversation, $user2, ['message' => $this->faker->text()]);
+        
+        $response = $this->actingAs($user2)->get(route('talk.replies.show', ['conversation' => $conversation, 'reply' => $r2]));
+
+        $response->assertStatus(200);
+
+        $response = $this->actingAs($user2)->get(route('talk.replies.show', ['conversation' => $conversation, 'reply' => $r2, 'raw' => 'false']));
+
+        $response->assertStatus(200);
+    }
+
+    public function test_update_reply_json()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $conversation = Conversation::factory()->byUser($user1)->create();
+
+        $conversation->addUser($user1);
+        $conversation->addUser($user2);
+
+        $r2 = Talk::createReply($conversation, $user2, ['message' => $this->faker->text()]);
+
+        $response = $this->actingAs($user2)->put(route('talk.replies.update', ['conversation' => $conversation, 'reply' => $r2]), []);
+        $response->assertStatus(422);
+
+        $response = $this->actingAs($user2)->put(route('talk.replies.update', ['conversation' => $conversation, 'reply' => $r2]), [
+            'message' => 'New Text',
+        ]);
+
+        $response->assertStatus(200);
+        $r2->refresh();
+
+        $this->assertEquals('New Text', $r2->message);
+    }
 }
