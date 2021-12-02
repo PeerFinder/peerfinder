@@ -7,7 +7,7 @@
     <conversation reply="{{ old('reply') }}" highlighted="{{ $embedded ? null : $highlighted_reply }}" conversation="{{ $conversation->identifier }}">
         <template v-slot:replies="props">
             @foreach ($replies->reverse() as $reply)
-                @include('talk::partials.reply')
+                @include('talk::partials.reply', ['level' => 0])
             @endforeach
         </template>
         <template v-slot:reply-form="props">
