@@ -1181,6 +1181,21 @@ select {
 .bottom-2 {
 	bottom: 0.5rem;
 }
+.left-\[1\.0rem\] {
+	left: 1.0rem;
+}
+.left-\[1\.2rem\] {
+	left: 1.2rem;
+}
+.left-\[1\.1rem\] {
+	left: 1.1rem;
+}
+.left-\[0\.9rem\] {
+	left: 0.9rem;
+}
+.left-\[0\.8rem\] {
+	left: 0.8rem;
+}
 .z-10 {
 	z-index: 10;
 }
