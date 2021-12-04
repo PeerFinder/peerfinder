@@ -18,6 +18,7 @@ class Appointment extends Model
         'subject',
         'details',
         'date',
+        'end_date',
         'location',
     ];
 
@@ -34,6 +35,8 @@ class Appointment extends Model
             'details' => ['nullable', 'string', 'max:800'],
             'date' => ['required', 'date'],
             'time' => ['required', 'date_format:H:i'],
+            'end_date' => ['required', 'date'],
+            'end_time' => ['required', 'date_format:H:i'],
         ];
 
         return [

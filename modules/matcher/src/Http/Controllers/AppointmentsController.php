@@ -13,6 +13,27 @@ use Matcher\Models\Appointment;
 
 class AppointmentsController extends Controller
 {
+    private function storeAppointment(Request $request, Peergroup $pg, Appointment $appointment = null)
+    {
+        $input = $request->all();
+
+        Validator::make($input, Appointment::rules()[$appointment ? 'update' : 'create'])->validate();
+
+        $input['date'] = EasyDate::joinAndConvertToUTC($input['date'], $input['time']);
+        $input['end_date'] = EasyDate::joinAndConvertToUTC($input['end_date'], $input['end_time']);
+
+        if ($appointment == null) {
+            $appointment = new Appointment();
+            $appointment->peergroup_id = $pg->id;
+            $appointment->fill($input);
+            $appointment->save();
+        } else {
+            $appointment->update($input);
+        }
+
+        return $appointment;
+    }
+
     public function index(Request $request, Peergroup $pg)
     {
         Gate::authorize('for-members', $pg);
@@ -27,7 +48,8 @@ class AppointmentsController extends Controller
         Gate::authorize('edit', $pg);
 
         $appointment = new Appointment();
-        $appointment->date = Carbon::now();
+        $appointment->date = Carbon::now()->startOfHour()->addHour();
+        $appointment->end_date = $appointment->date->addHour();
 
         return view('matcher::appointments.create', compact('pg', 'appointment'));
     }
@@ -36,16 +58,19 @@ class AppointmentsController extends Controller
     {
         Gate::authorize('edit', $pg);
 
+        $this->storeAppointment($request, $pg);
+/* 
         $input = $request->all();
 
         Validator::make($input, Appointment::rules()['create'])->validate();
 
         $input['date'] = EasyDate::joinAndConvertToUTC($input['date'], $input['time']);
+        $input['end_date'] = EasyDate::joinAndConvertToUTC($input['end_date'], $input['end_time']);
 
         $appointment = new Appointment();
         $appointment->peergroup_id = $pg->id;
         $appointment->fill($input);
-        $appointment->save();
+        $appointment->save(); */
 
         return redirect(route('matcher.appointments.index', ['pg' => $pg->groupname]))
                 ->with('success', __('matcher::peergroup.appointment_created_successfully'));
@@ -69,13 +94,16 @@ class AppointmentsController extends Controller
     {
         Gate::authorize('edit', $pg);
 
+        $this->storeAppointment($request, $pg, $appointment);
+
+/* 
         $input = $request->all();
 
         Validator::make($input, Appointment::rules()['update'])->validate();
 
         $input['date'] = EasyDate::joinAndConvertToUTC($input['date'], $input['time']);
 
-        $appointment->update($input);
+        $appointment->update($input); */
 
         return redirect(route('matcher.appointments.index', ['pg' => $pg->groupname]))
                 ->with('success', __('matcher::peergroup.appointment_updated_successfully'));
