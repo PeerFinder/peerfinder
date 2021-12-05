@@ -25,7 +25,7 @@ class DashboardController extends Controller
         $member_peergroups = Peergroup::whereIn('id', $memberships->all())
                 ->with(Peergroup::defaultRelationships())
                 ->with(['appointments' => function ($query) {
-                    $query->orderBy('date', 'asc')->where('date', '>', now());
+                    $query->orderBy('date', 'asc')->where('end_date', '>', now());
                 }])
                 ->get();
 

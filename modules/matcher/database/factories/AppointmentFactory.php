@@ -14,11 +14,14 @@ class AppointmentFactory extends Factory
 
     public function definition()
     {
+        $date = $this->faker->dateTime();
+
         return [
             'subject' => $this->faker->realText(50),
             'details' => $this->faker->realText(50),
             'location' => $this->faker->city(),
-            'date' => $this->faker->dateTime(),
+            'date' => $date,
+            'end_date' => $date->modify('+60 minutes'),
         ];
     }
 

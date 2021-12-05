@@ -17,9 +17,10 @@
                     </div>
                 </div>
 
-                <div class="ml-5">
-                    <h2 class="font-semibold text-lg mb-1">{{ $appointment->subject }}</h2>
-                    <div class="bg-gray-50 px-1 rounded-md inline-block">{{ EasyDate::fromUTC($appointment->date)->translatedFormat('d.m.Y') }} / {{ EasyDate::fromUTC($appointment->date)->format('H:i') }}</div>
+                <div class="ml-5 space-y-1">
+                    <h2 class="font-semibold text-lg">{{ $appointment->subject }}</h2>
+                    <div class="bg-gray-50 px-1 rounded-md block">{{ __('matcher::peergroup.appointment_begin') }}: {{ EasyDate::fromUTC($appointment->date)->translatedFormat('d.m.Y') }} / {{ EasyDate::fromUTC($appointment->date)->format('H:i') }}</div>
+                    <div class="bg-gray-50 px-1 rounded-md block">{{ __('matcher::peergroup.appointment_end') }}: {{ EasyDate::fromUTC($appointment->end_date)->translatedFormat('d.m.Y') }} / {{ EasyDate::fromUTC($appointment->end_date)->format('H:i') }}</div>
                 </div>
             </div>
 
@@ -32,6 +33,10 @@
             <h3 class="mt-3 font-semibold">{{ __('matcher::peergroup.field_location') }}</h3>
             <div>{!! Matcher::renderMarkdown($appointment->location) !!}</div>
             @endif
+        </div>
+
+        <div class="p-4 text-center">
+            <x-ui.forms.button tag="a" href="{{ route('matcher.appointments.download', ['pg' => $pg->groupname, 'appointment' => $appointment->identifier]) }}"><x-ui.icon name="calendar" viewBox="0 2 20 20" />  {{ __('matcher::peergroup.button_download_appointment') }}</x-ui.forms.button>
         </div>
         
         <div class="p-4 border-t">

@@ -10,7 +10,7 @@
         
         <input name="reply" type="hidden" v-bind:value="props.reply" />
         
-        <div class="flex items-center justify-between">
+        <div class="flex items-center md:justify-between flex-col md:flex-row space-y-1 md:space-y-0">
             <x-ui.forms.button vueClick="props.actionSave">{{ __('talk::talk.button_update_reply') }}</x-ui.forms.button>
             <x-ui.forms.button action="inform" vueClick="props.actionCancel">{{ __('talk::talk.button_cancel') }}</x-ui.forms.button>
         </div>

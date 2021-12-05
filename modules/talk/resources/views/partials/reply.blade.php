@@ -1,11 +1,11 @@
 <div id="reply-{{ $reply->identifier }}" class="relative">
     @if ($reply->reply_id)
-    <a href="#reply-{{ $reply->identifier }}" class="block bg-gray-100 hover:bg-gray-300 w-1 left-[1.3rem] top-9 bottom-0 absolute rounded-full"><span class="sr-only">Jump to comment</span></a>
+    <a href="#reply-{{ $reply->identifier }}" class="block bg-gray-100 hover:bg-gray-300 w-1 left-[0.8rem] top-9 bottom-0 absolute rounded-full"><span class="sr-only">Jump to comment</span></a>
     @else
-    <a href="#reply-{{ $reply->identifier }}" class="block bg-gray-100 hover:bg-gray-300 w-1 left-[1.6rem] top-12 bottom-0 absolute rounded-full"><span class="sr-only">Jump to comment</span></a>
+    <a href="#reply-{{ $reply->identifier }}" class="block bg-gray-100 hover:bg-gray-300 w-1 left-[1.1rem] top-12 bottom-0 absolute rounded-full"><span class="sr-only">Jump to comment</span></a>
     @endif
-
-    <div class="flex space-x-4 px-2 rounded-md">
+    
+    <div class="flex space-x-2 rounded-md">
         <div class="flex-shrink-0">
             @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40])
         </div>
@@ -36,14 +36,16 @@
                 </div>
             </div>
 
+            @if ($level < 2)
             <div class="edit-bar mt-1">
                 <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block text-pf-midblue hover:text-pf-lightblue">{{ __('talk::talk.button_reply_to_reply') }}</a>
             </div>
+            @endif
             
             @if ($reply->replies->count())
             <div class="mt-3 space-y-2">
                 @foreach ($reply->replies as $sub_reply)
-                    @include('talk::partials.reply', ['reply' => $sub_reply])
+                    @include('talk::partials.reply', ['reply' => $sub_reply, 'level' => $level + 1])
                 @endforeach
             </div>
             @endif

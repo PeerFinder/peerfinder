@@ -18,11 +18,13 @@ class Appointment extends Model
         'subject',
         'details',
         'date',
+        'end_date',
         'location',
     ];
 
     protected $casts = [
-        'date' => 'datetime'
+        'date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     public static function rules()
@@ -33,6 +35,8 @@ class Appointment extends Model
             'details' => ['nullable', 'string', 'max:800'],
             'date' => ['required', 'date'],
             'time' => ['required', 'date_format:H:i'],
+            'end_date' => ['required', 'date'],
+            'end_time' => ['required', 'date_format:H:i'],
         ];
 
         return [
@@ -48,6 +52,12 @@ class Appointment extends Model
         static::creating(function ($appointment) {
             Urler::createUniqueSlug($appointment, 'identifier');
         });
+
+        static::saving(function ($appointment) {
+            if ($appointment->end_date <= $appointment->date) {
+                $appointment->end_date = $appointment->date->addHour();
+            }
+        });
     }
 
     protected static function newFactory()
@@ -60,8 +70,13 @@ class Appointment extends Model
         return $this->belongsTo(Peergroup::class);
     }
 
+    public function isNow()
+    {
+        return Carbon::now()->betweenIncluded($this->date, $this->end_date);
+    }    
+
     public function isInPast()
     {
-        return Carbon::now()->diffInSeconds($this->date, false) < 0;
+        return Carbon::now()->isAfter($this->end_date);
     }
 }
