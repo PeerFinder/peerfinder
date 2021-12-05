@@ -50,6 +50,7 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
         Route::get('/create', [AppointmentsController::class, 'create'])->name('create');
         Route::put('/create', [AppointmentsController::class, 'store'])->name('store');
         Route::get('/{appointment:identifier}', [AppointmentsController::class, 'show'])->name('show');
+        Route::get('/{appointment:identifier}/ical', [AppointmentsController::class, 'download'])->name('download');
         Route::get('/{appointment:identifier}/edit', [AppointmentsController::class, 'edit'])->name('edit');
         Route::put('/{appointment:identifier}/edit', [AppointmentsController::class, 'update'])->name('update');
         Route::delete('/{appointment:identifier}/delete', [AppointmentsController::class, 'destroy'])->name('destroy');

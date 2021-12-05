@@ -102,4 +102,34 @@ class AppointmentsController extends Controller
         return redirect(route('matcher.appointments.index', ['pg' => $pg->groupname]))
                 ->with('success', __('matcher::peergroup.appointment_deleted_successfully'));
     }
+
+    public function download(Request $request, Peergroup $pg, Appointment $appointment)
+    {
+        Gate::authorize('for-members', $pg);
+
+        $event = new \Eluceo\iCal\Domain\Entity\Event();
+
+        $event->setSummary($appointment->subject);
+
+        if ($appointment->description) {
+            $event->setDescription($appointment->description);
+        }
+
+        $begin = new \Eluceo\iCal\Domain\ValueObject\DateTime($appointment->date, true);
+        $end = new \Eluceo\iCal\Domain\ValueObject\DateTime($appointment->end_date, true);
+
+        $timeSpan = new \Eluceo\iCal\Domain\ValueObject\TimeSpan($begin, $end);
+
+        $event->setOccurrence($timeSpan);
+
+        $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$event]);
+
+        $iCalendarComponent = (new \Eluceo\iCal\Presentation\Factory\CalendarFactory())->createCalendar($calendar);
+
+        header('Content-Type: text/calendar; charset=utf-8');
+        header('Content-Disposition: attachment; filename="cal.ics"');
+
+        echo $iCalendarComponent;
+        exit();
+    }
 }
