@@ -251,4 +251,17 @@ class AppointmentsTest extends TestCase
 
         $this->assertFalse($a->isNow());
     }
+
+    public function test_download_appointment_ical()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $a = Appointment::factory()->forPeergroup($pg)->create();
+
+        $response = $this->actingAs($user)->get(route('matcher.appointments.download', ['pg' => $pg->groupname, 'appointment' => $a->identifier]));
+        $response->assertStatus(200);
+
+        $response->assertHeader('Content-Type', 'text/calendar; charset=utf-8');
+        $response->assertSee($a->identifier);
+    }
 }

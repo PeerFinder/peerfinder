@@ -25,8 +25,11 @@ use Matcher\Rules\IsGroupMember;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use Matcher\Models\Appointment;
 use Matcher\Models\GroupType;
 use Matcher\Models\Tag;
+use App\Helpers\Facades\EasyDate;
+use Illuminate\Support\Facades\Response;
 
 class Matcher
 {
@@ -597,5 +600,45 @@ class Matcher
             $membership->member_role_id = $roles[$i];
             $membership->save();
         }
-    }    
+    }
+    
+    public function downloadAppointment(Peergroup $pg, Appointment $appointment)
+    {
+        $eventUid = new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier($appointment->identifier);
+
+        $event = new \Eluceo\iCal\Domain\Entity\Event($eventUid);
+
+        $event->setSummary($appointment->subject);
+
+        $description = [];
+
+        if ($appointment->details) {
+            $description[] = $appointment->details;
+        }
+
+        $description[] = __('matcher::peergroup.appointment_ical_description', ['title' => $pg->title, 'link' => route('matcher.appointments.show', ['pg' => $pg->groupname, 'appointment' => $appointment->identifier])]);
+        
+        $event->setDescription(implode("\n\n", $description));
+
+        if ($appointment->location) {
+            $location = new \Eluceo\iCal\Domain\ValueObject\Location($appointment->location);
+            $event->setLocation($location);
+        }
+
+        $begin = new \Eluceo\iCal\Domain\ValueObject\DateTime(EasyDate::fromUTC($appointment->date), true);
+        $end = new \Eluceo\iCal\Domain\ValueObject\DateTime(EasyDate::fromUTC($appointment->end_date), true);
+
+        $timeSpan = new \Eluceo\iCal\Domain\ValueObject\TimeSpan($begin, $end);
+
+        $event->setOccurrence($timeSpan);
+
+        $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$event]);
+
+        $iCalendarComponent = (new \Eluceo\iCal\Presentation\Factory\CalendarFactory())->createCalendar($calendar);
+
+        return Response::make($iCalendarComponent, 200, array(
+            'Content-Type' => 'text/calendar; charset=utf-8',
+            'Content-Disposition' => sprintf('attachment; filename="%s.ics"', $appointment->identifier),
+        ));
+    }
 }

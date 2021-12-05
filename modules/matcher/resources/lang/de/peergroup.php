@@ -121,6 +121,8 @@ return [
     'appointment_end_date_error' => 'Ende des Treffens muss nach dem Beginn liegen.',
     'appointment_begin' => 'Beginn',
     'appointment_end' => 'Ende',
+    'appointment_ical_description' => 'Treffen der Gruppe ":title": :link',
+    'button_download_appointment' => 'Lade die iCal-Datei für Deinen Kalender herunter',
     'badge_closed' => 'Geschlossen',
     'preview_only_visible_for_users' => 'Nur sichtbar für eingeloggte User',
     'please_login_to_see_details' => 'Bitte anmelden, um alle Gruppeninformationen zu sehen!',

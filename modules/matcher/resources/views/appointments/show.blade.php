@@ -34,6 +34,10 @@
             <div>{!! Matcher::renderMarkdown($appointment->location) !!}</div>
             @endif
         </div>
+
+        <div class="p-4 text-center">
+            <x-ui.forms.button tag="a" href="{{ route('matcher.appointments.download', ['pg' => $pg->groupname, 'appointment' => $appointment->identifier]) }}"><x-ui.icon name="calendar" viewBox="0 2 20 20" />  {{ __('matcher::peergroup.button_download_appointment') }}</x-ui.forms.button>
+        </div>
         
         <div class="p-4 border-t">
             <x-matcher::ui.edit-buttons :pg="$pg" tag="a" href="{{ route('matcher.appointments.edit', ['pg' => $pg->groupname, 'appointment' => $appointment->identifier]) }}" cancel="{{ route('matcher.appointments.index', ['pg' => $pg->groupname]) }}">

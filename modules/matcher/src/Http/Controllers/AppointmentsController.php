@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
+use Matcher\Facades\Matcher;
 use Matcher\Models\Appointment;
 
 class AppointmentsController extends Controller
@@ -107,29 +108,6 @@ class AppointmentsController extends Controller
     {
         Gate::authorize('for-members', $pg);
 
-        $event = new \Eluceo\iCal\Domain\Entity\Event();
-
-        $event->setSummary($appointment->subject);
-
-        if ($appointment->description) {
-            $event->setDescription($appointment->description);
-        }
-
-        $begin = new \Eluceo\iCal\Domain\ValueObject\DateTime($appointment->date, true);
-        $end = new \Eluceo\iCal\Domain\ValueObject\DateTime($appointment->end_date, true);
-
-        $timeSpan = new \Eluceo\iCal\Domain\ValueObject\TimeSpan($begin, $end);
-
-        $event->setOccurrence($timeSpan);
-
-        $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$event]);
-
-        $iCalendarComponent = (new \Eluceo\iCal\Presentation\Factory\CalendarFactory())->createCalendar($calendar);
-
-        header('Content-Type: text/calendar; charset=utf-8');
-        header('Content-Disposition: attachment; filename="cal.ics"');
-
-        echo $iCalendarComponent;
-        exit();
+        return Matcher::downloadAppointment($pg, $appointment);
     }
 }
