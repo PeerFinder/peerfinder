@@ -20,35 +20,18 @@
             <x-ui.card title="{{ __('dashboard/dashboard.next_appointments') }}">
                 <div class="grid grid-cols-4 gap-4 p-4">
                 @foreach ($appointments as $appointment)
-                    <div class="col-span-2 md:col-span-1">
-                        <a href="{{ route('matcher.appointments.show', ['pg' => $appointment->pg->groupname, 'appointment' => $appointment->identifier]) }}" class="block hover:bg-gray-50 border rounded-md shadow-sm">
-                            <div class="border-b px-1">
-                                <div class="text-xs flex items-center">
-                                    <div class="mr-1 pb-0.5">
-                                        <x-ui.icon name="user-group" size="w-3 h-3" />
-                                    </div>
-                                    <div class="line-clamp-1">{{ $appointment->pg->title }}</div>
+                    <a href="{{ route('matcher.appointments.show', ['pg' => $appointment->pg->groupname, 'appointment' => $appointment->identifier]) }}" class="col-span-2 md:col-span-1 block hover:bg-gray-50 border rounded-md shadow-sm pb-3">
+                        <div class="border-b px-1">
+                            <div class="text-xs flex items-center">
+                                <div class="mr-1 pb-0.5">
+                                    <x-ui.icon name="user-group" size="w-3 h-3" />
                                 </div>
+                                <div class="line-clamp-1">{{ $appointment->pg->title }}</div>
                             </div>
-                            <div class="flex items-center justify-center px-4 pt-4">
-                                <div @class(['bg-red-400 border border-red-400 w-10 text-center rounded-md overflow-none', 'bg-gray-400 border-gray-400' => $appointment->isInPast()])>
-                                    <div class="text-white text-sm px-1">
-                                        {{ EasyDate::fromUTC($appointment->date)->getTranslatedShortMonthName() }}
-                                    </div>
-                                    <div class="bg-white rounded-b-md font-semibold">
-                                        {{ EasyDate::fromUTC($appointment->date)->format('d') }}
-                                    </div>
-                                </div>
-                                <div class="bg-gray-100 border py-1 px-2 ml-2 rounded-md text-center text-3xl">
-                                    {{ EasyDate::fromUTC($appointment->date)->format('H:i') }}
-                                </div>
-                            </div>
-            
-                            <div class="p-4 text-center">
-                                <p>{{ $appointment->subject }}</p>
-                            </div>
-                        </a>
-                    </div>
+                        </div>
+
+                        <x-matcher::appointment.details :appointment="$appointment" class="px-4 pt-4" />
+                    </a>
                 @endforeach
                 </div>
             </x-ui.card>

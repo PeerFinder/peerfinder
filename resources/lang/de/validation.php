@@ -143,6 +143,8 @@ return [
         'day'                   => 'Tag',
         'description'           => 'Beschreibung',
         'email'                 => 'E-Mail Adresse',
+        'end_date'              => 'Enddatum',
+        'end_time'              => 'Endzeit',
         'excerpt'               => 'Auszug',
         'facebook_profile'      => 'Facebook',
         'twitter_profile'       => 'Twitter',

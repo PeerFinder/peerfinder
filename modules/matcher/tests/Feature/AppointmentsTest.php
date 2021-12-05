@@ -71,6 +71,8 @@ class AppointmentsTest extends TestCase
         $pg = Peergroup::factory()->byUser($user)->create();
 
         $date = Carbon::now($user->timezone);
+        $end_date = $date->clone();
+        $end_date->addHour();
 
         $data = [
             'subject' => $this->faker->realText(50),
@@ -78,6 +80,8 @@ class AppointmentsTest extends TestCase
             'location' => $this->faker->city(),
             'date' => $date->format('d-m-Y'),
             'time' => $date->format('H:i'),
+            'end_date' => $end_date->format('d-m-Y'),
+            'end_time' => $end_date->format('H:i'),
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.appointments.store', ['pg' => $pg->groupname]), $data);
@@ -116,6 +120,8 @@ class AppointmentsTest extends TestCase
         $a = Appointment::factory()->forPeergroup($pg)->create();
 
         $date = Carbon::now($user->timezone);
+        $end_date = $date->clone();
+        $end_date->addHour();
 
         $data = [
             'subject' => $this->faker->realText(50),
@@ -123,6 +129,8 @@ class AppointmentsTest extends TestCase
             'location' => $this->faker->city(),
             'date' => $date->format('d-m-Y'),
             'time' => $date->format('H:i'),
+            'end_date' => $end_date->format('d-m-Y'),
+            'end_time' => $end_date->format('H:i'),
         ];
 
         $response = $this->actingAs($user)->put(route(
@@ -136,6 +144,33 @@ class AppointmentsTest extends TestCase
         $date = $date->setTimezone('UTC')->second(0)->toDateTime();
 
         $this->assertDatabaseHas('appointments', ['peergroup_id' => $pg->id, 'subject' => $data['subject'], 'date' => $date]);
+    }
+
+    public function test_appointment_end_date_must_be_after_begin()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $a = Appointment::factory()->forPeergroup($pg)->create();
+
+        $date = Carbon::now($user->timezone);
+        $end_date = $date->clone();
+
+        $data = [
+            'subject' => $this->faker->realText(50),
+            'details' => $this->faker->realText(50),
+            'location' => $this->faker->city(),
+            'date' => $date->format('d-m-Y'),
+            'time' => $date->format('H:i'),
+            'end_date' => $end_date->format('d-m-Y'),
+            'end_time' => $end_date->format('H:i'),
+        ];
+
+        $response = $this->actingAs($user)->put(route(
+            'matcher.appointments.edit',
+            ['pg' => $pg->groupname, 'appointment' => $a->identifier]
+        ), $data);
+
+        $response->assertSessionHasErrors();
     }
 
     public function test_group_owner_can_destroy_appointment()
@@ -174,12 +209,19 @@ class AppointmentsTest extends TestCase
         $pg = Peergroup::factory()->byUser($user)->create();
         $a = Appointment::factory()->forPeergroup($pg)->create();
 
-        $dateTime = Carbon::now()->subHour();
+        $dateTime = Carbon::yesterday();
 
         $a->date = $dateTime;
         $a->save();
 
         $this->assertTrue($a->isInPast());
+
+        $dateTime = Carbon::now()->subMinutes(30);
+
+        $a->date = $dateTime;
+        $a->save();
+
+        $this->assertFalse($a->isInPast());
 
         $dateTime = Carbon::now()->addHour();
 
@@ -187,5 +229,26 @@ class AppointmentsTest extends TestCase
         $a->save();
 
         $this->assertFalse($a->isInPast());
+    }
+
+    public function test_appointment_is_now()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+        $a = Appointment::factory()->forPeergroup($pg)->create();
+
+        $dateTime = Carbon::now();
+
+        $a->date = $dateTime;
+        $a->save();
+
+        $this->assertTrue($a->isNow());
+
+        $dateTime = Carbon::now()->addHour();
+
+        $a->date = $dateTime;
+        $a->save();
+
+        $this->assertFalse($a->isNow());
     }
 }

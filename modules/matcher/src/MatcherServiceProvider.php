@@ -82,7 +82,7 @@ class MatcherServiceProvider extends ServiceProvider
                 },
                 'bookmarks',
                 'appointments' => function ($query) {
-                    $query->orderBy('date', 'asc')->where('date', '>', now())->limit(1);
+                    $query->orderBy('date', 'asc')->where('end_date', '>', now())->limit(1);
                 },
                 'languages',
                 'groupType',

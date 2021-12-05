@@ -52,6 +52,12 @@ class Appointment extends Model
         static::creating(function ($appointment) {
             Urler::createUniqueSlug($appointment, 'identifier');
         });
+
+        static::saving(function ($appointment) {
+            if ($appointment->end_date <= $appointment->date) {
+                $appointment->end_date = $appointment->date->addHour();
+            }
+        });
     }
 
     protected static function newFactory()
@@ -64,8 +70,13 @@ class Appointment extends Model
         return $this->belongsTo(Peergroup::class);
     }
 
+    public function isNow()
+    {
+        return Carbon::now()->betweenIncluded($this->date, $this->end_date);
+    }    
+
     public function isInPast()
     {
-        return Carbon::now()->diffInSeconds($this->date, false) < 0;
+        return Carbon::now()->isAfter($this->end_date);
     }
 }

@@ -17,9 +17,10 @@
                     </div>
                 </div>
 
-                <div class="ml-5">
-                    <h2 class="font-semibold text-lg mb-1">{{ $appointment->subject }}</h2>
-                    <div class="bg-gray-50 px-1 rounded-md inline-block">{{ EasyDate::fromUTC($appointment->date)->translatedFormat('d.m.Y') }} / {{ EasyDate::fromUTC($appointment->date)->format('H:i') }}</div>
+                <div class="ml-5 space-y-1">
+                    <h2 class="font-semibold text-lg">{{ $appointment->subject }}</h2>
+                    <div class="bg-gray-50 px-1 rounded-md block">{{ __('matcher::peergroup.appointment_begin') }}: {{ EasyDate::fromUTC($appointment->date)->translatedFormat('d.m.Y') }} / {{ EasyDate::fromUTC($appointment->date)->format('H:i') }}</div>
+                    <div class="bg-gray-50 px-1 rounded-md block">{{ __('matcher::peergroup.appointment_end') }}: {{ EasyDate::fromUTC($appointment->end_date)->translatedFormat('d.m.Y') }} / {{ EasyDate::fromUTC($appointment->end_date)->format('H:i') }}</div>
                 </div>
             </div>
 
