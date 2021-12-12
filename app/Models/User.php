@@ -66,6 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_seen' => 'datetime',
         'is_supporter' => 'bool',
         'is_verified_person' => 'bool',
     ];
