@@ -26,7 +26,7 @@ class AddLastSeenToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->timestamp('last_seen');
+            $table->dropColumn('last_seen');
         });
     }
 }
