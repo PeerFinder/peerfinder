@@ -6,6 +6,7 @@ use App\Helpers\Facades\Avatar;
 use App\Models\User as UserModel;
 use App\Nova\Actions\ShowUserProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
@@ -69,6 +70,7 @@ class User extends Resource
                 ->updateRules('unique:users,email,{{resourceId}}'),
 
             Text::make('Timezone')
+                ->hideFromIndex()
                 ->sortable()
                 ->rules('required', 'timezone'),           
 
@@ -104,7 +106,7 @@ class User extends Resource
                 ->hideFromIndex()
                 ->rules(UserModel::rules()['create']['xing_profile']),
 
-            Text::make('Locale'),
+            Text::make('Locale')->hideFromIndex(),
 
             Boolean::make('Is Supporter')->hideFromIndex(),
 
@@ -112,6 +114,14 @@ class User extends Resource
 
             Boolean::make('Email verified', function () {
                 return $this->email_verified_at != null;
+            }),
+
+            Text::make('Last Seen', function() {
+                if ($this->last_seen) {
+                    return $this->last_seen->diffForHumans(Carbon::now());
+                } else {
+                    return null;
+                }
             }),
 
 /*             Password::make('Password')
