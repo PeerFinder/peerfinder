@@ -8,13 +8,13 @@
         </x-slot>
 
         @if (session('status') == 'verification-link-sent')
-        <x-auth.flash class="bg-green-200">
+        <x-auth.flash class="bg-emerald-200">
             <p>{{ __('auth.verification_link_has_been_sent') }}</p>
         </x-auth.flash>
         @endif
 
         @if (session('success'))
-        <x-auth.flash class="bg-green-200">
+        <x-auth.flash class="bg-emerald-200">
             <p>{{ session('success') }}</p>
         </x-auth.flash>
         @endif

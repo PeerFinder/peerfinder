@@ -6,7 +6,7 @@
     @endif
     
     <div class="flex space-x-2 rounded-md">
-        <div class="flex-shrink-0">
+        <div class="shrink-0">
             @include('talk::partials.useravatar', ['user' => $reply->user, 'size' => $reply->reply_id ? 30 : 40])
         </div>
         

@@ -14,7 +14,7 @@
                 @endif
                 --}}
                 <div class="p-2 flex items-center overflow-hidden" >
-                    <div class="w-10 h-10 flex-shrink-0 relative">
+                    <div class="w-10 h-10 shrink-0 relative">
                         @include('talk::partials.avatars', ['users' => Talk::filterUsersForConversation($conv)])
                     </div>
                     <div class="flex-1">

@@ -1,6 +1,6 @@
 module.exports = {
   mode: 'jit',
-  purge: [
+  content: [
     './resources/**/*.blade.php',
     './resources/**/*.js',
     './resources/**/*.vue',
@@ -9,7 +9,6 @@ module.exports = {
     './modules/**/resources/**/*.vue.php',
     './public/content/**/*.html',
   ],
-  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -28,9 +27,6 @@ module.exports = {
       'sans': ['Quicksand', 'sans-serif'],
       'serif': ['RobotoSlab', 'serif'],
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require('@tailwindcss/forms'),
