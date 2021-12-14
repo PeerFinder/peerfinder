@@ -1,6 +1,6 @@
 @if (session('success'))
-    <x-ui.flash class="bg-green-200 border-green-500 p-3 border-b shadow text-center">
-        <x-ui.icon name="check-circle" class="text-green-600" viewBox="0 2 20 20" /> {{ session('success') }}
+    <x-ui.flash class="bg-emerald-200 border-emerald-500 p-3 border-b shadow text-center">
+        <x-ui.icon name="check-circle" class="text-emerald-600" viewBox="0 2 20 20" /> {{ session('success') }}
     </x-ui.flash>
 @endif
 
