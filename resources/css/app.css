@@ -31,7 +31,7 @@
 }
 
 #header-nav .not-collapsed .new-button {
-    @apply block ml-1 py-2 px-4 border whitespace-nowrap border-green-700 active:bg-green-600 rounded-md text-green-400 hover:text-white;
+    @apply block ml-1 py-2 px-4 border whitespace-nowrap border-emerald-700 active:bg-emerald-600 rounded-md text-emerald-400 hover:text-white;
 }
 
 #header-nav .not-collapsed .links {
@@ -55,7 +55,7 @@
 }
 
 #header-nav .collapsed .new-button {
-    @apply bg-green-500 active:bg-green-600 active:border-green-700 py-1 px-3 text-white inline-block text-center rounded-md shadow border border-green-600 transition-colors ml-2;
+    @apply bg-emerald-500 active:bg-emerald-600 active:border-emerald-700 py-1 px-3 text-white inline-block text-center rounded-md shadow border border-emerald-600 transition-colors ml-2;
 }
 
 #header-nav .collapsed .links {
