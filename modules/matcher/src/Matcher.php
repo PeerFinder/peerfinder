@@ -471,7 +471,7 @@ class Matcher
 
         # Cache all peergroups here for 60 seconds. TODO for the future: remove the cache
         # if some peergroup was updated.
-        $peergroups = cache()->remember($cache_key, 60, function () use ($request) {
+        $peergroups = cache()->remember($cache_key, 1, function () use ($request) {
             $query = Peergroup::withDefaults()->whereOpen(true)->wherePrivate(false);
 
             if ($request->get('language')) {
@@ -504,6 +504,8 @@ class Matcher
                     $query->orWhere('location', 'LIKE', '%' . $request->search .'%');
                 });
             }
+
+            $query->orderBy('created_at', 'desc');
 
             return $query->get();
         });
