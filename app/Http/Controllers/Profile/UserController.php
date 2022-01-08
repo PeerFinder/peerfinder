@@ -37,4 +37,9 @@ class UserController extends Controller
             'member_peergroups' => $member_peergroups,
         ]);
     }
+
+    public function search(Request $request)
+    {
+        
+    }
 }

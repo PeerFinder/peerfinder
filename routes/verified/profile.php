@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::group(['as' => 'profile.'], function () {
     Route::group(['prefix' => 'u', 'as' => 'user.'], function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::get('/search', [UserController::class, 'search'])->name('search');
         Route::get('/{user:username}', [UserController::class, 'show'])->name('show');
     });
 });

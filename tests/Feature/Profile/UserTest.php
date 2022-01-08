@@ -68,4 +68,9 @@ class UserTest extends TestCase
         $response->assertSee($data['facebook_profile']);
         $response->assertSee($data['xing_profile']);
     }
+
+    public function test_user_can_search_for_users()
+    {
+        
+    }
 }
