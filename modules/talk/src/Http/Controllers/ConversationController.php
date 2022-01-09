@@ -19,6 +19,11 @@ class ConversationController extends Controller
     {
         return view('talk::conversations.index');
     }
+    
+    public function create(Request $request)
+    {
+        
+    }
 
     public function createForUser(User $user, Request $request)
     {
