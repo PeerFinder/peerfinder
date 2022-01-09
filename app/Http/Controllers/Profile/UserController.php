@@ -6,6 +6,7 @@ use App\Helpers\Facades\Urler;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Matcher\Models\Peergroup;
 
 class UserController extends Controller
@@ -40,6 +41,15 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        
+        $jsonArray = [
+            'users' => [],
+        ];
+
+        if ($request->has('name')) {
+            $users = User::where('email_verified_at', '<>', null)->where('name', 'LIKE', '%' . $request->name .'%')->select('username', 'name')->get();
+            $jsonArray['users'] = $users->toArray();
+        }
+
+        return response()->json($jsonArray);
     }
 }

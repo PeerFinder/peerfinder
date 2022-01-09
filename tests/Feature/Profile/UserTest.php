@@ -71,6 +71,12 @@ class UserTest extends TestCase
 
     public function test_user_can_search_for_users()
     {
-        
+        $user1 = User::factory()->create();
+        $users = User::factory(10)->create();
+
+        $response = $this->actingAs($user1)->getJson(route('profile.user.search', ['name' => $users[0]->name]));
+
+        $response->assertStatus(200);
+        $response->assertJson(['users' => []]);
     }
 }
