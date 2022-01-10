@@ -20,9 +20,13 @@ class ConversationController extends Controller
         return view('talk::conversations.index');
     }
     
-    public function create(Request $request)
+    public function select(Request $request)
     {
-        
+        $conversation = new Conversation();
+
+        return view('talk::conversations.select', [
+            'conversation' => $conversation,
+        ]);
     }
 
     public function createForUser(User $user, Request $request)

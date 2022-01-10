@@ -26,4 +26,5 @@ return [
     'button_edit_reply' => 'Bearbeiten',
     'button_update_reply' => 'Speichern',
     'button_cancel' => 'Abbrechen',
+    'select_users' => 'Nutzer:innen auswählen',
 ];

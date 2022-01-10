@@ -26,4 +26,5 @@ return [
     'button_edit_reply' => 'Edit',
     'button_update_reply' => 'Save',
     'button_cancel' => 'Cancel',
+    'select_users' => 'Select users for conversation',
 ];
