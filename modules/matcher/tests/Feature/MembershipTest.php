@@ -221,14 +221,16 @@ class MembershipTest extends TestCase
             'with_approval' => true,
         ]);
 
-        Matcher::addMemberToGroup($pg, $user1);
-        Matcher::addMemberToGroup($pg, $user2);
+        $m1 = Matcher::addMemberToGroup($pg, $user1, ['comment' => $this->faker->text()]);
+        $m2 = Matcher::addMemberToGroup($pg, $user2, ['comment' => $this->faker->text()]);
 
         $response = $this->actingAs($user1)->get(route('matcher.show', ['pg' => $pg->groupname]));
         $response->assertStatus(200);
 
         $response->assertSee(route('matcher.membership.approve', ['pg' => $pg->groupname, 'username' => $user2->username]));
         $response->assertSee(route('matcher.membership.decline', ['pg' => $pg->groupname, 'username' => $user2->username]));
+
+        $response->assertSee($m2->comment);
 
         $response = $this->actingAs($user2)->get(route('matcher.show', ['pg' => $pg->groupname]));
         $response->assertStatus(200);

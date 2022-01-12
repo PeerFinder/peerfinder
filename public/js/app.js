@@ -20094,7 +20094,7 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = {
   key: 0,
-  "class": "absolute mt-1 w-full rounded-md shadow divide-y divide-solid overflow-hidden"
+  "class": "border border-gray-400 absolute mt-1.5 w-full rounded-md shadow divide-y divide-solid overflow-hidden"
 };
 var _hoisted_3 = {
   href: "#",
