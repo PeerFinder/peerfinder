@@ -16,7 +16,7 @@ return [
     'button_edit_group' => 'Gruppe bearbeiten',
     'button_delete_group' => 'Gruppe löschen',
     'button_complete_group' => 'Gruppe schließen',
-    'button_uncomplete_group' => 'Gruppe eröffnen',
+    'button_uncomplete_group' => 'Gruppe öffnen',
     'button_transfer_ownership' => 'Gruppe übertragen',
     'group_administration' => 'Administration der Gruppe',
     'group_administration_notice' => 'Nur Besitzer:in und Mitbesitzer:innen können dieses Menü sehen.',
