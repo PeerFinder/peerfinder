@@ -5,7 +5,7 @@
 
     <div class="p-4">
 
-        <dropdown-input url="{{ route('profile.user.search') }}?name=$1" items-field="users" items-id="username" items-value="name" lookup-delay="500">
+        <dropdown-input url="{{ route('profile.user.search') }}?name=$1" max-selected="3" items-field="users" items-id="username" items-value="name" lookup-delay="500">
 
         </dropdown-input>
 
