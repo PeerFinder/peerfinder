@@ -13,13 +13,13 @@
 
             <input type="text" 
                         @keydown.esc.prevent="closeDropDown" @keydown.enter.prevent="processEnter" @keydown.down.prevent="processDown" @keydown.up.prevent="processUp" 
-                        ref="inputField" v-model="inputText" 
+                        ref="inputField" v-model="inputText" :placeholder="placeholder"
                         class="ml-1 px-0 py-1 my-1 border-0 focus:ring-0 flex-1 bg-transparent" v-if="canShowInputField()" />
         </div>
 
         <div class="border border-gray-400 absolute mt-1.5 w-full rounded-md shadow divide-y divide-solid overflow-hidden" v-if="canShowDropDown()">
             <div v-for="item in unselectedItems" :key="item.id">
-                <a @click.prevent="selectItem(item)" href="#" :class="'block p-1 pl-3 hover:bg-gray-100 ' + (highlightedItem.id == item.id ? 'bg-pf-lightblue text-pf-darkblue' : '')">{{ item.value }}</a>
+                <a @click.prevent="selectItem(item)" href="#" :class="'block p-1 pl-3 ' + (highlightedItem.id == item.id ? 'bg-pf-lightblue text-pf-darkblue' : 'hover:bg-gray-100')">{{ item.value }}</a>
             </div>
         </div>
     </div>
@@ -48,6 +48,7 @@ export default {
             default: 0,
         },
         inputName: String,
+        placeholder: String,
     },
     setup(props) {
         const items = ref([]);
@@ -64,6 +65,7 @@ export default {
         });
 
         const inputName = computed(() => props.inputName);
+        const placeholder = computed(() => props.placeholder);
 
         const highlightedItem = computed(() => unselectedItems.value[highlightedIndex.value]);
 
@@ -129,6 +131,8 @@ export default {
                     }
                 }
 
+                inputText.value = '';
+
                 setFocus();
             }
         }
@@ -181,7 +185,7 @@ export default {
         }
 
         onMounted(() => {
-            items.value = [
+            selectedItems.value = [
                 { value: "Max Mustermann", id: "USER1" },
                 { value: "Vera Paula Müller", id: "USER2"  },
                 { value: "Alexander Spitz", id: "USER3" },
@@ -199,6 +203,7 @@ export default {
             inputName,
             highlightedIndex,
             highlightedItem,
+            placeholder,
             closeDropDown,
             canAddMore,
             itemAlreadySelected,

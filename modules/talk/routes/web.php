@@ -9,6 +9,7 @@ Route::get('/create/{user:username}', [ConversationController::class, 'createFor
 Route::put('/create/{user:username}', [ConversationController::class, 'storeForUser'])->name('store.user');
 
 Route::get('/select', [ConversationController::class, 'select'])->name('select');
+Route::post('/select', [ConversationController::class, 'selectAndRedirect'])->name('selectAndRedirect');
 
 Route::get('/{conversation:identifier}', [ConversationController::class, 'show'])->name('show');
 Route::get('/{conversation:identifier}/edit', [ConversationController::class, 'edit'])->name('edit');

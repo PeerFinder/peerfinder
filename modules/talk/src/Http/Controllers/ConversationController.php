@@ -29,6 +29,11 @@ class ConversationController extends Controller
         ]);
     }
 
+    public function selectAndRedirect(Request $request)
+    {
+        dd($request->users);
+    }
+
     public function createForUser(User $user, Request $request)
     {
         $ret = Talk::checkConversationCreation($user);
