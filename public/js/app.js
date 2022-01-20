@@ -19781,6 +19781,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (lastValue.length > 1) {
         lookupTimer = setTimeout(lookup, props.lookupDelay);
+      } else {
+        resetDropDown();
       }
     });
 
@@ -20304,7 +20306,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return $setup.selectItem(item);
       }, ["prevent"]),
       href: "#",
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('block p-1 pl-3 hover:bg-gray-100 ' + ($setup.highlightedItem.id == item.id ? 'bg-gray-200' : ''))
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('block p-1 pl-3 hover:bg-gray-100 ' + ($setup.highlightedItem.id == item.id ? 'bg-pf-lightblue text-pf-darkblue' : ''))
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.value), 11
     /* TEXT, CLASS, PROPS */
     , _hoisted_7)]);

@@ -1624,6 +1624,10 @@ select {
 .bg-transparent {
   background-color: transparent;
 }
+.bg-pf-lightblue {
+  --tw-bg-opacity: 1;
+  background-color: rgb(134 187 216 / var(--tw-bg-opacity));
+}
 .bg-pf-midorange {
   --tw-bg-opacity: 1;
   background-color: rgb(246 174 45 / var(--tw-bg-opacity));
@@ -1952,6 +1956,10 @@ select {
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.text-pf-darkblue {
+  --tw-text-opacity: 1;
+  color: rgb(46 72 88 / var(--tw-text-opacity));
 }
 .text-white {
   --tw-text-opacity: 1;

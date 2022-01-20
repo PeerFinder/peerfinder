@@ -19,7 +19,7 @@
 
         <div class="border border-gray-400 absolute mt-1.5 w-full rounded-md shadow divide-y divide-solid overflow-hidden" v-if="canShowDropDown()">
             <div v-for="item in unselectedItems" :key="item.id">
-                <a @click.prevent="selectItem(item)" href="#" :class="'block p-1 pl-3 hover:bg-gray-100 ' + (highlightedItem.id == item.id ? 'bg-gray-200' : '')">{{ item.value }}</a>
+                <a @click.prevent="selectItem(item)" href="#" :class="'block p-1 pl-3 hover:bg-gray-100 ' + (highlightedItem.id == item.id ? 'bg-pf-lightblue text-pf-darkblue' : '')">{{ item.value }}</a>
             </div>
         </div>
     </div>
@@ -169,6 +169,8 @@ export default {
 
             if (lastValue.length > 1) {
                 lookupTimer = setTimeout(lookup, props.lookupDelay);
+            } else {
+                resetDropDown();
             }
         });
 
