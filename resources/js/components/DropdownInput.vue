@@ -1,4 +1,11 @@
 <template>
+    <label :for="inputName" v-if="label" :class="'block mb-1 font-medium ' + (hasErrors ? 'text-red-500' : '')">
+        {{ label }}
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block" viewBox="0 0 20 20" fill="currentColor" v-if="hasErrors">
+            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+        </svg>
+    </label>
+
     <div class="relative" v-click-outside="closeDropDown">
         <div @click="setFocus" class="w-full border px-2 py-1 rounded-md shadow-sm bg-gray-50 flex flex-wrap items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-pf-midblue focus-within:border-transparent focus-within:bg-white">
             <div v-for="item in selectedItems" :key="item.id" :class="'px-2 py-1 rounded-md mr-2 my-1 flex items-center border ' + (item.error ? 'bg-red-200 border-red-500' : 'border-gray-300 bg-gray-200')">
@@ -11,15 +18,22 @@
                 <input :name="inputName + '[]'" :value="item.id" type="hidden" />
             </div>
 
-            <input type="text" 
-                        @keydown.esc.prevent="closeDropDown" @keydown.enter.prevent="processEnter" @keydown.down.prevent="processDown" @keydown.up.prevent="processUp" 
+            <input type="text" :id="inputName"
+                        @keydown.esc.prevent="closeDropDown"
+                        @keydown.enter.prevent="processEnter"
+                        @keydown.down.prevent="processDown"
+                        @keydown.up.prevent="processUp"
+                        @keydown.prevent.,="processEnter"
+                        @blur="processEnter"
+                        @keydown.prevent.space="processEnter"
                         ref="inputField" v-model="inputText" :placeholder="placeholder"
                         class="ml-1 px-0 py-1 my-1 border border-transparent focus:border-transparent focus:ring-0 flex-1 bg-transparent" v-if="canShowInputField()" />
         </div>
 
         <div class="border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white" v-if="canShowDropDown()">
             <div v-for="item in unselectedItems" :key="item.id">
-                <a @click.prevent="selectItem(item)" href="#" :class="'block p-1 pl-3 ' + (highlightedItem.id == item.id ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
+                <a @click.prevent="selectItem(item)" href="#" 
+                    :class="'block p-1 pl-3 ' + (highlightedItem && (highlightedItem.id == item.id) ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
             </div>
         </div>
     </div>
@@ -50,13 +64,16 @@ export default {
         inputName: String,
         placeholder: String,
         items: Array,
+        label: String,
+        strict: Boolean,
     },
     setup(props) {
         const items = ref([]);
         const selectedItems = ref([]);
         const inputText = ref("");
         const inputField = ref(null);
-        const highlightedIndex = ref(0);
+        const highlightedIndex = ref(-1);
+        const hasErrors = ref(false);
 
         var lookupTimer = null;
         var lastValue = null;
@@ -67,12 +84,12 @@ export default {
 
         const inputName = computed(() => props.inputName);
         const placeholder = computed(() => props.placeholder);
-
-        const highlightedItem = computed(() => unselectedItems.value[highlightedIndex.value]);
+        const label = computed(() => props.label);
+        const highlightedItem = computed(() => highlightedIndex.value >= 0 ? unselectedItems.value[highlightedIndex.value] : null);
 
         function resetDropDown() {
             items.value = [];
-            highlightedIndex.value = 0;
+            highlightedIndex.value = -1;
         }
 
         function lookup() {
@@ -147,8 +164,12 @@ export default {
         }
 
         function processEnter() {
-            if (unselectedItems.value.length > 0 && highlightedItem.value != undefined) {
-                selectItem(highlightedItem.value);
+            if (props.strict) {
+                if (unselectedItems.value.length > 0 && highlightedItem.value != undefined) {
+                    selectItem(highlightedItem.value);
+                }
+            } else {
+
             }
         }
         
@@ -163,6 +184,12 @@ export default {
                 highlightedIndex.value++;
             }
         }
+
+        function cleanInput(value) {
+            value = value.replace(/[\&\/\\\#\,\+\(\)\$\~\%\.\'\"\:\*\?\!\<\>\{\}]/g, "");
+            value = value.replace(/\s+/g, "-");
+            return value;
+        }        
 
         watch(inputText, function(val) {
             if (lookupTimer) {
@@ -188,12 +215,18 @@ export default {
         onMounted(() => {
             if (props.items.length > 0) {
                 selectedItems.value = props.items;
+
+                props.items.forEach(item => {
+                    if (item.error) {
+                        hasErrors.value = true;
+                    }
+                });
             } else {
-                /*selectedItems.value = [
+                selectedItems.value = [
                     { value: "Max Mustermann", id: "USER1", error: true },
                     { value: "Vera Paula Müller", id: "USER2"  },
                     { value: "Alexander Spitz", id: "USER3", error: true },
-                ];*/
+                ];
             }
         });
 
@@ -209,6 +242,8 @@ export default {
             highlightedIndex,
             highlightedItem,
             placeholder,
+            label,
+            hasErrors,
             closeDropDown,
             canAddMore,
             itemAlreadySelected,
