@@ -23,15 +23,41 @@ class ConversationController extends Controller
     public function select(Request $request)
     {
         $conversation = new Conversation();
+        $users_and_errors = [];
+
+        if ($request->old('_token') && $request->old('users')) {
+            $users = $request->old('users');
+            $errors = session()->get('errors')->getBag('default');
+            
+            for ($i=0; $i < count($users); $i++) { 
+                $username = $users[$i];
+                $name = User::whereUsername($username)->pluck('name')->first() ?: $username;
+                $error = $errors->get('users.' . $i);
+
+                $users_and_errors[] = [
+                    'id' => $username,
+                    'value' => $name,
+                    'error' => $error && count($error),
+                ];
+            }
+        }
 
         return view('talk::conversations.select', [
             'conversation' => $conversation,
+            'users' => collect($users_and_errors),
         ]);
     }
 
     public function selectAndRedirect(Request $request)
     {
-        dd($request->users);
+        $input = $request->all();
+
+        Validator::make($input, [
+            'users' => 'required',
+            'users.*' => 'exists:users,username'
+        ])->validate();
+
+        
     }
 
     public function createForUser(User $user, Request $request)

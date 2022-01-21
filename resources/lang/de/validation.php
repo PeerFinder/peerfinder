@@ -177,6 +177,7 @@ return [
         'time'                  => 'Uhrzeit',
         'title'                 => 'Titel',
         'username'              => 'Benutzername',
+        'users'                 => 'Nutzer:innen',
         'year'                  => 'Jahr',
     ],
 ];

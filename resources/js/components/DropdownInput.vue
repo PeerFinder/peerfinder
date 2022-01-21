@@ -1,7 +1,7 @@
 <template>
     <div class="relative" v-click-outside="closeDropDown">
         <div @click="setFocus" class="w-full border px-2 py-1 rounded-md shadow-sm bg-gray-50 flex flex-wrap items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-pf-midblue focus-within:border-transparent focus-within:bg-white">
-            <div v-for="item in selectedItems" :key="item.id" class="bg-gray-200 px-2 py-1 rounded-md mr-1 my-1 flex items-center">
+            <div v-for="item in selectedItems" :key="item.id" :class="'px-2 py-1 rounded-md mr-2 my-1 flex items-center border ' + (item.error ? 'bg-red-200 border-red-500' : 'border-gray-300 bg-gray-200')">
                 <a class="inline-block pr-1 text-gray-500 hover:text-red-600" href="#" @click.prevent="removeSelectedItem(item)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
@@ -14,12 +14,12 @@
             <input type="text" 
                         @keydown.esc.prevent="closeDropDown" @keydown.enter.prevent="processEnter" @keydown.down.prevent="processDown" @keydown.up.prevent="processUp" 
                         ref="inputField" v-model="inputText" :placeholder="placeholder"
-                        class="ml-1 px-0 py-1 my-1 border-0 focus:ring-0 flex-1 bg-transparent" v-if="canShowInputField()" />
+                        class="ml-1 px-0 py-1 my-1 border border-transparent focus:border-transparent focus:ring-0 flex-1 bg-transparent" v-if="canShowInputField()" />
         </div>
 
-        <div class="border border-gray-400 absolute mt-1.5 w-full rounded-md shadow divide-y divide-solid overflow-hidden" v-if="canShowDropDown()">
+        <div class="border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white" v-if="canShowDropDown()">
             <div v-for="item in unselectedItems" :key="item.id">
-                <a @click.prevent="selectItem(item)" href="#" :class="'block p-1 pl-3 ' + (highlightedItem.id == item.id ? 'bg-pf-lightblue text-pf-darkblue' : 'hover:bg-gray-100')">{{ item.value }}</a>
+                <a @click.prevent="selectItem(item)" href="#" :class="'block p-1 pl-3 ' + (highlightedItem.id == item.id ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
             </div>
         </div>
     </div>
@@ -49,6 +49,7 @@ export default {
         },
         inputName: String,
         placeholder: String,
+        items: Array,
     },
     setup(props) {
         const items = ref([]);
@@ -185,11 +186,15 @@ export default {
         }
 
         onMounted(() => {
-            selectedItems.value = [
-                { value: "Max Mustermann", id: "USER1" },
-                { value: "Vera Paula Müller", id: "USER2"  },
-                { value: "Alexander Spitz", id: "USER3" },
-            ];
+            if (props.items.length > 0) {
+                selectedItems.value = props.items;
+            } else {
+                /*selectedItems.value = [
+                    { value: "Max Mustermann", id: "USER1", error: true },
+                    { value: "Vera Paula Müller", id: "USER2"  },
+                    { value: "Alexander Spitz", id: "USER3", error: true },
+                ];*/
+            }
         });
 
         return {

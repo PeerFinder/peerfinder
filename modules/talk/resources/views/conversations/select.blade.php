@@ -4,13 +4,15 @@
     </div>
 
     <div class="p-4">
+        <x-ui.errors :errors="$errors" class="p-3 mb-2" />
+        
         <x-ui.forms.form :action="route('talk.selectAndRedirect')">
 
             <dropdown-input url="{{ route('profile.user.search') }}?name=$1" 
                         input-name="users" :max-selected="0" 
                         items-field="users" items-id="username" 
                         items-value="name" :lookup-delay="500"
-                        placeholder="Enter Name...">
+                        placeholder="Enter Name..." :items="{{ $users }}">
 
             </dropdown-input>
 
