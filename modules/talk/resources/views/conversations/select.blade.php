@@ -19,6 +19,15 @@
 
             </dropdown-input>
 
+            <dropdown-input url="{{ route('profile.user.search') }}?name=$1" 
+                        input-name="users2" :max-selected="3" 
+                        items-field="users" items-id="username" 
+                        items-value="name" :lookup-delay="500"
+                        placeholder="Enter Name..."
+                        label="Users2" :strict="false">
+
+            </dropdown-input>            
+
             <div class="mt-2">
                 @csrf
                 @method('POST')

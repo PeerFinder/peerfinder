@@ -19647,22 +19647,32 @@ __webpack_require__.r(__webpack_exports__);
     clickOutside: (click_outside_vue3__WEBPACK_IMPORTED_MODULE_2___default().directive)
   },
   props: {
+    // Delay before getting the date from URL after last key stroke
     lookupDelay: {
       type: Number,
       "default": 1000
     },
+    // Where to get the list of items
     url: String,
+    // JSON-field storing the items
     itemsField: String,
+    // JSON-field storing the ID of an item
     itemsId: String,
+    // JSON-field storing the value of an item
     itemsValue: String,
+    // How many items can be max selected
     maxSelected: {
       type: Number,
       "default": 0
     },
+    // Name of the input field
     inputName: String,
     placeholder: String,
+    // Items shown when page loaded
     items: Array,
+    // Text of the input label
     label: String,
+    // Only values from autosuggestion allowed
     strict: Boolean
   },
   setup: function setup(props) {
@@ -19766,11 +19776,18 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     function processEnter() {
-      if (props.strict) {
-        if (unselectedItems.value.length > 0 && highlightedItem.value != undefined) {
-          selectItem(highlightedItem.value);
+      if (unselectedItems.value.length > 0 && highlightedItem.value != undefined) {
+        selectItem(highlightedItem.value);
+      } else {
+        var input = cleanInput(inputText.value);
+
+        if (!props.strict && input) {
+          selectItem({
+            id: input,
+            value: input
+          });
         }
-      } else {}
+      }
     }
 
     function processUp() {
@@ -19820,20 +19837,15 @@ __webpack_require__.r(__webpack_exports__);
             hasErrors.value = true;
           }
         });
-      } else {
-        selectedItems.value = [{
-          value: "Max Mustermann",
-          id: "USER1",
-          error: true
-        }, {
-          value: "Vera Paula Müller",
-          id: "USER2"
-        }, {
-          value: "Alexander Spitz",
-          id: "USER3",
-          error: true
-        }];
       }
+      /* else {
+        selectedItems.value = [
+            { value: "Max Mustermann", id: "USER1", error: true },
+            { value: "Vera Paula Müller", id: "USER2"  },
+            { value: "Alexander Spitz", id: "USER3", error: true },
+        ];
+      } */
+
     });
     return {
       inputText: inputText,
@@ -20298,7 +20310,7 @@ var _hoisted_9 = ["name", "value"];
 var _hoisted_10 = ["id", "placeholder"];
 var _hoisted_11 = {
   key: 0,
-  "class": "border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white"
+  "class": "border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white z-20"
 };
 var _hoisted_12 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -20313,7 +20325,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), $setup.hasErrors ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_2, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 10
   /* CLASS, PROPS */
   , _hoisted_1)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[8] || (_cache[8] = function () {
+    onClick: _cache[7] || (_cache[7] = function () {
       return $setup.setFocus && $setup.setFocus.apply($setup, arguments);
     }),
     "class": "w-full border px-2 py-1 rounded-md shadow-sm bg-gray-50 flex flex-wrap items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-pf-midblue focus-within:border-transparent focus-within:bg-white"
@@ -20356,14 +20368,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $setup.processUp && $setup.processUp.apply($setup, arguments);
     }, ["prevent"]), ["up"])), _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.processEnter && $setup.processEnter.apply($setup, arguments);
-    }, ["prevent"]), [","])), _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    }, ["prevent"]), [","])), _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.processEnter && $setup.processEnter.apply($setup, arguments);
     }, ["prevent"]), ["space"]))],
-    onBlur: _cache[5] || (_cache[5] = function () {
-      return $setup.processEnter && $setup.processEnter.apply($setup, arguments);
-    }),
     ref: "inputField",
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $setup.inputText = $event;
     }),
     placeholder: $setup.placeholder,

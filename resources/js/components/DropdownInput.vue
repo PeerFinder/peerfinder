@@ -19,18 +19,18 @@
             </div>
 
             <input type="text" :id="inputName"
-                        @keydown.esc.prevent="closeDropDown"
-                        @keydown.enter.prevent="processEnter"
-                        @keydown.down.prevent="processDown"
-                        @keydown.up.prevent="processUp"
-                        @keydown.prevent.,="processEnter"
-                        @blur="processEnter"
-                        @keydown.prevent.space="processEnter"
-                        ref="inputField" v-model="inputText" :placeholder="placeholder"
-                        class="ml-1 px-0 py-1 my-1 border border-transparent focus:border-transparent focus:ring-0 flex-1 bg-transparent" v-if="canShowInputField()" />
+                    @keydown.esc.prevent="closeDropDown"
+                    @keydown.enter.prevent="processEnter"
+                    @keydown.down.prevent="processDown"
+                    @keydown.up.prevent="processUp"
+                    @keydown.prevent.,="processEnter"
+                    @keydown.prevent.space="processEnter"
+                    ref="inputField" v-model="inputText" :placeholder="placeholder"
+                    class="ml-1 px-0 py-1 my-1 border border-transparent focus:border-transparent focus:ring-0 flex-1 bg-transparent"
+                    v-if="canShowInputField()" />
         </div>
 
-        <div class="border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white" v-if="canShowDropDown()">
+        <div class="border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white z-20" v-if="canShowDropDown()">
             <div v-for="item in unselectedItems" :key="item.id">
                 <a @click.prevent="selectItem(item)" href="#" 
                     :class="'block p-1 pl-3 ' + (highlightedItem && (highlightedItem.id == item.id) ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
@@ -49,22 +49,32 @@ export default {
       clickOutside: vClickOutside.directive
     },
     props: {
+        // Delay before getting the date from URL after last key stroke
         lookupDelay: {
             type: Number,
             default: 1000,
         },
+        // Where to get the list of items
         url: String,
+        // JSON-field storing the items
         itemsField: String,
+        // JSON-field storing the ID of an item
         itemsId: String,
+        // JSON-field storing the value of an item
         itemsValue: String,
+        // How many items can be max selected
         maxSelected: {
             type: Number,
             default: 0,
         },
+        // Name of the input field
         inputName: String,
         placeholder: String,
+        // Items shown when page loaded
         items: Array,
+        // Text of the input label
         label: String,
+        // Only values from autosuggestion allowed
         strict: Boolean,
     },
     setup(props) {
@@ -164,12 +174,17 @@ export default {
         }
 
         function processEnter() {
-            if (props.strict) {
-                if (unselectedItems.value.length > 0 && highlightedItem.value != undefined) {
-                    selectItem(highlightedItem.value);
-                }
+            if (unselectedItems.value.length > 0 && highlightedItem.value != undefined) {
+                selectItem(highlightedItem.value);
             } else {
+                var input = cleanInput(inputText.value);
 
+                if (!props.strict && input) {
+                    selectItem({
+                        id: input,
+                        value: input,
+                    });
+                }
             }
         }
         
@@ -221,13 +236,13 @@ export default {
                         hasErrors.value = true;
                     }
                 });
-            } else {
+            } /* else {
                 selectedItems.value = [
                     { value: "Max Mustermann", id: "USER1", error: true },
                     { value: "Vera Paula Müller", id: "USER2"  },
                     { value: "Alexander Spitz", id: "USER3", error: true },
                 ];
-            }
+            } */
         });
 
         return {
