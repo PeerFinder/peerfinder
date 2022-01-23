@@ -8,32 +8,26 @@
         
         <x-ui.forms.form :action="route('talk.selectAndRedirect')">
 
-
-
             <dropdown-input url="{{ route('profile.user.search') }}?name=$1" 
                         input-name="users" :max-selected="0" 
                         items-field="users" items-id="username" 
                         items-value="name" :lookup-delay="500"
-                        placeholder="Enter Name..." :items="{{ $users }}"
-                        label="Users" :strict="true">
+                        placeholder="{{ __('talk::talk.enter_name') }}" :items="{{ $users }}"
+                        label="{{ __('talk::talk.field_users') }}" :strict="true">
 
             </dropdown-input>
 
-            <dropdown-input url="{{ route('profile.user.search') }}?name=$1" 
-                        input-name="users2" :max-selected="3" 
-                        items-field="users" items-id="username" 
-                        items-value="name" :lookup-delay="500"
-                        placeholder="Enter Name..."
-                        label="Users2" :strict="false">
-
-            </dropdown-input>            
-
-            <div class="mt-2">
+            <div class="mt-4">
                 @csrf
                 @method('POST')
-                
-                <x-ui.forms.button>{{ __('talk::talk.button_select') }}</x-ui.forms.button>
-                
+                <div class="flex items-center justify-between">
+                    <div>
+                        <x-ui.forms.button>{{ __('talk::talk.button_next') }}</x-ui.forms.button>
+                    </div>
+                    <div>
+                        <x-ui.forms.button action="inform" tag="a" href="{{ route('talk.index') }}">{{ __('talk::talk.button_cancel') }}</x-ui.forms.button>
+                    </div>
+                </div>
             </div>
 
         </x-ui.forms.form>

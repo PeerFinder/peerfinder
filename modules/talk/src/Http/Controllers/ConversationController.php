@@ -57,35 +57,57 @@ class ConversationController extends Controller
             'users.*' => 'exists:users,username'
         ])->validate();
 
-        
+        return redirect(route('talk.create.user', ['usernames' => implode(',', $input['users'])]));
     }
 
-    public function createForUser(User $user, Request $request)
+    private function checkAndGetUsers($usernamesString)
     {
-        $ret = Talk::checkConversationCreation($user);
+        $usernames = array_unique(explode(',', $usernamesString));
+
+        $users = User::whereIn('username', $usernames)->get();
+
+        if ($users->count() != count($usernames)) {
+            abort(404);
+        }
+
+        return Talk::filterUsers($users->all(), 0);
+    }
+
+    public function createForUser(Request $request, $usernamesString)
+    {
+        $users = $this->checkAndGetUsers($usernamesString);
+
+        $ret = Talk::checkConversationCreation($users);
 
         if ($ret) {
             return $ret;
         }
 
         $conversation = new Conversation();
-        $conversation->title = __('talk::talk.start_conversation_with', ['participants' => Talk::usersAsString(Talk::filterUsers([$user]))]);
+        $conversation->title = __('talk::talk.start_conversation_with', ['participants' => Talk::usersAsString(Talk::filterUsers($users))]);
+
+        $participantsString = implode(',', array_map(fn($u) => $u->username, $users));
 
         return view('talk::conversations.create', [
-            'participants' => [$user],
+            'participants' => $users,
+            'participantsString' => $participantsString,
             'conversation' => $conversation,
         ]);
     }
 
-    public function storeForUser(User $user, Request $request)
+    public function storeForUser(Request $request, $usernamesString)
     {
-        $ret = Talk::checkConversationCreation($user);
+        $users = $this->checkAndGetUsers($usernamesString);
+
+        $ret = Talk::checkConversationCreation($users);
         
         if ($ret) {
             return $ret;
         }
-    
-        Talk::createConversation(auth()->user(), [auth()->user(), $user], $request->all());
+
+        $users[] = auth()->user();
+
+        Talk::createConversation(auth()->user(), $users, $request->all());
 
         return redirect()->back()->with('success', __('talk::talk.conversation_created_successfully'));
     }

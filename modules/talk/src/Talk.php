@@ -19,9 +19,9 @@ class Talk
         $this->user = auth()->user();
     }
 
-    public function filterUsers($users)
+    public function filterUsers($users, $minUsers = 1)
     {
-        if (count($users) > 1 && $this->user) {
+        if (count($users) > $minUsers && $this->user) {
             $users = array_filter($users, fn ($user) => $this->user->id != $user->id);
         }
 
@@ -128,13 +128,15 @@ class Talk
         });
     }
 
-    public function checkConversationCreation($user)
+    public function checkConversationCreation($users)
     {
-        if ($user->id == auth()->user()->id) {
+        if (!$users || count($users) < 1) {
             return redirect(route('talk.index'));
         }
 
-        $conversation = Conversation::forUsers([auth()->user(), $user])->get()->first();
+        $users[] = auth()->user();
+
+        $conversation = Conversation::forUsers($users)->get()->first();
 
         if ($conversation) {
             return redirect($conversation->getUrl());

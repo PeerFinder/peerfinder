@@ -128,22 +128,6 @@ class ConversationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    #public function test_user_is_redirected_to_unread_conversation()
-    #{
-    #    $user1 = User::factory()->create();
-    #    $user2 = User::factory()->create();
-    #    $conversation = Conversation::factory()->byUser()->create();
-    #
-    #    $conversation->addUser($user1);
-    #    $conversation->addUser($user2);
-    #
-    #    Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
-    #
-    #    $response = $this->actingAs($user2)->get(route('talk.index'));
-    #    $response->assertStatus(302);
-    #    $response->assertLocation(route('talk.show', ['conversation' => $conversation->identifier]));
-    #}
-
     public function test_user_can_render_conversation()
     {
         $user = User::factory()->create();
@@ -239,7 +223,7 @@ class ConversationTest extends TestCase
         $conversation = Conversation::factory()->byUser()->create();
         $conversation->addUser($user);
 
-        $response = $this->actingAs($user)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user)->get(route('talk.create.user', ['usernames' => $user1->username]));
         $response->assertStatus(200);
     }
 
@@ -253,7 +237,7 @@ class ConversationTest extends TestCase
         $conversation->addUser($user1);
         $conversation->addUser($user2);
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(200);
         
         $conversation->setOwner($user1);
@@ -261,11 +245,11 @@ class ConversationTest extends TestCase
         $this->assertFalse($conversation->isOwner($conversation)); // check for a different type
         $this->assertTrue($conversation->isOwner($user1));
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
 
-        $response = $this->actingAs($user2)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => $user1->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
     }
@@ -283,7 +267,7 @@ class ConversationTest extends TestCase
         $conversation->addUser($user2);
         $conversation->addUser($user3);
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(200);
     }
 
@@ -297,10 +281,10 @@ class ConversationTest extends TestCase
         $conversation->addUser($user1);
         $conversation->addUser($user2);
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(200);
 
-        $response = $this->actingAs($user2)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => $user1->username]));
         $response->assertStatus(200);
     }
 
@@ -310,7 +294,7 @@ class ConversationTest extends TestCase
         $user2 = User::factory()->create();
         $user3 = User::factory()->create();
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user1->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.index'));
     }
@@ -320,14 +304,14 @@ class ConversationTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user1->username]), [
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['usernames' => $user1->username]), [
             'message' => $this->faker->text(),
         ]);
         
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.index'));
 
-        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user2->username]), [
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['usernames' => $user2->username]), [
             'message' => $this->faker->text(),
         ]);
 

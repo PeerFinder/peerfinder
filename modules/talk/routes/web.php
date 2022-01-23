@@ -5,8 +5,8 @@ use Talk\Http\Controllers\ConversationController;
 use Talk\Http\Controllers\RepliesController;
 
 Route::get('/', [ConversationController::class, 'index'])->name('index');
-Route::get('/create/{user:username}', [ConversationController::class, 'createForUser'])->name('create.user');
-Route::put('/create/{user:username}', [ConversationController::class, 'storeForUser'])->name('store.user');
+Route::get('/create/{usernames}', [ConversationController::class, 'createForUser'])->name('create.user');
+Route::put('/create/{usernames}', [ConversationController::class, 'storeForUser'])->name('store.user');
 
 Route::get('/select', [ConversationController::class, 'select'])->name('select');
 Route::post('/select', [ConversationController::class, 'selectAndRedirect'])->name('selectAndRedirect');
