@@ -249,9 +249,46 @@ class ConversationTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
 
-        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => $user1->username]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => $user1->username]));        
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
+    }
+
+    public function test_conversation_for_multiple_users_with_error()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => implode(',', [$user1->username, 'blabla'])]));
+        $response->assertStatus(404);
+    }
+
+    public function test_conversation_can_render_for_multiple_users()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => implode(',', [$user2->username, $user3->username])]));
+        $response->assertStatus(200);
+    }
+
+    public function test_conversation_can_create_for_multiple_users()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['usernames' => implode(',', [$user2->username, $user3->username])]), [
+            'message' => $this->faker->text(),
+        ]);
+
+        $response->assertStatus(302);
+
+        $this->assertEquals(1, $user1->owned_conversations()->count());
+        $this->assertEquals(3, $user1->owned_conversations()->first()->users()->count());
+        $this->assertEquals(1, $user2->participated_conversations()->count());
+        $this->assertEquals(1, $user3->participated_conversations()->count());
     }
 
     public function test_not_redirect_to_conversation_with_more_participants()

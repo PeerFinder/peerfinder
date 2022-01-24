@@ -21,8 +21,10 @@ class Talk
 
     public function filterUsers($users, $minUsers = 1)
     {
-        if (count($users) > $minUsers && $this->user) {
-            $users = array_filter($users, fn ($user) => $this->user->id != $user->id);
+        $currentUser = auth()->user();
+        
+        if (count($users) > $minUsers && $currentUser) {
+            $users = array_filter($users, fn ($user) => $currentUser->id != $user->id);
         }
 
         $users = array_values($users);
