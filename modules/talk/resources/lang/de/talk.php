@@ -30,4 +30,5 @@ return [
     'field_users' => 'Nutzer:innen',
     'enter_name' => 'Namen eingeben...',
     'button_next' => 'Weiter',
+    'conversations_new' => 'Neu',
 ];

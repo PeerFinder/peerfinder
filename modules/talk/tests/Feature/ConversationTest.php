@@ -259,7 +259,7 @@ class ConversationTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => implode(',', [$user1->username, 'blabla'])]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => implode(',', [$user1->username, 'bla-bla'])]));
         $response->assertStatus(404);
     }
 
@@ -386,5 +386,13 @@ class ConversationTest extends TestCase
         $conversation = Conversation::factory()->byPeergroup($pg)->create();
 
         $this->assertEquals($pg->title, $conversation->getTitle());
-    }    
+    }
+
+    public function test_select_users_for_conversation()
+    {
+        $user1 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->get(route('talk.select'));
+        $response->assertStatus(200);
+    }
 }

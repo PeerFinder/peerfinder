@@ -7,14 +7,19 @@
     </div>
     @endif
 
-    <x-ui.card class="sm:mt-10 mb-5 sm:mb-10">
+    <x-ui.card class="sm:mt-10 mb-5 sm:mb-10 min-h-screen">
         <div class="grid grid-cols-10">
             <div @class([
-                'hidden sm:block col-span-3 border-r bg-gray-50' => $conversation,
-                'col-span-10 sm:col-span-3 border-r bg-gray-50' => !$conversation,
+                'hidden sm:block col-span-3 border-r bg-gray-50 min-h-screen' => $conversation,
+                'col-span-10 sm:col-span-3 border-r bg-gray-50 min-h-screen' => !$conversation,
             ])>
-                <div class="bg-white p-4 border-b">
+                <div class="bg-white border-b p-2 flex justify-between items-center flex-wrap">
+                    <div class="p-2">
                     {{ __('talk::talk.conversations_title') }}
+                    </div>
+                    <div>
+                        <x-ui.forms.button action="create" tag="a" href="{{ route('talk.select') }}">{{ __('talk::talk.conversations_new') }}</x-ui.forms.button>
+                    </div>
                 </div>
 
                 <x-talk-conversations-list :conversation="$conversation" />
