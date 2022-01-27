@@ -6,7 +6,7 @@
     <div class="p-4">
         <x-ui.errors :errors="$errors" class="p-3 mb-2" />
         
-        <x-ui.forms.form :action="route('talk.selectAndRedirect')">
+        <x-ui.forms.form :action="route('talk.selectAndRedirect')" autocomplete="off">
 
             <dropdown-input url="{{ route('profile.user.search') }}?name=$1" 
                         input-name="users" :max-selected="0" 
