@@ -47,7 +47,7 @@
                         </div>
                         @else
                         <div class="mt-5 flex flex-col sm:flex-row">
-                            <x-ui.forms.button tag="a" href="{{ route('talk.create.user', ['user' => $user->username]) }}">{{ __('profile/user.button_send_message') }}</x-ui.forms.button>
+                            <x-ui.forms.button tag="a" href="{{ route('talk.create.user', ['usernames' => $user->username]) }}">{{ __('profile/user.button_send_message') }}</x-ui.forms.button>
                         </div>
                         @endif
                     </div>

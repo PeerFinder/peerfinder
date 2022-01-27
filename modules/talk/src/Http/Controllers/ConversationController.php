@@ -19,33 +19,95 @@ class ConversationController extends Controller
     {
         return view('talk::conversations.index');
     }
-
-    public function createForUser(User $user, Request $request)
+    
+    public function select(Request $request)
     {
-        $ret = Talk::checkConversationCreation($user);
+        $conversation = new Conversation();
+        $users_and_errors = [];
+
+        if ($request->old('_token') && $request->old('search_users')) {
+            $users = $request->old('search_users');
+            $errors = session()->get('errors')->getBag('default');
+            
+            for ($i=0; $i < count($users); $i++) { 
+                $username = $users[$i];
+                $name = User::whereUsername($username)->pluck('name')->first() ?: $username;
+                $error = $errors->get('search_users.' . $i);
+
+                $users_and_errors[] = [
+                    'id' => $username,
+                    'value' => $name,
+                    'error' => $error && count($error),
+                ];
+            }
+        }
+
+        return view('talk::conversations.select', [
+            'conversation' => $conversation,
+            'users' => collect($users_and_errors),
+        ]);
+    }
+
+    public function selectAndRedirect(Request $request)
+    {
+        $input = $request->all();
+
+        Validator::make($input, [
+            'search_users' => 'required',
+            'search_users.*' => 'exists:users,username'
+        ])->validate();
+
+        return redirect(route('talk.create.user', ['usernames' => implode(',', $input['search_users'])]));
+    }
+
+    private function checkAndGetUsers($usernamesString)
+    {
+        $usernames = array_unique(explode(',', $usernamesString));
+
+        $users = User::whereIn('username', $usernames)->get();
+
+        if ($users->count() != count($usernames)) {
+            abort(404);
+        }
+
+        return Talk::filterUsers($users->all(), 0);
+    }
+
+    public function createForUser(Request $request, $usernamesString)
+    {
+        $users = $this->checkAndGetUsers($usernamesString);
+
+        $ret = Talk::checkConversationCreation($users);
 
         if ($ret) {
             return $ret;
         }
 
         $conversation = new Conversation();
-        $conversation->title = __('talk::talk.start_conversation_with', ['participants' => Talk::usersAsString(Talk::filterUsers([$user]))]);
+        $conversation->title = __('talk::talk.start_conversation_with', ['participants' => Talk::usersAsString(Talk::filterUsers($users))]);
+
+        $participantsString = implode(',', array_map(fn($u) => $u->username, $users));
 
         return view('talk::conversations.create', [
-            'participants' => [$user],
+            'participants' => $users,
+            'participantsString' => $participantsString,
             'conversation' => $conversation,
         ]);
     }
 
-    public function storeForUser(User $user, Request $request)
+    public function storeForUser(Request $request, $usernamesString)
     {
-        $ret = Talk::checkConversationCreation($user);
+        $users = $this->checkAndGetUsers($usernamesString);
+
+        $ret = Talk::checkConversationCreation($users);
         
         if ($ret) {
             return $ret;
         }
-    
-        Talk::createConversation(auth()->user(), [auth()->user(), $user], $request->all());
+
+        $users[] = auth()->user();
+
+        Talk::createConversation(auth()->user(), $users, $request->all());
 
         return redirect()->back()->with('success', __('talk::talk.conversation_created_successfully'));
     }
@@ -89,8 +151,8 @@ class ConversationController extends Controller
 
         $conversation->update($input);
 
-        if(key_exists('users', $input)) {
-            $users = User::whereIn('username', $input['users'])->get()->all();
+        if(key_exists('search_users', $input)) {
+            $users = User::whereIn('username', $input['search_users'])->get()->all();
             $conversation->syncUsers($users);
         }
 

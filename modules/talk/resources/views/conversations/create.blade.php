@@ -4,6 +4,6 @@
     </div>
 
     <div class="p-4">
-        <x-talk::conversations.reply-form new="true" :action="route('talk.store.user', ['user' => $participants[0]->username])" />
+        <x-talk::conversations.reply-form new="true" :action="route('talk.store.user', ['usernames' => $participantsString])" />
     </div>
 </x-talk::layout.single>

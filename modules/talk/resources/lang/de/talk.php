@@ -26,4 +26,9 @@ return [
     'button_edit_reply' => 'Bearbeiten',
     'button_update_reply' => 'Speichern',
     'button_cancel' => 'Abbrechen',
+    'select_users' => 'Nutzer:innen auswählen',
+    'field_users' => 'Nutzer:innen',
+    'enter_name' => 'Namen eingeben...',
+    'button_next' => 'Weiter',
+    'conversations_new' => 'Neu',
 ];

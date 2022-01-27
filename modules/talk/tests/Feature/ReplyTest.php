@@ -45,7 +45,7 @@ class ReplyTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user2->username]), [
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['usernames' => $user2->username]), [
             'message' => '',
         ]);
 

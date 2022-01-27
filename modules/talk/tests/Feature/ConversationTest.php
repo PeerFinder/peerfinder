@@ -12,6 +12,8 @@ use Matcher\Models\Peergroup;
 use Talk\Facades\Talk;
 use Talk\Models\Participant;
 use Tests\TestCase;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 /**
  * @group Talk
@@ -128,22 +130,6 @@ class ConversationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    #public function test_user_is_redirected_to_unread_conversation()
-    #{
-    #    $user1 = User::factory()->create();
-    #    $user2 = User::factory()->create();
-    #    $conversation = Conversation::factory()->byUser()->create();
-    #
-    #    $conversation->addUser($user1);
-    #    $conversation->addUser($user2);
-    #
-    #    Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
-    #
-    #    $response = $this->actingAs($user2)->get(route('talk.index'));
-    #    $response->assertStatus(302);
-    #    $response->assertLocation(route('talk.show', ['conversation' => $conversation->identifier]));
-    #}
-
     public function test_user_can_render_conversation()
     {
         $user = User::factory()->create();
@@ -214,7 +200,7 @@ class ConversationTest extends TestCase
         $conversation->addUser($user);
 
         $response = $this->actingAs($user)->put(route('talk.update', ['conversation' => $conversation->identifier]), [
-            'users' => [
+            'search_users' => [
                 $users[0]->username,
                 $users[1]->username,
                 $users[2]->username,
@@ -239,7 +225,7 @@ class ConversationTest extends TestCase
         $conversation = Conversation::factory()->byUser()->create();
         $conversation->addUser($user);
 
-        $response = $this->actingAs($user)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user)->get(route('talk.create.user', ['usernames' => $user1->username]));
         $response->assertStatus(200);
     }
 
@@ -253,7 +239,7 @@ class ConversationTest extends TestCase
         $conversation->addUser($user1);
         $conversation->addUser($user2);
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(200);
         
         $conversation->setOwner($user1);
@@ -261,13 +247,50 @@ class ConversationTest extends TestCase
         $this->assertFalse($conversation->isOwner($conversation)); // check for a different type
         $this->assertTrue($conversation->isOwner($user1));
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
 
-        $response = $this->actingAs($user2)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => $user1->username]));        
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.show', ['conversation' => $conversation->identifier]));
+    }
+
+    public function test_conversation_for_multiple_users_with_error()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => implode(',', [$user1->username, 'bla-bla'])]));
+        $response->assertStatus(404);
+    }
+
+    public function test_conversation_can_render_for_multiple_users()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => implode(',', [$user2->username, $user3->username])]));
+        $response->assertStatus(200);
+    }
+
+    public function test_conversation_can_create_for_multiple_users()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['usernames' => implode(',', [$user2->username, $user3->username])]), [
+            'message' => $this->faker->text(),
+        ]);
+
+        $response->assertStatus(302);
+
+        $this->assertEquals(1, $user1->owned_conversations()->count());
+        $this->assertEquals(3, $user1->owned_conversations()->first()->users()->count());
+        $this->assertEquals(1, $user2->participated_conversations()->count());
+        $this->assertEquals(1, $user3->participated_conversations()->count());
     }
 
     public function test_not_redirect_to_conversation_with_more_participants()
@@ -283,7 +306,7 @@ class ConversationTest extends TestCase
         $conversation->addUser($user2);
         $conversation->addUser($user3);
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(200);
     }
 
@@ -297,10 +320,10 @@ class ConversationTest extends TestCase
         $conversation->addUser($user1);
         $conversation->addUser($user2);
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user2->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user2->username]));
         $response->assertStatus(200);
 
-        $response = $this->actingAs($user2)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user2)->get(route('talk.create.user', ['usernames' => $user1->username]));
         $response->assertStatus(200);
     }
 
@@ -310,7 +333,7 @@ class ConversationTest extends TestCase
         $user2 = User::factory()->create();
         $user3 = User::factory()->create();
 
-        $response = $this->actingAs($user1)->get(route('talk.create.user', ['user' => $user1->username]));
+        $response = $this->actingAs($user1)->get(route('talk.create.user', ['usernames' => $user1->username]));
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.index'));
     }
@@ -320,14 +343,14 @@ class ConversationTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
 
-        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user1->username]), [
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['usernames' => $user1->username]), [
             'message' => $this->faker->text(),
         ]);
         
         $response->assertStatus(302);
         $response->assertRedirect(route('talk.index'));
 
-        $response = $this->actingAs($user1)->put(route('talk.store.user', ['user' => $user2->username]), [
+        $response = $this->actingAs($user1)->put(route('talk.store.user', ['usernames' => $user2->username]), [
             'message' => $this->faker->text(),
         ]);
 
@@ -365,5 +388,61 @@ class ConversationTest extends TestCase
         $conversation = Conversation::factory()->byPeergroup($pg)->create();
 
         $this->assertEquals($pg->title, $conversation->getTitle());
-    }    
+    }
+
+    public function test_select_users_for_conversation()
+    {
+        $user1 = User::factory()->create();
+
+        $response = $this->actingAs($user1)->get(route('talk.select'));
+        $response->assertStatus(200);
+    }
+
+    public function test_select_users_for_conversation_with_errors()
+    {
+        $user1 = User::factory()->create();
+        
+        $errors = new ViewErrorBag();
+        $errors->add('default', new MessageBag());
+
+        session([
+            '_old_input._token' => 'something',
+            '_old_input.search_users' => ['userA', 'userB'],
+            'errors' => $errors,
+        ]);
+
+        $response = $this->actingAs($user1)->get(route('talk.select'));
+
+        $response->assertStatus(200);
+        $response->assertSee('userA');
+        $response->assertSee('userB');
+    }
+
+    public function test_select_users_for_conversation_and_redirect()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+        
+        $response = $this->actingAs($user1)->post(route('talk.select'), [
+            'search_users' => [
+                'userA',
+                'userB',
+            ]
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors();
+
+        $response = $this->actingAs($user1)->post(route('talk.select'), [
+            'search_users' => [
+                $user2->username,
+                $user3->username,
+            ]
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect(route('talk.create.user', ['usernames' => $user2->username . ',' . $user3->username]));
+    }
 }

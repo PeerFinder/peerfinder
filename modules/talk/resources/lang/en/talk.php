@@ -26,4 +26,9 @@ return [
     'button_edit_reply' => 'Edit',
     'button_update_reply' => 'Save',
     'button_cancel' => 'Cancel',
+    'select_users' => 'Select users for conversation',
+    'field_users' => 'Users',
+    'enter_name' => 'Enter name...',
+    'button_next' => 'Next',
+    'conversations_new' => 'New',
 ];
