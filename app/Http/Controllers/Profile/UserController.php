@@ -46,7 +46,12 @@ class UserController extends Controller
         ];
 
         if ($request->has('name')) {
-            $users = User::where('email_verified_at', '<>', null)->where('name', 'LIKE', '%' . $request->name .'%')->select('username', 'name')->get();
+            $users = User::where('email_verified_at', '<>', null)
+                            ->where('name', 'LIKE', '%' . $request->name .'%')
+                            ->select('username', 'name')
+                            ->limit(config('user.search.limit'))
+                            ->get();
+            
             $jsonArray['users'] = $users->toArray();
         }
 

@@ -8,4 +8,7 @@ return [
         'min_upload_size' => env('AVATAR_MIN_UPLOAD_SIZE', 300),
         'max_upload_file' => env('AVATAR_MAX_UPLOAD_FILE_SIZE', 1024*5),
     ],
+    'search' => [
+        'limit' => env('USER_SEARCH_LIMIT', 15),
+    ]
 ];
