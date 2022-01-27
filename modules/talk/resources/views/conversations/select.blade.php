@@ -9,7 +9,7 @@
         <x-ui.forms.form :action="route('talk.selectAndRedirect')" autocomplete="off">
 
             <dropdown-input url="{{ route('profile.user.search') }}?name=$1" 
-                        input-name="users" :max-selected="0" 
+                        input-name="search_users" :max-selected="0" 
                         items-field="users" items-id="username" 
                         items-value="name" :lookup-delay="500"
                         placeholder="{{ __('talk::talk.enter_name') }}" :items="{{ $users }}"
