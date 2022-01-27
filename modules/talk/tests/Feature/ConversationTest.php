@@ -200,7 +200,7 @@ class ConversationTest extends TestCase
         $conversation->addUser($user);
 
         $response = $this->actingAs($user)->put(route('talk.update', ['conversation' => $conversation->identifier]), [
-            'users' => [
+            'search_users' => [
                 $users[0]->username,
                 $users[1]->username,
                 $users[2]->username,
@@ -407,7 +407,7 @@ class ConversationTest extends TestCase
 
         session([
             '_old_input._token' => 'something',
-            '_old_input.users' => ['userA', 'userB'],
+            '_old_input.search_users' => ['userA', 'userB'],
             'errors' => $errors,
         ]);
 
@@ -425,7 +425,7 @@ class ConversationTest extends TestCase
         $user3 = User::factory()->create();
         
         $response = $this->actingAs($user1)->post(route('talk.select'), [
-            'users' => [
+            'search_users' => [
                 'userA',
                 'userB',
             ]
@@ -435,7 +435,7 @@ class ConversationTest extends TestCase
         $response->assertSessionHasErrors();
 
         $response = $this->actingAs($user1)->post(route('talk.select'), [
-            'users' => [
+            'search_users' => [
                 $user2->username,
                 $user3->username,
             ]

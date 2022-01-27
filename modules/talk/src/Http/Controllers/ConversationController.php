@@ -25,14 +25,14 @@ class ConversationController extends Controller
         $conversation = new Conversation();
         $users_and_errors = [];
 
-        if ($request->old('_token') && $request->old('users')) {
-            $users = $request->old('users');
+        if ($request->old('_token') && $request->old('search_users')) {
+            $users = $request->old('search_users');
             $errors = session()->get('errors')->getBag('default');
             
             for ($i=0; $i < count($users); $i++) { 
                 $username = $users[$i];
                 $name = User::whereUsername($username)->pluck('name')->first() ?: $username;
-                $error = $errors->get('users.' . $i);
+                $error = $errors->get('search_users.' . $i);
 
                 $users_and_errors[] = [
                     'id' => $username,
@@ -53,11 +53,11 @@ class ConversationController extends Controller
         $input = $request->all();
 
         Validator::make($input, [
-            'users' => 'required',
-            'users.*' => 'exists:users,username'
+            'search_users' => 'required',
+            'search_users.*' => 'exists:users,username'
         ])->validate();
 
-        return redirect(route('talk.create.user', ['usernames' => implode(',', $input['users'])]));
+        return redirect(route('talk.create.user', ['usernames' => implode(',', $input['search_users'])]));
     }
 
     private function checkAndGetUsers($usernamesString)
@@ -151,8 +151,8 @@ class ConversationController extends Controller
 
         $conversation->update($input);
 
-        if(key_exists('users', $input)) {
-            $users = User::whereIn('username', $input['users'])->get()->all();
+        if(key_exists('search_users', $input)) {
+            $users = User::whereIn('username', $input['search_users'])->get()->all();
             $conversation->syncUsers($users);
         }
 
