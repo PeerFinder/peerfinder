@@ -12,6 +12,8 @@ use Matcher\Models\Peergroup;
 use Talk\Facades\Talk;
 use Talk\Models\Participant;
 use Tests\TestCase;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 /**
  * @group Talk
@@ -394,5 +396,53 @@ class ConversationTest extends TestCase
 
         $response = $this->actingAs($user1)->get(route('talk.select'));
         $response->assertStatus(200);
+    }
+
+    public function test_select_users_for_conversation_with_errors()
+    {
+        $user1 = User::factory()->create();
+        
+        $errors = new ViewErrorBag();
+        $errors->add('default', new MessageBag());
+
+        session([
+            '_old_input._token' => 'something',
+            '_old_input.users' => ['userA', 'userB'],
+            'errors' => $errors,
+        ]);
+
+        $response = $this->actingAs($user1)->get(route('talk.select'));
+
+        $response->assertStatus(200);
+        $response->assertSee('userA');
+        $response->assertSee('userB');
+    }
+
+    public function test_select_users_for_conversation_and_redirect()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+        
+        $response = $this->actingAs($user1)->post(route('talk.select'), [
+            'users' => [
+                'userA',
+                'userB',
+            ]
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors();
+
+        $response = $this->actingAs($user1)->post(route('talk.select'), [
+            'users' => [
+                $user2->username,
+                $user3->username,
+            ]
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect(route('talk.create.user', ['usernames' => $user2->username . ',' . $user3->username]));
     }
 }
