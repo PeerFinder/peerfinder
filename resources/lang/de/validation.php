@@ -170,6 +170,7 @@ return [
         'password_confirmation' => 'Passwort Bestätigung',
         'phone'                 => 'Telefonnummer',
         'reply_message'         => 'Antwort',
+        'search_users'          => 'Nutzer:innen',
         'second'                => 'Sekunde',
         'sex'                   => 'Geschlecht',
         'size'                  => 'Größe',
