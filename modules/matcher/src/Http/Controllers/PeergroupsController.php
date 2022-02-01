@@ -182,4 +182,25 @@ class PeergroupsController extends Controller
             return redirect(route('dashboard.index'))->with('success', __('matcher::peergroup.owner_changed_successfully'));
         }
     }
+
+    public function searchTags(Request $request)
+    {
+        $jsonArray = [
+            'tags' => [],
+        ];
+
+        if ($request->has('tag')) {
+            /*$users = Tag
+                            ->where('name', 'LIKE', '%' . $request->name .'%')
+                            ->select('username', 'name')
+                            ->limit(config('user.search.limit'))
+                            ->get();
+            
+            $jsonArray['users'] = $users->toArray();*/
+
+            
+        }
+
+        return response()->json($jsonArray);
+    }
 }
