@@ -33,8 +33,8 @@
 
         <div class="border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white z-20" v-if="canShowDropDown()">
             <div v-for="item in unselectedItems" :key="item.id">
-                <a @click.prevent="selectItem(item)" href="#" 
-                    :class="'block p-1 pl-3 ' + (highlightedItem && (highlightedItem.id == item.id) ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
+                <a @click.prevent="selectItem(item)" href="#" tabindex="0"
+                    :class="'focus:outline-none block p-1 pl-3 ' + (highlightedItem && (highlightedItem.id == item.id) ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
             </div>
         </div>
     </div>
