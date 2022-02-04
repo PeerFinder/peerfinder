@@ -45,7 +45,7 @@ class UserController extends Controller
             'users' => [],
         ];
 
-        if ($request->has('name')) {
+        if ($request->has('name') && strlen($request->name) > 2) {
             $users = User::where('email_verified_at', '<>', null)
                             ->where('name', 'LIKE', '%' . $request->name .'%')
                             ->select('username', 'name')

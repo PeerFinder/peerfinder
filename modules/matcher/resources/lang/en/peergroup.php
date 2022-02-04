@@ -148,6 +148,7 @@ return [
     'filter_groups' => 'Filter groups',
     'filter_tags' => 'Tags',
     'field_tags' => 'Tags',
+    'enter_tag' => 'Enter Tag',
     'reset_all_filters' => 'Reset all filters',
 
     'role_member' => 'Member',

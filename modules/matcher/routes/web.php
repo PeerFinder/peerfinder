@@ -14,7 +14,7 @@ Route::get('/create', [PeergroupsController::class, 'create'])->name('create');
 Route::put('/create', [PeergroupsController::class, 'store'])->name('store');
 
 Route::get('/group-types', [GroupTypesController::class, 'index'])->name('group_types');
-Route::get('/tags/search', [PeergroupsController::class, 'searchTags'])->withoutMiddleware(['auth', 'verified'])->name('searchTags');
+Route::get('/tags/search', [PeergroupsController::class, 'searchTags'])->withoutMiddleware(['auth', 'verified'])->name('tags.search');
 
 Route::get('/{pg:groupname}', [PeergroupsController::class, 'show'])->withoutMiddleware(['auth', 'verified'])->name('show');
 Route::get('/{groupname}/preview', [PeergroupsController::class, 'preview'])->withoutMiddleware(['auth', 'verified'])->name('preview');

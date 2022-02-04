@@ -76,6 +76,10 @@ export default {
         label: String,
         // Only values from autosuggestion allowed
         strict: Boolean,
+        minSearchLength: {
+            type: Number,
+            default: 1,
+        }
     },
     setup(props) {
         const items = ref([]);
@@ -214,7 +218,7 @@ export default {
 
             lastValue = val.trim();
 
-            if (lastValue.length > 1) {
+            if (lastValue.length > props.minSearchLength) {
                 lookupTimer = setTimeout(lookup, props.lookupDelay);
             } else {
                 resetDropDown();

@@ -11,6 +11,7 @@ use Matcher\Facades\Matcher;
 use Matcher\Models\GroupType;
 use Matcher\Models\Membership;
 use Matcher\Models\Peergroup;
+use Spatie\Tags\Tag;
 
 class PeergroupsController extends Controller
 {
@@ -190,15 +191,13 @@ class PeergroupsController extends Controller
         ];
 
         if ($request->has('tag')) {
-            /*$users = Tag
-                            ->where('name', 'LIKE', '%' . $request->name .'%')
-                            ->select('username', 'name')
-                            ->limit(config('user.search.limit'))
-                            ->get();
+            $tags = Tag::containing($request->tag, 'en')
+                        ->limit(config('matcher.tags.search.limit'))
+                        ->get();
             
-            $jsonArray['users'] = $users->toArray();*/
+            $tags = $tags->map(fn($tag) => ['name' => $tag->name, 'slug' => $tag->slug]);
 
-            
+            $jsonArray['tags'] = $tags->toArray();
         }
 
         return response()->json($jsonArray);

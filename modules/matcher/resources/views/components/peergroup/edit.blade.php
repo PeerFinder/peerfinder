@@ -48,7 +48,17 @@
                 <x-ui.forms.multi-checkbox :selection="\Matcher\Models\Language::all()" key="code" :default="$pg->languages" name="languages" required="true">{{ __('matcher::peergroup.field_languages') }}</x-ui.forms.multi-checkbox>
             </div>
             <div>
-                <x-ui.forms.tags-input name="tags" :values="$pg->tags->pluck('name')">{{ __('matcher::peergroup.field_tags') }}</x-ui.forms.tags-input>
+                {{--<x-ui.forms.tags-input name="tags" :values="$pg->tags->pluck('name')">{{ __('matcher::peergroup.field_tags') }}</x-ui.forms.tags-input>--}}
+
+                <dropdown-input url="{{ route('matcher.tags.search') }}?tag=$1" 
+                    input-name="search_tags" :max-selected="0" 
+                    items-field="tags" items-id="slug" 
+                    :min-search-length="0"
+                    items-value="name" :lookup-delay="500"
+                    placeholder="{{ __('matcher::peergroup.enter_tag') }}" :items="{{ $pg->tags->map(fn($tag) => ['value' => $tag->name, 'id' => $tag->slug]) }}"
+                    label="{{ __('matcher::peergroup.field_tags') }}" :strict="false">
+
+                </dropdown-input>
             </div>
         </div>
 
