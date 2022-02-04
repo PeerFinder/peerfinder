@@ -19956,6 +19956,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
 
+    function processBlur(e) {
+      if (!props.strict) {
+        if (!e.relatedTarget || e.relatedTarget.tagName != 'A') {
+          processEnter();
+        }
+      }
+    }
+
     function cleanInput(value) {
       value = value.replace(/[\&\/\\\#\,\+\(\)\$\~\%\.\'\"\:\*\?\!\<\>\{\}]/g, "");
       value = value.replace(/\s+/g, "-");
@@ -20024,7 +20032,8 @@ __webpack_require__.r(__webpack_exports__);
       canShowDropDown: canShowDropDown,
       processEnter: processEnter,
       processUp: processUp,
-      processDown: processDown
+      processDown: processDown,
+      processBlur: processBlur
     };
   }
 });
@@ -20479,7 +20488,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   ), $setup.hasErrors ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", _hoisted_2, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 10
   /* CLASS, PROPS */
   , _hoisted_1)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[7] || (_cache[7] = function () {
+    onClick: _cache[8] || (_cache[8] = function () {
       return $setup.setFocus && $setup.setFocus.apply($setup, arguments);
     }),
     "class": "w-full border px-2 py-1 rounded-md shadow-sm bg-gray-50 flex flex-wrap items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-pf-midblue focus-within:border-transparent focus-within:bg-white"
@@ -20512,21 +20521,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0,
     type: "text",
     id: $setup.inputName,
+    autocomplete: "off",
     onKeydown: [_cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.closeDropDown && $setup.closeDropDown.apply($setup, arguments);
     }, ["prevent"]), ["esc"])), _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.processEnter && $setup.processEnter.apply($setup, arguments);
     }, ["prevent"]), ["enter"])), _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.processDown && $setup.processDown.apply($setup, arguments);
-    }, ["prevent"]), ["down"])), _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    }, ["prevent"]), ["down"])), _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.processUp && $setup.processUp.apply($setup, arguments);
-    }, ["prevent"]), ["up"])), _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    }, ["prevent"]), ["up"])), _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.processEnter && $setup.processEnter.apply($setup, arguments);
-    }, ["prevent"]), [","])), _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    }, ["prevent"]), [","])), _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $setup.processEnter && $setup.processEnter.apply($setup, arguments);
     }, ["prevent"]), ["space"]))],
+    onBlur: _cache[3] || (_cache[3] = function () {
+      return $setup.processBlur && $setup.processBlur.apply($setup, arguments);
+    }),
     ref: "inputField",
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $setup.inputText = $event;
     }),
     placeholder: $setup.placeholder,

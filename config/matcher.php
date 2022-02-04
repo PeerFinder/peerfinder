@@ -13,7 +13,7 @@ return [
     'peergroups_per_page' => env('MATCHER_PEERGROUPS_PER_PAGE', 20),
     'tags' => [
         'search' => [
-            'limit' => env('TAGS_SEARCH_LIMIT', 10),
+            'limit' => env('TAGS_SEARCH_LIMIT', 5),
         ]
     ]
 ];

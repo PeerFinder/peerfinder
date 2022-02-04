@@ -7,13 +7,13 @@
     </div>
     @endif
 
-    <x-ui.card class="sm:mt-10 mb-5 sm:mb-10 min-h-screen">
+    <x-ui.card class="sm:mt-10 mb-5 sm:mb-10">
         <div class="grid grid-cols-10">
             <div @class([
-                'hidden sm:block col-span-3 border-r bg-gray-50 min-h-screen' => $conversation,
-                'col-span-10 sm:col-span-3 border-r bg-gray-50 min-h-screen' => !$conversation,
+                'hidden sm:block col-span-3 border-r bg-gray-50 rounded-l-md' => $conversation,
+                'col-span-10 sm:col-span-3 border-r bg-gray-50 rounded-l-md' => !$conversation,
             ])>
-                <div class="bg-white border-b p-2 flex justify-between items-center flex-wrap">
+                <div class="bg-white border-b p-2 flex justify-between items-center flex-wrap rounded-tl-md">
                     <div class="p-2">
                     {{ __('talk::talk.conversations_title') }}
                     </div>

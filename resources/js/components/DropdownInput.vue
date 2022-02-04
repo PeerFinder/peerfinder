@@ -18,10 +18,11 @@
                 <input :name="inputName + '[]'" :value="item.id" type="hidden" />
             </div>
 
-            <input type="text" :id="inputName"
+            <input type="text" :id="inputName" autocomplete="off"
                     @keydown.esc.prevent="closeDropDown"
                     @keydown.enter.prevent="processEnter"
                     @keydown.down.prevent="processDown"
+                    @blur="processBlur"
                     @keydown.up.prevent="processUp"
                     @keydown.prevent.,="processEnter"
                     @keydown.prevent.space="processEnter"
@@ -204,6 +205,14 @@ export default {
             }
         }
 
+        function processBlur(e) {
+            if (!props.strict) {
+                if (!e.relatedTarget || e.relatedTarget.tagName != 'A') {
+                    processEnter();
+                }
+            }
+        }
+
         function cleanInput(value) {
             value = value.replace(/[\&\/\\\#\,\+\(\)\$\~\%\.\'\"\:\*\?\!\<\>\{\}]/g, "");
             value = value.replace(/\s+/g, "-");
@@ -273,6 +282,7 @@ export default {
             processEnter,
             processUp,
             processDown,
+            processBlur,
         }
     }
 }

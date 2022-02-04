@@ -35,7 +35,7 @@ class TagsTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
-            'tags' => [
+            'search_tags' => [
                 'Tag 1',
                 'tag2',
                 'tag 3'
@@ -86,7 +86,7 @@ class TagsTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
-            'tags' => [
+            'search_tags' => [
                 'Tag 1',
                 'tag2',
                 'tag 3'
@@ -133,6 +133,11 @@ class TagsTest extends TestCase
         $pg = Peergroup::whereTitle($data['title'])->first();
 
         $this->assertEquals(0, $pg->tags->count());
+    }
+
+    public function test_tags_autocompletion_returns_json()
+    {
+        
     }
 
     public function test_tags_are_not_case_sensitive()

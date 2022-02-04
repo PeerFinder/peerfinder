@@ -85,8 +85,8 @@ class Matcher
         $languages = Language::whereIn('code', array_values($request->languages))->get();
         $pg->languages()->sync($languages);
 
-        if ($request->has('tags')) {
-            $pg->syncTags($request->tags);
+        if ($request->has('search_tags')) {
+            $pg->syncTags($request->search_tags);
         } else {
             $pg->syncTags([]);
         }
