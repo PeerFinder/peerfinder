@@ -10,6 +10,7 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
+use Spatie\Tags\Tag;
 
 /**
  * @group Peergroup
@@ -137,7 +138,20 @@ class TagsTest extends TestCase
 
     public function test_tags_autocompletion_returns_json()
     {
-        
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $pg->syncTags(['aTag', 'bTag', 'cTag']);
+        $pg->save();
+
+        $response = $this->get(route('matcher.tags.search', ['tag' => 'Tag']));
+
+        $response->assertJson(['tags' => [
+            0 => [
+                'slug' => 'atag',
+                'name' => 'aTag',
+            ]
+        ]]);
     }
 
     public function test_tags_are_not_case_sensitive()
