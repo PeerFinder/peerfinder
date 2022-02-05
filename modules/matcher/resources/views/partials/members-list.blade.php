@@ -2,7 +2,7 @@
     edit="{{ route('matcher.membership.index', ['pg' => $pg->groupname]) }}" :can="auth()->check() ? auth()->user()->can('manage-members', $pg) : false">
     
     @if ($pg->getMembers()->count() > 0)
-    <div class="p-2 space-y-1 m-2">
+    <div class="p-4 space-y-1">
         @foreach ($pg->memberships as $membership)
             @if ($membership->user)
                 @if (isset($anonymous) && $anonymous)

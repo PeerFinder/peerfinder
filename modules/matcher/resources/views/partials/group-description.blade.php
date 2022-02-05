@@ -1,6 +1,5 @@
 <x-ui.card title="{{ __('matcher::peergroup.group_description') }}" edit="{{ route('matcher.edit', ['pg' => $pg->groupname]) }}" :can="auth()->check() ? auth()->user()->can('edit', $pg) : false">
     <div>
-
         <div class="p-4 flex items-stretch gap-4 text-center flex-col md:flex-row">
             <div class="border rounded-md p-2 flex-1 flex flex-col justify-evenly shadow-sm">
                 <h3 class="font-semibold mb-2 text-gray-600"><x-ui.icon name="calendar" viewBox="0 3 20 20" /> {{ __('matcher::peergroup.detail_begin') }}</h3>
@@ -41,7 +40,7 @@
 
         <h3 class="font-bold border-t pt-8 px-8 mb-4 text-gray-600">Beschreibung</h3>
 
-        <div class="px-8 mb-8 font-serif font-light prose prose-blue">
+        <div class="px-8 pb-8 font-serif font-light prose prose-blue">
             {!! Matcher::renderMarkdown($pg->description) !!}
         </div>
     </div>

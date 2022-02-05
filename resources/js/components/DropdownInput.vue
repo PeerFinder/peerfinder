@@ -18,10 +18,11 @@
                 <input :name="inputName + '[]'" :value="item.id" type="hidden" />
             </div>
 
-            <input type="text" :id="inputName"
+            <input type="text" :id="inputName" autocomplete="off"
                     @keydown.esc.prevent="closeDropDown"
                     @keydown.enter.prevent="processEnter"
                     @keydown.down.prevent="processDown"
+                    @blur="processBlur"
                     @keydown.up.prevent="processUp"
                     @keydown.prevent.,="processEnter"
                     @keydown.prevent.space="processEnter"
@@ -32,8 +33,8 @@
 
         <div class="border border-gray-300 absolute mt-1.5 w-full rounded-md shadow-md divide-y divide-solid overflow-hidden bg-white z-20" v-if="canShowDropDown()">
             <div v-for="item in unselectedItems" :key="item.id">
-                <a @click.prevent="selectItem(item)" href="#" 
-                    :class="'block p-1 pl-3 ' + (highlightedItem && (highlightedItem.id == item.id) ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
+                <a @click.prevent="selectItem(item)" href="#" tabindex="0"
+                    :class="'focus:outline-none block p-1 pl-3 ' + (highlightedItem && (highlightedItem.id == item.id) ? 'bg-gray-200' : 'hover:bg-gray-100')">{{ item.value }}</a>
             </div>
         </div>
     </div>
@@ -76,6 +77,10 @@ export default {
         label: String,
         // Only values from autosuggestion allowed
         strict: Boolean,
+        minSearchLength: {
+            type: Number,
+            default: 1,
+        }
     },
     setup(props) {
         const items = ref([]);
@@ -200,6 +205,14 @@ export default {
             }
         }
 
+        function processBlur(e) {
+            if (!props.strict) {
+                if (!e.relatedTarget || e.relatedTarget.tagName != 'A') {
+                    processEnter();
+                }
+            }
+        }
+
         function cleanInput(value) {
             value = value.replace(/[\&\/\\\#\,\+\(\)\$\~\%\.\'\"\:\*\?\!\<\>\{\}]/g, "");
             value = value.replace(/\s+/g, "-");
@@ -214,7 +227,7 @@ export default {
 
             lastValue = val.trim();
 
-            if (lastValue.length > 1) {
+            if (lastValue.length > props.minSearchLength) {
                 lookupTimer = setTimeout(lookup, props.lookupDelay);
             } else {
                 resetDropDown();
@@ -269,6 +282,7 @@ export default {
             processEnter,
             processUp,
             processDown,
+            processBlur,
         }
     }
 }

@@ -150,7 +150,7 @@ return [
     'filter_groups' => 'Gruppen filtern',
     'filter_tags' => 'Tags',
     'field_tags' => 'Tags',
-
+    'enter_tag' => 'Tag eingeben',
     'reset_all_filters' => 'Alle Filter zurücksetzen',
 
     'role_member' => 'Mitglied',

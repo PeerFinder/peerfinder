@@ -10,6 +10,7 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
+use Spatie\Tags\Tag;
 
 /**
  * @group Peergroup
@@ -35,7 +36,7 @@ class TagsTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
-            'tags' => [
+            'search_tags' => [
                 'Tag 1',
                 'tag2',
                 'tag 3'
@@ -86,7 +87,7 @@ class TagsTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
-            'tags' => [
+            'search_tags' => [
                 'Tag 1',
                 'tag2',
                 'tag 3'
@@ -133,6 +134,24 @@ class TagsTest extends TestCase
         $pg = Peergroup::whereTitle($data['title'])->first();
 
         $this->assertEquals(0, $pg->tags->count());
+    }
+
+    public function test_tags_autocompletion_returns_json()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $pg->syncTags(['aTag', 'bTag', 'cTag']);
+        $pg->save();
+
+        $response = $this->get(route('matcher.tags.search', ['tag' => 'Tag']));
+
+        $response->assertJson(['tags' => [
+            0 => [
+                'slug' => 'atag',
+                'name' => 'aTag',
+            ]
+        ]]);
     }
 
     public function test_tags_are_not_case_sensitive()
