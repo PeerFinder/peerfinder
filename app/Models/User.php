@@ -13,6 +13,7 @@ use Matcher\Facades\Matcher;
 use Matcher\Traits\UserPeergroups;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Tags\HasTags;
 use Talk\Facades\Talk;
 use Talk\Traits\UserConversations;
 
@@ -22,7 +23,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         Notifiable,
         UserConversations,
         UserPeergroups,
-        LogsActivity;
+        LogsActivity,
+        HasTags;
 
     /**
      * The attributes that are mass assignable.

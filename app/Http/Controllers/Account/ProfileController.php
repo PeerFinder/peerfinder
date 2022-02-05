@@ -39,6 +39,12 @@ class ProfileController extends Controller
 
         $request->user()->update($input);
 
+        if ($request->has('search_tags')) {
+            $request->user()->syncTags($request->search_tags);
+        } else {
+            $request->user()->syncTags([]);
+        }
+
         return redirect()->back()->with('success', __('account/profile.profile_changed_successfully'));
     }
 }

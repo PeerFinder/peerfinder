@@ -18,6 +18,14 @@
                         <p class="text-gray-400 mb-4">{{ $user->slogan }}</p>
                         @endif
 
+                        @if ($user->tags->count())
+                        <div class="flex flex-wrap">
+                            @foreach ($user->tags as $tag)
+                                <div class="bg-gray-50 text-gray-500 group-hover:bg-gray-100 mt-1 mr-1 px-2 py-0.5 rounded-md">{{ $tag->name }}</div>
+                            @endforeach
+                        </div>
+                        @endif
+
                         <x-ui.user.awards :user="$user" style="full" />
 
                         @if ($user->company)
