@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Line;
@@ -123,6 +124,8 @@ class User extends Resource
                     return null;
                 }
             }),
+
+            HasMany::make('Tags'),
 
 /*             Password::make('Password')
                 ->onlyOnForms()

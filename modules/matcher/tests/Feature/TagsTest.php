@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Language;
 use Spatie\Tags\Tag;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 /**
  * @group Peergroup
@@ -136,6 +138,28 @@ class TagsTest extends TestCase
         $this->assertEquals(0, $pg->tags->count());
     }
 
+    public function test_tags_for_form()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $errors = new ViewErrorBag();
+
+        $errors->add('default', new MessageBag());
+
+        session([
+            '_old_input._token' => 'something',
+            '_old_input.search_tags' => ['myTagA', 'myTagB'],
+            'errors' => $errors,
+        ]);
+
+        $response = $this->actingAs($user)->get(route('matcher.edit', ['pg' => $pg->groupname]));
+
+        $response->assertStatus(200);
+        $response->assertSee('myTagA');
+        $response->assertSee('myTagB');
+    }
+
     public function test_tags_autocompletion_returns_json()
     {
         $user = User::factory()->create();
@@ -148,7 +172,7 @@ class TagsTest extends TestCase
 
         $response->assertJson(['tags' => [
             0 => [
-                'slug' => 'atag',
+                'slug' => 'aTag',
                 'name' => 'aTag',
             ]
         ]]);

@@ -186,4 +186,33 @@ class ProfileTest extends TestCase
     {
         $this->test_user_can_change_social_url('xing');
     }
+
+    public function test_user_can_change_tags()
+    {
+        $user = User::factory()->create();
+        $name = $user->name;
+
+        $about = $this->faker->text();
+
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+            'search_tags' => ['userTagA', 'userTagB'],
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $user->refresh();
+
+        $this->assertEquals(['userTagA', 'userTagB'], $user->tags->map(fn($t) => $t->name)->toArray());
+
+        $response = $this->actingAs($user)->put(route('account.profile.update'), [
+            'name' => $name,
+        ]);
+
+        $response->assertSessionHasNoErrors();
+
+        $user->refresh();
+
+        $this->assertEquals([], $user->tags->map(fn($t) => $t->name)->toArray());
+    }    
 }

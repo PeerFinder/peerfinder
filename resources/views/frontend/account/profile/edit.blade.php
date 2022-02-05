@@ -11,6 +11,17 @@
         </div>
 
         <div>
+            <dropdown-input url="{{ route('matcher.tags.search') }}?tag=$1" 
+                input-name="search_tags" :max-selected="0" 
+                items-field="tags" items-id="slug" 
+                :min-search-length="0"
+                items-value="name" :lookup-delay="500"
+                placeholder="{{ __('matcher::peergroup.enter_tag') }}" :items="{{ Matcher::tagsForForm('search_tags', $user->tags) }}"
+                label="{{ __('matcher::peergroup.field_tags') }}" :strict="false">
+            </dropdown-input>
+        </div>
+
+        <div>
             <x-ui.forms.textarea id="about" value="{{ old('about', $user->about) }}" name="about" rows="5">
                 {{ __('account/profile.field_about') }}</x-ui.forms.textarea>
         </div>

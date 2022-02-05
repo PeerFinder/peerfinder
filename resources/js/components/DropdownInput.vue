@@ -7,7 +7,7 @@
     </label>
 
     <div class="relative" v-click-outside="closeDropDown">
-        <div @click="setFocus" class="w-full border px-2 py-1 rounded-md shadow-sm bg-gray-50 flex flex-wrap items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-pf-midblue focus-within:border-transparent focus-within:bg-white">
+        <div @click="setFocus" class="w-full border border-gray-300 px-2 py-1 rounded-md shadow-sm bg-gray-50 flex flex-wrap items-center focus-within:outline-none focus-within:ring-2 focus-within:ring-pf-midblue focus-within:border-transparent focus-within:bg-white">
             <div v-for="item in selectedItems" :key="item.id" :class="'px-2 py-1 rounded-md mr-2 my-1 flex items-center border ' + (item.error ? 'bg-red-200 border-red-500' : 'border-gray-300 bg-gray-200')">
                 <a class="inline-block pr-1 text-gray-500 hover:text-red-600" href="#" @click.prevent="removeSelectedItem(item)">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
