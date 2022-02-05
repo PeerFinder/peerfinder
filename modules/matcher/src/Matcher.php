@@ -643,4 +643,14 @@ class Matcher
             'Content-Disposition' => sprintf('attachment; filename="%s.ics"', $appointment->identifier),
         ));
     }
+
+    public function tagsForForm($fieldName, $savedTags)
+    {
+        if (old('_token')) {
+            $oldTags = new Collection(old($fieldName, []));
+            return $oldTags->map(fn($tag) => ['value' => $tag, 'id' => $tag]);
+        } else {
+            return $savedTags->map(fn($tag) => ['value' => $tag->name, 'id' => $tag->name]);
+        }
+    }
 }

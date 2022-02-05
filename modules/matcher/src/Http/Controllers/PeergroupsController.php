@@ -195,7 +195,7 @@ class PeergroupsController extends Controller
                         ->limit(config('matcher.tags.search.limit'))
                         ->get();
             
-            $tags = $tags->map(fn($tag) => ['name' => $tag->name, 'slug' => $tag->slug]);
+            $tags = $tags->map(fn($tag) => ['name' => $tag->name, 'slug' => $tag->name]);
 
             $jsonArray['tags'] = $tags->toArray();
         }
