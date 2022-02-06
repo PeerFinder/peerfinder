@@ -95,7 +95,7 @@ class PeergroupsController extends Controller
             $pending = null;
         }
 
-        if (Gate::allows('for-members', $pg)) {
+        if ($pg->isMember(auth()->user())) {
             $conversations = $pg->conversations()->get();
         } else {
             $conversations = null;
