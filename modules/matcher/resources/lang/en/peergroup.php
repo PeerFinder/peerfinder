@@ -162,4 +162,6 @@ return [
     'member_removed_successfully' => 'User :name removed from this group successfully!',
     'members_managed_successfully' => 'Member roles changed successfully!',
     'button_manage_members' => 'Manage members',
+
+    'button_admin_dropdown' => 'Manage group',
 ];

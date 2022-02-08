@@ -15,8 +15,8 @@ return [
     'new_peergroup' => 'Neue Gruppe',
     'button_edit_group' => 'Gruppe bearbeiten',
     'button_delete_group' => 'Gruppe löschen',
-    'button_complete_group' => 'Gruppe schließen',
-    'button_uncomplete_group' => 'Gruppe öffnen',
+    'button_complete_group' => 'Als geschlossen markieren',
+    'button_uncomplete_group' => 'Als nicht geschlossen markieren',
     'button_transfer_ownership' => 'Gruppe übertragen',
     'group_administration' => 'Administration der Gruppe',
     'group_administration_notice' => 'Nur Besitzer:in und Mitbesitzer:innen können dieses Menü sehen.',
@@ -164,4 +164,6 @@ return [
     'member_removed_successfully' => 'Mitglied :name erfolgreich aus der Gruppe entfernt!',
     'members_managed_successfully' => 'Mitgliederrollen erfolgreich geändert!',
     'button_manage_members' => 'Mitglieder verwalten',
+
+    'button_admin_dropdown' => 'Gruppe verwalten',
 ];

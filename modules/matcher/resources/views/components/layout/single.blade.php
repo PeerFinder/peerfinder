@@ -20,7 +20,7 @@
             </div>
 
             {{-- Title and Founder --}}
-            <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 md:mt-0 px-4 sm:px-0">
+            <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-5 mt-5 md:mt-0 px-4 sm:px-0">
                 <a href="{{ $pg->getUrl() }}">
                     <x-ui.h1>
                         {{ $pg->title }}
@@ -29,11 +29,13 @@
                     @if(!$pg->open)<x-matcher::ui.badge icon="lock-closed" class="bg-yellow-400 mt-2">{{ __('matcher::peergroup.badge_closed') }}</x-matcher::ui.badge>@endif
                 </a>
 
+                <x-matcher::peergroup.tags-list :pg="$pg" :asLinks="true" />
+
                 <div class="mt-7 space-x-5">
                     <x-matcher::ui.user :user="$pg->user" role="{{ __('matcher::peergroup.role_founder') }}" class="inline-flex" />
                 </div>
 
-                <x-matcher::peergroup.tags-list :pg="$pg" :asLinks="true" />
+                @include('matcher::partials.edit-menu')
             </div>
         </div>
         @else
@@ -64,11 +66,12 @@
 
         @if ($pg)
         <div class="sm:col-span-4 lg:col-span-3 space-y-5 sm:space-y-7 mt-5 sm:mt-0">
+            
+
             @include('matcher::partials.next-appointment')
             @include('matcher::partials.meeting-link')
             @include('matcher::partials.bookmarks-list')
             @include('matcher::partials.members-list')
-            @include('matcher::partials.edit-menu')
         </div>
         @endif
     </div>
