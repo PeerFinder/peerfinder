@@ -16,6 +16,8 @@
                         <input name="status" value="0" type="hidden" />
                         @if ($pg->canUncomplete())
                         <x-ui.forms.dropdown-item>{{ __('matcher::peergroup.button_uncomplete_group') }}</x-ui.forms.dropdown-item>
+                        @else
+                        <x-ui.forms.dropdown-item disabled="true">{{ __('matcher::peergroup.button_uncomplete_group') }}</x-ui.forms.dropdown-item>
                         @endif
                         @endif
                     </x-ui.forms.form>
