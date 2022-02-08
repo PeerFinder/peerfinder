@@ -9,6 +9,7 @@ import EditableList from './components/EditableList.vue';
 import Conversation from './components/Conversation.vue';
 import CollapsedContent from './components/CollapsedContent.vue';
 import DropdownInput from './components/DropdownInput.vue';
+import DropdownButton from './components/DropdownButton.vue';
 import vClickOutside from "click-outside-vue3";
 
 const app = createApp({
@@ -21,6 +22,7 @@ const app = createApp({
         'conversation': Conversation,
         'collapsed-content': CollapsedContent,
         'dropdown-input': DropdownInput,
+        'dropdown-button': DropdownButton,
     }
 });
 
