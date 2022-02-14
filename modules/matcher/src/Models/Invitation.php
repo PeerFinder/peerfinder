@@ -2,6 +2,7 @@
 
 namespace Matcher\Models;
 
+use App\Helpers\Facades\Urler;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Matcher\Facades\Matcher;
@@ -11,6 +12,13 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Invitation extends Model
 {
     use LogsActivity;
+
+    protected $fillable = [
+        'peergroup_id',
+        'sender_user_id',
+        'receiver_user_id',
+        'comment',
+    ];
 
     public static function rules()
     {
@@ -24,6 +32,15 @@ class Invitation extends Model
             'update' => $updateRules,
             'create' => $updateRules,
         ];
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($invitation) {
+            Urler::createUniqueSlug($invitation, 'identifier');
+        });
     }
 
     public function getActivitylogOptions(): LogOptions

@@ -46,9 +46,9 @@ class GroupInvitationsTest extends TestCase
         
         $pg = Peergroup::factory()->byUser($user1)->create();
 
-        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname], [
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [],
-        ]));
+        ]);
 
         $response->assertStatus(302);
         $response->assertSessionHasErrors();
@@ -68,16 +68,19 @@ class GroupInvitationsTest extends TestCase
         
         $pg = Peergroup::factory()->byUser($user1)->create();
 
-        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname], [
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username,
                 $user3->username,
                 $user4->username,
             ],
             'comment' => $this->faker->text()
-        ]));
+        ]);
 
         $response->assertStatus(302);
-        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->username, 'peergroup_id' => $pg->groupname]);
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user3->id, 'peergroup_id' => $pg->id]);
+        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user4->id, 'peergroup_id' => $pg->id]);
     }
 }

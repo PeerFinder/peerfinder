@@ -659,8 +659,20 @@ class Matcher
     {
         $input = $request->all();
 
+        $sender = auth()->user();
+
         Validator::make($input, Invitation::rules()['create'])->validate();
 
-        
+        $users = User::whereIn('username', $input['search_users'])->get();
+
+        $users->each(function ($user) use ($pg, $sender, $request) {
+            Invitation::firstOrCreate([
+                'peergroup_id' => $pg->id,
+                'sender_user_id' => $sender->id,
+                'receiver_user_id' => $user->id,
+            ], [
+                'comment' => $request->comment,
+            ]);
+        });
     }
 }
