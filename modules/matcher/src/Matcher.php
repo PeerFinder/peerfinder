@@ -30,6 +30,7 @@ use Matcher\Models\GroupType;
 use Matcher\Models\Tag;
 use App\Helpers\Facades\EasyDate;
 use Illuminate\Support\Facades\Response;
+use Matcher\Models\Invitation;
 
 class Matcher
 {
@@ -652,5 +653,14 @@ class Matcher
         } else {
             return $savedTags->map(fn($tag) => ['value' => $tag->name, 'id' => $tag->name]);
         }
+    }
+
+    public function createInvitation(Request $request, Peergroup $pg)
+    {
+        $input = $request->all();
+
+        Validator::make($input, Invitation::rules()['create'])->validate();
+
+        
     }
 }

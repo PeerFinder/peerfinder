@@ -24,6 +24,8 @@ class InvitationsController extends Controller
     {
         Gate::authorize('create', [Invitation::class, $pg]);
 
+        Matcher::createInvitation($request, $pg);
+
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.invitation_created_successfully'));
-    }    
+    }
 }
