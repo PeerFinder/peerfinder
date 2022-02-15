@@ -150,7 +150,6 @@ return [
     'field_tags' => 'Tags',
     'enter_tag' => 'Enter Tag',
     'reset_all_filters' => 'Reset all filters',
-
     'role_member' => 'Member',
     'role_co_owner' => 'Co-Owner of the group',
     'edit_membership_roles_title' => 'Manage members',
@@ -162,6 +161,6 @@ return [
     'member_removed_successfully' => 'User :name removed from this group successfully!',
     'members_managed_successfully' => 'Member roles changed successfully!',
     'button_manage_members' => 'Manage members',
-
     'button_admin_dropdown' => 'Manage group',
+    'invitation_created_successfully' => 'Invitation sent successfully!',
 ];

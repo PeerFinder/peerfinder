@@ -232,6 +232,8 @@ class Matcher
 
     public function afterMemberAdded(Peergroup $pg, User $user, Membership $membership)
     {
+        $this->deleteInvitations($pg, $user);
+
         MemberJoinedPeergroup::dispatch($pg, $user, $membership);
     }
 
@@ -666,13 +668,23 @@ class Matcher
         $users = User::whereIn('username', $input['search_users'])->get();
 
         $users->each(function ($user) use ($pg, $sender, $request) {
+            // Skip peergroup owner and member, they don't need an invitation
+            if ($pg->isMember($user) || $pg->isOwner($user)) {
+                return;
+            }
+
             Invitation::firstOrCreate([
                 'peergroup_id' => $pg->id,
-                'sender_user_id' => $sender->id,
                 'receiver_user_id' => $user->id,
             ], [
+                'sender_user_id' => $sender->id,
                 'comment' => $request->comment,
             ]);
         });
+    }
+
+    public function deleteInvitations(Peergroup $pg, User $user)
+    {
+        Invitation::wherePeergroupId($pg->id)->whereReceiverUserId($user->id)->delete();
     }
 }

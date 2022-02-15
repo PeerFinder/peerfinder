@@ -135,12 +135,10 @@ return [
     'current_image' => 'Aktuelles Bild',
     'button_edit_image' => 'Bearbeiten',
     'image_upload_notice' => 'Das Bild sollte ein Seitenverhältnis von :r:1 haben. Minimale Abmessungen: :w x :h px.',
-
     'group_type_reference' => 'Mehr Informationen',
     'field_group_type' => 'Gruppentyp',
     'more_about_types' => 'Welche Typen gibt es?',
     'group_types_title' => 'Gruppentypen',
-
     'bool_yes' => 'Ja',
     'bool_no' => 'Nein',
     'reset_filter' => 'Zurücksetzen',
@@ -152,7 +150,6 @@ return [
     'field_tags' => 'Tags',
     'enter_tag' => 'Tag eingeben',
     'reset_all_filters' => 'Alle Filter zurücksetzen',
-
     'role_member' => 'Mitglied',
     'role_co_owner' => 'Mitbesitzer:in der Gruppe',
     'edit_membership_roles_title' => 'Mitglieder verwalten',
@@ -164,6 +161,6 @@ return [
     'member_removed_successfully' => 'Mitglied :name erfolgreich aus der Gruppe entfernt!',
     'members_managed_successfully' => 'Mitgliederrollen erfolgreich geändert!',
     'button_manage_members' => 'Mitglieder verwalten',
-
     'button_admin_dropdown' => 'Gruppe verwalten',
+    'invitation_created_successfully' => 'Einladung erfolgreich versendet!',
 ];
