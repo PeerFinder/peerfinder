@@ -163,4 +163,9 @@ return [
     'button_manage_members' => 'Manage members',
     'button_admin_dropdown' => 'Manage group',
     'invitation_created_successfully' => 'Invitation sent successfully!',
+    'send_group_invitation' => 'Send group invitation',
+    'button_send_invitation' => 'Invite',
+    'invitation_enter_name' => 'Enter name...',
+    'invitation_field_users' => 'Users',
+    'invitation_comment' => 'Comment',
 ];
