@@ -43,6 +43,21 @@ class Invitation extends Model
         });
     }
 
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_user_id', 'id');
+    }
+
+    public function receiver()
+    {
+        return $this->belongsTo(User::class, 'receiver_user_id', 'id');
+    }
+
+    public function peergroup()
+    {
+        return $this->belongsTo(Peergroup::class);
+    }    
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logAll();

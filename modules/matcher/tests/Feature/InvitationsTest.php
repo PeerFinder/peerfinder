@@ -7,6 +7,7 @@ use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Matcher\Facades\Matcher;
+use Matcher\Models\Invitation;
 use Matcher\Models\Language;
 use Matcher\Models\Peergroup;
 use Tests\TestCase;
@@ -43,7 +44,7 @@ class GroupInvitationsTest extends TestCase
     public function test_user_cannot_send_invitation_without_user_ids()
     {
         $user1 = User::factory()->create();
-        
+
         $pg = Peergroup::factory()->byUser($user1)->create();
 
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
@@ -56,7 +57,7 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname], []));
 
         $response->assertStatus(302);
-        $response->assertSessionHasErrors();        
+        $response->assertSessionHasErrors();
     }
 
     public function test_user_can_send_invitation()
@@ -65,9 +66,9 @@ class GroupInvitationsTest extends TestCase
         $user2 = User::factory()->create();
         $user3 = User::factory()->create();
         $user4 = User::factory()->create();
-        
+
         $pg = Peergroup::factory()->byUser($user1)->create();
-        
+
         $comment = $this->faker->text();
 
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
@@ -84,13 +85,18 @@ class GroupInvitationsTest extends TestCase
         $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id, 'comment' => $comment]);
         $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user3->id, 'peergroup_id' => $pg->id, 'comment' => $comment]);
         $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user4->id, 'peergroup_id' => $pg->id, 'comment' => $comment]);
+
+        $inv1 = Invitation::where('peergroup_id', $pg->id)->where('receiver_user_id', $user2->id)->first();
+        $this->assertEquals($user1->id, $inv1->sender()->first()->id);
+        $this->assertEquals($user2->id, $inv1->receiver()->first()->id);
+        $this->assertEquals($pg->id, $inv1->peergroup()->first()->id);
     }
 
     public function test_no_invitation_for_group_members()
     {
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
-        
+
         $pg = Peergroup::factory()->byUser($user1)->create();
 
         Matcher::addMemberToGroup($pg, $user2);
@@ -113,7 +119,7 @@ class GroupInvitationsTest extends TestCase
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
         $user3 = User::factory()->create();
-        
+
         $pg = Peergroup::factory()->byUser($user1)->create();
 
         Matcher::addMemberToGroup($pg, $user3);
@@ -144,7 +150,7 @@ class GroupInvitationsTest extends TestCase
     {
         $user1 = User::factory()->create();
         $user2 = User::factory()->create();
-        
+
         $pg = Peergroup::factory()->byUser($user1)->create();
 
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
@@ -160,5 +166,20 @@ class GroupInvitationsTest extends TestCase
         Matcher::addMemberToGroup($pg, $user2);
 
         $this->assertDatabaseMissing('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+    }
+
+    public function test_invitation_gets_deleted_with_sender()
+    {
+        
+    }
+
+    public function test_invitation_gets_deleted_with_receiver()
+    {
+        
     }    
+
+    public function test_invitation_gets_deleted_with_peergroup()
+    {
+        
+    }
 }
