@@ -163,6 +163,7 @@ return [
     'button_manage_members' => 'Mitglieder verwalten',
     'button_admin_dropdown' => 'Gruppe verwalten',
     'invitation_created_successfully' => 'Einladung erfolgreich versendet!',
+    'invitation_deleted_successfully' => 'Einladung erfolgreich gelöscht!',
     'send_group_invitation' => 'In die Gruppe einladen',
     'button_send_invitation' => 'Einladen',
     'invitation_enter_name' => 'Namen eingeben...',

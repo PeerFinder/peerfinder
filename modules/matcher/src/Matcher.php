@@ -30,6 +30,7 @@ use Matcher\Models\GroupType;
 use Matcher\Models\Tag;
 use App\Helpers\Facades\EasyDate;
 use Illuminate\Support\Facades\Response;
+use Matcher\Events\InvitationSent;
 use Matcher\Models\Invitation;
 
 class Matcher
@@ -62,6 +63,14 @@ class Matcher
         $user->memberships()->each(function ($membership) {
             $membership->delete();
         });
+
+        $user->received_invitations()->each(function ($invitation) {
+            $invitation->delete();
+        });
+
+        $user->sent_invitations()->each(function ($invitation) {
+            $invitation->delete();
+        });
     }
 
     public function storePeergroupData($pg, Request $request, $mode = 'update')
@@ -79,7 +88,7 @@ class Matcher
             $pg->user()->associate($request->user());
             $pg->open = true;
         }
-        
+
         $pg->groupType()->associate($groupType);
         $pg->save();
 
@@ -252,6 +261,11 @@ class Matcher
         MemberLeftPeergroup::dispatch($pg, $user);
     }
 
+    public function afterInvitationCreated(Peergroup $pg, User $receiver, User $sender, Invitation $invitation)
+    {
+        InvitationSent::dispatch($pg, $receiver, $sender, $invitation);
+    }
+
     public function updateBookmarks(Peergroup $pg, Request $request)
     {
         $input = $request->input();
@@ -384,12 +398,12 @@ class Matcher
             $options = ['' => ''];
 
             $sub_types = GroupType::where('group_type_id', null)
-                        ->with('groupTypes')
-                        ->orderBy('title_' . $this->locale)
-                        ->get();
+                ->with('groupTypes')
+                ->orderBy('title_' . $this->locale)
+                ->get();
         }
 
-        $sub_types->each(function ($el) use(&$options, $level) {
+        $sub_types->each(function ($el) use (&$options, $level) {
             $options = array_merge($options, $this->groupTypesSelect($el, $level + 1));
         });
 
@@ -444,7 +458,7 @@ class Matcher
         foreach ($filters as $key => &$filter) {
             $urlParamsCopy = $urlParams;
 
-            usort($filter, function($a, $b) {
+            usort($filter, function ($a, $b) {
                 return strcmp(strtolower($a['title']), strtolower($b['title']));
             });
 
@@ -502,9 +516,9 @@ class Matcher
                     $tags = Tag::containing($request->search)->get();
                     $query->withAnyTags($tags);
 
-                    $query->orWhere('title', 'LIKE', '%' . $request->search .'%');
-                    $query->orWhere('description', 'LIKE', '%' . $request->search .'%');
-                    $query->orWhere('location', 'LIKE', '%' . $request->search .'%');
+                    $query->orWhere('title', 'LIKE', '%' . $request->search . '%');
+                    $query->orWhere('description', 'LIKE', '%' . $request->search . '%');
+                    $query->orWhere('location', 'LIKE', '%' . $request->search . '%');
                 });
             }
 
@@ -522,9 +536,9 @@ class Matcher
     public function paginate($items, $perPage = 15, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-    
+
         $items = $items instanceof Collection ? $items : Collection::make($items);
-    
+
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
@@ -533,7 +547,7 @@ class Matcher
         $urlParams = array_filter(request()->query());
 
         unset($urlParams['page']);
-        
+
         if (key_exists($filter_key, $urlParams)) {
             unset($urlParams[$filter_key]);
             return route('matcher.index', $urlParams);
@@ -551,7 +565,7 @@ class Matcher
     {
         $urlParams = array_filter(request()->query());
 
-        if(count(array_intersect_key($this->filters, $urlParams)) > 0) {
+        if (count(array_intersect_key($this->filters, $urlParams)) > 0) {
             return true;
         } else {
             return false;
@@ -561,15 +575,17 @@ class Matcher
     public function notifyAllOwners($pg, $notification, $ignore_user = null)
     {
         $owners = [];
-        
+
         if ($ignore_user == null || $ignore_user->id != $pg->user_id) {
             $owners[] = $pg->user;
         }
 
-        foreach($pg->memberships as $membership) {
-            if ($membership->member_role_id == Membership::ROLE_CO_OWNER && 
-                    $membership->user_id != $pg->user_id && 
-                    ($ignore_user == null || $ignore_user->id != $membership->user_id)) {
+        foreach ($pg->memberships as $membership) {
+            if (
+                $membership->member_role_id == Membership::ROLE_CO_OWNER &&
+                $membership->user_id != $pg->user_id &&
+                ($ignore_user == null || $ignore_user->id != $membership->user_id)
+            ) {
                 $owners[] = $membership->user;
             }
         }
@@ -606,7 +622,7 @@ class Matcher
             $membership->save();
         }
     }
-    
+
     public function downloadAppointment(Peergroup $pg, Appointment $appointment)
     {
         $eventUid = new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier($appointment->identifier);
@@ -622,7 +638,7 @@ class Matcher
         }
 
         $description[] = __('matcher::peergroup.appointment_ical_description', ['title' => $pg->title, 'link' => route('matcher.appointments.show', ['pg' => $pg->groupname, 'appointment' => $appointment->identifier])]);
-        
+
         $event->setDescription(implode("\n\n", $description));
 
         if ($appointment->location) {
@@ -651,9 +667,9 @@ class Matcher
     {
         if (old('_token')) {
             $oldTags = new Collection(old($fieldName, []));
-            return $oldTags->map(fn($tag) => ['value' => $tag, 'id' => $tag]);
+            return $oldTags->map(fn ($tag) => ['value' => $tag, 'id' => $tag]);
         } else {
-            return $savedTags->map(fn($tag) => ['value' => $tag->name, 'id' => $tag->name]);
+            return $savedTags->map(fn ($tag) => ['value' => $tag->name, 'id' => $tag->name]);
         }
     }
 
@@ -673,13 +689,20 @@ class Matcher
                 return;
             }
 
-            Invitation::firstOrCreate([
+            $invitation = Invitation::wherePeergroupId($pg->id)->whereReceiverUserId($user->id)->first();
+
+            if ($invitation) {
+                return;
+            }
+
+            $invitation = Invitation::create([
                 'peergroup_id' => $pg->id,
                 'receiver_user_id' => $user->id,
-            ], [
                 'sender_user_id' => $sender->id,
                 'comment' => $request->comment,
             ]);
+
+            $this->afterInvitationCreated($pg, $user, $sender, $invitation);
         });
     }
 

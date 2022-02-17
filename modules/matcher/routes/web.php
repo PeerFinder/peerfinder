@@ -67,6 +67,7 @@ Route::group(['prefix' => '/{pg:groupname}'], function () {
     Route::group(['as' => 'invitations.', 'prefix' => 'invitations'], function () {
         Route::get('/create', [InvitationsController::class, 'create'])->name('create');
         Route::put('/create', [InvitationsController::class, 'store'])->name('store');
+        Route::delete('/delete', [InvitationsController::class, 'destroy'])->name('destroy');
     });
 });
 

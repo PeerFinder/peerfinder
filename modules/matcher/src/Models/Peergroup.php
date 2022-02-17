@@ -116,6 +116,10 @@ class Peergroup extends Model
                 $appointment->delete();
             });
 
+            $pg->invitations()->each(function ($invitation) {
+                $invitation->delete();
+            });
+
             Matcher::beforePeergroupDeleted($pg);
         });
     }
@@ -143,6 +147,11 @@ class Peergroup extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(Invitation::class);
     }
 
     public function groupType()
@@ -233,11 +242,13 @@ class Peergroup extends Model
     {
         $user = $user ?: auth()->user();
 
-        $query = Membership::where(['user_id' => $user->id, 
-                                    'peergroup_id' => $this->id, 
-                                    'approved' => true,
-                                    'member_role_id' => $member_role_id]);
-        
+        $query = Membership::where([
+            'user_id' => $user->id,
+            'peergroup_id' => $this->id,
+            'approved' => true,
+            'member_role_id' => $member_role_id
+        ]);
+
         return $query->exists();
     }
 

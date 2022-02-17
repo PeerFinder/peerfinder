@@ -163,6 +163,7 @@ return [
     'button_manage_members' => 'Manage members',
     'button_admin_dropdown' => 'Manage group',
     'invitation_created_successfully' => 'Invitation sent successfully!',
+    'invitation_deleted_successfully' => 'Invitation deleted successfully!',
     'send_group_invitation' => 'Send group invitation',
     'button_send_invitation' => 'Invite',
     'invitation_enter_name' => 'Enter name...',

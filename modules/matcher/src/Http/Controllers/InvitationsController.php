@@ -28,4 +28,13 @@ class InvitationsController extends Controller
 
         return redirect($pg->getUrl())->with('success', __('matcher::peergroup.invitation_created_successfully'));
     }
+
+    public function destroy(Request $request, Peergroup $pg)
+    {
+        $invitation = Invitation::wherePeergroupId($pg->id)->whereReceiverUserId(auth()->id())->firstOrFail();
+
+        Matcher::deleteInvitations($pg, auth()->user());
+
+        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.invitation_deleted_successfully'));
+    }
 }

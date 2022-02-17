@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Event;
+use Matcher\Events\InvitationSent;
 use Matcher\Facades\Matcher;
 use Matcher\Models\Invitation;
 use Matcher\Models\Language;
@@ -170,16 +172,125 @@ class GroupInvitationsTest extends TestCase
 
     public function test_invitation_gets_deleted_with_sender()
     {
-        
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user3)->create();
+
+        Matcher::addMemberToGroup($pg, $user1);
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username
+            ]
+        ]);
+
+        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+
+        $user1->delete();
+
+        $this->assertDatabaseMissing('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
     }
 
     public function test_invitation_gets_deleted_with_receiver()
     {
-        
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username
+            ]
+        ]);
+
+        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+
+        $user2->delete();
+
+        $this->assertDatabaseMissing('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+
     }    
 
     public function test_invitation_gets_deleted_with_peergroup()
     {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username
+            ]
+        ]);
+
+        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+
+        $pg->delete();
+
+        $this->assertDatabaseMissing('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+    }
+
+    public function test_receiver_can_delete_invitation()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username
+            ]
+        ]);
+
+        $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+
+        $response = $this->actingAs($user3)->delete(route('matcher.invitations.destroy', ['pg' => $pg->groupname]));
+        $response->assertStatus(404);
+
+        $response = $this->actingAs($user2)->delete(route('matcher.invitations.destroy', ['pg' => $pg->groupname]));
         
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+
+        $this->assertDatabaseMissing('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
+    }
+
+    public function test_event_dispatched_with_invitation()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        Event::fake(InvitationSent::class);
+
+        $pg = Peergroup::factory()->byUser($user1)->create();
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username,
+                $user3->username,
+            ]
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+
+        Event::assertDispatched(InvitationSent::class, function (InvitationSent $event) use ($pg, $user1) {
+            return ($event->pg->id == $pg->id) && ($event->sender->id == $user1->id);
+        });
+
+        Event::assertDispatched(InvitationSent::class, function (InvitationSent $event) use ($pg, $user2) {
+            return ($event->pg->id == $pg->id) && ($event->receiver->id == $user2->id);
+        });
+        
+        Event::assertDispatched(InvitationSent::class, function (InvitationSent $event) use ($pg, $user3) {
+            return ($event->pg->id == $pg->id) && ($event->receiver->id == $user3->id);
+        });
     }
 }

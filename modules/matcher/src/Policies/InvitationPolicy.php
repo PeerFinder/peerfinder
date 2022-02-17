@@ -3,6 +3,7 @@
 namespace Matcher\Policies;
 
 use App\Models\User;
+use Matcher\Models\Invitation;
 use Matcher\Models\Membership;
 use Matcher\Models\Peergroup;
 
@@ -17,5 +18,7 @@ class InvitationPolicy
         if ($pg->isMember($user)) {
             return true;
         }
+
+        return false;
     }
 }
