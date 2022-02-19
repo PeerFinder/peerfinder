@@ -190,7 +190,7 @@ class PeergroupsController extends Controller
             'tags' => [],
         ];
 
-        if ($request->has('tag')) {
+        if ($request->get('tag')) {
             $tags = Tag::containing($request->tag, 'en')
                         ->limit(config('matcher.tags.search.limit'))
                         ->get();
