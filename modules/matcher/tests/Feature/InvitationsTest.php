@@ -293,4 +293,14 @@ class GroupInvitationsTest extends TestCase
             return ($event->pg->id == $pg->id) && ($event->receiver->id == $user3->id);
         });
     }
+
+    public function test_user_can_access_private_group_with_invitation()
+    {
+        
+    }    
+
+    public function test_user_can_join_closed_group_with_invitation()
+    {
+        
+    }
 }

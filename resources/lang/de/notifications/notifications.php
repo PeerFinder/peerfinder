@@ -9,4 +9,6 @@ return [
     'user_requests_to_join_details' => ':user_name möchte der Gruppe ":title" beitreten.',
     'request_approved_title' => 'Deine Anfrage wurde akzeptiert!',
     'request_approved_details' => 'Du wurdest als Mitglied in der Gruppe ":title" bestätigt.',
+    'group_invitation_received_title' => 'Einladung in eine Gruppe erhalten!',
+    'group_invitation_received_details' => ':user_name hat Dich in die Gruppe ":title" eingeladen.',
 ];

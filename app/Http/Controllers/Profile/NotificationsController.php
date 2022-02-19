@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\GroupInvitationReceived;
 use App\Notifications\NewMemberInGroup;
 use App\Notifications\UserApprovedInGroup;
 use App\Notifications\UserRequestsToJoinGroup;
+use Exception;
 use Illuminate\Http\Request;
 
 class NotificationsController extends Controller
@@ -51,6 +53,16 @@ class NotificationsController extends Controller
                         'by_user' => null,
                     ];
                     break;
+                case GroupInvitationReceived::class:
+                    $notification_data = [
+                        'title' => __('notifications/notifications.group_invitation_received_title'),
+                        'details' => __('notifications/notifications.group_invitation_received_details', $notification->data),
+                        'url' => $notification->data['url'],
+                        'by_user' => $by_user,
+                    ];
+                    break;
+                default:
+                    throw new Exception('No handling of notification ' . $notification->type);
             }
 
             $notification_data['unread'] = is_null($notification->read_at);
