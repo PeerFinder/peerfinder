@@ -294,13 +294,63 @@ class GroupInvitationsTest extends TestCase
         });
     }
 
+    public function test_user_gets_approved_when_invited()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+        ]);
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username,
+            ]
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+
+        $this->assertTrue($m1->approved);
+    }
+
     public function test_user_can_access_private_group_with_invitation()
     {
-        
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'private' => true,
+        ]);
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username,
+            ]
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+
+        $this->assertTrue($m1->approved);
     }    
 
     public function test_user_can_join_closed_group_with_invitation()
     {
-        
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'open' => false,
+        ]);
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username,
+            ]
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+
+        $this->assertTrue($m1->approved);
     }
 }

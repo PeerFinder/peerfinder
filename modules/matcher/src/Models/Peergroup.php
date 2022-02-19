@@ -203,6 +203,10 @@ class Peergroup extends Model
             return false;
         }
 
+        if ($this->userHasInvitation($user)) {
+            return false;
+        }
+
         if ($this->with_approval) {
             return true;
         }
@@ -218,7 +222,7 @@ class Peergroup extends Model
             return true;
         }
 
-        if ($this->private) {
+        if ($this->private && !$this->userHasInvitation($user)) {
             return false;
         }
 
@@ -236,6 +240,11 @@ class Peergroup extends Model
             $members = $this->getMembers();
             return $members->contains($user);
         }
+    }
+
+    public function userHasInvitation(User $user)
+    {
+        return Invitation::wherePeergroupId($this->id)->whereReceiverUserId($user->id)->exists();
     }
 
     public function memberHasRole(User $user = null, $member_role_id = Membership::ROLE_MEMBER)

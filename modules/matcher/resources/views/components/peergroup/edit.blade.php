@@ -36,10 +36,7 @@
                 </template>
             </conditional-elements>
             <div>
-                <input name="private" value="0" type="hidden" />
-                {{-- will be used in the future..
-                    <x-ui.forms.checkbox id="private" default="{{ $pg->private }}" name="private">{{ __('matcher::peergroup.field_private') }}</x-ui.forms.checkbox>
-                    --}}
+                <x-ui.forms.checkbox id="private" default="{{ $pg->private }}" name="private">{{ __('matcher::peergroup.field_private') }}</x-ui.forms.checkbox>
             </div>
             <div>
                 <x-ui.forms.checkbox id="with_approval" default="{{ $pg->with_approval }}" name="with_approval">{{ __('matcher::peergroup.field_with_approval') }}</x-ui.forms.checkbox>

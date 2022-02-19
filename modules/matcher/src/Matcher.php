@@ -156,18 +156,18 @@ class Matcher
             throw new MembershipException(__('matcher::peergroup.exception_user_already_member', ['user' => $user->name]));
         }
 
-        # User without invitation cannot join private groups. Owners can.
-        if (!$pg->allowedToJoin($user)) {
-            throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
-        }
-
         # If the group is full, nobody can join
         if ($pg->isFull()) {
             throw new MembershipException(__('matcher::peergroup.exception_limit_is_reached'));
         }
 
-        # If the group is marked as completed/closed nobody can join
-        if (!$pg->isOpen()) {
+        # User without invitation cannot join private groups. Owners can.
+        if (!$pg->allowedToJoin($user)) {
+            throw new MembershipException(__('matcher::peergroup.exception_cannot_join_private_group'));
+        }
+
+        # If the group is marked as completed/closed only invited users can join
+        if (!$pg->isOpen() && !$pg->userHasInvitation($user)) {
             throw new MembershipException(__('matcher::peergroup.exception_group_is_completed'));
         }
     }

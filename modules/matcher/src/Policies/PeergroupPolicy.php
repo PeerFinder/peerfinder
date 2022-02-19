@@ -22,7 +22,7 @@ class PeergroupPolicy
      */
     public function view(User $user, Peergroup $pg)
     {
-        if (!$pg->private) {
+        if (!$pg->private || $pg->userHasInvitation($user)) {
             return true;
         }
 
