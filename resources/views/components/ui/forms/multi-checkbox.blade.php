@@ -7,9 +7,9 @@
     @php
     $checked = (old('_token') !== null ) ? old($name) && is_array(old($name)) && in_array($item->$key, old($name)) : $default->contains($item);
     @endphp
-    <div class="inline-flex items-center mt-1 mr-3">
+    <div class="inline-flex items-center mt-1 mr-4">
         <input value="{{ $item->$key }}" {{ $attributes->merge(['type' => 'checkbox', 'name' => $name . '[]', 'class' => 'border-2 focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent border-gray-300 rounded-sm']) }} id="{{ $name }}_{{ $item->$key }}" @if ($checked) checked @endif />
-        <label class="text-sm ml-1" for="{{ $name }}_{{ $item->$key }}">{{ $item->title }}</label>
+        <label class="ml-1" for="{{ $name }}_{{ $item->$key }}">{{ $item->title }}</label>
     </div>
     @endforeach
 </div>

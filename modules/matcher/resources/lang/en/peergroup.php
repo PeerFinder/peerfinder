@@ -31,6 +31,8 @@ return [
     'field_private' => 'Private group (new members need an invitation)',
     'field_with_approval' => 'New members need approval by group owner',
     'field_meeting_link' => 'Virtual meeting link (e.g. Zoom or Teams)',
+    'section_heading_settings' => 'Settings',
+    'section_heading_organization' => 'Organization',
     'button_save_peergroup' => 'Save group details',
     'edit_title' => 'Change group details',
     'button_cancel' => 'Cancel',
@@ -169,4 +171,5 @@ return [
     'invitation_enter_name' => 'Enter name...',
     'invitation_field_users' => 'Users',
     'invitation_comment' => 'Comment',
+    'invite_new_members_link' => 'Invite new members',
 ];

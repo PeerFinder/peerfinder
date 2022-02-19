@@ -31,6 +31,8 @@ return [
     'field_private' => 'Private Gruppe (neue Mitglieder brauchen eine Einladung)',
     'field_with_approval' => 'Neue Mitglieder brauchen eine Bestätigung durch Eigentümer:in',
     'field_meeting_link' => 'Link zum virtuellen Meeting (z.B. für Zoom oder Microsoft Teams)',
+    'section_heading_settings' => 'Einstellungen',
+    'section_heading_organization' => 'Organisation',
     'button_save_peergroup' => 'Gruppe speichern',
     'edit_title' => 'Details der Gruppe ändern',
     'button_cancel' => 'Abbrechen',
@@ -169,4 +171,5 @@ return [
     'invitation_enter_name' => 'Namen eingeben...',
     'invitation_field_users' => 'Nutzer:innen',    
     'invitation_comment' => 'Kommentar',
+    'invite_new_members_link' => 'Neue Mitglieder einladen',
 ];
