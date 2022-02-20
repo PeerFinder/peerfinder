@@ -34,10 +34,12 @@
         <p class="p-4">{{ __('matcher::peergroup.this_group_has_no_members_yet') }}</p>
     @endif
 
-    @can('create', [Matcher\Models\Invitation::class, $pg])
-        <div class="p-4 text-center border-t">
-            <x-ui.link href="{{ route('matcher.invitations.create', ['pg' => $pg->groupname]) }}">
-                {{ __('matcher::peergroup.invite_new_members_link') }}</x-ui.link>
-        </div>
-    @endcan
+    @if (!$pg->isFull())
+        @can('create', [Matcher\Models\Invitation::class, $pg])
+            <div class="p-4 text-center border-t">
+                <x-ui.link href="{{ route('matcher.invitations.create', ['pg' => $pg->groupname]) }}">
+                    {{ __('matcher::peergroup.invite_new_members_link') }}</x-ui.link>
+            </div>
+        @endcan        
+    @endif
 </x-ui.card>

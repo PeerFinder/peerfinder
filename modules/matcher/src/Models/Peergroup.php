@@ -27,6 +27,7 @@ class Peergroup extends Model
         'virtual' => 'boolean',
         'private' => 'boolean',
         'with_approval' => 'boolean',
+        'restrict_invitations' => 'boolean',
     ];
 
     protected $fillable = [
@@ -37,6 +38,7 @@ class Peergroup extends Model
         'virtual',
         'private',
         'with_approval',
+        'restrict_invitations',
         'location',
         'meeting_link',
     ];
@@ -51,6 +53,7 @@ class Peergroup extends Model
             'virtual' => ['required', 'boolean'],
             'private' => ['required', 'boolean'],
             'with_approval' => ['required', 'boolean'],
+            'restrict_invitations' => ['required', 'boolean'],
             'location' => ['nullable', 'string', 'max:100'],
             'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
             'languages' => ['required', 'exists:languages,code'],

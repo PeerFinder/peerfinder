@@ -22,6 +22,7 @@ class PeergroupFactory extends Factory
             'private' => false,
             'open' => true,
             'with_approval' => false,
+            'restrict_invitations' => false,
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
         ];

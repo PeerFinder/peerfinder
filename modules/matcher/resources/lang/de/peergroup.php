@@ -30,6 +30,7 @@ return [
     'field_languages' => 'Sprachen',
     'field_private' => 'Private Gruppe (neue Mitglieder brauchen eine Einladung)',
     'field_with_approval' => 'Neue Mitglieder brauchen eine Bestätigung durch Eigentümer:in',
+    'field_restrict_invitations' => 'Nur Eigentümer:innen können Einladungen zu dieser Gruppe verschicken',
     'field_meeting_link' => 'Link zum virtuellen Meeting (z.B. für Zoom oder Microsoft Teams)',
     'section_heading_settings' => 'Einstellungen',
     'section_heading_organization' => 'Organisation',

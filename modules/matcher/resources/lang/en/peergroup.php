@@ -30,6 +30,7 @@ return [
     'field_languages' => 'Languages',
     'field_private' => 'Private group (new members need an invitation)',
     'field_with_approval' => 'New members need approval by group owner',
+    'field_restrict_invitations' => 'Only owners can send invitations to this group',
     'field_meeting_link' => 'Virtual meeting link (e.g. Zoom or Teams)',
     'section_heading_settings' => 'Settings',
     'section_heading_organization' => 'Organization',

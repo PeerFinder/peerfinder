@@ -11,11 +11,11 @@ class InvitationPolicy
 {
     public function create(User $user, Peergroup $pg)
     {
-        if ($pg->isOwner($user)) {
+        if ($pg->isOwner($user) || $pg->memberHasRole($user, Membership::ROLE_CO_OWNER)) {
             return true;
         }
 
-        if ($pg->isMember($user)) {
+        if ($pg->isMember($user) && !$pg->restrict_invitations) {
             return true;
         }
 

@@ -353,4 +353,25 @@ class GroupInvitationsTest extends TestCase
 
         $this->assertTrue($m1->approved);
     }
+
+    public function test_owner_can_restrict_sending_invitations()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'restrict_invitations' => true,
+        ]);
+
+        Matcher::addMemberToGroup($pg, $user2);
+
+        $response = $this->actingAs($user2)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user3->username,
+            ]
+        ]);
+
+        $response->assertStatus(403);
+    }
 }

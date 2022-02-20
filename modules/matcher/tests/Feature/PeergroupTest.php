@@ -60,6 +60,7 @@ class PeergroupTest extends TestCase
             'virtual' => $this->faker->boolean(),
             'private' => $this->faker->boolean(),
             'with_approval' => $this->faker->boolean(),
+            'restrict_invitations' => $this->faker->boolean(),
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
@@ -192,6 +193,7 @@ class PeergroupTest extends TestCase
             'virtual' => $this->faker->boolean(),
             'private' => $this->faker->boolean(),
             'with_approval' => $this->faker->boolean(),
+            'restrict_invitations' => $this->faker->boolean(),
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
@@ -223,6 +225,7 @@ class PeergroupTest extends TestCase
             'virtual' => $this->faker->text(),
             'private' => $this->faker->text(),
             'with_approval' => $this->faker->text(),
+            'restrict_invitations' => $this->faker->text(),
             'meeting_link' => $this->faker->text(),
             'languages' => ['bla', 'blu']
         ];
@@ -259,6 +262,7 @@ class PeergroupTest extends TestCase
             'virtual' => $this->faker->boolean(),
             'private' => $this->faker->boolean(),
             'with_approval' => $this->faker->boolean(),
+            'restrict_invitations' => $this->faker->boolean(),
             'languages' => [
                 $language1->code,
                 $language2->code,
