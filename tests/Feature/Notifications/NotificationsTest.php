@@ -3,6 +3,7 @@
 namespace Tests\Feature\Notifications;
 
 use App\Models\User;
+use App\Notifications\GroupInvitationReceived;
 use App\Notifications\NewMemberInGroup;
 use App\Notifications\UserApprovedInGroup;
 use App\Notifications\UserHasUnreadReplies;
@@ -134,5 +135,33 @@ class NotificationsTest extends TestCase
         Talk::sendNotificationsForReceipts();
 
         Notification::assertSentTo([$user2], UserHasUnreadReplies::class);
+    }
+
+    public function test_notification_generated_when_user_receives_group_invitation()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user2)->create();
+
+        $notification = $user1->unreadNotifications()->first();
+        $this->assertNull($notification);
+
+        $response = $this->actingAs($user2)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user1->username,
+            ],
+            'comment' => $this->faker->text(),
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHasNoErrors();
+
+        $notification = $user1->unreadNotifications()->first();
+        $this->assertNotNull($notification);
+
+        $this->assertEquals(GroupInvitationReceived::class, $notification->type);
+        $this->assertEquals($pg->id, $notification->data['peergroup_id']);
+        $this->assertEquals($user2->id, $notification->data['user_id']);
     }
 }

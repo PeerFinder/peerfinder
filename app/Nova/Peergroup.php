@@ -77,6 +77,11 @@ class Peergroup extends Resource
 
             Number::make('Limit')->rules(ModelsPeergroup::rules()['update']['limit'])->required(),
 
+            Number::make('Replies', function($model) {
+                #TODO: Sum up all conversations
+                return $model->conversations()->first()->replies()->count();
+            }),
+
             Date::make('Begin')->rules(ModelsPeergroup::rules()['update']['begin'])->hideFromIndex(),
 
             Boolean::make('Virtual')->hideFromIndex(),

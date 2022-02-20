@@ -130,7 +130,7 @@ class MembershipsController extends Controller
 
         $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id, 'approved' => false])->firstOrFail();
 
-        Gate::authorize('approve', [$membership, $pg]);
+        Gate::authorize('approve', [Membership::class, $pg]);
 
         try {
             Matcher::approveMember($pg, $user);
@@ -147,7 +147,7 @@ class MembershipsController extends Controller
 
         $membership = Membership::where(['peergroup_id' => $pg->id, 'user_id' => $user->id, 'approved' => false])->firstOrFail();
 
-        Gate::authorize('approve', [$membership, $pg]);
+        Gate::authorize('approve', [Membership::class, $pg]);
 
         $membership->delete();
         

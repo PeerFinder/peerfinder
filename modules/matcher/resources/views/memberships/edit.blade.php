@@ -1,5 +1,4 @@
 <x-matcher::layout.single :pg="$pg" edit="true">
-
     <x-ui.card title="{{ __('matcher::peergroup.update_membership_title') }}">
         <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 

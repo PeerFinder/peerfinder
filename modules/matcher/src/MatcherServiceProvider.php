@@ -6,8 +6,10 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Matcher\Models\Invitation;
 use Matcher\Models\Membership;
 use Matcher\Models\Peergroup;
+use Matcher\Policies\InvitationPolicy;
 use Matcher\Policies\MembershipPolicy;
 use Matcher\Policies\PeergroupPolicy;
 
@@ -16,6 +18,7 @@ class MatcherServiceProvider extends ServiceProvider
     protected $policies = [
         Peergroup::class => PeergroupPolicy::class,
         Membership::class => MembershipPolicy::class,
+        Invitation::class => InvitationPolicy::class,
     ];
 
     public function boot()

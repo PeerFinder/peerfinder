@@ -46,12 +46,18 @@ class DashboardController extends Controller
             return $a->date->greaterThan($b->date);
         });
 
+        $invitations = $user->received_invitations()->with([
+            'sender', 
+            'peergroup' => fn($q) => $q->with(Peergroup::defaultRelationships())
+        ])->get();
+
         return view('frontend.profile.dashboard.index', compact(
             'own_peergroups',
             'member_peergroups',
             'all_peergroups_count',
             'users_count',
-            'appointments'
+            'appointments',
+            'invitations',
         ));
     }
 }

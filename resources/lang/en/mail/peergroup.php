@@ -9,4 +9,7 @@ return [
     'button_show_group' => 'Show group',
     'subject_owner_approved_your_request' => 'Your request to join group was accepted',
     'notification_owner_approved_your_request' => 'Your request to join group ":title" was accepted.',
+    'subject_group_invitation_received' => 'Invitation to join group ":title"',
+    'notification_group_invitation_received' => ':user_name has invited you to join group ":title".',
+    'notification_group_invitation_comment' => 'Comment: :comment',
 ];

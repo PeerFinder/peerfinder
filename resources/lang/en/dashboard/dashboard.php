@@ -11,4 +11,7 @@ return [
     'groups_waiting_for_you' => '{1}open group is waiting for you!|[2,*]open groups are waiting for you!',
     'users_waiting_for_your_group' => 'users waiting for your group!',
     'next_appointments' => 'Next appointments',
+    'group_invitations' => 'Received group invitations',
+    'button_dismiss_invitation' => 'Dismiss',
+    'group_invitations_from' => 'Invited by'
 ];

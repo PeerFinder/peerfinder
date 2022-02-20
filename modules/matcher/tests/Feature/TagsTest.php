@@ -35,6 +35,7 @@ class TagsTest extends TestCase
             'virtual' => $this->faker->boolean(),
             'private' => $this->faker->boolean(),
             'with_approval' => $this->faker->boolean(),
+            'restrict_invitations' => $this->faker->boolean(),
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
@@ -86,6 +87,7 @@ class TagsTest extends TestCase
             'virtual' => $this->faker->boolean(),
             'private' => $this->faker->boolean(),
             'with_approval' => $this->faker->boolean(),
+            'restrict_invitations' => $this->faker->boolean(),
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
@@ -123,6 +125,7 @@ class TagsTest extends TestCase
             'virtual' => $this->faker->boolean(),
             'private' => $this->faker->boolean(),
             'with_approval' => $this->faker->boolean(),
+            'restrict_invitations' => $this->faker->boolean(),
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code]

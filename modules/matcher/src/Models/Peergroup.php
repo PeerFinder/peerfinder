@@ -27,6 +27,7 @@ class Peergroup extends Model
         'virtual' => 'boolean',
         'private' => 'boolean',
         'with_approval' => 'boolean',
+        'restrict_invitations' => 'boolean',
     ];
 
     protected $fillable = [
@@ -37,6 +38,7 @@ class Peergroup extends Model
         'virtual',
         'private',
         'with_approval',
+        'restrict_invitations',
         'location',
         'meeting_link',
     ];
@@ -51,6 +53,7 @@ class Peergroup extends Model
             'virtual' => ['required', 'boolean'],
             'private' => ['required', 'boolean'],
             'with_approval' => ['required', 'boolean'],
+            'restrict_invitations' => ['required', 'boolean'],
             'location' => ['nullable', 'string', 'max:100'],
             'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
             'languages' => ['required', 'exists:languages,code'],
@@ -116,6 +119,10 @@ class Peergroup extends Model
                 $appointment->delete();
             });
 
+            $pg->invitations()->each(function ($invitation) {
+                $invitation->delete();
+            });
+
             Matcher::beforePeergroupDeleted($pg);
         });
     }
@@ -143,6 +150,11 @@ class Peergroup extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function invitations()
+    {
+        return $this->hasMany(Invitation::class);
     }
 
     public function groupType()
@@ -194,6 +206,10 @@ class Peergroup extends Model
             return false;
         }
 
+        if ($this->userHasInvitation($user)) {
+            return false;
+        }
+
         if ($this->with_approval) {
             return true;
         }
@@ -209,7 +225,7 @@ class Peergroup extends Model
             return true;
         }
 
-        if ($this->private) {
+        if ($this->private && !$this->userHasInvitation($user)) {
             return false;
         }
 
@@ -229,15 +245,22 @@ class Peergroup extends Model
         }
     }
 
+    public function userHasInvitation(User $user)
+    {
+        return Invitation::wherePeergroupId($this->id)->whereReceiverUserId($user->id)->exists();
+    }
+
     public function memberHasRole(User $user = null, $member_role_id = Membership::ROLE_MEMBER)
     {
         $user = $user ?: auth()->user();
 
-        $query = Membership::where(['user_id' => $user->id, 
-                                    'peergroup_id' => $this->id, 
-                                    'approved' => true,
-                                    'member_role_id' => $member_role_id]);
-        
+        $query = Membership::where([
+            'user_id' => $user->id,
+            'peergroup_id' => $this->id,
+            'approved' => true,
+            'member_role_id' => $member_role_id
+        ]);
+
         return $query->exists();
     }
 

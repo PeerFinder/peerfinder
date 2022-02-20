@@ -11,7 +11,7 @@
         </a>
         @endforeach
     </div>
-    <div class="text-center p-1 text-sm border-t">
+    <div class="text-center p-4 border-t">
         <x-ui.link href="{{ route('matcher.appointments.index', ['pg' => $pg->groupname]) }}">{{ __('matcher::peergroup.all_appointments') }}</x-ui.link>
     </div>    
 </x-ui.card>

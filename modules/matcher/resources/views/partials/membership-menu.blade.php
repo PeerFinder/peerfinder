@@ -18,7 +18,7 @@
         <x-ui.flash class="bg-yellow-100 p-3 border border-yellow-400 shadow text-center rounded-md">
             <x-ui.icon name="information-circle" class="text-yellow-500" /> {{ __('matcher::peergroup.full_notice') }}
         </x-ui.flash>
-        @elseif (!$pg->isOpen())
+        @elseif (!$pg->isOpen() && !$pg->userHasInvitation(auth()->user()))
         <x-ui.flash class="bg-yellow-100 p-3 border border-yellow-400 shadow text-center rounded-md">
             <x-ui.icon name="information-circle" class="text-yellow-500" /> {{ __('matcher::peergroup.completed_notice') }}
         </x-ui.flash>

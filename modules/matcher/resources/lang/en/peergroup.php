@@ -30,7 +30,10 @@ return [
     'field_languages' => 'Languages',
     'field_private' => 'Private group (new members need an invitation)',
     'field_with_approval' => 'New members need approval by group owner',
+    'field_restrict_invitations' => 'Only owners can send invitations to this group',
     'field_meeting_link' => 'Virtual meeting link (e.g. Zoom or Teams)',
+    'section_heading_settings' => 'Settings',
+    'section_heading_organization' => 'Organization',
     'button_save_peergroup' => 'Save group details',
     'edit_title' => 'Change group details',
     'button_cancel' => 'Cancel',
@@ -150,7 +153,6 @@ return [
     'field_tags' => 'Tags',
     'enter_tag' => 'Enter Tag',
     'reset_all_filters' => 'Reset all filters',
-
     'role_member' => 'Member',
     'role_co_owner' => 'Co-Owner of the group',
     'edit_membership_roles_title' => 'Manage members',
@@ -162,6 +164,13 @@ return [
     'member_removed_successfully' => 'User :name removed from this group successfully!',
     'members_managed_successfully' => 'Member roles changed successfully!',
     'button_manage_members' => 'Manage members',
-
     'button_admin_dropdown' => 'Manage group',
+    'invitation_created_successfully' => 'Invitation sent successfully!',
+    'invitation_deleted_successfully' => 'Invitation deleted successfully!',
+    'send_group_invitation' => 'Send group invitation',
+    'button_send_invitation' => 'Invite',
+    'invitation_enter_name' => 'Enter name...',
+    'invitation_field_users' => 'Users',
+    'invitation_comment' => 'Comment (e.g. why should you join this group)',
+    'invite_new_members_link' => 'Invite new members',
 ];

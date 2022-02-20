@@ -30,7 +30,10 @@ return [
     'field_languages' => 'Sprachen',
     'field_private' => 'Private Gruppe (neue Mitglieder brauchen eine Einladung)',
     'field_with_approval' => 'Neue Mitglieder brauchen eine Bestätigung durch Eigentümer:in',
+    'field_restrict_invitations' => 'Nur Eigentümer:innen können Einladungen zu dieser Gruppe verschicken',
     'field_meeting_link' => 'Link zum virtuellen Meeting (z.B. für Zoom oder Microsoft Teams)',
+    'section_heading_settings' => 'Einstellungen',
+    'section_heading_organization' => 'Organisation',
     'button_save_peergroup' => 'Gruppe speichern',
     'edit_title' => 'Details der Gruppe ändern',
     'button_cancel' => 'Abbrechen',
@@ -135,12 +138,10 @@ return [
     'current_image' => 'Aktuelles Bild',
     'button_edit_image' => 'Bearbeiten',
     'image_upload_notice' => 'Das Bild sollte ein Seitenverhältnis von :r:1 haben. Minimale Abmessungen: :w x :h px.',
-
     'group_type_reference' => 'Mehr Informationen',
     'field_group_type' => 'Gruppentyp',
     'more_about_types' => 'Welche Typen gibt es?',
     'group_types_title' => 'Gruppentypen',
-
     'bool_yes' => 'Ja',
     'bool_no' => 'Nein',
     'reset_filter' => 'Zurücksetzen',
@@ -152,7 +153,6 @@ return [
     'field_tags' => 'Tags',
     'enter_tag' => 'Tag eingeben',
     'reset_all_filters' => 'Alle Filter zurücksetzen',
-
     'role_member' => 'Mitglied',
     'role_co_owner' => 'Mitbesitzer:in der Gruppe',
     'edit_membership_roles_title' => 'Mitglieder verwalten',
@@ -164,6 +164,13 @@ return [
     'member_removed_successfully' => 'Mitglied :name erfolgreich aus der Gruppe entfernt!',
     'members_managed_successfully' => 'Mitgliederrollen erfolgreich geändert!',
     'button_manage_members' => 'Mitglieder verwalten',
-
     'button_admin_dropdown' => 'Gruppe verwalten',
+    'invitation_created_successfully' => 'Einladung erfolgreich versendet!',
+    'invitation_deleted_successfully' => 'Einladung erfolgreich gelöscht!',
+    'send_group_invitation' => 'In die Gruppe einladen',
+    'button_send_invitation' => 'Einladen',
+    'invitation_enter_name' => 'Namen eingeben...',
+    'invitation_field_users' => 'Nutzer:innen',    
+    'invitation_comment' => 'Kommentar (z.B. "Warum solltest Du beitreten?")',
+    'invite_new_members_link' => 'Neue Mitglieder einladen',
 ];
