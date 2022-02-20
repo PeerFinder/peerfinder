@@ -14,7 +14,11 @@
             @endif
             
             <div class="p-4">
-                <h2 class="font-bold text-xl inline-flex items-center text-gray-600 group-hover:text-black">@if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1" />@endif{{ $pg->title }}</h2>
+                <h2 class="font-bold text-xl inline-flex items-center text-gray-600 group-hover:text-black">
+                    @if($pg->private)<x-ui.icon name="eye-off" class="mr-1 text-purple-400 shrink-0" />@endif
+                    @if(!$pg->open)<x-ui.icon name="lock-closed" class="mr-1 text-yellow-400 shrink-0" />@endif
+                    {{ $pg->title }}
+                </h2>
             </div>
 
             <div class="px-4 pb-4">

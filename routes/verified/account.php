@@ -13,36 +13,36 @@ Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
         return redirect(route('account.profile.edit'));
     })->name('index');
 
-    Route::group(['prefix' => 'password', 'as' => 'password.'], function () {
-        Route::get('/', [PasswordController::class, 'edit'])->name('edit');
-        Route::put('/update', [PasswordController::class, 'update'])->name('update');
+    Route::group(['prefix' => 'password', 'as' => 'password.', 'controller' => PasswordController::class], function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/update', 'update')->name('update');
     });
 
-    Route::group(['prefix' => 'email', 'as' => 'email.'], function () {
+    Route::group(['prefix' => 'email', 'as' => 'email.', 'controller' => EmailController::class], function () {
         # This routes are accessible even by not verified users so they can change their mail to be able to verify it
-        Route::get('/', [EmailController::class, 'edit'])->name('edit')->withoutMiddleware('verified');
-        Route::put('/update', [EmailController::class, 'update'])->name('update')->withoutMiddleware('verified');
+        Route::get('/', 'edit')->name('edit')->withoutMiddleware('verified');
+        Route::put('/update', 'update')->name('update')->withoutMiddleware('verified');
     });
 
-    Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
-        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
-        Route::put('/update', [ProfileController::class, 'update'])->name('update');
+    Route::group(['prefix' => 'profile', 'as' => 'profile.', 'controller' => ProfileController::class], function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/update', 'update')->name('update');
     });
 
-    Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
-        Route::get('/', [AccountController::class, 'edit'])->name('edit');
-        Route::put('/update', [AccountController::class, 'update'])->name('update');
-        Route::delete('/destroy', [AccountController::class, 'destroy'])->name('destroy');
+    Route::group(['prefix' => 'account', 'as' => 'account.', 'controller' => AccountController::class], function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/update', 'update')->name('update');
+        Route::delete('/destroy', 'destroy')->name('destroy');
     });
 
-    Route::group(['prefix' => 'avatar', 'as' => 'avatar.'], function () {
-        Route::get('/', [AvatarController::class, 'edit'])->name('edit');
-        Route::put('/update', [AvatarController::class, 'update'])->name('update');
-        Route::delete('/destroy', [AvatarController::class, 'destroy'])->name('destroy');
+    Route::group(['prefix' => 'avatar', 'as' => 'avatar.', 'controller' => AvatarController::class], function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/update', 'update')->name('update');
+        Route::delete('/destroy', 'destroy')->name('destroy');
     });
 
-    Route::group(['prefix' => 'settings', 'as' => 'settings.'], function () {
-        Route::get('/', [SettingsController::class, 'edit'])->name('edit');
-        Route::put('/update', [SettingsController::class, 'update'])->name('update');
+    Route::group(['prefix' => 'settings', 'as' => 'settings.', 'controller' => SettingsController::class], function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/update', 'update')->name('update');
     });
 });
