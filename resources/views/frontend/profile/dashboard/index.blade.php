@@ -47,7 +47,9 @@
                     <div class="border rounded-md shadow-sm p-4">
                         <div class="flex space-x-2 rounded-md items-center">
                             <div class="shrink-0">
-                                <x-ui.user.avatar :user="$invitation->sender" size="40" class="rounded-full mr-2" />
+                                <a href="{{ $invitation->sender->profileUrl() }}">
+                                    <x-ui.user.avatar :user="$invitation->sender" size="40" class="rounded-full mr-2" />
+                                </a>
                             </div>
                             <div class="flex-1">
                                 <p>{{ __('dashboard/dashboard.group_invitations_from') }}</p>

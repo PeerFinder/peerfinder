@@ -150,7 +150,8 @@ class NotificationsTest extends TestCase
         $response = $this->actingAs($user2)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user1->username,
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $response->assertStatus(302);

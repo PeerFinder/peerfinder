@@ -683,10 +683,19 @@ class Matcher
 
         $users = User::whereIn('username', $input['search_users'])->get();
 
-        $users->each(function ($user) use ($pg, $sender, $request) {
+        $can_approve = $sender->can('approve', [Membership::class, $pg]);
+        
+        $users->each(function ($user) use ($pg, $sender, $request, $can_approve) {
             // Skip peergroup owner and member, they don't need an invitation
             if ($pg->isMember($user) || $pg->isOwner($user)) {
                 return;
+            }
+
+            if ($can_approve) {
+                if ($pg->isMember($user, true) && !$pg->isFull()) {
+                    $this->approveMember($pg, $user);
+                    return;
+                }
             }
 
             $invitation = Invitation::wherePeergroupId($pg->id)->whereReceiverUserId($user->id)->first();

@@ -47,7 +47,7 @@ class MembershipPolicy
      *  + owner of the group
      *  + co-owner
      */
-    public function approve(User $user, Membership $membership, Peergroup $pg)
+    public function approve(User $user, Peergroup $pg)
     {
         return $pg->isOwner($user) || $pg->memberHasRole($user, Membership::ROLE_CO_OWNER);
     }

@@ -51,6 +51,7 @@ class GroupInvitationsTest extends TestCase
 
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [],
+            'comment' => $this->faker->text(),
         ]);
 
         $response->assertStatus(302);
@@ -107,7 +108,8 @@ class GroupInvitationsTest extends TestCase
             'search_users' => [
                 $user1->username,
                 $user2->username
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $response->assertStatus(302);
@@ -129,7 +131,8 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $response->assertStatus(302);
@@ -158,7 +161,8 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $response->assertStatus(302);
@@ -183,7 +187,8 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
@@ -203,7 +208,8 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
@@ -224,7 +230,8 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
@@ -245,8 +252,11 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
+
+        $response->assertSessionHasNoErrors();
 
         $this->assertDatabaseHas('invitations', ['receiver_user_id' => $user2->id, 'peergroup_id' => $pg->id]);
 
@@ -275,7 +285,8 @@ class GroupInvitationsTest extends TestCase
             'search_users' => [
                 $user2->username,
                 $user3->username,
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
         $response->assertStatus(302);
@@ -306,8 +317,11 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username,
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
+
+        $response->assertSessionHasNoErrors();
 
         $m1 = Matcher::addMemberToGroup($pg, $user2);
 
@@ -326,8 +340,11 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username,
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
+
+        $response->assertSessionHasNoErrors();
 
         $m1 = Matcher::addMemberToGroup($pg, $user2);
 
@@ -346,8 +363,11 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user2->username,
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
+
+        $response->assertSessionHasNoErrors();
 
         $m1 = Matcher::addMemberToGroup($pg, $user2);
 
@@ -369,14 +389,70 @@ class GroupInvitationsTest extends TestCase
         $response = $this->actingAs($user2)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
             'search_users' => [
                 $user3->username,
-            ]
+            ],
+            'comment' => $this->faker->text(),
         ]);
 
+        $response->assertSessionHasNoErrors();
         $response->assertStatus(403);
     }
 
     public function test_owners_invitation_approves_membership()
     {
-        
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+
+        $this->assertFalse($m1->approved);
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username,
+            ],
+            'comment' => $this->faker->text(),
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(302);
+        $m1->refresh();
+        $this->assertTrue($m1->approved);
+    }
+
+    public function test_owners_invitation_not_approves_membership_for_full_group()
+    {
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+        $user3 = User::factory()->create();
+        $user4 = User::factory()->create();
+
+        $pg = Peergroup::factory()->byUser($user1)->create([
+            'with_approval' => true,
+            'limit' => 3,
+        ]);
+
+        $m1 = Matcher::addMemberToGroup($pg, $user2);
+
+        Matcher::addMemberToGroup($pg, $user1);
+        Matcher::addMemberToGroup($pg, $user3)->approve();
+        Matcher::addMemberToGroup($pg, $user4)->approve();
+
+        $this->assertFalse($m1->approved);
+
+        $response = $this->actingAs($user1)->put(route('matcher.invitations.store', ['pg' => $pg->groupname]), [
+            'search_users' => [
+                $user2->username,
+            ],
+            'comment' => $this->faker->text(),
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(302);
+        $m1->refresh();
+        $this->assertFalse($m1->approved);
     }
 }
