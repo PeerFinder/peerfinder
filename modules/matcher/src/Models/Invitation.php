@@ -23,9 +23,9 @@ class Invitation extends Model
     public static function rules()
     {
         $updateRules = [
-            'comment' => ['nullable', 'string', 'max:500'],
             'search_users' => 'required',
             'search_users.*' => 'exists:users,username',
+            'comment' => ['required', 'string', 'max:500'],
         ];
 
         return [

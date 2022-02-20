@@ -11,4 +11,7 @@ return [
     'groups_waiting_for_you' => '{1}offene Gruppe wartet auf Dich!|[2,*]offene Gruppen warten auf Dich!',
     'users_waiting_for_your_group' => 'Nutzer:innen freuen sich auf Deine Gruppe!',
     'next_appointments' => 'Nächsten Treffen',
+    'group_invitations' => 'Empfangene Gruppeneinladungen',
+    'button_dismiss_invitation' => 'Verwerfen',
+    'group_invitations_from' => 'Eingeladen von'
 ];

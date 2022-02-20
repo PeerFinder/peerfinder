@@ -17,7 +17,7 @@
                 </x-ui.forms.section-body>
 
                 <x-ui.forms.section-body>
-                    <x-ui.forms.textarea id="comment" value="{{ old('comment') }}" name="comment" rows="3">{{ __('matcher::peergroup.invitation_comment') }}</x-ui.forms.textarea>
+                    <x-ui.forms.textarea id="comment" value="{{ old('comment') }}" name="comment" rows="3" required>{{ __('matcher::peergroup.invitation_comment') }}</x-ui.forms.textarea>
                 </x-ui.forms.section-body>
             </x-ui.forms.section>
 

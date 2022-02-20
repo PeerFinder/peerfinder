@@ -35,6 +35,6 @@ class InvitationsController extends Controller
 
         Matcher::deleteInvitations($pg, auth()->user());
 
-        return redirect($pg->getUrl())->with('success', __('matcher::peergroup.invitation_deleted_successfully'));
+        return back()->with('success', __('matcher::peergroup.invitation_deleted_successfully'));
     }
 }

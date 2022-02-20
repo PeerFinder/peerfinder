@@ -38,6 +38,49 @@
         </div>
         @endif
 
+        {{-- Group invitations --}}
+        @if ($invitations->count())
+        <div class="mt-5 sm:mt-10">
+            <x-ui.card title="{{ __('dashboard/dashboard.group_invitations') }}">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+                @foreach ($invitations as $invitation)
+                    <div class="border rounded-md shadow-sm p-4">
+                        <div class="flex space-x-2 rounded-md items-center">
+                            <div class="shrink-0">
+                                <x-ui.user.avatar :user="$invitation->sender" size="40" class="rounded-full mr-2" />
+                            </div>
+                            <div class="flex-1">
+                                <p>{{ __('dashboard/dashboard.group_invitations_from') }}</p>
+                                <a href="{{ $invitation->sender->profileUrl() }}" class="font-semibold">{{ $invitation->sender->name }}</a>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 px-4 py-2 bg-gray-50 rounded-md">
+                            {{ $invitation->comment }}
+                        </div>
+
+                        <div class="flex mt-4 justify-center flex-wrap gap-2">
+                            @unless ($invitation->peergroup->isFull())
+                            <x-ui.forms.button tag="a" href="{{ route('matcher.membership.create', ['pg' => $invitation->peergroup->groupname]) }}">{{ __('matcher::peergroup.button_join_group') }}</x-ui.forms.button>
+                            @endunless
+
+                            <x-ui.forms.form :action="route('matcher.invitations.destroy', ['pg' => $invitation->peergroup->groupname])" method="post" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <x-ui.forms.button action="inform">{{ __('dashboard/dashboard.button_dismiss_invitation') }}</x-ui.forms.button>
+                            </x-ui.forms.form>
+                        </div>
+
+                        <div class="mt-4">
+                            <x-matcher::peergroup.card :pg="$invitation->peergroup" />
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+            </x-ui.card>
+        </div>
+        @endif
+
         {{-- Groups --}}
         <div class="mt-5 sm:mt-10 grid sm:grid-cols-2 gap-2 sm:gap-5">
             <div class="col-span-1">

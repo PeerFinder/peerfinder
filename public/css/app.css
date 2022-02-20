@@ -1723,6 +1723,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(209 250 229 / var(--tw-bg-opacity));
 }
+.bg-green-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / var(--tw-bg-opacity));
+}
 .bg-opacity-30 {
   --tw-bg-opacity: 0.3;
 }
@@ -1908,9 +1912,6 @@ select {
 }
 .pb-8 {
   padding-bottom: 2rem;
-}
-.pt-1 {
-  padding-top: 0.25rem;
 }
 .pl-2 {
   padding-left: 0.5rem;
@@ -2994,6 +2995,10 @@ select {
 
   .md\:grid-cols-10 {
     grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .md\:flex-row {

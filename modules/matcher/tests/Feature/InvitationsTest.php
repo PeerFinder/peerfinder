@@ -374,4 +374,9 @@ class GroupInvitationsTest extends TestCase
 
         $response->assertStatus(403);
     }
+
+    public function test_owners_invitation_approves_membership()
+    {
+        
+    }
 }

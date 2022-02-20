@@ -171,6 +171,6 @@ return [
     'button_send_invitation' => 'Invite',
     'invitation_enter_name' => 'Enter name...',
     'invitation_field_users' => 'Users',
-    'invitation_comment' => 'Comment',
+    'invitation_comment' => 'Comment (e.g. why should you join this group)',
     'invite_new_members_link' => 'Invite new members',
 ];

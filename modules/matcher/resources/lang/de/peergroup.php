@@ -171,6 +171,6 @@ return [
     'button_send_invitation' => 'Einladen',
     'invitation_enter_name' => 'Namen eingeben...',
     'invitation_field_users' => 'Nutzer:innen',    
-    'invitation_comment' => 'Kommentar',
+    'invitation_comment' => 'Kommentar (z.B. "Warum solltest Du beitreten?")',
     'invite_new_members_link' => 'Neue Mitglieder einladen',
 ];

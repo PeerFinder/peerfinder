@@ -136,6 +136,7 @@ return [
         'age'                   => 'Alter',
         'available'             => 'verfügbar',
         'city'                  => 'Stadt',
+        'comment'               => 'Kommentar',
         'content'               => 'Inhalt',
         'country'               => 'Land',
         'current_password'      => 'Derzeitiges Passwort',
