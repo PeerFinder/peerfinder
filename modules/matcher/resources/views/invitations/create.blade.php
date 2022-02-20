@@ -6,12 +6,12 @@
         <x-ui.forms.form :action="route('matcher.invitations.create', ['pg' => $pg->groupname])">
             <x-ui.forms.section>
                 <x-ui.forms.section-body>
-                    <dropdown-input url="{{ route('profile.user.search') }}?name=$1" 
-                                input-name="search_users" :max-selected="0" 
-                                items-field="users" items-id="username" 
-                                items-value="name" :lookup-delay="500"
-                                placeholder="{{ __('matcher::peergroup.invitation_enter_name') }}" :items=""
-                                label="{{ __('matcher::peergroup.invitation_field_users') }}" :strict="true">
+                    <dropdown-input url="{{ route('profile.user.search') }}?name=$1"
+                        input-name="search_users" :max-selected="0"
+                        items-field="users" items-id="username"
+                        items-value="name" :lookup-delay="500"
+                        placeholder="{{ __('matcher::peergroup.invitation_enter_name') }}" :items="[]"
+                        label="{{ __('matcher::peergroup.invitation_field_users') }}" :strict="true">
 
                     </dropdown-input>
                 </x-ui.forms.section-body>
