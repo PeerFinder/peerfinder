@@ -11,4 +11,5 @@ return [
     'notification_owner_approved_your_request' => 'Du wurdest als Mitglied in der Gruppe ":title" bestätigt.',
     'subject_group_invitation_received' => 'Einladung der Gruppe ":title" beizutreten',
     'notification_group_invitation_received' => ':user_name hat Dich in die Gruppe ":title" eingeladen.',
+    'notification_group_invitation_comment' => 'Kommentar: :comment',
 ];

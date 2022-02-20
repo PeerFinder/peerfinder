@@ -28,6 +28,6 @@ class SendGroupInvitationNotification
      */
     public function handle($event)
     {
-        $event->receiver->notify(new GroupInvitationReceived($event->pg, $event->receiver, $event->sender));
+        $event->receiver->notify(new GroupInvitationReceived($event->pg, $event->receiver, $event->sender, $event->invitation));
     }
 }

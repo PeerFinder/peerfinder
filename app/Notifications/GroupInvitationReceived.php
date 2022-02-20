@@ -14,17 +14,19 @@ class GroupInvitationReceived extends Notification
     private $pg;
     private $receiver;
     private $sender;
+    private $invitation;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($pg, $receiver, $sender)
+    public function __construct($pg, $receiver, $sender, $invitation)
     {
         $this->pg = $pg;
         $this->receiver = $receiver;
         $this->sender = $sender;
+        $this->invitation = $invitation;
     }
 
     /**
@@ -50,6 +52,7 @@ class GroupInvitationReceived extends Notification
                 ->greeting(__('mail/general.greeting'))
                 ->subject(__('mail/peergroup.subject_group_invitation_received', ['title' => $this->pg->title]))
                 ->line(__('mail/peergroup.notification_group_invitation_received', ['user_name' => $this->sender->name, 'title' => $this->pg->title]))
+                ->line(__('mail/peergroup.notification_group_invitation_comment', ['comment' => $this->invitation->comment]))
                 ->action(__('mail/peergroup.button_show_group'), $this->pg->getUrl())
                 ->line(__('mail/general.thank_you_for_using'));
     }
