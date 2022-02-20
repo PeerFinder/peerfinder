@@ -4,9 +4,9 @@ use App\Http\Controllers\Profile\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['as' => 'profile.'], function () {
-    Route::group(['prefix' => 'u', 'as' => 'user.'], function () {
-        Route::get('/', [UserController::class, 'index'])->name('index');
-        Route::get('/search', [UserController::class, 'search'])->name('search');
-        Route::get('/{user:username}', [UserController::class, 'show'])->name('show');
+    Route::group(['prefix' => 'u', 'as' => 'user.', 'controller' => UserController::class], function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/search', 'search')->name('search');
+        Route::get('/{user:username}', 'show')->name('show');
     });
 });

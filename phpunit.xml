@@ -19,6 +19,11 @@
             <directory suffix=".php">./app</directory>
             <directory suffix=".php">./modules/**/src</directory>
         </include>
+        <exclude>
+            <directory>./app/Nova</directory>
+            <directory>./app/Console</directory>
+            <file>./app/Providers/NovaServiceProvider.php</file>
+        </exclude>
         <report>
             <html outputDirectory="./tests/tmp/coverage"/>
         </report>
