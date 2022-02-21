@@ -26,8 +26,8 @@ class LogSentMail
      */
     public function handle($event)
     {
-        $to = implode('; ', array_keys($event->message->getTo()));
-
+        $to = implode('; ', $event->message->getHeaders()->get('To')->getAddressStrings());
+        
         Log::info('Mail was sent to "' . $to . '" with subject: ' . $event->message->getSubject());
     }
 }
