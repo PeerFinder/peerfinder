@@ -34,9 +34,10 @@ class AppServiceProvider extends ServiceProvider
             // Load the current user with receipts to show in the header (mail symbol)
             $view->with('currentUser', $user);
 
-            $dashboardCounter = $user->received_invitations_count;
-
-            $view->with('dashboardCounter', $dashboardCounter);
+            if ($user) {
+                $dashboardCounter = $user->received_invitations_count;
+                $view->with('dashboardCounter', $dashboardCounter);
+            }
         });
     }
 }
