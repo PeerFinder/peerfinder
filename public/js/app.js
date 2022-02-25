@@ -20193,6 +20193,85 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/HeartbeatBadges.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/HeartbeatBadges.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    url: String,
+    urlNotifications: String,
+    urlMessages: String,
+    interval: {
+      type: Number,
+      "default": 1000
+    }
+  },
+  setup: function setup(props) {
+    var hasErrors = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false);
+    var notifications = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(-1);
+    var messages = (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(-1);
+    var urlNotifications = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return props.urlNotifications;
+    });
+    var urlMessages = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return props.urlMessages;
+    });
+
+    function updateBadges() {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get(props.url, {
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(function (response) {
+        if (notifications.value != response.data.notifications) {
+          if (notifications.value >= 0 && response.data.notifications > notifications.value) {
+            alert("bla");
+          }
+
+          notifications.value = response.data.notifications;
+        }
+
+        if (messages.value != response.data.messages) {
+          messages.value = response.data.messages;
+        }
+      })["catch"](function (e) {})["finally"](function () {});
+    }
+
+    function startHeartbeat() {
+      setInterval(function () {
+        updateBadges();
+      }, props.interval);
+    }
+
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.onMounted)(function () {
+      updateBadges();
+      startHeartbeat();
+    });
+    return {
+      hasErrors: hasErrors,
+      notifications: notifications,
+      messages: messages,
+      urlNotifications: urlNotifications,
+      urlMessages: urlMessages
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TimezoneSelect.vue?vue&type=script&lang=js":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TimezoneSelect.vue?vue&type=script&lang=js ***!
@@ -20656,6 +20735,82 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1 ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "mr-5 flex space-x-4"
+};
+var _hoisted_2 = {
+  "class": "relative"
+};
+var _hoisted_3 = ["href"];
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  "class": "w-7 h-7 text-pf-lightblue hover:text-white",
+  viewBox: "0 0 20 20",
+  fill: "currentColor"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_5 = {
+  key: 0,
+  "class": "absolute rounded-full -right-1.5 -top-0.5 h-4 min-w-[1.5em] px-1 bg-red-500 shadow-sm pointer-events-none text-xs font-semibold text-white flex items-center justify-center"
+};
+var _hoisted_6 = {
+  "class": "relative"
+};
+var _hoisted_7 = ["href"];
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  xmlns: "http://www.w3.org/2000/svg",
+  "class": "w-7 h-7 text-pf-lightblue hover:text-white",
+  viewBox: "0 0 20 20",
+  fill: "currentColor"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_9 = {
+  key: 0,
+  "class": "absolute rounded-full -right-1.5 -top-0.5 h-4 min-w-[1.5em] px-1 bg-red-500 shadow-sm pointer-events-none text-xs font-semibold text-white flex items-center justify-center"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: $setup.urlNotifications
+  }, [_hoisted_4, $setup.notifications > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.notifications), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
+  /* PROPS */
+  , _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: $setup.urlMessages
+  }, [_hoisted_8, $setup.messages > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.messages), 1
+  /* TEXT */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
+  /* PROPS */
+  , _hoisted_7)])]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TimezoneSelect.vue?vue&type=template&id=0779fa00":
 /*!************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TimezoneSelect.vue?vue&type=template&id=0779fa00 ***!
@@ -20702,9 +20857,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_CollapsedContent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CollapsedContent.vue */ "./resources/js/components/CollapsedContent.vue");
 /* harmony import */ var _components_DropdownInput_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/DropdownInput.vue */ "./resources/js/components/DropdownInput.vue");
 /* harmony import */ var _components_DropdownButton_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/DropdownButton.vue */ "./resources/js/components/DropdownButton.vue");
-/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! click-outside-vue3 */ "./node_modules/click-outside-vue3/dist/v-click-outside.umd.js");
-/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(click_outside_vue3__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _components_HeartbeatBadges_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/HeartbeatBadges.vue */ "./resources/js/components/HeartbeatBadges.vue");
+/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! click-outside-vue3 */ "./node_modules/click-outside-vue3/dist/v-click-outside.umd.js");
+/* harmony import */ var click_outside_vue3__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(click_outside_vue3__WEBPACK_IMPORTED_MODULE_11__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -20727,11 +20884,12 @@ var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
     'conversation': _components_Conversation_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     'collapsed-content': _components_CollapsedContent_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     'dropdown-input': _components_DropdownInput_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    'dropdown-button': _components_DropdownButton_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    'dropdown-button': _components_DropdownButton_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    'heartbeat-badges': _components_HeartbeatBadges_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   }
 });
 app.mount('#app');
-app.use((click_outside_vue3__WEBPACK_IMPORTED_MODULE_10___default()));
+app.use((click_outside_vue3__WEBPACK_IMPORTED_MODULE_11___default()));
 
 /***/ }),
 
@@ -39676,6 +39834,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/HeartbeatBadges.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/HeartbeatBadges.vue ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _HeartbeatBadges_vue_vue_type_template_id_2fcc0fb1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1 */ "./resources/js/components/HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1");
+/* harmony import */ var _HeartbeatBadges_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeartbeatBadges.vue?vue&type=script&lang=js */ "./resources/js/components/HeartbeatBadges.vue?vue&type=script&lang=js");
+/* harmony import */ var _Users_leonidlezner_Documents_Dev_Coding_laravelPlayground_peerfinder_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_Users_leonidlezner_Documents_Dev_Coding_laravelPlayground_peerfinder_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HeartbeatBadges_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HeartbeatBadges_vue_vue_type_template_id_2fcc0fb1__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/HeartbeatBadges.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/TimezoneSelect.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/TimezoneSelect.vue ***!
@@ -39832,6 +40018,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/HeartbeatBadges.vue?vue&type=script&lang=js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/HeartbeatBadges.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HeartbeatBadges_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HeartbeatBadges_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HeartbeatBadges.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/HeartbeatBadges.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/TimezoneSelect.vue?vue&type=script&lang=js":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/TimezoneSelect.vue?vue&type=script&lang=js ***!
@@ -39972,6 +40174,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HeaderMenu_vue_vue_type_template_id_7b393792_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HeaderMenu_vue_vue_type_template_id_7b393792_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HeaderMenu.vue?vue&type=template&id=7b393792&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/HeaderMenu.vue?vue&type=template&id=7b393792&scoped=true");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1 ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HeartbeatBadges_vue_vue_type_template_id_2fcc0fb1__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HeartbeatBadges_vue_vue_type_template_id_2fcc0fb1__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/HeartbeatBadges.vue?vue&type=template&id=2fcc0fb1");
 
 
 /***/ }),
