@@ -653,6 +653,11 @@ class Matcher
 
         $event->setOccurrence($timeSpan);
 
+        $event->addAlarm(new \Eluceo\iCal\Domain\ValueObject\Alarm(
+            new \Eluceo\iCal\Domain\ValueObject\Alarm\DisplayAction(__('matcher::peergroup.appointment_ical_reminder')),
+            (new \Eluceo\iCal\Domain\ValueObject\Alarm\RelativeTrigger(\DateInterval::createFromDateString('-60 minutes')))
+        ));
+
         $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$event]);
 
         $iCalendarComponent = (new \Eluceo\iCal\Presentation\Factory\CalendarFactory())->createCalendar($calendar);

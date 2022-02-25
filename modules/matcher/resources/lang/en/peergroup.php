@@ -126,6 +126,7 @@ return [
     'appointment_end' => 'End',
     'button_download_appointment' => 'Download iCal file for your calender',
     'appointment_ical_description' => 'Event from Peer Group ":title": :link',
+    'appointment_ical_reminder' => 'Reminder: the meeting starts in 1 hour!',
     'badge_closed' => 'Completed',
     'preview_only_visible_for_users' => 'Only visible for logged in users',
     'please_login_to_see_details' => 'Please login to see all group details!',
