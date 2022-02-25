@@ -27,10 +27,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('components.layout.*', function ($view) {
-            // Load the current user with receipts to show in the header (mail symbol)
-            $view->with('currentUser', User::where('id', auth()->id())->with(['receipts' => function ($query) {
+            $user = User::where('id', auth()->id())->with(['receipts' => function ($query) {
                 $query->orderBy('updated_at', 'desc')->with('conversation');
-            }])->get()->first());
+            }])->withCount('received_invitations')->get()->first();
+
+            // Load the current user with receipts to show in the header (mail symbol)
+            $view->with('currentUser', $user);
+
+            if ($user) {
+                $dashboardCounter = $user->received_invitations_count;
+                $view->with('dashboardCounter', $dashboardCounter);
+            }
         });
     }
 }

@@ -41,7 +41,7 @@
         {{-- Group invitations --}}
         @if ($invitations->count())
         <div class="mt-5 sm:mt-10">
-            <x-ui.card title="{{ __('dashboard/dashboard.group_invitations') }}">
+            <x-ui.card title="{{ __('dashboard/dashboard.group_invitations') }}" class="border-2 border-pf-darkorange">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                 @foreach ($invitations as $invitation)
                     <div class="border rounded-md shadow-sm p-4">

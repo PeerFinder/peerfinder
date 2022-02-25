@@ -8,6 +8,7 @@ use App\Nova\Metrics\NewMemberships;
 use App\Nova\Metrics\NewPeergroups;
 use App\Nova\Metrics\NewReplies;
 use App\Nova\Metrics\NewUsers;
+use App\Nova\Metrics\OnlineUsers;
 use App\Nova\Metrics\OpenPeergroups;
 use App\Nova\Metrics\UsersPerDay;
 use Illuminate\Support\Facades\Auth;
@@ -73,6 +74,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             new NewAppointments,
             new ApprovedMemberships,
             new OpenPeergroups,
+            new OnlineUsers,
         ];
     }
 

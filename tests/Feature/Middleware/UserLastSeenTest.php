@@ -3,6 +3,7 @@
 namespace Tests\Feature\Middleware;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -25,5 +26,22 @@ class UserLastSeenTest extends TestCase
         $user->refresh();
 
         $this->assertNotNull($user->last_seen);
+    }
+
+    public function test_user_is_online_function()
+    {
+        $user = User::factory()->create();
+
+        $this->assertFalse($user->isOnline());
+
+        $user->last_seen = Carbon::now();
+        $user->save();
+
+        $this->assertTrue($user->isOnline());
+
+        $user->last_seen = Carbon::now()->subMinutes(config('user.timeouts.is_online'));
+        $user->save();
+
+        $this->assertFalse($user->isOnline());
     }
 }

@@ -54,6 +54,9 @@
             @auth
             <div class="flex items-center">
                 {{-- Notification and Messages menu --}}
+                <heartbeat-badges url="{{ route('heartbeat.badges') }}" :interval="5000" url-notifications="{{ route('notifications.index') }}" url-messages="{{ Talk::dynamicConversationsUrl($user) }}"></heartbeat-badges>
+
+                {{-- 
                 <div class="mr-5 flex space-x-4">
                     <div class="relative">
                         <a href="{{ route('notifications.index') }}"><x-ui.icon name="bell" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
@@ -70,6 +73,7 @@
                         @endif
                     </div>
                 </div>
+                --}}
     
                 {{-- User menu --}}
                 <collapsable-header-menu dropdown-class="w-60">

@@ -125,6 +125,7 @@ return [
     'appointment_begin' => 'Beginn',
     'appointment_end' => 'Ende',
     'appointment_ical_description' => 'Treffen der Gruppe ":title": :link',
+    'appointment_ical_reminder' => 'Erinnerung: das Meeting startet in 1 Stunde!',
     'button_download_appointment' => 'Lade die iCal-Datei für Deinen Kalender herunter',
     'badge_closed' => 'Geschlossen',
     'preview_only_visible_for_users' => 'Nur sichtbar für eingeloggte User',

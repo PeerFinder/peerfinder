@@ -117,13 +117,17 @@ class User extends Resource
                 return $this->email_verified_at != null;
             }),
 
+            Boolean::make('Online', function() {
+                return $this->isOnline();
+            }),
+
             Text::make('Last Seen', function() {
                 if ($this->last_seen) {
                     return $this->last_seen->diffForHumans(Carbon::now());
                 } else {
                     return null;
                 }
-            }),
+            })->onlyOnDetail(),
 
             HasMany::make('Tags'),
 
