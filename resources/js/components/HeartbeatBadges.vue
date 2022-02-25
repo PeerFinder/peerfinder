@@ -40,9 +40,17 @@ export default {
         const hasErrors = ref(false);
         const notifications = ref(-1);
         const messages = ref(-1);
+        const urlMessages = ref('');
 
         const urlNotifications = computed(() => props.urlNotifications);
-        const urlMessages = computed(() => props.urlMessages);
+
+        function flashNewNotifications(count) {
+
+        }
+
+        function flashNewMessages(count) {
+
+        }
 
         function updateBadges() {
             axios.get(props.url, {
@@ -52,29 +60,41 @@ export default {
             }).then(function(response) {
                 if (notifications.value != response.data.notifications) {
                     if (notifications.value >= 0 && response.data.notifications > notifications.value) {
-                        alert("bla");
+                        flashNewNotifications(response.data.notifications);
                     }
 
                     notifications.value = response.data.notifications;
                 }
 
                 if (messages.value != response.data.messages) {
+                    if (messages.value >= 0 && response.data.messages > messages.value) {
+                        flashNewMessages(response.data.messages);
+                    }
+
+                    if (response.data.messages_url) {
+                        urlMessages.value = response.data.messages_url;
+                    }
+
                     messages.value = response.data.messages;
                 }
             }).catch(function (e) {
-
-            }).finally(function() {
-
+                hasErrors.value = true;
+                messages.value = 0;
+                notifications.value = 0;
             });
         }
 
         function startHeartbeat() {
             setInterval(() => {
-                updateBadges();
+                if (!hasErrors.value) {
+                    updateBadges();
+                }
             }, props.interval);
         }
 
         onMounted(() => {
+            urlMessages.value = props.urlMessages;
+
             updateBadges();
             startHeartbeat();
         });
@@ -89,6 +109,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-</style>

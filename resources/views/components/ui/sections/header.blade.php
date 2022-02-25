@@ -53,14 +53,8 @@
             
             @auth
             <div class="flex items-center">
-
-
-
                 {{-- Notification and Messages menu --}}
-
-                <heartbeat-badges url="{{ route('heartbeat.badges') }}" interval="3000" url-notifications="{{ route('notifications.index') }}" url-messages="{{ Talk::dynamicConversationsUrl($user) }}">
-
-                </heartbeat-badges>
+                <heartbeat-badges url="{{ route('heartbeat.badges') }}" :interval="5000" url-notifications="{{ route('notifications.index') }}" url-messages="{{ Talk::dynamicConversationsUrl($user) }}"></heartbeat-badges>
 
                 {{-- 
                 <div class="mr-5 flex space-x-4">

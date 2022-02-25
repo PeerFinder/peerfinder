@@ -10,5 +10,8 @@ return [
     ],
     'search' => [
         'limit' => env('USER_SEARCH_LIMIT', 15),
+    ],
+    'timeouts' => [
+        'is_online' => 5,
     ]
 ];

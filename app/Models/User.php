@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\Facades\Avatar;
 use App\Helpers\Facades\Urler;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -121,5 +122,14 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->logAll()->logExcept(['password']);
+    }
+
+    public function isOnline()
+    {
+        if ($this->last_seen) {
+            return $this->last_seen->diffInMinutes(Carbon::now()) < config('user.timeouts.is_online');
+        } else {
+            return false;
+        }
     }
 }

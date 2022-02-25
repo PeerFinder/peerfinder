@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\HeartbeatController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PageController;
@@ -33,5 +32,3 @@ Route::get('/pages/{language}/{slug}', [PageController::class, 'show'])->name('p
 
 Route::get('/{language}', [HomepageController::class, 'show'])->where('language', '[a-z]{2}')->name('homepage.show');
 Route::get('/', [HomepageController::class, 'index'])->name('index');
-
-Route::get('/heartbeat/badges/', [HeartbeatController::class, 'badges'])->name('heartbeat.badges');
