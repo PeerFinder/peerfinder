@@ -106,6 +106,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             Avatar::deleteForUser($user);
             Talk::cleanupForUser($user);
             Matcher::cleanupForUser($user);
+
+            $user->notificationSettings()->get()->each(function($notificationSetting) {
+                $notificationSetting->delete();
+            });
         });
     }
 
@@ -131,5 +135,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         } else {
             return false;
         }
+    }
+
+    public function notificationSettings()
+    {
+        return $this->hasMany(NotificationSetting::class);
     }
 }
