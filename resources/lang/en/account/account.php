@@ -8,6 +8,7 @@ return [
     'menu_password' => 'Password',
     'menu_account' => 'Account',
     'menu_settings' => 'Settings',
+    'menu_notification_settings' => 'Notifications',
     'button_delete_account' => 'Delete Account',
     'deletion_warning' => 'Deleting your account is permanent and irreversible. All your data will be removed from our servers.',
     'confirm_with_password' => 'To confirm the deletion please enter your password.',
