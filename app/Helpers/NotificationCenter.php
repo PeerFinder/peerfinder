@@ -12,29 +12,27 @@ class NotificationCenter
 {
     public function notificationEnabled(User $user, NotificationSettingType $type): bool
     {
-        $existingNotification = NotificationSetting::whereUserId($user->id)->whereNotificationType($type->value)->first();
+        return $this->getNotificationSetting($user, $type) != NotificationSettingStatus::Disabled;
+    }
 
-        $defaultStatus = NotificationSetting::defaultStatus();
+    public function getNotificationSetting(User $user, NotificationSettingType $type): NotificationSettingStatus
+    {
+        $notification = NotificationSetting::whereUserId($user->id)->whereNotificationType($type->value)->first();
 
-        // If the notification settings is not set yet, check if the setting is disabled by default.
-        if ($existingNotification == null) {
-            // If the settings is disabled by default, return false
-            if ($defaultStatus[$type->value] == NotificationSettingStatus::Disabled) {
-                return false;
-            } else {
-                // If the default setting is not disabled, create a new notification setting
-                $notification = new NotificationSetting();
-
-                $notification->user_id = $user->id;
-                $notification->notification_type = $type;
-                $notification->notification_status = $defaultStatus[$type->value];
-        
-                $notification->save();
-
-                return true;
-            }
+        if ($notification != null) {
+            return $notification->notification_status;
         } else {
-            return $existingNotification->notification_status != NotificationSettingStatus::Disabled;
+            $defaultStatus = NotificationSetting::defaultStatus();
+
+            $notification = new NotificationSetting();
+
+            $notification->user_id = $user->id;
+            $notification->notification_type = $type;
+            $notification->notification_status = $defaultStatus[$type->value];
+    
+            $notification->save();
+
+            return $notification->notification_status;
         }
     }
 

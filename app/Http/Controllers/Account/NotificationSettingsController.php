@@ -16,23 +16,33 @@ class NotificationSettingsController extends Controller
 {
     public function edit(Request $request)
     {
+        $user = $request->user();
+
         return view('frontend.account.notification_settings.edit', [
-            'user' => $request->user(),
-            
+            'user' => $user,
+            'statusOptions' => [
+                NotificationSettingStatus::Disabled->value => __('account/notification_settings.notification_setting_status_disabled'),
+                NotificationSettingStatus::Mail->value => __('account/notification_settings.notification_setting_status_mail'),
+            ],
+            'statusValues' => [
+                NotificationSettingType::UnreadMessages->name => NotificationCenter::getNotificationSetting($user, NotificationSettingType::UnreadMessages),
+                NotificationSettingType::NewGroupsNewsletter->name => NotificationCenter::getNotificationSetting($user, NotificationSettingType::NewGroupsNewsletter),
+            ]
         ]);
     }
 
     public function update(Request $request)
     {
         $input = $request->input();
+        $user = $request->user();
 
         Validator::make($input, [
             NotificationSettingType::UnreadMessages->name => ['required', 'numeric', new Enum(NotificationSettingStatus::class)],
             NotificationSettingType::NewGroupsNewsletter->name => ['required', 'numeric' , new Enum(NotificationSettingStatus::class)],
         ])->validate();
 
-        NotificationCenter::setNotificationSetting($request->user(), NotificationSettingType::UnreadMessages, NotificationSettingStatus::from($input[NotificationSettingType::UnreadMessages->name]));
-        NotificationCenter::setNotificationSetting($request->user(), NotificationSettingType::NewGroupsNewsletter, NotificationSettingStatus::from($input[NotificationSettingType::NewGroupsNewsletter->name]));
+        NotificationCenter::setNotificationSetting($user, NotificationSettingType::UnreadMessages, NotificationSettingStatus::from($input[NotificationSettingType::UnreadMessages->name]));
+        NotificationCenter::setNotificationSetting($user, NotificationSettingType::NewGroupsNewsletter, NotificationSettingStatus::from($input[NotificationSettingType::NewGroupsNewsletter->name]));
 
         return redirect()->back()->with('success', __('account/notification_settings.notification_settings_changed_successfully'));
     }
