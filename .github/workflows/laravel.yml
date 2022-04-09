@@ -39,7 +39,7 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
     - name: Run Tests
-      run: php artisan test
+      run: export XDEBUG_MODE=off && php artisan test
     - name: Install MailHog for Dusk Tests
       run: |
         sudo apt-get -y install golang-go
