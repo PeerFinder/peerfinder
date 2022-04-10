@@ -2,6 +2,9 @@
 
 namespace Tests\Feature\Notifications;
 
+use App\Enums\NotificationSettingStatus;
+use App\Enums\NotificationSettingType;
+use App\Helpers\Facades\NotificationCenter;
 use App\Models\User;
 use App\Notifications\GroupInvitationReceived;
 use App\Notifications\NewMemberInGroup;
@@ -135,6 +138,31 @@ class NotificationsTest extends TestCase
         Talk::sendNotificationsForReceipts();
 
         Notification::assertSentTo([$user2], UserHasUnreadReplies::class);
+    }
+
+    public function test_talk_api_notifies_about_existing_receipts_only_when_notification_enabled()
+    {
+        Notification::fake();
+
+        $user1 = User::factory()->create();
+        $user2 = User::factory()->create();
+
+        NotificationCenter::setNotificationSetting($user2, NotificationSettingType::UnreadMessages, NotificationSettingStatus::Disabled);
+
+        $conversation = Conversation::factory()->byUser($user2)->create();
+
+        $conversation->addUser($user2);
+        $conversation->addUser($user1);
+
+        $r1 = Talk::createReply($conversation, $user1, ['message' => $this->faker->text()]);
+
+        $rc1 = Receipt::whereReplyId($r1->id)->whereUserId($user2->id)->first();
+        $rc1->created_at = now()->subMinutes(50);
+        $rc1->save();
+
+        Talk::sendNotificationsForReceipts();
+
+        Notification::assertNothingSentTo([$user2], UserHasUnreadReplies::class);
     }
 
     public function test_notification_generated_when_user_receives_group_invitation()
