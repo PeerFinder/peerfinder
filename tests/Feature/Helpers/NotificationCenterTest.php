@@ -59,4 +59,19 @@ class NotificationCenterTest extends TestCase
         $this->assertDatabaseMissing('notification_settings', ['user_id' => $user->id, 'notification_type' => NotificationSettingType::UnreadMessages->value]);
         $this->assertDatabaseMissing('notification_settings', ['user_id' => $user->id, 'notification_type' => NotificationSettingType::NewGroupsNewsletter->value]);
     }
+
+    public function test_notification_guest_can_disable_by_link()
+    {
+        $user = User::factory()->create();
+
+        NotificationCenter::setNotificationSetting($user, NotificationSettingType::UnreadMessages, NotificationSettingStatus::Mail);
+
+        $this->assertEmpty(NotificationCenter::getUnsubscribeLink($user, NotificationSettingType::NewGroupsNewsletter));
+
+        $response = $this->get(NotificationCenter::getUnsubscribeLink($user, NotificationSettingType::UnreadMessages));
+
+        $response->assertStatus(200);
+
+        $this->assertFalse(NotificationCenter::notificationEnabled($user, NotificationSettingType::UnreadMessages));
+    }
 }

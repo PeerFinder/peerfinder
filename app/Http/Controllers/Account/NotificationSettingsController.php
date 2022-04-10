@@ -6,6 +6,7 @@ use App\Enums\NotificationSettingStatus;
 use App\Enums\NotificationSettingType;
 use App\Helpers\Facades\NotificationCenter;
 use App\Http\Controllers\Controller;
+use App\Models\NotificationSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -45,5 +46,15 @@ class NotificationSettingsController extends Controller
         NotificationCenter::setNotificationSetting($user, NotificationSettingType::NewGroupsNewsletter, NotificationSettingStatus::from($input[NotificationSettingType::NewGroupsNewsletter->name]));
 
         return redirect()->back()->with('success', __('account/notification_settings.notification_settings_changed_successfully'));
+    }
+
+    public function unsubscribe($identifier)
+    {
+        $notification = NotificationSetting::whereIdentifier($identifier)->firstOrFail();
+
+        $notification->notification_status = NotificationSettingStatus::Disabled;
+        $notification->save();
+
+        return view('frontend.account.notification_settings.unsubscribe');
     }
 }

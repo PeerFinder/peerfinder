@@ -8,4 +8,6 @@ return [
     'notification_setting_status_mail' => 'E-Mail',
     'label_UnreadMessages' => 'Benachrichtige bei ungelesenen Nachrichten',
     'label_NewGroupsNewsletter' => 'Schicke eine Aktualisierung mit neuen Gruppen',
+    'unsubscribe_title' => 'E-Mail Abonnement',
+    'unsubscribe_message' => 'Das Abonnement wurde erfolgreich gekündigt!',
 ];

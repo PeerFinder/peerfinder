@@ -50,4 +50,15 @@ class NotificationCenter
 
         $notification->save();
     }
+
+    public function getUnsubscribeLink(User $user, NotificationSettingType $type)
+    {
+        $notification = NotificationSetting::whereUserId($user->id)->whereNotificationType($type->value)->first();
+
+        if ($notification != null) {
+            return route('notifications.unsubscribe', ['identifier' => $notification->identifier]);
+        } else {
+            return null;
+        }
+    }
 }

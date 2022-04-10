@@ -8,4 +8,6 @@ return [
     'notification_setting_status_mail' => 'E-Mail',
     'label_UnreadMessages' => 'Notify if there are unread messages',
     'label_NewGroupsNewsletter' => 'Send an update with new groups',
+    'unsubscribe_title' => 'Mail subscription',
+    'unsubscribe_message' => 'Subscription was successfully canceled!',
 ];
