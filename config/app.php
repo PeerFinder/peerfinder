@@ -185,6 +185,7 @@ return [
         Matcher\MatcherServiceProvider::class,
         App\Providers\EasyDateServiceProvider::class,
         App\Providers\PagesServiceProvider::class,
+        App\Providers\NotificationCenterServiceProvider::class,
     ],
 
     /*
@@ -243,6 +244,7 @@ return [
         'Avatar' => App\Helpers\Facades\Avatar::class,
         'EasyDate' => App\Helpers\Facades\EasyDate::class,
         'Pages' => App\Helpers\Facades\Pages::class,
+        'NotificationCenter' => App\Helpers\Facades\NotificationCenter::class,
     ],
 
 ];

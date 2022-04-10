@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\NotificationSettingsController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PageController;
@@ -22,11 +23,12 @@ Route::group(['prefix' => 'media', 'as' => 'media.'], function () {
     Route::get('/avatar/{user}_{size}.jpg', [MediaController::class, 'avatar'])->where('size', '[0-9]+')->middleware('cache.headers:private;max_age=300;etag')->name('avatar');
 });
 
-
 Route::get('/logout', function() {
     Auth::logout();
     return redirect('/');
 })->name('logout');
+
+Route::get('/notifications/unsubscribe/{identifier}', [NotificationSettingsController::class, 'unsubscribe'])->name('notifications.unsubscribe');
 
 Route::get('/pages/{language}/{slug}', [PageController::class, 'show'])->name('page.show');
 

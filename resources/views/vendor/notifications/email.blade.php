@@ -56,6 +56,7 @@
         'actionText' => $actionText,
     ]
 ) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+
 @endslot
 @endisset
 @endcomponent

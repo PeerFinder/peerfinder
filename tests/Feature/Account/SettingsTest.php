@@ -23,7 +23,7 @@ class SettingsTest extends TestCase
         $response->assertRedirect(route('login'));
     }
 
-    public function test_account_password_screen_can_be_rendered()
+    public function test_account_settings_screen_can_be_rendered()
     {
         $user = User::factory()->create();
         $response = $this->actingAs($user)->get(route('account.settings.edit'));

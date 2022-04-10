@@ -2,6 +2,9 @@
 
 namespace App\Listeners;
 
+use App\Enums\NotificationSettingStatus;
+use App\Enums\NotificationSettingType;
+use App\Helpers\Facades\NotificationCenter;
 use App\Notifications\UserHasUnreadReplies;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -26,6 +29,10 @@ class SendUserHasUnreadReplies
      */
     public function handle($event)
     {
-        $event->receipt->user->notify(new UserHasUnreadReplies($event->receipt));
+        $notificationStatus = NotificationCenter::getNotificationSetting($event->receipt->user, NotificationSettingType::UnreadMessages);
+
+        if ($notificationStatus != NotificationSettingStatus::Disabled) {
+            $event->receipt->user->notify(new UserHasUnreadReplies($event->receipt));
+        }
     }
 }

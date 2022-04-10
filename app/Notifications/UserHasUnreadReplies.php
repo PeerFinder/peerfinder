@@ -2,12 +2,15 @@
 
 namespace App\Notifications;
 
+use App\Enums\NotificationSettingType;
+use App\Helpers\Facades\NotificationCenter;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Talk\Models\Receipt;
 use Illuminate\Support\Str;
+use Illuminate\Support\HtmlString;
 
 class UserHasUnreadReplies extends Notification
 {
@@ -49,6 +52,8 @@ class UserHasUnreadReplies extends Notification
                 ->subject(__('mail/talk.unread_messages_conversation', ['conversation_title' => Str::limit($this->receipt->conversation->getTitle(), 50)]))
                 ->line(__('mail/talk.unread_messages_conversation', ['conversation_title' => $this->receipt->conversation->getTitle()]))
                 ->action(__('mail/talk.button_show_conversation'), route('talk.show', ['conversation' => $this->receipt->conversation->identifier]))
-                ->line(__('mail/general.thank_you_for_using'));
+                ->line(__('mail/general.thank_you_for_using'))
+                ->line(new HtmlString(__('mail/general.unsubscribe_text', 
+                    ['link' => NotificationCenter::getUnsubscribeLink($this->receipt->user, NotificationSettingType::UnreadMessages)])));
     }
 }

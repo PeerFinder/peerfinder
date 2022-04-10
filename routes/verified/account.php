@@ -6,6 +6,7 @@ use App\Http\Controllers\Account\ProfileController;
 use App\Http\Controllers\Account\AccountController;
 use App\Http\Controllers\Account\AvatarController;
 use App\Http\Controllers\Account\SettingsController;
+use App\Http\Controllers\Account\NotificationSettingsController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
@@ -42,6 +43,11 @@ Route::group(['prefix' => 'account', 'as' => 'account.'], function () {
     });
 
     Route::group(['prefix' => 'settings', 'as' => 'settings.', 'controller' => SettingsController::class], function () {
+        Route::get('/', 'edit')->name('edit');
+        Route::put('/update', 'update')->name('update');
+    });
+
+    Route::group(['prefix' => 'notifications', 'as' => 'notification_settings.', 'controller' => NotificationSettingsController::class], function () {
         Route::get('/', 'edit')->name('edit');
         Route::put('/update', 'update')->name('update');
     });
