@@ -1,12 +1,26 @@
 <header id="header" class="shadow bg-[#1F303A]">
     <div class="max-w-6xl mx-auto px-3 flex py-2.5 items-center">
         {{-- App logo --}}
+        @guest
         <div class="mr-5 sm:mr-10">
-            <a href="{{ Auth::check() ? route('dashboard.index') : route('index') }}" class="flex items-center">
+            <a href="{{ route('index') }}" class="flex items-center">
                 <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="w-7" alt="{{ config('app.name') }}" />
                 <div class="text-2xl ml-2 text-gray-200 hidden sm:block">{{ config('app.name') }}</div>
             </a>
         </div>
+        @endguest
+
+        @auth
+        <div class="mr-5 sm:mr-10">
+            <a href="{{ route('dashboard.index') }}" class="flex items-center">
+                <img src="{{ Urler::versioned_asset('/images/peerfinder_logo.png') }}" srcset="{{ Urler::versioned_asset('/images/peerfinder_logo@2x.png') }} 2x" class="w-7" alt="{{ config('app.name') }}" />
+                <div class="ml-2">
+                    <div class="text-1xl font-bold text-gray-200 hidden sm:block">{{ config('app.name') }}</div>
+                    <div class="text-pf-lightblue hover:text-white text-sm">@lang('submenu.my_dashboard')</div>
+                </div>
+            </a>
+        </div>
+        @endauth    
 
         <div id="header-nav" class="flex-1 flex items-center justify-between">
             @auth
@@ -56,25 +70,6 @@
                 {{-- Notification and Messages menu --}}
                 <heartbeat-badges url="{{ route('heartbeat.badges') }}" :interval="5000" url-notifications="{{ route('notifications.index') }}" url-messages="{{ Talk::dynamicConversationsUrl($user) }}"></heartbeat-badges>
 
-                {{-- 
-                <div class="mr-5 flex space-x-4">
-                    <div class="relative">
-                        <a href="{{ route('notifications.index') }}"><x-ui.icon name="bell" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
-                        @if ($user->unreadNotifications->isNotEmpty())
-                        <div class="animate-ping absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm pointer-events-none"></div>
-                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm pointer-events-none"></div>
-                        @endif
-                    </div>
-                    <div class="relative">
-                        <a href="{{ Talk::dynamicConversationsUrl($user) }}"><x-ui.icon name="mail" class="w-7 h-7 text-pf-lightblue hover:text-white" /></a>
-                        @if (Talk::userHasUnreadConversations($user))
-                        <div class="animate-ping absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm pointer-events-none"></div>
-                        <div class="absolute rounded-full -right-0.5 top-0 w-3 h-3 bg-red-500 shadow-sm pointer-events-none"></div>
-                        @endif
-                    </div>
-                </div>
-                --}}
-    
                 {{-- User menu --}}
                 <collapsable-header-menu dropdown-class="w-60">
                     <template v-slot:trigger>
