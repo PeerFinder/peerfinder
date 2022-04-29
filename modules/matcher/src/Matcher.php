@@ -32,6 +32,7 @@ use App\Helpers\Facades\EasyDate;
 use Illuminate\Support\Facades\Response;
 use Matcher\Events\InvitationSent;
 use Matcher\Models\Invitation;
+use DateTimeZone;
 
 class Matcher
 {
@@ -659,6 +660,12 @@ class Matcher
         ));
 
         $calendar = new \Eluceo\iCal\Domain\Entity\Calendar([$event]);
+
+        if (auth()->user()->timezone) {
+            $phpTz = new DateTimeZone('Europe/Berlin');
+            $tz = \Eluceo\iCal\Domain\Entity\TimeZone::createFromPhpDateTimeZone($phpTz, EasyDate::fromUTC($appointment->date), EasyDate::fromUTC($appointment->end_date));
+            $calendar->addTimeZone($tz);
+        }
 
         $iCalendarComponent = (new \Eluceo\iCal\Presentation\Factory\CalendarFactory())->createCalendar($calendar);
 
