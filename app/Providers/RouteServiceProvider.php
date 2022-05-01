@@ -62,6 +62,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware(['web', 'auth', 'verified'])
                 ->namespace('App\Http\Controllers\Profile')
                 ->group(base_path('routes/verified/profile.php'));
+
+            Route::middleware(['web', 'auth'])
+                ->namespace('App\Http\Controllers\Support')
+                ->group(base_path('routes/verified/support.php'));                
         });
     }
 
