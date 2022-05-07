@@ -11,7 +11,9 @@ class WishlistController extends Controller
 {
     public function create(Request $request)
     {
-        return view('frontend.support.wishlist.create');
+        return view('frontend.support.wishlist.create', [
+            'context' => $request->get('c', ''),
+        ]);
     }
 
     public function store(Request $request)
@@ -30,6 +32,6 @@ class WishlistController extends Controller
 
         $entry->save();
 
-        return redirect(route('support.wishlist.create'))->with('success', __('support/wishlist.wishlist_was_saved_successfully'));
+        return redirect(route('dashboard.index'))->with('success', __('support/wishlist.wishlist_was_saved_successfully'));
     }
 }
