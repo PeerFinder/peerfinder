@@ -12,7 +12,7 @@
             </div>
 
             <x-account.form-buttons>
-                <input type="text" name="context" value="{{ $context }}" />
+                <input type="hidden" name="context" value="{{ $context }}" />
 
                 @csrf
                 @method('PUT')
