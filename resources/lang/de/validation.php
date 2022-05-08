@@ -135,6 +135,7 @@ return [
         'avatar'                => 'Avatar',
         'age'                   => 'Alter',
         'available'             => 'verfügbar',
+        'body'                  => 'Beschreibung',
         'city'                  => 'Stadt',
         'comment'               => 'Kommentar',
         'content'               => 'Inhalt',

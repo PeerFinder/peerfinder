@@ -4,6 +4,8 @@
     <x-base.app>
         <x-ui.sections.header :user="$currentUser" />
 
+        <x-ui.feedback-button />
+
         @auth
         <div class="bg-white border-b mb-1">
             <x-base.container class="sm:px-3">
