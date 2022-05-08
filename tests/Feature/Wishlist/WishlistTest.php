@@ -1,9 +1,10 @@
 <?php
 
-namespace Tests\Feature\Profile;
+namespace Tests\Feature\Wishlist;
 
 use App\Helpers\Facades\Urler;
 use App\Models\User;
+use App\Models\WishlistEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,7 +12,7 @@ use Tests\TestCase;
 /**
  * @group wishlist
  */
-class Wishlist extends TestCase
+class WishlistTest extends TestCase
 {
     use RefreshDatabase;
     use WithFaker;
@@ -61,5 +62,9 @@ class Wishlist extends TestCase
             'body' => $text,
             'context' => $context,
         ]);
+
+        $we = WishlistEntry::whereUserId($user->id)->whereBody($text)->first();
+
+        $this->assertEquals($user->id, $we->user()->first()->id);
     }
 }

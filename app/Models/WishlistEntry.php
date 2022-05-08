@@ -20,5 +20,10 @@ class WishlistEntry extends Model
             'update' => $updateRules,
             'create' => $updateRules,
         ];
-    }    
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
