@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Helpers\Facades\Infocards;
 use App\Helpers\Facades\Urler;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -51,6 +52,8 @@ class DashboardController extends Controller
             'peergroup' => fn($q) => $q->with(Peergroup::defaultRelationships())
         ])->get();
 
+        $infocards = Infocards::getCards(app()->getLocale(), ['dashboard-welcome', 'learn-request-hint'], $user);
+
         return view('frontend.profile.dashboard.index', compact(
             'own_peergroups',
             'member_peergroups',
@@ -58,6 +61,7 @@ class DashboardController extends Controller
             'users_count',
             'appointments',
             'invitations',
+            'infocards',
         ));
     }
 }

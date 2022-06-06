@@ -3,6 +3,21 @@
         {{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }}
     </x-slot>
 
+    @if ($infocards && count($infocards))
+    <div class="my-5 space-y-1">
+    @foreach ($infocards as $infocard)
+        <x-ui.card class="lg:w-2/3 mx-auto px-5 py-4 bg-yellow-50 border border-yellow-300">
+            @if ($infocard->title)
+            <h2 class="mb-2 font-semibold">{{ $infocard->title }}</h2>
+            @endif
+            <div>
+                {{ $infocard->body }}
+            </div>
+        </x-ui.card>
+    @endforeach
+    </div>
+    @endif
+
     <div class="mt-5 sm:mt-10 mb-5 sm:mb-10">
         <div class="sm:flex sm:items-center space-y-2 text-center sm:text-left">
             <div class="flex-1 inline-flex items-center mr-2">

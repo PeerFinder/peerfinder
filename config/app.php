@@ -186,6 +186,7 @@ return [
         App\Providers\EasyDateServiceProvider::class,
         App\Providers\PagesServiceProvider::class,
         App\Providers\NotificationCenterServiceProvider::class,
+        App\Providers\InfocardsServiceProvider::class,
     ],
 
     /*
@@ -245,6 +246,7 @@ return [
         'EasyDate' => App\Helpers\Facades\EasyDate::class,
         'Pages' => App\Helpers\Facades\Pages::class,
         'NotificationCenter' => App\Helpers\Facades\NotificationCenter::class,
+        'Infocards' => App\Helpers\Facades\Infocards::class,
     ],
 
 ];
