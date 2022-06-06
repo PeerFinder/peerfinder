@@ -36,7 +36,7 @@
             @if ($users->hasPages())
             <div class="mt-4">{{ $users->links() }}</div>
             @endif
-            @elseif (request()->has('search'))
+            @elseif (request()->get('search', ''))
             <div class="text-center py-10">{{ __('profile/search.no_users_found') }}</div>
             @endif
         </x-ui.card>
