@@ -69,7 +69,7 @@ class UserTest extends TestCase
         $response->assertSee($data['xing_profile']);
     }
 
-    public function test_user_can_search_for_users()
+    public function test_user_can_search_for_users_as_json()
     {
         $user1 = User::factory()->create();
         $users = User::factory(10)->create();
@@ -78,5 +78,21 @@ class UserTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson(['users' => []]);
+    }
+
+    public function test_user_can_search_for_users()
+    {
+        $user1 = User::factory()->create();
+        $users = User::factory(10)->create();
+
+        $response = $this->actingAs($user1)->get(route('profile.user.search', ['search' => $users[0]->name]));
+
+        $response->assertStatus(200);
+        $response->assertSee(__('profile/search.results'));
+        $response->assertSee($users[0]->slogan);
+        
+        $response = $this->actingAs($user1)->get(route('profile.user.search', ['search' => '']));
+        $response->assertStatus(200);
+        $response->assertDontSee(__('profile/search.results'));
     }
 }

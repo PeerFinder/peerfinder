@@ -3,4 +3,5 @@
 return [
     'my_dashboard' => 'Mein Dashboard',
     'groups' => 'Gruppen',
+    'peers' => 'Personen',
 ];
