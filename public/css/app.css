@@ -1297,9 +1297,6 @@ select {
 .w-64 {
   width: 16rem;
 }
-.w-2\/3 {
-  width: 66.666667%;
-}
 .w-3 {
   width: 0.75rem;
 }
@@ -1308,6 +1305,9 @@ select {
 }
 .w-10 {
   width: 2.5rem;
+}
+.w-2\/3 {
+  width: 66.666667%;
 }
 .w-1 {
   width: 0.25rem;
@@ -1731,10 +1731,6 @@ select {
 .bg-yellow-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(254 240 138 / var(--tw-bg-opacity));
-}
-.bg-green-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(187 247 208 / var(--tw-bg-opacity));
 }
 .bg-yellow-50 {
   --tw-bg-opacity: 1;
@@ -3103,6 +3099,10 @@ select {
 
   .lg\:w-2\/3 {
     width: 66.666667%;
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .lg\:space-y-0 > :not([hidden]) ~ :not([hidden]) {
