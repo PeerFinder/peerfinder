@@ -4,10 +4,11 @@ namespace App\Helpers;
 
 use Illuminate\Support\Str;
 use App\Models\Infocard;
+use Illuminate\Support\Facades\DB;
 
 class Infocards
 {
-    public function getCard($language, $slug, $user)
+    public function getCard($language, $slug, $user = null)
     {
         if(!in_array($language, config('app.available_locales'))) {
             return null;
@@ -18,12 +19,16 @@ class Infocards
                     ->whereActive(true)
                     ->first();
 
-        // #TODO: Check if the card was hidden by the user
+        if ($card && $user) {
+            if ($this->isCardClosed($card, $user)) {
+                return null;
+            }
+        }
 
         return $card;
     }
     
-    public function getCards($language, $slugs, $user)
+    public function getCards($language, $slugs, $user = null)
     {
         $cards = [];
 
@@ -38,8 +43,29 @@ class Infocards
         return $cards;
     }
 
-    public function markdown($markdown)
+    public function closeCard($language, $slug, $user = null)
     {
-        return Str::markdown($markdown);
+        $card = $this->getCard($language, $slug, $user);
+
+        if (!$card) {
+            return false;
+        }
+
+        DB::table('infocards_closed')->insert([
+            'user_id' => $user->id,
+            'infocard_id' => $card->id,
+        ]);
+
+        return true;
+    }
+
+    public function isCardClosed($card, $user)
+    {
+        $closed = DB::table('infocards_closed')
+                    ->where('infocard_id', '=', $card->id)
+                    ->where('user_id', '=', $user->id)
+                    ->first();
+
+        return $closed != null;
     }
 }
