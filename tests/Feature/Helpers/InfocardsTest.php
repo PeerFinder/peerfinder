@@ -39,7 +39,7 @@ class InfocardsTest extends TestCase
         $this->assertEquals($c[0]->title, $cards[$c[0]->slug]->title);
     }
 
-    public function test_user_can_close_infocard()
+    public function test_infocard_is_closable()
     {
         $user = User::factory()->create();
         $c = Infocard::factory()->create();
@@ -56,5 +56,16 @@ class InfocardsTest extends TestCase
 
         $ret = Infocards::closeCard($c->language, $c->slug, $user);
         $this->assertFalse($ret);
+    }
+
+    public function test_user_can_close_infocard()
+    {
+        $user = User::factory()->create();
+        $c = Infocard::factory()->create();
+
+        $response = $this->actingAs($user)->postJson(route('infocards.close', ['slug' => $c->slug]));
+
+        $response->assertStatus(200);
+        $response->assertJson(['closed' => true]);
     }
 }
