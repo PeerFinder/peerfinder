@@ -3,6 +3,8 @@
         {{ __('dashboard/dashboard.title', ['name' => auth()->user()->name]) }}
     </x-slot>
 
+    <x-ui.top-infocards :infocards="$infocards" />
+
     <div class="mt-5 sm:mt-10 mb-5 sm:mb-10">
         <div class="sm:flex sm:items-center space-y-2 text-center sm:text-left">
             <div class="flex-1 inline-flex items-center mr-2">

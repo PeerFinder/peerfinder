@@ -1,12 +1,13 @@
 <x-layout.minimal title="{{ __('profile/search.title') }}">
 
     <div class="mt-5 sm:mt-10 mb-5 sm:mb-10">
-        <x-ui.h1>{{ __('profile/search.title') }}</x-ui.h1>
-
+        <div class="px-4 sm:p-0">
+            <x-ui.h1>{{ __('profile/search.title') }}</x-ui.h1>
+        </div>
 
         <x-ui.card class="p-4 mt-5">
-            <x-ui.forms.form method="get" action="{{ route('profile.user.search') }}" autocomplete="off" class="space-x-2 flex w-1/2 my-2 mx-auto">
-                <x-ui.forms.input name="search" value="{{ request()->get('search') }}" placeholder="{{ __('profile/search.search_placeholder') }}" />
+            <x-ui.forms.form method="get" action="{{ route('profile.user.search') }}" autocomplete="off" class="space-x-2 flex sm:w-1/2 my-2 mx-auto">
+                <x-ui.forms.input name="search" value="{{ request()->get('search') }}" placeholder="{{ __('profile/search.search_placeholder') }}"></x-ui.forms.input>
                 <x-ui.forms.button action="inform">@lang('profile/search.button_search')</x-ui.forms.button>
             </x-ui.forms.form>
 
@@ -14,7 +15,7 @@
             <div class="mt-4">
                 <h2 class="font-semibold text-lg mb-4">{{ __('profile/search.results') }}</h2>
 
-                <div class="grid grid-cols-4 gap-4">
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     @foreach ($users as $user)
                     <a class="block col-span-1 hover:bg-gray-50 border rounded-md shadow-sm py-2 px-3" href="{{ $user->profileUrl() }}">
                         <div class="text-center my-4">

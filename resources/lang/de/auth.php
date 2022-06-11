@@ -38,7 +38,7 @@ return [
     'privacy_policy' => 'Datenschutz',
     'imprint' => 'Impressum',
     'please_verify_your_email' => 'Bitte die E-Mail Adresse bestätigen',
-    'verify_email_explanation' => 'Danke für die Registrierung! Es wurde an die angegebene E-Mail Adresse ein Bestätigungslink geschickt. Bitte den Link anklicken, um die E-Mail Adresse zu bestätigen. Sollte kein Link angekommen sein, bitte erneut einen Schicken lassen.',
+    'verify_email_explanation' => 'Danke für die Registrierung! Es wurde an die angegebene E-Mail Adresse ein Bestätigungslink geschickt. Bitte den Link anklicken, um die E-Mail Adresse zu bestätigen. Sollte kein Link angekommen sein, bitte erneut einen Schicken lassen oder die E-Mail Adresse ändern.',
     'button_resend_verification_email' => 'Bestätigungslink senden',
     'verification_link_has_been_sent' => 'Ein neuer Bestätigungslink wurde an die angegebene E-Mail Adresse geschickt.',
     'forgot_password_title' => 'Passwort zurücksetzen',

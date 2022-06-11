@@ -1,6 +1,9 @@
-@props(['pg' => null, 'edit' => false])
+@props(['pg' => null, 'edit' => false, 'infocards' => null])
 
 <x-layout.minimal :title="$pg ? $pg->title : __('matcher::peergroup.new_peergroup_title')">
+    @if ($infocards)
+    <x-ui.top-infocards :infocards="$infocards" />
+    @endif
 
     @if ($pg)
         @if (!$edit)
@@ -39,7 +42,7 @@
             </div>
         </div>
         @else
-        <div class="sm:mt-10 mb-5 sm:mb-7">
+        <div class="mt-5 sm:mt-10 mb-5 sm:mb-7 px-4 sm:px-0">
             <a href="{{ $pg->getUrl() }}">
                 <x-ui.h1>
                     {{ $pg->title }}
