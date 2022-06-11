@@ -125,6 +125,10 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'matomo_tracking_url' => env('APP_MATOMO_TRACKING_URL', ''),
+
+    'matomo_tracking_id' => env('APP_MATOMO_TRACKING_ID', 1),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
