@@ -28,7 +28,7 @@ class Infocards
         return $card;
     }
     
-    public function getCards($language, $slugs, $user = null)
+    public function getCards($language, $slugs, $user = null, $limit = 0)
     {
         $cards = [];
 
@@ -37,6 +37,10 @@ class Infocards
 
             if ($card) {
                 $cards[$slug] = $card;
+            }
+
+            if ($limit && (count($cards) >= $limit)) {
+                return $cards;
             }
         }
 

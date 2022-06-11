@@ -2,6 +2,7 @@
 
 namespace Matcher\Http\Controllers;
 
+use App\Helpers\Facades\Infocards;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -17,6 +18,8 @@ class PeergroupsController extends Controller
 {
     public function index(Request $request)
     {
+        $infocards = Infocards::getCards(app()->getLocale(), ['peergroups-index', 'peergroups-start-group'], auth()->user(), 1);
+
         $params = [];
 
         foreach(Matcher::getDefaultFilters() as $p => $v) {
@@ -36,7 +39,7 @@ class PeergroupsController extends Controller
             'path' => Paginator::resolveCurrentPath(),
         ]);
 
-        $ret = response()->view('matcher::peergroups.index', compact('peergroups', 'filters', 'params'));
+        $ret = response()->view('matcher::peergroups.index', compact('peergroups', 'filters', 'params', 'infocards'));
 
         if ($peergroups->count() < 1) {
             $ret->setStatusCode(404);
@@ -57,7 +60,9 @@ class PeergroupsController extends Controller
 
         $group_types = Matcher::groupTypesSelect();
 
-        return view('matcher::peergroups.create', compact('pg', 'group_types'));
+        $infocards = Infocards::getCards(app()->getLocale(), ['peergroups-create'], auth()->user(), 1);
+
+        return view('matcher::peergroups.create', compact('pg', 'group_types', 'infocards'));
     }
 
     public function preview(Request $request, $groupname)
@@ -91,8 +96,14 @@ class PeergroupsController extends Controller
 
         if (Gate::allows('manage-members', $pg)) {
             $pending = Matcher::getPendingMemberships($pg);
+
+            // Show infocard for group owners
+            $infocards = Infocards::getCards(app()->getLocale(), ['peergroups-show-for-owners'], auth()->user(), 1);
         } else {
             $pending = null;
+
+            // Show infocard for non-owners
+            $infocards = Infocards::getCards(app()->getLocale(), ['peergroups-show'], auth()->user(), 1);
         }
 
         if ($pg->isMember(auth()->user())) {
@@ -101,7 +112,7 @@ class PeergroupsController extends Controller
             $conversations = null;
         }
 
-        return view('matcher::peergroups.show', compact('pg', 'pending', 'conversations'));
+        return view('matcher::peergroups.show', compact('pg', 'pending', 'conversations', 'infocards'));
     }
 
     public function edit(Request $request, Peergroup $pg)

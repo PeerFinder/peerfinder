@@ -11,6 +11,7 @@ import CollapsedContent from './components/CollapsedContent.vue';
 import DropdownInput from './components/DropdownInput.vue';
 import DropdownButton from './components/DropdownButton.vue';
 import HeartbeatBadges from './components/HeartbeatBadges.vue';
+import Infocard from './components/Infocard.vue';
 import vClickOutside from "click-outside-vue3";
 
 const app = createApp({
@@ -25,6 +26,7 @@ const app = createApp({
         'dropdown-input': DropdownInput,
         'dropdown-button': DropdownButton,
         'heartbeat-badges': HeartbeatBadges,
+        'infocard': Infocard,
     }
 });
 

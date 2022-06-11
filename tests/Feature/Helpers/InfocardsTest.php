@@ -37,6 +37,9 @@ class InfocardsTest extends TestCase
         $cards = Infocards::getCards($c[0]->language, $slugs);
         $this->assertCount(3, $cards);
         $this->assertEquals($c[0]->title, $cards[$c[0]->slug]->title);
+
+        $cards = Infocards::getCards($c[0]->language, $slugs, null, 1);
+        $this->assertCount(1, $cards);
     }
 
     public function test_infocard_is_closable()

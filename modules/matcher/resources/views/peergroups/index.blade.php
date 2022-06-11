@@ -1,4 +1,4 @@
-<x-matcher::layout>
+<x-matcher::layout :infocards="$infocards">
 
 <x-ui.card class="p-4 mt-5">
     @if ($peergroups->count() > 0)
