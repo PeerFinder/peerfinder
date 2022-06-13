@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 [v-cloak] {
-    display: none
+    /*display: none;*/
+    visibility: hidden;
 }
 
 .hyphens {
