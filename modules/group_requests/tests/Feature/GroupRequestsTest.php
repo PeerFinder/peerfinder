@@ -16,7 +16,7 @@ class GroupRequestsTest extends TestCase
     use RefreshDatabase;
     use WithFaker;
 
-    public function test_user_can_render_requests_list()
+    public function test_user_can_render_group_requests_list()
     {
         $user = User::factory()->create();
         $group_request = GroupRequest::factory()->byUser($user)->create();
