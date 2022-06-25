@@ -45,7 +45,7 @@ class Urler
     public function fullUrl($url)
     {
         if (preg_match('%^(?:(?:https?|ftp):\/\/)%', $url) === 0) {
-            $url = "http://" . $url;
+            $url = "https://" . $url;
         }
 
         return $url;

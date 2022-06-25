@@ -10,9 +10,10 @@ class UrlerTest extends TestCase
 {
     public function test_prefix_url()
     {
-        $this->assertEquals('http://google.com', Urler::fullUrl('google.com'));
-        $this->assertEquals('http://twitter.com/blabla', Urler::fullUrl('twitter.com/blabla'));
+        $this->assertEquals('https://google.com', Urler::fullUrl('google.com'));
+        $this->assertEquals('https://twitter.com/blabla', Urler::fullUrl('twitter.com/blabla'));
         $this->assertEquals('https://google.com', Urler::fullUrl('https://google.com'));
+        $this->assertEquals('http://google.com', Urler::fullUrl('http://google.com'));
     }
 
     public function test_validate_url()
