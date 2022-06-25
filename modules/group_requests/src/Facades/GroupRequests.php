@@ -1,13 +1,13 @@
 <?php
 
-namespace Requests\Facades;
+namespace GroupRequests\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Requests extends Facade
+class GroupRequests extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'Requests';
+        return 'GroupRequests';
     }
 }

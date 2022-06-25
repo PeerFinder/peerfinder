@@ -1,13 +1,13 @@
 <?php
 
-namespace Requests;
+namespace GroupRequests;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
-class RequestsServiceProvider extends ServiceProvider
+class GroupRequestsServiceProvider extends ServiceProvider
 {
     protected $policies = [
         
@@ -30,12 +30,12 @@ class RequestsServiceProvider extends ServiceProvider
 
     protected function registerFacades()
     {
-        $this->app->singleton('Requests', function() {
-            return new \Requests\Requests();
+        $this->app->singleton('GroupRequests', function() {
+            return new \GroupRequests\GroupRequests();
         });
 
         $loader = AliasLoader::getInstance();
-        $loader->alias('Requests', \Requests\Facades\Requests::class);        
+        $loader->alias('GroupRequests', \GroupRequests\Facades\GroupRequests::class);        
     }
 
     protected function registerPolicies()
@@ -48,15 +48,15 @@ class RequestsServiceProvider extends ServiceProvider
     protected function registerResources()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'requests');
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'requests');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'group_requests');
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'group_requests');
     }
 
     protected function registerPublishing()
     {
         $this->publishes([
-            __DIR__ . '/../config/requests.php' => config_path('requests.php'),
-        ], 'requests-config');
+            __DIR__ . '/../config/group_requests.php' => config_path('group_requests.php'),
+        ], 'group-requests-config');
     }
 
     protected function registerRoutes()
@@ -69,10 +69,10 @@ class RequestsServiceProvider extends ServiceProvider
     protected function getRoutesConfiguration($interface = 'web')
     {
         return [
-            'middleware' => array_merge([$interface], config('requests.middleware.' . $interface, ['auth'])),
-            'prefix' => config('requests.url.' . $interface, 'requests'),
-            'namespace' => 'Requests',
-            'as' => 'requests.',
+            'middleware' => array_merge([$interface], config('group_requests.middleware.' . $interface, ['auth'])),
+            'prefix' => config('group_requests.url.' . $interface, 'group_requests'),
+            'namespace' => 'GroupRequests',
+            'as' => 'group_requests.',
         ];
     }    
 }
