@@ -37,11 +37,17 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
+            
             "Talk\\": "modules/talk/src/",
             "Talk\\Database\\Factories\\": "modules/talk/database/factories",
+
             "Matcher\\": "modules/matcher/src/",
             "Matcher\\Database\\Factories\\": "modules/matcher/database/factories",
-            "Matcher\\Database\\Seeders\\": "modules/matcher/database/seeders"
+            "Matcher\\Database\\Seeders\\": "modules/matcher/database/seeders",
+
+            "Requests\\": "modules/requests/src/",
+            "Requests\\Database\\Factories\\": "modules/requests/database/factories",
+            "Requests\\Database\\Seeders\\": "modules/requests/database/seeders"
         }
     },
     "autoload-dev": {
