@@ -118,7 +118,7 @@ class ProfileTest extends TestCase
             'homepage' => 'homepage.com'
         ]);
         $response->assertSessionHasNoErrors();
-        $this->assertEquals($user->homepage, 'http://homepage.com');
+        $this->assertEquals($user->homepage, 'https://homepage.com');
 
         $response = $this->actingAs($user)->put(route('account.profile.update'), [
             'name' => $name,
