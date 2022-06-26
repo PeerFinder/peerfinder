@@ -70,7 +70,7 @@ class GroupRequestsServiceProvider extends ServiceProvider
     {
         return [
             'middleware' => array_merge([$interface], config('group_requests.middleware.' . $interface, ['auth'])),
-            'prefix' => config('group_requests.url.' . $interface, 'group_requests'),
+            'prefix' => config('group_requests.url.' . $interface, 'requests'),
             'namespace' => 'GroupRequests',
             'as' => 'group_requests.',
         ];

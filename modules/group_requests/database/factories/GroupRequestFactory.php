@@ -16,7 +16,8 @@ class GroupRequestFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->faker->text(100),
+            'title' => $this->faker->text(100),
+            'description' => $this->faker->text(500),
         ];
     }
 

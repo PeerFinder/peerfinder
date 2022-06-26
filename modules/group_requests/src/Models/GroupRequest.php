@@ -17,7 +17,8 @@ class GroupRequest extends Model
     public static function rules()
     {
         $updateRules = [
-            'description' => ['nullable', 'string', 'max:255'],
+            'title' => ['string', 'max:255'],
+            'description' => ['nullable', 'string', 'max:500'],
         ];
 
         return [
@@ -30,10 +31,11 @@ class GroupRequest extends Model
     {
         parent::boot();
 
-        static::creating(function ($request) {
+        static::creating(function ($group_request) {
+            $group_request->identifier = (string) Str::uuid();
         });
 
-        static::deleting(function ($request) {
+        static::deleting(function ($group_request) {
         });
     }
 
