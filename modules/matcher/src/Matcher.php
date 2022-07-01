@@ -74,7 +74,7 @@ class Matcher
         });
     }
 
-    public function storePeergroupData($pg, Request $request, $mode = 'update')
+    public function storePeergroupData($pg, Request $request)
     {
         $input = $request->all();
 

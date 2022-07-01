@@ -2,9 +2,10 @@
 
 namespace GroupRequests\Http\Controllers;
 
+use GroupRequests\Facades\GroupRequests;
 use GroupRequests\Models\GroupRequest;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class GroupRequestsController extends Controller
 {
@@ -25,10 +26,8 @@ class GroupRequestsController extends Controller
     {
         Gate::authorize('create', GroupRequest::class);
     
-/*         $pg = Matcher::storePeergroupData(null, $request);
+        $group_request = GroupRequests::storeGroupRequestData(null, $request);
 
-        Matcher::addOwnerAsMemberToGroup($pg);
-
-        return redirect(route('matcher.show', ['pg' => $pg->groupname]))->with('success', __('matcher::peergroup.peergroup_created_successfully')); */
+        return redirect(route('group_requests.index'))->with('success', __('group_requests::group_requests.group_request_created_successfully'));
     }
 }

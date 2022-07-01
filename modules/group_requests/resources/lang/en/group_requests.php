@@ -13,4 +13,5 @@ return [
     'field_title' => 'Title',
     'field_description' => 'Description',
     'field_languages' => 'Languages',
+    'group_request_created_successfully' => 'Group request was created successfully!',
 ];

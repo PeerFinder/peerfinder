@@ -17,7 +17,7 @@ class CreateGroupRequestsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('language_group_request', function (Blueprint $table) {
+        Schema::create('group_request_language', function (Blueprint $table) {
             $table->id();
             $table->foreignId('language_id');
             $table->foreign('language_id')->references('id')->on('languages');
@@ -29,7 +29,7 @@ class CreateGroupRequestsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('language_group_request');
+        Schema::dropIfExists('group_request_language');
         Schema::dropIfExists('group_requests');
     }
 }
