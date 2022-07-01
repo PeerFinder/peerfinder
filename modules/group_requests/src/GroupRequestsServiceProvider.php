@@ -2,6 +2,8 @@
 
 namespace GroupRequests;
 
+use GroupRequests\Policies\GroupRequestPolicy;
+use GroupRequests\Models\GroupRequest;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -10,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 class GroupRequestsServiceProvider extends ServiceProvider
 {
     protected $policies = [
-        
+        GroupRequest::class => GroupRequestPolicy::class,
     ];
 
     public function boot()

@@ -18,7 +18,7 @@ class GroupRequest extends Model
     {
         $updateRules = [
             'title' => ['string', 'max:255'],
-            'description' => ['nullable', 'string', 'max:500'],
+            'description' => ['string', 'max:500'],
         ];
 
         return [

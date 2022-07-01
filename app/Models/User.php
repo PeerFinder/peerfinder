@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Helpers\Facades\Avatar;
 use App\Helpers\Facades\Urler;
 use Carbon\Carbon;
+use GroupRequests\Facades\GroupRequests;
+use GroupRequests\Traits\UserGroupRequests;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -25,7 +27,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
         UserConversations,
         UserPeergroups,
         LogsActivity,
-        HasTags;
+        HasTags,
+        UserGroupRequests;
 
     /**
      * The attributes that are mass assignable.
@@ -106,6 +109,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasLocalePreferen
             Avatar::deleteForUser($user);
             Talk::cleanupForUser($user);
             Matcher::cleanupForUser($user);
+            GroupRequests::cleanupForUser($user);
 
             $user->notificationSettings()->get()->each(function($notificationSetting) {
                 $notificationSetting->delete();

@@ -5,7 +5,7 @@
 <div class="border w-full px-4 py-2 rounded-md shadow-sm {{ ($errors->first($name) ? ' bg-red-100 border-red-500': ' bg-gray-50 border-gray-300') }}">
     @foreach ($selection as $item)
     @php
-    $checked = (old('_token') !== null ) ? old($name) && is_array(old($name)) && in_array($item->$key, old($name)) : $default->contains($item);
+    $checked = (old('_token') !== null ) ? old($name) && is_array(old($name)) && in_array($item->$key, old($name)) : ($default ? $default->contains($item) : false);
     @endphp
     <div class="inline-flex items-center mt-1 mr-4">
         <input value="{{ $item->$key }}" {{ $attributes->merge(['type' => 'checkbox', 'name' => $name . '[]', 'class' => 'border-2 focus:outline-none focus:ring-2 focus:ring-pf-midblue focus:border-transparent border-gray-300 rounded-sm']) }} id="{{ $name }}_{{ $item->$key }}" @if ($checked) checked @endif />
