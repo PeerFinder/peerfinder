@@ -1,7 +1,7 @@
 <x-group_requests::layout.minimal :title="__('group_requests::group_requests.index_title')" :create="true">
     <x-ui.card class="mt-5" :title="__('group_requests::group_requests.your_requests')">
         @if ($users_group_requests->count())
-        <div class="p-4 grid sm:grid-cols-2 gap-4">
+        <div class="p-4 grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
         @foreach ($users_group_requests as $group_request)
             <x-group_requests::request.card :group_request="$group_request" />
         @endforeach
@@ -17,9 +17,11 @@
 
     @if ($other_group_requests->count())
     <x-ui.card class="mt-5" :title="__('group_requests::group_requests.users_requests')">
+        <div class="p-4 grid lg:grid-cols-3 sm:grid-cols-2 gap-4">
         @foreach ($other_group_requests as $group_request)
-        {{ $group_request->title }}
+            <x-group_requests::request.card :group_request="$group_request" />
         @endforeach
+        </div>
     </x-ui.card>
     @endif
 </x-group_requests::layout.minimal>
