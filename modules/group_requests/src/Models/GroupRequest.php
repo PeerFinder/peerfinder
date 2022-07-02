@@ -59,4 +59,9 @@ class GroupRequest extends Model
     {
         return new GroupRequestFactory();
     }
+
+    public function getUrl()
+    {
+        return route('group_requests.show', ['group_request' => $this->identifier]);
+    }
 }

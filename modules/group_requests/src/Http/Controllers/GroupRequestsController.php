@@ -11,8 +11,8 @@ class GroupRequestsController extends Controller
 {
     public function index(Request $request)
     {
-        $users_group_requests = GroupRequest::where('user_id', '=', auth()->id())->get();
-        $other_group_requests = GroupRequest::where('user_id', '<>', auth()->id())->get();
+        $users_group_requests = GroupRequest::where('user_id', '=', auth()->id())->with(['languages', 'user'])->get();
+        $other_group_requests = GroupRequest::where('user_id', '<>', auth()->id())->with(['languages', 'user'])->get();
 
         return view('group_requests::group_requests.index', compact('users_group_requests', 'other_group_requests'));
     }
@@ -29,5 +29,14 @@ class GroupRequestsController extends Controller
         $group_request = GroupRequests::storeGroupRequestData(null, $request);
 
         return redirect(route('group_requests.index'))->with('success', __('group_requests::group_requests.group_request_created_successfully'));
+    }
+
+    public function update(Request $request, GroupRequest $group_request)
+    {
+        Gate::authorize('edit', $group_request);
+    
+        GroupRequests::storeGroupRequestData($group_request, $request);
+
+        return redirect(route('group_requests.index'))->with('success', __('group_requests::group_requests.group_request_changed_successfully'));
     }
 }
