@@ -24,7 +24,9 @@ class GroupRequestsController extends Controller
 
     public function show(Request $request, GroupRequest $group_request)
     {
-        return view('group_requests::group_requests.show', compact('group_request'));
+        $conversation = $group_request->conversations()->first();
+        
+        return view('group_requests::group_requests.show', compact('group_request', 'conversation'));
     }
 
     public function store(Request $request)

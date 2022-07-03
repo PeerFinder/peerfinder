@@ -1,7 +1,7 @@
 @props(['new' => false, 'reply' => false, 'conversation' => null, 'action' => null])
 
+@can('view', $conversation)
 <x-ui.forms.form :action="$action ?: route('talk.replies.store', ['conversation' => $conversation->identifier])">
-
     <x-ui.errors :errors="$errors" class="p-3 mb-2" />
 
     <div>
@@ -24,5 +24,7 @@
         <x-ui.forms.button>{{ __('talk::talk.button_send_reply') }}</x-ui.forms.button>
         @endif
     </div>
-
-</x-ui.forms.form>
+</x-ui.forms.form> 
+@else
+<x-talk::ui.join-nav :conversation="$conversation" />
+@endcan

@@ -158,4 +158,22 @@ class ConversationController extends Controller
 
         return redirect($conversation->getUrl())->with('success', __('talk::talk.conversation_changed_successfully'));
     }
+
+    public function join(Conversation $conversation, Request $request)
+    {
+        Gate::authorize('join', $conversation);
+
+        $conversation->addUser(auth()->user());
+
+        return redirect(back())->with('success', __('talk::talk.conversation_joined_successfully'));
+    }
+
+    public function leave(Conversation $conversation, Request $request)
+    {
+        Gate::authorize('leave', $conversation);
+
+        $conversation->removeUser(auth()->user());
+
+        return redirect(back())->with('success', __('talk::talk.conversation_left_successfully'));
+    }    
 }

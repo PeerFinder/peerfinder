@@ -172,5 +172,5 @@ class GroupRequestsTest extends TestCase
         $response->assertStatus(302);
 
         $this->assertDatabaseMissing('group_requests', ['id' => $group_request->id]);
-    }    
+    }
 }

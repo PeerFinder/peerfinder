@@ -9,6 +9,12 @@
         </div>
         @endif
 
+        @if ($conversation->isOwnerGroupRequest())
+        <div class="text-xs flex items-center mb-2">
+            <div class="line-clamp-1"><x-ui.link href="{{ $conversation->conversationable->getUrl() }}">{{ $conversation->conversationable->title }}</x-ui.link></div>
+        </div>
+        @endif
+
         @if ($conversation->title)
         <h2 class="font-semibold">{{ $conversation->title }}</h2>
         @endif

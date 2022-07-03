@@ -26,4 +26,5 @@ return [
     'delete_warning' => 'Do you really want to delete this request?',
     'button_edit' => 'Edit request',
     'button_delete' => 'Delete request',
+    'caption_conversations' => 'Conversation',
 ];

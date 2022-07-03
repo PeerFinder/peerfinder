@@ -26,4 +26,9 @@
             @endcan
         </div>
     </x-ui.card>
+
+    <x-ui.card class="mt-4" title="{{ __('group_requests::group_requests.caption_conversations') }}">
+        {{ Talk::embedConversation($conversation) }}
+    </x-ui.card>
+
 </x-group_requests::layout.minimal>

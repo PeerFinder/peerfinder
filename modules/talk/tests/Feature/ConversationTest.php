@@ -3,6 +3,7 @@
 namespace Talk\Tests;
 
 use App\Models\User;
+use GroupRequests\Models\GroupRequest;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -445,4 +446,43 @@ class ConversationTest extends TestCase
         $response->assertSessionHasNoErrors();
         $response->assertRedirect(route('talk.create.user', ['usernames' => $user2->username . ',' . $user3->username]));
     }
+
+    public function test_user_cannot_join_closed_conversation()
+    {
+        $user = User::factory()->create();
+        $conversation = Conversation::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->post(route('talk.join', ['conversation' => $conversation->identifier]));
+        $response->assertStatus(403);
+    }
+
+    public function test_user_can_join_open_conversation()
+    {
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+        $group_request = GroupRequest::factory()->byUser($user)->create();
+        $conversation = $group_request->conversations()->first();
+
+        $response = $this->actingAs($user2)->post(route('talk.join', ['conversation' => $conversation->identifier]));
+        $response->assertStatus(302);
+
+        $this->assertTrue($conversation->isParticipant($user));
+        $this->assertTrue($conversation->isParticipant($user2));
+    }
+
+    public function test_user_can_leave_open_conversation()
+    {
+        $user = User::factory()->create();
+        $user2 = User::factory()->create();
+        $group_request = GroupRequest::factory()->byUser($user)->create();
+        $conversation = $group_request->conversations()->first();
+
+        $conversation->addUser($user2);
+
+        $response = $this->actingAs($user2)->post(route('talk.leave', ['conversation' => $conversation->identifier]));
+        $response->assertStatus(302);
+
+        $this->assertTrue($conversation->isParticipant($user));
+        $this->assertFalse($conversation->isParticipant($user2));
+    }    
 }

@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use GroupRequests\Database\Factories\GroupRequestFactory;
+use GroupRequests\Facades\GroupRequests;
 use Matcher\Models\Language;
+use Talk\Models\Conversation;
+use Talk\Traits\GroupRequestConversations;
 
 class GroupRequest extends Model
 {
-    use HasFactory;
+    use HasFactory, GroupRequestConversations;
 
     protected $fillable = [
         'description',
@@ -42,6 +45,14 @@ class GroupRequest extends Model
 
         static::deleting(function ($group_request) {
             $group_request->languages()->detach();
+
+            $group_request->conversations()->each(function (Conversation $conversation) {
+                $conversation->delete();
+            });
+        });
+
+        static::created(function ($group_request) {
+            GroupRequests::createConversationForGroupRequest($group_request);
         });
     }
 

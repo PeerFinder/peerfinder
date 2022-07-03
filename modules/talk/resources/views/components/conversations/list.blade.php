@@ -3,7 +3,7 @@
     @foreach ($conversations as $conv)
         <li class="border rounded-md {{ ($conversation && $conv->identifier == $conversation->identifier) ? 'border-pf-midorange bg-pf-midorange text-white' : 'bg-white hover:bg-gray-50' }}">
             <a href="{{ $conv->getUrl() }}">
-                {{--
+                
                 @if ($conv->isOwnerPeergroup())
                 <div class="text-xs flex items-center border-b px-1">
                     <div class="mr-1 pb-0.5">
@@ -12,7 +12,16 @@
                     <div class="line-clamp-1">{{ $conv->conversationable->title }}</div>
                 </div>
                 @endif
-                --}}
+
+                @if ($conv->isOwnerGroupRequest())
+                <div class="text-xs flex items-center border-b px-1">
+                    <div class="mr-1 pb-0.5">
+                        <x-ui.icon name="speakerphone" size="w-3 h-3" />
+                    </div>
+                    <div class="line-clamp-1">{{ $conv->conversationable->title }}</div>
+                </div>
+                @endif                
+                
                 <div class="p-2 flex items-center overflow-hidden" >
                     <div class="w-10 h-10 shrink-0 relative">
                         @include('talk::partials.avatars', ['users' => Talk::filterUsersForConversation($conv)])

@@ -7,6 +7,7 @@ use GroupRequests\Models\GroupRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Matcher\Models\Language;
+use Talk\Models\Conversation;
 
 class GroupRequests
 {
@@ -42,5 +43,13 @@ class GroupRequests
         } */
 
         return $group_request;
+    }
+
+    public function createConversationForGroupRequest(GroupRequest $group_request)
+    {
+        $conversation = new Conversation();
+        $conversation->setOwner($group_request);
+        $conversation->addUser($group_request->user);
+        $conversation->save();
     }
 }

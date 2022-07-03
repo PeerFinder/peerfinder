@@ -3,6 +3,7 @@
 namespace Talk\Models;
 
 use App\Models\User;
+use GroupRequests\Models\GroupRequest;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Builder;
 use Talk\Database\Factories\ConversationFactory;
@@ -113,6 +114,11 @@ class Conversation extends Model
         return $this->conversationable_type == Peergroup::class;
     }
 
+    public function isOwnerGroupRequest()
+    {
+        return $this->conversationable_type == GroupRequest::class;
+    }
+    
     public function isParticipant(User $user)
     {
         return $this->users->contains($user);

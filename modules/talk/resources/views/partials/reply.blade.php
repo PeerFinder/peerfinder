@@ -36,11 +36,13 @@
                 </div>
             </div>
 
-            @if ($level < 2)
-            <div class="edit-bar mt-1">
-                <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block text-pf-midblue hover:text-pf-lightblue">{{ __('talk::talk.button_reply_to_reply') }}</a>
-            </div>
-            @endif
+            @can('view', $conversation)
+                @if ($level < 2)
+                <div class="edit-bar mt-1">
+                    <a @click.prevent="props.actionReply('{{ $reply->identifier }}')" href="#" class="text-sm inline-block text-pf-midblue hover:text-pf-lightblue">{{ __('talk::talk.button_reply_to_reply') }}</a>
+                </div>
+                @endif
+            @endcan
             
             @if ($reply->replies->count())
             <div class="mt-3 space-y-2">
