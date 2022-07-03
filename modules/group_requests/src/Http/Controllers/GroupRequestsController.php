@@ -22,6 +22,11 @@ class GroupRequestsController extends Controller
         return view('group_requests::group_requests.create');
     }
 
+    public function show(Request $request, GroupRequest $group_request)
+    {
+        return view('group_requests::group_requests.show', compact('group_request'));
+    }
+
     public function store(Request $request)
     {
         Gate::authorize('create', GroupRequest::class);

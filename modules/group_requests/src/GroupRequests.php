@@ -12,7 +12,9 @@ class GroupRequests
 {
     public function cleanupForUser(User $user)
     {
-        
+        $user->group_requests()->each(function ($group_request) {
+            $group_request->delete();
+        });
     }
 
     public function storeGroupRequestData($group_request, Request $request)

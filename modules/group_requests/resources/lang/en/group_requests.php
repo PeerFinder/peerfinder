@@ -16,4 +16,6 @@ return [
     'field_languages' => 'Languages',
     'group_request_created_successfully' => 'Group request was created successfully!',
     'what_do_you_want' => 'What do you want to learn or get better in?',
+    'submitted_by' => 'Submitted by',
+    'request_details' => 'Details',
 ];
