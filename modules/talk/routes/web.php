@@ -11,6 +11,9 @@ Route::put('/create/{usernames}', [ConversationController::class, 'storeForUser'
 Route::get('/select', [ConversationController::class, 'select'])->name('select');
 Route::post('/select', [ConversationController::class, 'selectAndRedirect'])->name('selectAndRedirect');
 
+Route::post('/{conversation:identifier}/join', [ConversationController::class, 'join'])->name('join');
+Route::post('/{conversation:identifier}/leave', [ConversationController::class, 'leave'])->name('leave');
+
 Route::get('/{conversation:identifier}', [ConversationController::class, 'show'])->name('show');
 Route::get('/{conversation:identifier}/edit', [ConversationController::class, 'edit'])->name('edit');
 Route::put('/{conversation:identifier}/update', [ConversationController::class, 'update'])->name('update');

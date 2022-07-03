@@ -9,6 +9,12 @@
         </div>
         @endif
 
+        @if ($conversation->isOwnerGroupRequest())
+        <div class="text-xs flex items-center mb-2">
+            <div class="line-clamp-1"><x-ui.link href="{{ $conversation->conversationable->getUrl() }}">{{ $conversation->conversationable->title }}</x-ui.link></div>
+        </div>
+        @endif
+
         @if ($conversation->title)
         <h2 class="font-semibold">{{ $conversation->title }}</h2>
         @endif
@@ -20,7 +26,7 @@
         @include('talk::partials.replies', ['embedded' => false])
     </div>
 
-    <div class="p-4 border-t">
-        <x-talk::conversations.reply-form :conversation="$conversation" />
-    </div>
+    <x-talk::conversations.reply-form :conversation="$conversation" />
+
+    <x-talk::ui.join-nav :conversation="$conversation" />
 </x-talk::layout.single>

@@ -15,4 +15,14 @@ class ConversationPolicy
     {
         return $conversation->isParticipant($user);
     }
+
+    public function join($user, Conversation $conversation)
+    {
+        return $conversation->isOwnerGroupRequest();
+    }
+
+    public function leave($user, Conversation $conversation)
+    {
+        return $conversation->isOwnerGroupRequest();
+    }
 }

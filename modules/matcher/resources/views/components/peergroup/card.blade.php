@@ -34,9 +34,9 @@
             <x-matcher::peergroup.tags-list :pg="$pg" :asLinks="false" class="px-4 pb-4" />
         </div>
 
-        <div class="py-2 border-t flex items-center px-4">
+        <div class="py-2 border-t flex items-center px-4 bg-gray-50">
             @if ($pg && $pg->getMembers()->count() > 0)
-            <div class="shrink-0 flex items-center text-sm text-gray-500 py-1.5 px-3 bg-gray-50 group-hover:bg-gray-100 rounded-full whitespace-nowrap mr-2">
+            <div class="shrink-0 flex items-center text-sm text-gray-500 py-1.5 px-3 bg-gray-100 group-hover:bg-gray-200 rounded-full whitespace-nowrap mr-2">
                 <x-ui.icon name="user-group" /><span class="inline-block ml-2">{{ $pg->getMembers()->count() }}</span>
             </div>
             <div class="flex items-center flex-wrap">

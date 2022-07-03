@@ -31,4 +31,8 @@ return [
     'enter_name' => 'Namen eingeben...',
     'button_next' => 'Weiter',
     'conversations_new' => 'Neu',
+    'conversation_joined_successfully' => 'Du bist der Unterhaltung beigetreten!',
+    'conversation_left_successfully' => 'Du hast die Unterhaltung verlassen!',
+    'button_join_conversation' => 'Der Unterhaltung beitreten',
+    'button_leave_conversation' => 'Unterhaltung verlassen',
 ];

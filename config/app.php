@@ -191,6 +191,7 @@ return [
         App\Providers\PagesServiceProvider::class,
         App\Providers\NotificationCenterServiceProvider::class,
         App\Providers\InfocardsServiceProvider::class,
+        GroupRequests\GroupRequestsServiceProvider::class,
     ],
 
     /*

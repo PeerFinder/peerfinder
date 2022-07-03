@@ -4,6 +4,7 @@ namespace Talk\Database\Factories;
 
 use App\Models\User;
 use Exception;
+use GroupRequests\Models\GroupRequest;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Matcher\Models\Peergroup;
@@ -39,6 +40,16 @@ class ConversationFactory extends Factory
             return [
                 'conversationable_type' => Peergroup::class,
                 'conversationable_id' => $pg->id,
+            ];
+        });
+    }
+
+    public function byGroupRequest(GroupRequest $group_request)
+    {
+        return $this->state(function ($attributes) use ($group_request) {
+            return [
+                'conversationable_type' => GroupRequest::class,
+                'conversationable_id' => $group_request->id,
             ];
         });
     }

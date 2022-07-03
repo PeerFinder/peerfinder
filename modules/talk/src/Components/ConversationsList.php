@@ -23,7 +23,7 @@ class ConversationsList extends Component
             'users', 
             'receipts' => function ($query) {
                 $query->where('user_id', $this->user->id);
-            }, 
+            },
             'replies' => function ($query) {
                 $query->orderBy('created_at', 'desc');
             },
