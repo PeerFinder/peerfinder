@@ -11,8 +11,15 @@ class GroupRequestsController extends Controller
 {
     public function index(Request $request)
     {
-        $users_group_requests = GroupRequest::where('user_id', '=', auth()->id())->with(['languages', 'user'])->get();
-        $other_group_requests = GroupRequest::where('user_id', '<>', auth()->id())->with(['languages', 'user'])->get();
+        $users_group_requests = GroupRequest::where('user_id', '=', auth()->id())
+                ->with(['languages', 'user'])
+                ->orderByDesc('created_at')
+                ->get();
+        
+        $other_group_requests = GroupRequest::where('user_id', '<>', auth()->id())
+                ->with(['languages', 'user'])
+                ->orderByDesc('created_at')                
+                ->get();
 
         return view('group_requests::group_requests.index', compact('users_group_requests', 'other_group_requests'));
     }

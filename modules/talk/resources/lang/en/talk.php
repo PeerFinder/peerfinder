@@ -34,4 +34,5 @@ return [
     'conversation_joined_successfully' => 'You have joined the conversation!',
     'conversation_left_successfully' => 'You have left the conversation!',
     'button_join_conversation' => 'Join conversation',
+    'button_leave_conversation' => 'Leave conversation',
 ];

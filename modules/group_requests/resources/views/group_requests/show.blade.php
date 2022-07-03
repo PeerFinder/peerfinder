@@ -10,8 +10,8 @@
     <x-ui.card class="mt-8" :title="__('group_requests::group_requests.request_details')">
         <div class="sm:flex">
             <div class="flex-1">
-                <div class="p-4">
-                    {{ $group_request->description }}
+                <div class="p-4 prose">
+                    {!! Matcher::renderMarkdown($group_request->description) !!}
                 </div>
 
                 <div class="px-4 pb-4">

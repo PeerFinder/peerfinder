@@ -9,7 +9,7 @@
         </div>
 
         <div class="p-4 pt-0">
-            {{ $group_request->description }}
+            {!! Matcher::renderMarkdown($group_request->description) !!}
         </div>
 
         <div class="px-4 pb-4">

@@ -165,7 +165,7 @@ class ConversationController extends Controller
 
         $conversation->addUser(auth()->user());
 
-        return redirect(back())->with('success', __('talk::talk.conversation_joined_successfully'));
+        return back()->with('success', __('talk::talk.conversation_joined_successfully'));
     }
 
     public function leave(Conversation $conversation, Request $request)
@@ -174,6 +174,6 @@ class ConversationController extends Controller
 
         $conversation->removeUser(auth()->user());
 
-        return redirect(back())->with('success', __('talk::talk.conversation_left_successfully'));
+        return redirect($conversation->conversationable()->first()->getUrl())->with('success', __('talk::talk.conversation_left_successfully'));
     }    
 }

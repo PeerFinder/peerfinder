@@ -26,7 +26,7 @@
         @include('talk::partials.replies', ['embedded' => false])
     </div>
 
-    <div class="p-4 border-t">
-        <x-talk::conversations.reply-form :conversation="$conversation" />
-    </div>
+    <x-talk::conversations.reply-form :conversation="$conversation" />
+
+    <x-talk::ui.join-nav :conversation="$conversation" />
 </x-talk::layout.single>
