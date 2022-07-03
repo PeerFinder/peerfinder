@@ -10,4 +10,6 @@ Route::group(['controller' => GroupRequestsController::class], function () {
     Route::get('/{group_request:identifier}', 'show')->name('show');
     Route::get('/{group_request:identifier}/edit', 'edit')->name('edit');
     Route::put('/{group_request:identifier}/edit', 'update')->name('update');
+    Route::get('/{group_request:identifier}/delete', 'delete')->name('delete');
+    Route::delete('/{group_request:identifier}/delete', 'destroy')->name('destroy');
 });

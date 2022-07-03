@@ -135,4 +135,42 @@ class GroupRequestsTest extends TestCase
         $this->assertDatabaseMissing('group_request_language', ['group_request_id' => $group_request[0]->id]);
         $this->assertDatabaseMissing('group_request_language', ['group_request_id' => $group_request[1]->id]);
     }
+
+    public function test_user_can_edit_group_request()
+    {
+        $user = User::factory()->create();
+
+        $group_request = GroupRequest::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->get(route('group_requests.edit', ['group_request' => $group_request->identifier]));
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(200);
+    }
+
+    public function test_user_can_delete_group_request()
+    {
+        $user = User::factory()->create();
+
+        $group_request = GroupRequest::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->get(route('group_requests.delete', ['group_request' => $group_request->identifier]));
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(200);
+    }
+
+    public function test_user_can_destroy_group_request()
+    {
+        $user = User::factory()->create();
+
+        $group_request = GroupRequest::factory()->byUser($user)->create();
+
+        $response = $this->actingAs($user)->delete(route('group_requests.destroy', ['group_request' => $group_request->identifier]));
+
+        $response->assertSessionHasNoErrors();
+        $response->assertStatus(302);
+
+        $this->assertDatabaseMissing('group_requests', ['id' => $group_request->id]);
+    }    
 }

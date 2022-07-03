@@ -33,7 +33,7 @@ class GroupRequestsController extends Controller
     
         $group_request = GroupRequests::storeGroupRequestData(null, $request);
 
-        return redirect(route('group_requests.index'))->with('success', __('group_requests::group_requests.group_request_created_successfully'));
+        return redirect($group_request->getUrl())->with('success', __('group_requests::group_requests.group_request_created_successfully'));
     }
 
     public function update(Request $request, GroupRequest $group_request)
@@ -42,6 +42,29 @@ class GroupRequestsController extends Controller
     
         GroupRequests::storeGroupRequestData($group_request, $request);
 
-        return redirect(route('group_requests.index'))->with('success', __('group_requests::group_requests.group_request_changed_successfully'));
+        return redirect($group_request->getUrl())->with('success', __('group_requests::group_requests.group_request_changed_successfully'));
+    }
+
+    public function edit(Request $request, GroupRequest $group_request)
+    {
+        Gate::authorize('edit', $group_request);
+
+        return view('group_requests::group_requests.edit', compact('group_request'));
+    }
+
+    public function delete(Request $request, GroupRequest $group_request)
+    {
+        Gate::authorize('delete', $group_request);
+
+        return view('group_requests::group_requests.delete', compact('group_request'));
+    }
+
+    public function destroy(Request $request, GroupRequest $group_request)
+    {
+        Gate::authorize('delete', $group_request);
+    
+        $group_request->delete();
+
+        return redirect(route('group_requests.index'))->with('success', __('group_requests::group_requests.group_request_deleted_successfully'));
     }
 }

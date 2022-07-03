@@ -16,4 +16,9 @@ class GroupRequestPolicy
     {
         return $group_request->user_id == $user->id;
     }
+
+    public function delete(User $user, GroupRequest $group_request)
+    {
+        return $group_request->user_id == $user->id;
+    }
 }

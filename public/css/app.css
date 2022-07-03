@@ -1836,6 +1836,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(254 240 138 / var(--tw-bg-opacity));
 }
+.bg-green-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(240 253 244 / var(--tw-bg-opacity));
+}
 .bg-red-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(248 113 113 / var(--tw-bg-opacity));
@@ -2045,6 +2049,9 @@ select {
 .pb-0\.5 {
   padding-bottom: 0.125rem;
 }
+.pb-4 {
+  padding-bottom: 1rem;
+}
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -2059,9 +2066,6 @@ select {
 }
 .pr-3 {
   padding-right: 0.75rem;
-}
-.pb-4 {
-  padding-bottom: 1rem;
 }
 .pr-0\.5 {
   padding-right: 0.125rem;
@@ -3018,10 +3022,6 @@ select {
 
   .sm\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .sm\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .sm\:grid-cols-10 {

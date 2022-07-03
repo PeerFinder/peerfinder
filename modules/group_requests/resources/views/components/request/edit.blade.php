@@ -5,11 +5,14 @@
         <x-ui.card title="{{ $group_request ? __('group_requests::group_requests.edit_title') : __('group_requests::group_requests.create_title') }}" class="mt-5">            
             <x-ui.errors :errors="$errors" class="p-3 m-4 mb-2" />
 
-            <x-ui.forms.form :action="$group_request ? route('group_requests.edit', ['identifier' => $group_request->identifier]) : route('group_requests.create')">
+            <x-ui.forms.form :action="$group_request ? route('group_requests.edit', ['group_request' => $group_request->identifier]) : route('group_requests.create')">
                 <x-ui.forms.section>
+                    @if (!$group_request)
                     <x-ui.forms.section-body>
                         @lang('group_requests::group_requests.create_annotation')
                     </x-ui.forms.section-body>
+                    @endif
+
                     <x-ui.forms.section-body>
                         <x-ui.forms.input id="title" value="{{ old('title', $group_request ? $group_request->title : '') }}" name="title" type="text" required>{{ __('group_requests::group_requests.field_title') }}</x-ui.forms.input>
                     </x-ui.forms.section-body>

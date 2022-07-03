@@ -1,6 +1,6 @@
 @props(['group_request'])
 
-<a href="{{ $group_request->getUrl() }}" class="rounded-md block shadow hover:shadow-md overflow-hidden group flex flex-col justify-between">
+<a href="{{ $group_request->getUrl() }}" class="rounded-md shadow hover:shadow-md overflow-hidden group flex flex-col justify-between">
     <div>
         <div class="p-4">
             <h2 class="font-bold text-xl inline-flex items-center text-gray-600 group-hover:text-black">
