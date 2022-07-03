@@ -52,7 +52,7 @@ class DashboardController extends Controller
             'peergroup' => fn($q) => $q->with(Peergroup::defaultRelationships())
         ])->get();
 
-        $infocards = Infocards::getCards(app()->getLocale(), ['dashboard-welcome'], $user, 1);
+        $infocards = Infocards::getCards(app()->getLocale(), ['dashboard-welcome', 'create-group-request', 'join-group'], $user, 1);
 
         return view('frontend.profile.dashboard.index', compact(
             'own_peergroups',
