@@ -1,9 +1,13 @@
 @props(['new' => false, 'reply' => false, 'conversation' => null, 'action' => null])
 
-@can('view', $conversation)
-@unless ($reply)
-<div class="border-t p-4">
-@endunless
+@if($conversation == null || Gate::check('view', $conversation))
+@if ($conversation)
+    @if (!$reply)
+    <div class="border-t p-4">
+    @endif
+@else
+<div class="p-4">
+@endif
     <x-ui.forms.form :action="$action ?: route('talk.replies.store', ['conversation' => $conversation->identifier])">
         <x-ui.errors :errors="$errors" class="p-3 mb-2" />
 
@@ -28,7 +32,7 @@
             @endif
         </div>
     </x-ui.forms.form>
-@unless ($reply)
+@if (!$reply || $conversation == null)
 </div>
-@endunless
-@endcan
+@endif
+@endif
