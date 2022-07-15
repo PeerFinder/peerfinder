@@ -57,12 +57,20 @@
                             </x-ui.forms.input>
                         </div>
                         <div v-bind:class="{ 'hidden': (!props.state) }">
-                            <x-ui.forms.input id="meeting_link" value="{{ old('meeting_link', $pg->meeting_link) }}" name="meeting_link" type="text">
-                                {{ __('matcher::peergroup.field_meeting_link') }}
-                            </x-ui.forms.input>
+                            <div class="mb-2">
+                                <x-ui.forms.input id="meeting_link" value="{{ old('meeting_link', $pg->meeting_link) }}" name="meeting_link" type="text">
+                                    {{ __('matcher::peergroup.field_meeting_link') }}
+                                </x-ui.forms.input>
+                            </div>
+
+                            <x-ui.forms.checkbox id="use_jitsi_for_location" default="{{ $pg->use_jitsi_for_location }}" name="use_jitsi_for_location">{{ __('matcher::peergroup.field_use_jitsi_for_location') }}</x-ui.forms.checkbox>
                         </div>
                     </template>
                 </conditional-elements>
+                
+                <div class="mt-4">
+                    <x-ui.forms.checkbox id="inherit_location" default="{{ $pg->inherit_location }}" name="inherit_location">{{ __('matcher::peergroup.field_inherit_location') }}</x-ui.forms.checkbox>
+                </div>
             </x-ui.forms.section-body>
 
             <x-ui.forms.section-heading>@lang('matcher::peergroup.section_heading_settings')</x-ui.forms.section-heading>

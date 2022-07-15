@@ -64,6 +64,8 @@ class PeergroupTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
+            'inherit_location' => $this->faker->boolean(),
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.create'), $data);
@@ -197,6 +199,8 @@ class PeergroupTest extends TestCase
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
+            'inherit_location' => $this->faker->boolean(),
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
@@ -227,7 +231,9 @@ class PeergroupTest extends TestCase
             'with_approval' => $this->faker->text(),
             'restrict_invitations' => $this->faker->text(),
             'meeting_link' => $this->faker->text(),
-            'languages' => ['bla', 'blu']
+            'languages' => ['bla', 'blu'],
+            'inherit_location' => $this->faker->text(),
+            'use_jitsi_for_location' => $this->faker->text(),
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
@@ -266,7 +272,9 @@ class PeergroupTest extends TestCase
             'languages' => [
                 $language1->code,
                 $language2->code,
-            ]
+            ],
+            'inherit_location' => false,
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
@@ -627,5 +635,19 @@ class PeergroupTest extends TestCase
         $response = $this->actingAs($user)->get(route('matcher.index', ['search' => 'tag1']));
         $response->assertStatus(200);
         $response->assertSee($pgs[0]->title);
+    }
+
+    public function test_jitsi_link_is_generated_when_saving()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser()->create();
+
+        $this->assertNull($pg->jitsi_url);
+
+        $pg->title = $this->faker->text(50);
+        $pg->use_jitsi_for_location = true;
+        $pg->save();
+
+        $this->assertEquals($pg->jitsi_url . '/' . Str::of($pg->title)->slug('-'), $pg->meeting_link);
     }
 }

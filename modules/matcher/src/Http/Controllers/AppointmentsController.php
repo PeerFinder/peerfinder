@@ -56,6 +56,7 @@ class AppointmentsController extends Controller
         $appointment = new Appointment();
         $appointment->date = Carbon::now()->startOfHour()->addHour();
         $appointment->end_date = $appointment->date->addHour();
+        $appointment->peergroup = $pg;
 
         return view('matcher::appointments.create', compact('pg', 'appointment'));
     }

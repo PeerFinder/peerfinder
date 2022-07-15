@@ -60,6 +60,8 @@ class GroupTypeTest extends TestCase
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
             'group_type' => $gt1->identifier,
+            'inherit_location' => false,
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.create'), $data);
@@ -91,6 +93,8 @@ class GroupTypeTest extends TestCase
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
             'group_type' => 'some-fake-identifier',
+            'inherit_location' => false,
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.create'), $data);
@@ -153,6 +157,8 @@ class GroupTypeTest extends TestCase
             'meeting_link' => $this->faker->url(),
             'languages' => [$language->code],
             'group_type' => $gt2->identifier,
+            'inherit_location' => false,
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);

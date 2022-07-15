@@ -22,6 +22,6 @@
         <x-ui.forms.textarea id="details" value="{{ old('details', $appointment->details) }}" name="details" rows="3">{{ __('matcher::peergroup.field_details') }}</x-ui.forms.textarea>
     </div>
     <div>
-        <x-ui.forms.input id="location" value="{{ old('location', $appointment->location) }}" name="location" type="text">{{ __('matcher::peergroup.field_location') }}</x-ui.forms.input>
+        <x-ui.forms.input id="location" value="{{ old('location', $appointment->location) }}" name="location" type="text" :disabled="$appointment->peergroup->inherit_location">{{ __('matcher::peergroup.field_location') }}</x-ui.forms.input>
     </div>
 </div>

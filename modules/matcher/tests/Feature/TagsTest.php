@@ -43,7 +43,9 @@ class TagsTest extends TestCase
                 'Tag 1',
                 'tag2',
                 'tag 3'
-            ]
+            ],
+            'inherit_location' => false,
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.create'), $data);
@@ -95,7 +97,9 @@ class TagsTest extends TestCase
                 'Tag 1',
                 'tag2',
                 'tag 3'
-            ]
+            ],
+            'inherit_location' => false,
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
@@ -128,7 +132,9 @@ class TagsTest extends TestCase
             'restrict_invitations' => $this->faker->boolean(),
             'location' => $this->faker->city(),
             'meeting_link' => $this->faker->url(),
-            'languages' => [$language->code]
+            'languages' => [$language->code],
+            'inherit_location' => false,
+            'use_jitsi_for_location' => false,
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
