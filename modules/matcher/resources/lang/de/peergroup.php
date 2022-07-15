@@ -174,4 +174,6 @@ return [
     'invitation_field_users' => 'Nutzer:innen',    
     'invitation_comment' => 'Kommentar (z.B. "Warum solltest Du beitreten?")',
     'invite_new_members_link' => 'Neue Mitglieder einladen',
+    'field_use_jitsi_for_location' => 'Jitsi für virtuelle Meetings nutzen',    
+    'field_inherit_location' => 'Ort für alle Termine übernehmen',
 ];

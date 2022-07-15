@@ -264,4 +264,32 @@ class AppointmentsTest extends TestCase
         $response->assertHeader('Content-Type', 'text/calendar; charset=utf-8');
         $response->assertSee($a->identifier);
     }
+
+    public function test_appointment_inherits_peergroups_location()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $pg->inherit_location = true;
+        $pg->virtual = false;
+        $pg->save();
+
+        $response = $this->actingAs($user)->get(route('matcher.appointments.create', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+        $response->assertSee($pg->location);
+    }
+
+    public function test_appointment_inherits_peergroups_meeting_link()
+    {
+        $user = User::factory()->create();
+        $pg = Peergroup::factory()->byUser($user)->create();
+
+        $pg->inherit_location = true;
+        $pg->virtual = true;
+        $pg->save();
+
+        $response = $this->actingAs($user)->get(route('matcher.appointments.create', ['pg' => $pg->groupname]));
+        $response->assertStatus(200);
+        $response->assertSee($pg->meeting_link);
+    }    
 }

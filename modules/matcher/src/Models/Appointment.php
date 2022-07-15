@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Matcher\Database\Factories\AppointmentFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Appointment extends Model
 {
@@ -25,6 +26,10 @@ class Appointment extends Model
     protected $casts = [
         'date' => 'datetime',
         'end_date' => 'datetime',
+    ];
+
+    protected $with = [
+        'peergroup',
     ];
 
     public static function rules()
@@ -78,5 +83,22 @@ class Appointment extends Model
     public function isInPast()
     {
         return Carbon::now()->isAfter($this->end_date);
+    }
+
+    protected function location() : Attribute
+    {
+        return Attribute::make(
+            get: function($value) {
+                if($this->peergroup->inherit_location) {
+                    if ($this->peergroup->virtual) {
+                        return $this->peergroup->meeting_link;
+                    } else {
+                        return $this->peergroup->location;
+                    }
+                } else {
+                    return $value;
+                }
+            },
+        );
     }
 }

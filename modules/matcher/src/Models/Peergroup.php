@@ -15,6 +15,7 @@ use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Talk\Traits\PeergroupConversations;
 use Spatie\Tags\HasTags;
+use Illuminate\Support\Str;
 
 class Peergroup extends Model
 {
@@ -28,6 +29,8 @@ class Peergroup extends Model
         'private' => 'boolean',
         'with_approval' => 'boolean',
         'restrict_invitations' => 'boolean',
+        'inherit_location' => 'boolean',
+        'use_jitsi_for_location' => 'boolean',
     ];
 
     protected $fillable = [
@@ -41,6 +44,8 @@ class Peergroup extends Model
         'restrict_invitations',
         'location',
         'meeting_link',
+        'inherit_location',
+        'use_jitsi_for_location',
     ];
 
     public static function rules()
@@ -53,6 +58,8 @@ class Peergroup extends Model
             'virtual' => ['required', 'boolean'],
             'private' => ['required', 'boolean'],
             'with_approval' => ['required', 'boolean'],
+            'inherit_location' => ['required', 'boolean'],
+            'use_jitsi_for_location' => ['required', 'boolean'],
             'restrict_invitations' => ['required', 'boolean'],
             'location' => ['nullable', 'string', 'max:100'],
             'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
@@ -101,6 +108,14 @@ class Peergroup extends Model
             # If the group is full, mark is also as closed
             if ($pg->isFull()) {
                 $pg->open = false;
+            }
+
+            if ($pg->use_jitsi_for_location) {
+                if (!$pg->jitsi_url) {
+                    $pg->jitsi_url = 'https://meet.jit.si/pf-' . Str::uuid();
+                }
+
+                $pg->meeting_link =  $pg->jitsi_url . '/' . Str::of($pg->title)->slug('-');
             }
         });
 

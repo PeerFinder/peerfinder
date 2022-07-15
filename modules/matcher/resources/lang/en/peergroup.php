@@ -174,4 +174,6 @@ return [
     'invitation_field_users' => 'Users',
     'invitation_comment' => 'Comment (e.g. why should you join this group)',
     'invite_new_members_link' => 'Invite new members',
+    'field_use_jitsi_for_location' => 'Use Jitsi for virtual meetings',
+    'field_inherit_location' => 'Use location for all appointments',
 ];
