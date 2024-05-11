@@ -63,7 +63,7 @@
                                 </x-ui.forms.input>
                             </div>
 
-                            <x-ui.forms.checkbox id="use_jitsi_for_location" default="{{ $pg->use_jitsi_for_location }}" name="use_jitsi_for_location">{{ __('matcher::peergroup.field_use_jitsi_for_location') }}</x-ui.forms.checkbox>
+                            {{--<x-ui.forms.checkbox id="use_jitsi_for_location" default="{{ $pg->use_jitsi_for_location }}" name="use_jitsi_for_location">{{ __('matcher::peergroup.field_use_jitsi_for_location') }}</x-ui.forms.checkbox>--}}
                         </div>
                     </template>
                 </conditional-elements>

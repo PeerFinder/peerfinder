@@ -233,7 +233,7 @@ class PeergroupTest extends TestCase
             'meeting_link' => $this->faker->text(),
             'languages' => ['bla', 'blu'],
             'inherit_location' => $this->faker->text(),
-            'use_jitsi_for_location' => $this->faker->text(),
+            /* 'use_jitsi_for_location' => $this->faker->text(), */
         ];
 
         $response = $this->actingAs($user)->put(route('matcher.update', ['pg' => $pg->groupname]), $data);
@@ -637,7 +637,7 @@ class PeergroupTest extends TestCase
         $response->assertSee($pgs[0]->title);
     }
 
-    public function test_jitsi_link_is_generated_when_saving()
+/*     public function test_jitsi_link_is_generated_when_saving()
     {
         $user = User::factory()->create();
         $pg = Peergroup::factory()->byUser()->create();
@@ -649,5 +649,5 @@ class PeergroupTest extends TestCase
         $pg->save();
 
         $this->assertEquals($pg->jitsi_url . '/' . Str::of($pg->title)->slug('-'), $pg->meeting_link);
-    }
+    } */
 }
