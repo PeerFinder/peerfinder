@@ -42,6 +42,9 @@ class DashboardController extends Controller
                 }
             }
         });
+        
+        $own_ids = $own_peergroups->map(fn($item) => $item->id);
+        $member_peergroups = $member_peergroups->filter(fn($item) => !$own_ids->has($item->id));
 
         usort($appointments, function ($a, $b) {
             return $a->date->greaterThan($b->date);
