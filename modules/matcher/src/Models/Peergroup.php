@@ -30,7 +30,7 @@ class Peergroup extends Model
         'with_approval' => 'boolean',
         'restrict_invitations' => 'boolean',
         'inherit_location' => 'boolean',
-        'use_jitsi_for_location' => 'boolean',
+        /* 'use_jitsi_for_location' => 'boolean', */
     ];
 
     protected $fillable = [
@@ -45,7 +45,7 @@ class Peergroup extends Model
         'location',
         'meeting_link',
         'inherit_location',
-        'use_jitsi_for_location',
+        /* 'use_jitsi_for_location', */
     ];
 
     public static function rules()
@@ -59,7 +59,7 @@ class Peergroup extends Model
             'private' => ['required', 'boolean'],
             'with_approval' => ['required', 'boolean'],
             'inherit_location' => ['required', 'boolean'],
-            'use_jitsi_for_location' => ['required', 'boolean'],
+            /* 'use_jitsi_for_location' => ['required', 'boolean'], */
             'restrict_invitations' => ['required', 'boolean'],
             'location' => ['nullable', 'string', 'max:100'],
             'meeting_link' => ['nullable', 'string', 'max:255', new \App\Rules\UrlerValidUrl()],
@@ -110,13 +110,13 @@ class Peergroup extends Model
                 $pg->open = false;
             }
 
-            if ($pg->use_jitsi_for_location) {
+/*             if ($pg->use_jitsi_for_location) {
                 if (!$pg->jitsi_url) {
                     $pg->jitsi_url = 'https://meet.jit.si/pf-' . Str::uuid();
                 }
 
                 $pg->meeting_link =  $pg->jitsi_url . '/' . Str::of($pg->title)->slug('-');
-            }
+            } */
         });
 
         static::deleting(function ($pg) {
