@@ -2,7 +2,7 @@
     <x-base.container class="mb-5 pt-8 px-3">
         <footer class="text-center">
             <div class="text-sm inline-block px-5 py-2 rounded-full bg-gray-50">
-                Presented by {{ config('app.name') }}. Handcrafted in Hannover with ❤️ by <a href="https://twitter.com/leonidlezner">Leonid Lezner</a>
+                Presented by {{ config('app.name') }}. Handcrafted in Hannover with ❤️ by <a href="https://norden.social/@leonid">Leonid Lezner</a>
             </div>
             
             <nav class="mt-2 text-center space-x-3 text-sm">
